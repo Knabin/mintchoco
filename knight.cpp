@@ -13,6 +13,9 @@ knight::~knight()
 
 HRESULT knight::init()
 {
+	//사랑은 은하수를 타고
+	//으아아앙
+
 	_image = IMAGEMANAGER->addFrameImage("knight", "knight.bmp", 0, 0, 612, 312, 9, 4, true, RGB(255, 0, 255));
 
 	_knightDirection = KNIGHTDIRECTION_RIGHT_STOP;
