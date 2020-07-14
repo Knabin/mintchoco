@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "knight.h"
 
-
+//test
 knight::knight()
 {
 }
