@@ -22,10 +22,14 @@ HRESULT playGround::init()
 	IMAGEMANAGER->addImage("ÃÑ¾Ë", "bullet.bmp", 21, 21, true, RGB(255, 0, 255));
 	//ÁÖ¼® Å×½ºÆ®
 <<<<<<< HEAD
+<<<<<<< HEAD
 	//2¹øÂ° Å×½ºÆ®
 =======
 
 >>>>>>> 61d00a9... í…ŒìŠ¤íŠ¸
+=======
+	//2¹øÂ° Å×½ºÆ®
+>>>>>>> 32b5224... 2ë²ˆì§¸ í…ŒìŠ¤íŠ¸
 
 	SCENEMANAGER->addScene("°í½ºÆ®¾À", new ghostNGoblinScene);
 
