@@ -4,6 +4,7 @@
 
 txtData::txtData()
 {
+	// ¾å
 }
 
 
