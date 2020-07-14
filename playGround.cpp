@@ -21,7 +21,11 @@ HRESULT playGround::init()
 	IMAGEMANAGER->addFrameImage("¹öÆ°", "button.bmp", 0, 0, 122, 62, 1, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("ÃÑ¾Ë", "bullet.bmp", 21, 21, true, RGB(255, 0, 255));
 	//ÁÖ¼® Å×½ºÆ®
+<<<<<<< HEAD
 	//2¹øÂ° Å×½ºÆ®
+=======
+
+>>>>>>> 61d00a9... í…ŒìŠ¤íŠ¸
 
 	SCENEMANAGER->addScene("°í½ºÆ®¾À", new ghostNGoblinScene);
 
