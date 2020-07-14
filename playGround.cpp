@@ -20,7 +20,7 @@ HRESULT playGround::init()
 	IMAGEMANAGER->addFrameImage("battle", "battle.bmp", 0, 0, 1536, 79, 16, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("버튼", "button.bmp", 0, 0, 122, 62, 1, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("총알", "bullet.bmp", 21, 21, true, RGB(255, 0, 255));
-
+	//주석 테스트
 
 
 	SCENEMANAGER->addScene("고스트씬", new ghostNGoblinScene);
