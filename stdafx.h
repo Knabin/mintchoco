@@ -35,7 +35,7 @@ using namespace TTYONE_UTIL;
 
 // 여기서 프로그램에 필요한 추가 헤더를 참조합니다.
 #define WINNAME (LPCTSTR)(TEXT("뜨웨니 원~"))
-#define WINSTARTX	2000
+#define WINSTARTX	50
 #define WINSTARTY	50
 #define WINSIZEX	1024		
 #define WINSIZEY	768
