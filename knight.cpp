@@ -14,7 +14,10 @@ knight::~knight()
 HRESULT knight::init()
 {
 	//»ç¶ûÀº ÀºÇÏ¼ö¸¦ Å¸°í
+<<<<<<< HEAD
 	//À¸¾Æ¾Æ¾Ó
+=======
+>>>>>>> bcb1f49... knight ì—…ë°ì´íŠ¸ ì¶”ê°€
 
 	_image = IMAGEMANAGER->addFrameImage("knight", "knight.bmp", 0, 0, 612, 312, 9, 4, true, RGB(255, 0, 255));
 
