@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "imageManager.h"
-
-
+//ÁÖ¼®
 imageManager::imageManager()
 {
 }
