@@ -14,6 +14,7 @@ battle::~battle()
 HRESULT battle::init(const char* imageName, int x, int y)
 {
 	ship::init(imageName, x, y);
+	// 주석 테스트
 
 	return S_OK;
 }
