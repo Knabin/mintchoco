@@ -1,6 +1,5 @@
 #pragma once
 #include "gameNode.h"
-#include "ghostNGoblinScene.h"
 
 
 class playGround : public gameNode
