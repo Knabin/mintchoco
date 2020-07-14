@@ -1,2 +1,0 @@
-C:\Users\User\source\repos\mintchoco\teampp\x64\Debug\windowsAPI.exe
-C:\Users\User\source\repos\mintchoco\teampp\x64\Debug\windowsAPI.pdb
