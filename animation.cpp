@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "animation.h"
 
+//test
 
 animation::animation()
 	: _frameNum(0),

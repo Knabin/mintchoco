@@ -7,7 +7,10 @@ HRESULT bullet::init(const char * imageName, int bulletMax, float range)
 	_imageName = imageName;
 	_bulletMax = bulletMax;
 	_range = range;
+<<<<<<< HEAD
 	// せせ ぞぞ
+=======
+>>>>>>> 02e9fb8f32c0abe6c60d36ce9deab20d066cadf7
 
 	return S_OK;
 }
