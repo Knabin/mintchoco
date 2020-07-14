@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "gameNode.h"
 
+//test
 
 gameNode::gameNode()
 {
