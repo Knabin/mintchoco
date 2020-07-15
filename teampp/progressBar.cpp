@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "progressBar.h"
 
-
+//progressBar test
 progressBar::progressBar()
 {
 }
