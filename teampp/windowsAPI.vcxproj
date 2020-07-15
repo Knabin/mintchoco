@@ -173,6 +173,7 @@
     <ClInclude Include="txtData.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="windowsAPI.h" />
+    <ClInclude Include="zOrder.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
@@ -201,6 +202,7 @@
     <ClCompile Include="txtData.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="windowsAPI.cpp" />
+    <ClCompile Include="zOrder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="windowsAPI.rc" />
