@@ -26,6 +26,7 @@ using namespace std;
 #include "sceneManager.h"
 #include "keyAniManager.h"
 #include "txtData.h"
+#include "iniDataManager.h"
 
 using namespace TTYONE_UTIL;
 
@@ -50,6 +51,7 @@ using namespace TTYONE_UTIL;
 #define SCENEMANAGER sceneManager::getSingleton()
 #define KEYANIMANAGER keyAniManager::getSingleton()
 #define TXTDATA txtData::getSingleton()
+#define INIDATA iniDataManager::getSingleton()
 
 #define SAFE_DELETE(p)		{if(p) {delete(p); (p) = NULL;}}
 #define SAFE_RELEASE(p)		{if(p) {(p)->release(); (p) = NULL;}}

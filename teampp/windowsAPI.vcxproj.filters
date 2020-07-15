@@ -144,6 +144,9 @@
     <ClInclude Include="keyAniManager.h">
       <Filter>2DGameFramework\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="iniDataManager.h">
+      <Filter>2DGameFramework\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -204,6 +207,9 @@
       <Filter>2DGameFramework\button</Filter>
     </ClCompile>
     <ClCompile Include="keyAniManager.cpp">
+      <Filter>2DGameFramework\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="iniDataManager.cpp">
       <Filter>2DGameFramework\Manager</Filter>
     </ClCompile>
   </ItemGroup>
