@@ -16,6 +16,7 @@ HRESULT playGround::init()
 {
 	gameNode::init(true);
 
+	//jiSub test
 
 	return S_OK;
 }
