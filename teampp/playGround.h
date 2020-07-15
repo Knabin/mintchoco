@@ -1,11 +1,9 @@
 #pragma once
 #include "gameNode.h"
 
-
 class playGround : public gameNode
 {
 private:
-	
 	
 public:
 	playGround();
@@ -15,8 +13,5 @@ public:
 	virtual void release();
 	virtual void update();
 	virtual void render();
-
-	
-
 };
 
