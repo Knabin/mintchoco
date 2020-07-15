@@ -1,11 +1,10 @@
 #pragma once
 #include "gameNode.h"
-
+#include "enemyManager.h"
 
 class playGround : public gameNode
 {
 private:
-	
 	
 public:
 	playGround();
