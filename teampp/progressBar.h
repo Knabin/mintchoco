@@ -11,7 +11,7 @@ private:
 
 	image* _progressBarTop;
 	image* _progressBarBottom;
-
+	//test
 public:
 	progressBar();
 	~progressBar();
