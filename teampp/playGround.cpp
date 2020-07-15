@@ -17,8 +17,6 @@ HRESULT playGround::init()
 {
 	gameNode::init(true);
 
-	//jiSub test
-
 	return S_OK;
 }
 
@@ -33,6 +31,7 @@ void playGround::update()
 {
 	gameNode::update();
 
+
 }
 
 //그리기 전용
@@ -40,7 +39,6 @@ void playGround::render()
 {	
 	PatBlt(getMemDC(), 0, 0, WINSIZEX, WINSIZEY, WHITENESS);
 	//=================================================
-
 	
 	//=============================================
 	_backBuffer->render(getHDC(), 0, 0);
