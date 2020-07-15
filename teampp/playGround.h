@@ -1,6 +1,5 @@
 #pragma once
 #include "gameNode.h"
-#include "enemyManager.h"
 
 class playGround : public gameNode
 {
@@ -14,8 +13,5 @@ public:
 	virtual void release();
 	virtual void update();
 	virtual void render();
-
-	
-
 };
 

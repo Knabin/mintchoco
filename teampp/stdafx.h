@@ -27,6 +27,7 @@ using namespace std;
 #include "keyAniManager.h"
 #include "txtData.h"
 #include "iniDataManager.h"
+#include "zOrder.h"
 
 using namespace TTYONE_UTIL;
 
@@ -50,6 +51,7 @@ using namespace TTYONE_UTIL;
 #define SOUNDMANAGER soundManager::getSingleton()
 #define SCENEMANAGER sceneManager::getSingleton()
 #define KEYANIMANAGER keyAniManager::getSingleton()
+#define ZORDER zOrder::getSingleton()
 #define TXTDATA txtData::getSingleton()
 #define INIDATA iniDataManager::getSingleton()
 
