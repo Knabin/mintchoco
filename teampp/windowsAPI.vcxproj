@@ -149,6 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="animation.h" />
+    <ClInclude Include="boss.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="commonMacroFunction.h" />
@@ -177,6 +178,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
+    <ClCompile Include="boss.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="effect.cpp" />
