@@ -118,6 +118,8 @@ namespace TTYONE_UTIL
 
 		float getWidth() { return right - left; }
 		float getHeight() { return bottom - top; }
+		float getCenterX() { return (left + right) * 0.5f; }
+		float getCenterY() { return (top + bottom) * 0.5f; }
 	}MYRECT, *LPMYRECT;
 
 
