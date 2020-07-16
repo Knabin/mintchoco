@@ -9,41 +9,36 @@ enemy::~enemy()
 {
 }
 
-HRESULT enemy::init()
+HRESULT enemy::init(string imageName, float x, float y, float speed)
 {
-	switch (_cheerleaderDirection)
-	{
-	case IDLE:
-		IMAGEMANAGER->addFrameImage("치어리더아이들", "CheerLeader_Idle.bmp", 2034, 432, 12, 2, true, RGB(255, 0, 255));
-		break;
-	case WALK:
-		IMAGEMANAGER->addFrameImage("치어리더무브", "CheerLeader_Walk.bmp", 2736, 438, 12, 2, true, RGB(255, 0, 255));
-		break;
 
-	}
-	
-	_cheerleaderDirection = IDLE;
-	_enemyDirection = ENEMY_LEFT_MOVE;
+	_xp = 500;
+	_yp = WINSIZEY - 200;
 
-	_x = WINSIZEX / 2;
-	_y = WINSIZEY / 2;
+	_player = RectMakeCenter(_xp, _yp, 100, 100);
 
-	_rc = RectMakeCenter(_x, _y, _enemyImg->getFrameWidth(), _enemyImg->getFrameHeight());
+	_enemyImg = IMAGEMANAGER->findImage(imageName);
+	_imageName = imageName;
+	_speed = speed;
+	_x = _x + x;
+	_y = _y + y;
+	_direction = LEFT_MOVE;
+	_enemyMotionL = new animation;
+	_enemyMotionL->init(_enemyImg->getWidth(), _enemyImg->getHeight(), _enemyImg->getFrameWidth(), _enemyImg->getFrameHeight());
+	_enemyMotionL->setPlayFrame(0,11,false, true);
+	_enemyMotionL->setFPS(1);
+	_enemyMotionL->start();
 
-	int leftIdle[] = { 0,1,2,3,4,5,6,7,8,9,10,11 };
-	KEYANIMANAGER->addArrayFrameAnimation("enemyLeftIdle", "치어리더아이들", leftIdle,12,8,true);
+	_enemyMotionR = new animation;
+	_enemyMotionR->init(_enemyImg->getWidth(), _enemyImg->getHeight(), _enemyImg->getFrameWidth(), _enemyImg->getFrameHeight());
+	_enemyMotionR->setPlayFrame(21, 12, false, true);
+	_enemyMotionR->setFPS(1);
+	_enemyMotionR->start();
 
-	int rightIdle[] = { 12,13,14,15,16,17,18,19,20,21,22,23 };
-	KEYANIMANAGER->addArrayFrameAnimation("enemyRightIdle", "치어리더아이들", rightIdle, 12, 8, true);
+	_rc.set(0, 0, _enemyImg->getFrameWidth(), _enemyImg->getFrameHeight());
+	_rc.setCenterPos(_x, _y);
 
-	int leftMove[] = { 0,1,2,3,4,5,6,7,8,9,10,11 };
-	KEYANIMANAGER->addArrayFrameAnimation("enemyLeftMove", "치어리더무브", leftMove, 12, 8, true);
-
-	int rightMove[] = { 12,13,14,15,16,17,18,19,20,21,22,23 };
-	KEYANIMANAGER->addArrayFrameAnimation("enemyRightMove", "치어리더무브", rightMove, 12, 8, true);
-
-	_enemyMotion = KEYANIMANAGER->findAnimation("enemyLeftMove");
-
+	_enemyMotion = _enemyMotionL;
 	return S_OK;
 }
 
@@ -53,48 +48,71 @@ void enemy::release()
 
 void enemy::update()
 {		
-	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+
+	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
 	{
-		_enemyDirection = ENEMY_RIGHT_MOVE;
-		_enemyMotion = KEYANIMANAGER->findAnimation("enemyRightMove");
+		_player.left += 5;
+		_player.right += 5;
+	}
+
+	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+	{
+		_player.left -= 5;
+		_player.right -= 5;
+	}
+	if (KEYMANAGER->isStayKeyDown(VK_UP))
+	{
+		_player.top -= 5;
+		_player.bottom -= 5;
+	}
+	if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+	{
+		_player.top += 5;
+		_player.bottom += 5;
+	}
+
+	_enemyMotion->frameUpdate(TIMEMANAGER->getElapsedTime() * 10);
+
+	if ((_rc.left + _rc.right) / 2 < 100)
+	{
+		_direction = RIGHT_MOVE;
+
+		_enemyMotion = _enemyMotionR;
 		_enemyMotion->start();
 	}
-	if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+
+	if ((_rc.left + _rc.right) / 2 > 800)
 	{
-		_enemyDirection = ENEMY_LEFT_MOVE;
-		_enemyMotion = KEYANIMANAGER->findAnimation("enemyLeftMove");
+		_direction = LEFT_MOVE;
+
+		_enemyMotion = _enemyMotionL;
 		_enemyMotion->start();
 	}
 
-	if ((_rc.left + _rc.right) / 2 <= 300)
-	{
-		_cheerleaderDirection = IDLE;
-		_enemyDirection = ENEMY_RIGHT_MOVE;
-	}
-	if ((_rc.left + _rc.right) / 2 >= WINSIZEX - 300)
-	{
-		_cheerleaderDirection = IDLE;
-		_enemyDirection = ENEMY_LEFT_MOVE;
-	}
-
-	switch (_enemyDirection)
-	{
-	case ENEMY_RIGHT_IDLE:
-		break;
-	case ENEMY_LEFT_MOVE:
-		_x -= ENEMYSPEED;
-		break;
-	case ENEMY_RIGHT_MOVE:
-		_x += ENEMYSPEED;
-		break;
-	}
-
-	_rc = RectMakeCenter(_x, _y, _enemyImg->getFrameWidth(), _enemyImg->getFrameHeight());
-	KEYANIMANAGER->update();
+	enemyDirection();
 }
 
 void enemy::render()
 {
-	_enemyImg->aniRender(getMemDC(), _rc.left, _rc.top, _enemyMotion);
-	//Rectangle(getMemDC(), _rc);
-}  
+	Rectangle(getMemDC(), _player);//플레이어 렉트
+	_rc.render(getMemDC());//렉트
+	_enemyImg->aniRender(getMemDC(),_rc.left,_rc.top,_enemyMotion);
+}
+
+void enemy::enemyDirection()
+{
+
+	switch (_direction)
+	{
+	case LEFT_MOVE:
+
+		_rc.move(-5, 0);
+	
+		break;
+	case RIGHT_MOVE:
+
+		_rc.move(5, 0);
+		break;
+	}
+}
+

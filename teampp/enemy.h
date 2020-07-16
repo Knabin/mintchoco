@@ -4,42 +4,47 @@
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 using namespace std;
 
-#define ENEMYSPEED 3.0f;
-
 enum ENEMYDIRECTION
 {
-	ENEMY_RIGHT_IDLE,
-	ENEMY_LEFT_IDLE,
-	ENEMY_RIGHT_MOVE,
-	ENEMY_LEFT_MOVE
+	LEFT_IDLE,
+	RIGHT_IDLE,
+	LEFT_MOVE,
+	RIGHT_MOVE
 };
-
-enum CHEELEADER
-{
-	IDLE,
-	WALK
-};
-
 
 class enemy : public gameNode
 {
-private:
+protected:
 	image* _enemyImg;	//에너미 이미지
-	float _x, _y;		//에너미 x축 y축
-	RECT _rc;			//에너미 렉트
 
-	ENEMYDIRECTION _enemyDirection;	//에너미 상태정의
-	CHEELEADER _cheerleaderDirection;			//에너미 정의
-	animation* _enemyMotion;		//에너미 애니메이션
+	animation* _enemyMotion;
+
+	animation* _enemyMotionL;
+	animation* _enemyMotionR;
+	string _imageName;
+	float _x, _y;		//에너미 x축 y축
+	float _speed;
+	int _count, _index;
+	int _width, _height;
+	MYRECT _rc;			//에너미 렉트
+	bool _leftMove, _rightMove;
+
+	//float _hp;		//에너미체력
+	//float _Maxhp;		//에너미맥스체력
+
+	ENEMYDIRECTION _direction;
+private:
+	RECT _player;
+	float _xp, _yp;
 public:
 	enemy();
 	~enemy();
 
-	virtual HRESULT init();
+	virtual HRESULT init(string imageName, float x, float y, float speed);
 	virtual void release();
 	virtual void update();
 	virtual void render();
 
-
+	void enemyDirection();
 };
 
