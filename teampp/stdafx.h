@@ -28,6 +28,7 @@ using namespace std;
 #include "txtData.h"
 #include "iniDataManager.h"
 #include "zOrder.h"
+#include "camera.h"
 
 using namespace TTYONE_UTIL;
 
@@ -36,11 +37,11 @@ using namespace TTYONE_UTIL;
 
 
 // 여기서 프로그램에 필요한 추가 헤더를 참조합니다.
-#define WINNAME (LPCTSTR)(TEXT("뜨웨니 원~"))
+#define WINNAME (LPCTSTR)(TEXT("test"))
 #define WINSTARTX	50
 #define WINSTARTY	50
-#define WINSIZEX	1024		
-#define WINSIZEY	768
+#define WINSIZEX	1280	
+#define WINSIZEY	720
 #define WINSTYLE	WS_CAPTION | WS_SYSMENU
 
 #define RND randomFunction::getSingleton()
@@ -54,6 +55,7 @@ using namespace TTYONE_UTIL;
 #define ZORDER zOrder::getSingleton()
 #define TXTDATA txtData::getSingleton()
 #define INIDATA iniDataManager::getSingleton()
+#define CAMERA camera::getSingleton()
 
 #define SAFE_DELETE(p)		{if(p) {delete(p); (p) = NULL;}}
 #define SAFE_RELEASE(p)		{if(p) {(p)->release(); (p) = NULL;}}

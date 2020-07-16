@@ -19,6 +19,46 @@ void zOrder::update()
 void zOrder::render()
 {
 	sortVector(0, _vObject.size()-1);
+
+
+	//for (int i = 0; i < _vObject.size(); ++i)
+	//{
+	//	for (int j = 0; j < _vObject.size(); ++j)
+	//	{
+	//		if (_vObject[i].z == _vObject[j].z)
+	//		{
+	//			if (_vObject[i].type == 0 && i < j)
+	//			{
+	//				swap(_vObject[i], _vObject[j]);
+	//			}
+	//		}
+	//	}
+	//}
+
+	int index = -1;
+	for (int i = 0; i < _vObject.size(); ++i)
+	{
+		if (_vObject[i].type == PLAYER)
+		{
+			index = i;
+			break;
+		}
+	}
+	if (index >= 0)
+	{
+		for (int i = 0; i < _vObject.size(); ++i)
+		{
+			if (_vObject[i].z == _vObject[index].z && index < i)
+			{
+				swap(_vObject[i], _vObject[index]);
+				index = i;
+			}
+		}
+	}
+
+
+
+
 	for (int i = 0; i < _vObject.size(); ++i)
 	{
 		if (_vObject[i].ani != nullptr)
@@ -37,7 +77,13 @@ void zOrder::render()
 			_vObject[i].image->render(_vObject[i].hdc, _vObject[i].x, _vObject[i].z - _vObject[i].jumpPower);
 		}
 	}
+
+
+
+
 	_vObject.clear();
+
+	
 }
 
 void zOrder::pushObject(HDC hdc, image * img, int type, float x, float jumpPower, float z)

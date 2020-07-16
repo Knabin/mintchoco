@@ -17,11 +17,11 @@ HRESULT playGround::init()
 {
 	gameNode::init(true);
 
-	_backGround1 = IMAGEMANAGER->addImage("backGround1", "image/01_backGround.bmp", 2016, 672, true, RGB(255, 0, 255));//인게임 처음 시작시 배경화면
-
-	_player = new player;
-	_player->init();
-	//플레이어 상속할당
+	// ==========================================
+	// ## 카메라 중점 초기화 ##
+	// ==========================================
+	// 플레이어 센터나 테스트용 렉트(MYRECT) 만들어서 사용하세요
+	//CAMERA->setPosition(_rc.getCenterX(), _rc.getCenterY());
 
 	return S_OK;
 }
@@ -37,21 +37,24 @@ void playGround::update()
 {
 	gameNode::update();
 
-	_player->update();//플레이어 업데이트
-
-
+	// ==========================================
+	// ## 카메라 중점 초기화 ##
+	// ==========================================
+	CAMERA->shakeStart();
+	// 플레이어 센터나 테스트용 렉트(MYRECT) 만들어서 사용하세요
+	//CAMERA->setPosition(_rc.getCenterX(), _rc.getCenterY());
 }
 
 //그리기 전용
 void playGround::render()
 {	
-	PatBlt(getMemDC(), 0, 0, WINSIZEX, WINSIZEY, WHITENESS);
+	PatBlt(getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
 	//=================================================
-	
-	_backGround1->render(getMemDC(), 0, 20);//인게임 처음 시작시 배경화면
-	_player->render();//플레이어 렌더
 
+	
 	ZORDER->render();
 	//=============================================
-	_backBuffer->render(getHDC(), 0, 0);
+	_backBuffer->render(getHDC(), 0, CAMERA->getBlackSize() * 0.5,
+		CAMERA->getLeft(), CAMERA->getTop() + CAMERA->getShakeNumber(),
+		CAMERA->getWidth(), CAMERA->getHeight());
 }
