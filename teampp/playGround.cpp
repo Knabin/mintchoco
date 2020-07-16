@@ -11,7 +11,8 @@ playGround::~playGround()
 {
 }
 //tset
-//ÃÊ±âÈ­ ÇÔ¼ö
+
+//ì´ˆê¸°í™” í•¨ìˆ˜
 HRESULT playGround::init()
 {
 	gameNode::init(true);
@@ -19,13 +20,13 @@ HRESULT playGround::init()
 	return S_OK;
 }
 
-//¸Þ¸ð¸® ÇØÁ¦
+//ë©”ëª¨ë¦¬ í•´ì œ
 void playGround::release()
 {
 	
 }
 
-//¿¬»ê
+//ì—°ì‚°
 void playGround::update()
 {
 	gameNode::update();
@@ -33,7 +34,7 @@ void playGround::update()
 
 }
 
-//±×¸®±â Àü¿ë
+//ê·¸ë¦¬ê¸° ì „ìš©
 void playGround::render()
 {	
 	PatBlt(getMemDC(), 0, 0, WINSIZEX, WINSIZEY, WHITENESS);

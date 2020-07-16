@@ -39,8 +39,8 @@ using namespace TTYONE_UTIL;
 #define WINNAME (LPCTSTR)(TEXT("뜨웨니 원~"))
 #define WINSTARTX	50
 #define WINSTARTY	50
-#define WINSIZEX	1024		
-#define WINSIZEY	768
+#define WINSIZEX	2016	
+#define WINSIZEY	672
 #define WINSTYLE	WS_CAPTION | WS_SYSMENU
 
 #define RND randomFunction::getSingleton()
