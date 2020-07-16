@@ -67,6 +67,9 @@
     <Filter Include="playGround\nabin">
       <UniqueIdentifier>{972a4225-3d75-4a73-bd1a-2697795d5f47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2DGameFramework\camera">
+      <UniqueIdentifier>{a9c973db-4aa8-4953-bee6-e6cf28da8d48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -150,6 +153,9 @@
     <ClInclude Include="zOrder.h">
       <Filter>2DGameFramework\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>2DGameFramework\camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -217,6 +223,9 @@
     </ClCompile>
     <ClCompile Include="zOrder.cpp">
       <Filter>2DGameFramework\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>2DGameFramework\camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
