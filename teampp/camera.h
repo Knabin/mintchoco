@@ -15,6 +15,7 @@ class camera : public singletonBase<camera>
 
 		int width;	//보여질 영역 가로 크기
 		int height;	//보여질 영역 세로 크기
+
 	} CAMERA_INFO, *LPCAMERA_INFO;
 
 private:
@@ -22,9 +23,13 @@ private:
 
 
 	bool _isShaking;
-	int _shakeCount;
 	float _shakeAmount;
+	int _shakeCount;
 	int _flag = -1;
+
+	bool _isFixed;
+	int _fixedLeft;
+	int _fixedTop;
 
 public:
 	camera();
@@ -39,6 +44,11 @@ public:
 
 	void cameraShake();
 	void shakeStart();
+
+	void cameraFixed(float x, float y);
+	void FixedStart();
+
+	void changePosition(float x, float y);
 
 	inline float getShakeNumber() { return _shakeAmount * _flag; }
 
