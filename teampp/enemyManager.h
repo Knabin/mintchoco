@@ -15,6 +15,7 @@ private:
 
 	image* _enemyImg;
 
+
 public:
 	enemyManager();
 	~enemyManager();
@@ -24,9 +25,11 @@ public:
 	void update();
 	void render();
 
-	void setEnemyCheer();
+	void setEnemyCheerMove();
 
 	vector<enemy*> getVCheerLeader() { return _vCheerLeader; }
 	vector<enemy*>::iterator getVICheerleader() { return _viCheerLeader; }
+
+	void setPlayerPos(float x, float y);
 };
 

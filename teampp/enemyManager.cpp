@@ -25,6 +25,8 @@ void enemyManager::update()
 	{
 		_vCheerLeader[i]->update();
 	}
+	
+	
 }
 
 void enemyManager::render()
@@ -35,15 +37,23 @@ void enemyManager::render()
 	}
 }
 
-void enemyManager::setEnemyCheer()
+void enemyManager::setEnemyCheerMove()
 {
 	float x[] = {300,500,700};
-	float y[] = {200,300,400};
+	float y[] = {350,450,550};
 
 	for (int i = 0; i < 3; i++)
 	{
 		enemy* _tempCheer = new enemy;
 		_tempCheer->init("move", x[i], y[i], 3);
 		_vCheerLeader.push_back(_tempCheer);
+	}
+}
+
+void enemyManager::setPlayerPos(float x, float y)
+{
+	for (int i = 0; i < _vCheerLeader.size(); i++)
+	{
+		_vCheerLeader[i]->setPlayerPos(x, y);
 	}
 }
