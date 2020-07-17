@@ -156,6 +156,24 @@
     <ClInclude Include="camera.h">
       <Filter>2DGameFramework\camera</Filter>
     </ClInclude>
+    <ClInclude Include="cheerleader.h">
+      <Filter>playGround\taeyong</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy.h">
+      <Filter>playGround\taeyong</Filter>
+    </ClInclude>
+    <ClInclude Include="enemyManager.h">
+      <Filter>playGround\taeyong</Filter>
+    </ClInclude>
+    <ClInclude Include="jump.h">
+      <Filter>playGround\jiseop</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>playGround\jiseop</Filter>
+    </ClInclude>
+    <ClInclude Include="playerTest.h">
+      <Filter>playGround\taeyong</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -226,6 +244,24 @@
     </ClCompile>
     <ClCompile Include="camera.cpp">
       <Filter>2DGameFramework\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="cheerleader.cpp">
+      <Filter>playGround\taeyong</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy.cpp">
+      <Filter>playGround\taeyong</Filter>
+    </ClCompile>
+    <ClCompile Include="enemyManager.cpp">
+      <Filter>playGround\taeyong</Filter>
+    </ClCompile>
+    <ClCompile Include="jump.cpp">
+      <Filter>playGround\jiseop</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>playGround\jiseop</Filter>
+    </ClCompile>
+    <ClCompile Include="playerTest.cpp">
+      <Filter>playGround\taeyong</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
