@@ -94,5 +94,6 @@ public:
 
 	float getPlayerX() { return _x; }
 	float getPlayerY() { return _y; }
+	MYRECT getPlayerRect() { return _rc; }
 };
 

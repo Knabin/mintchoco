@@ -185,8 +185,7 @@ void player::update()
 		//_rc = RectMakeCenter(_x, _y, _jumpImage->getFrameWidth(), _jumpImage->getFrameHeight());
 	}
 
-
-	//_jump->update();//점프 업데이트
+	_jump->update();//점프 업데이트
 }
 
 void player::release()
@@ -260,10 +259,14 @@ void player::move()
 					}
 					_count = 0;
 				}
+			}
+			if (!_attack && !keyRight())
+			{
 				_rc.setCenterPos(_x + 55, _y + 120);
 				//_rc = RectMakeCenter(_x, _y, _walkImage->getFrameWidth(), _walkImage->getFrameHeight());
 				_x -= _speed;
 			}
+			
 		}
 	}
 
@@ -286,10 +289,14 @@ void player::move()
 					}
 					_count = 0;
 				}
+			}
+			if (!_attack && !keyRight())
+			{
 				_rc.setCenterPos(_x + 55, _y + 120);
 				//_rc = RectMakeCenter(_x, _y, _runImage->getFrameWidth(), _runImage->getFrameHeight());
 				_x -= _runSpeed;
 			}
+			
 		}
 	}
 
@@ -548,39 +555,15 @@ void player::move()
 		{
 			//_startY = _y;
 			_jumping = true;
-			//_jump->jumping(&_x, &_y, _jumpPower, _gravity);
-			if (_playerDirection == PLAYERDIRECTION_LEFT_STOP)//플레이어가 왼쪽을 보고있으면
-			{
-				_playerDirection = PLAYERDIRECTION_LEFT_JUMP;
-				_jumpImage->setFrameX(_jumpImage->getMaxFrameX());
-				_jumpImage->setFrameY(0);
-			}
-			if (_playerDirection == PLAYERDIRECTION_LEFT_WALK)
-			{
-				_playerDirection = PLAYERDIRECTION_LEFT_JUMP;
-				_jumpImage->setFrameX(_jumpImage->getMaxFrameX());
-				_jumpImage->setFrameY(0);
-			}
-			if (_playerDirection == PLAYERDIRECTION_LEFT_MOVE)
+			_jump->jumping(&_x, &_y, _jumpPower, _gravity);
+			if (_playerDirection == PLAYERDIRECTION_LEFT_STOP || _playerDirection == PLAYERDIRECTION_LEFT_WALK || _playerDirection == PLAYERDIRECTION_LEFT_MOVE)//플레이어가 왼쪽을 보고있으면
 			{
 				_playerDirection = PLAYERDIRECTION_LEFT_JUMP;
 				_jumpImage->setFrameX(_jumpImage->getMaxFrameX());
 				_jumpImage->setFrameY(0);
 			}
 
-			if (_playerDirection == PLAYERDIRECTION_RIGHT_STOP)//플레이어가 오른쪽을 보고있으면
-			{
-				_playerDirection = PLAYERDIRECTION_RIGHT_JUMP;
-				_jumpImage->setFrameX(0);
-				_jumpImage->setFrameY(1);
-			}
-			if (_playerDirection == PLAYERDIRECTION_RIGHT_WALK)
-			{
-				_playerDirection = PLAYERDIRECTION_RIGHT_JUMP;
-				_jumpImage->setFrameX(0);
-				_jumpImage->setFrameY(1);
-			}
-			if (_playerDirection == PLAYERDIRECTION_RIGHT_MOVE)
+			if (_playerDirection == PLAYERDIRECTION_RIGHT_STOP || _playerDirection == PLAYERDIRECTION_RIGHT_WALK || _playerDirection == PLAYERDIRECTION_RIGHT_MOVE)//플레이어가 오른쪽을 보고있으면
 			{
 				_playerDirection = PLAYERDIRECTION_RIGHT_JUMP;
 				_jumpImage->setFrameX(0);
