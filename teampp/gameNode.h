@@ -1,7 +1,7 @@
 #pragma once
 #include "image.h"
 
-static image* _backBuffer = IMAGEMANAGER->addImage("backBuffer", WINSIZEX, WINSIZEY);
+static image* _backBuffer = IMAGEMANAGER->addImage("backBuffer", WINSIZEX * 3, WINSIZEY * 3);
 
 class gameNode
 {
@@ -25,6 +25,9 @@ public:
 	//백버퍼 DC메모리 접근자
 	HDC getMemDC() { return _backBuffer->getMemDC(); }
 	HDC getHDC() { return _hdc; }
+
+	int getMemDCWidth() { return _backBuffer->getWidth(); }
+	int getMemDCHeight() { return _backBuffer->getHeight(); }
 
 	LRESULT MainProc(HWND, UINT, WPARAM, LPARAM);
 };

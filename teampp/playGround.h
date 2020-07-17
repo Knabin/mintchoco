@@ -1,9 +1,19 @@
 #pragma once
 #include "gameNode.h"
+#include <Vfw.h>
+#pragma comment(lib, "vfw32.lib")
+#include "stageManager.h"
+#include "collisionManager.h"
+#include "player.h"
+#include "enemyManager.h"
 
 class playGround : public gameNode
 {
 private:
+	stageManager* _stageManger;
+	player* _player;
+	enemyManager* _enemyManger;
+	collisionManager* _collisionManager;
 	
 public:
 	playGround();

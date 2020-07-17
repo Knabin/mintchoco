@@ -38,6 +38,7 @@ HRESULT gameNode::init(bool managerInit)
 		KEYANIMANAGER->init();
 		ZORDER->init();
 		TXTDATA->init();
+		CAMERA->init(WINSIZEX, WINSIZEY, WINSIZEX * 3, WINSIZEY * 3);
 		INIDATA->init();
 	}
 
@@ -80,6 +81,9 @@ void gameNode::release()
 
 		ZORDER->release();
 		ZORDER->releaseSingleton();
+
+		CAMERA->release();
+		CAMERA->releaseSingleton();
 	}
 	
 	ReleaseDC(_hWnd, _hdc);
@@ -87,12 +91,10 @@ void gameNode::release()
 
 void gameNode::update()
 {
-	
 }
 
 void gameNode::render()
 {
-
 }
 
 LRESULT gameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)

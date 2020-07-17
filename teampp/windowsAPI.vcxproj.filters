@@ -67,6 +67,9 @@
     <Filter Include="playGround\nabin">
       <UniqueIdentifier>{972a4225-3d75-4a73-bd1a-2697795d5f47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2DGameFramework\camera">
+      <UniqueIdentifier>{a9c973db-4aa8-4953-bee6-e6cf28da8d48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -150,6 +153,39 @@
     <ClInclude Include="zOrder.h">
       <Filter>2DGameFramework\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>2DGameFramework\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="jump.h">
+      <Filter>playGround\jiseop</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>playGround\jiseop</Filter>
+    </ClInclude>
+    <ClInclude Include="cheerleader.h">
+      <Filter>playGround\taeyong</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy.h">
+      <Filter>playGround\taeyong</Filter>
+    </ClInclude>
+    <ClInclude Include="enemyManager.h">
+      <Filter>playGround\taeyong</Filter>
+    </ClInclude>
+    <ClInclude Include="stageManager.h">
+      <Filter>playGround\sungyo</Filter>
+    </ClInclude>
+    <ClInclude Include="stage1.h">
+      <Filter>playGround\sungyo</Filter>
+    </ClInclude>
+    <ClInclude Include="stage2.h">
+      <Filter>playGround\sungyo</Filter>
+    </ClInclude>
+    <ClInclude Include="stage3.h">
+      <Filter>playGround\sungyo</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionManager.h">
+      <Filter>playGround\nabin</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -217,6 +253,39 @@
     </ClCompile>
     <ClCompile Include="zOrder.cpp">
       <Filter>2DGameFramework\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>2DGameFramework\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="jump.cpp">
+      <Filter>playGround\jiseop</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>playGround\jiseop</Filter>
+    </ClCompile>
+    <ClCompile Include="cheerleader.cpp">
+      <Filter>playGround\taeyong</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy.cpp">
+      <Filter>playGround\taeyong</Filter>
+    </ClCompile>
+    <ClCompile Include="enemyManager.cpp">
+      <Filter>playGround\taeyong</Filter>
+    </ClCompile>
+    <ClCompile Include="stageManager.cpp">
+      <Filter>playGround\sungyo</Filter>
+    </ClCompile>
+    <ClCompile Include="stage1.cpp">
+      <Filter>playGround\sungyo</Filter>
+    </ClCompile>
+    <ClCompile Include="stage2.cpp">
+      <Filter>playGround\sungyo</Filter>
+    </ClCompile>
+    <ClCompile Include="stage3.cpp">
+      <Filter>playGround\sungyo</Filter>
+    </ClCompile>
+    <ClCompile Include="collisionManager.cpp">
+      <Filter>playGround\nabin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
