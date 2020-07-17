@@ -156,6 +156,12 @@
     <ClInclude Include="camera.h">
       <Filter>2DGameFramework\camera</Filter>
     </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>playGround\jiseop</Filter>
+    </ClInclude>
+    <ClInclude Include="jump.h">
+      <Filter>playGround\jiseop</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -226,6 +232,12 @@
     </ClCompile>
     <ClCompile Include="camera.cpp">
       <Filter>2DGameFramework\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>playGround\jiseop</Filter>
+    </ClCompile>
+    <ClCompile Include="jump.cpp">
+      <Filter>playGround\jiseop</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
