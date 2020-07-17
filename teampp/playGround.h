@@ -2,11 +2,12 @@
 #include "gameNode.h"
 #include <Vfw.h>
 #pragma comment(lib, "vfw32.lib")
+#include "stageManager.h"
 
 class playGround : public gameNode
 {
 private:
-
+	stageManager* _stageManger;
 	
 	
 public:
