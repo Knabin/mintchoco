@@ -154,6 +154,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="cheerleader.h" />
     <ClInclude Include="collision.h" />
+    <ClInclude Include="collisionManager.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="cheerleader.cpp" />
     <ClCompile Include="collision.cpp" />
+    <ClCompile Include="collisionManager.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
     <ClCompile Include="enemy.cpp" />

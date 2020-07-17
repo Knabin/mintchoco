@@ -183,6 +183,9 @@
     <ClInclude Include="stage3.h">
       <Filter>playGround\sungyo</Filter>
     </ClInclude>
+    <ClInclude Include="collisionManager.h">
+      <Filter>playGround\nabin</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -280,6 +283,9 @@
     </ClCompile>
     <ClCompile Include="stage3.cpp">
       <Filter>playGround\sungyo</Filter>
+    </ClCompile>
+    <ClCompile Include="collisionManager.cpp">
+      <Filter>playGround\nabin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

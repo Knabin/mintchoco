@@ -16,7 +16,19 @@ HRESULT playGround::init()
 {
 	gameNode::init(true);
 	
-	
+	_player = new player;
+	//_player->init();
+
+	_enemyManger = new enemyManager;
+
+
+	_collisionManager = new collisionManager;
+	_collisionManager->init();
+
+	_collisionManager->setPlayerMemoryAddressLink(_player);
+	_collisionManager->setEnemyManagerMemoryAddressLink(_enemyManger);
+
+
 
 
 
@@ -45,7 +57,7 @@ void playGround::update()
 	gameNode::update();
 
 	
-	
+	_collisionManager->update();
 	_stageManger->update();
 	// ==========================================
 	// ## 카메라 중점 초기화 ##
