@@ -156,6 +156,12 @@
     <ClInclude Include="camera.h">
       <Filter>2DGameFramework\camera</Filter>
     </ClInclude>
+    <ClInclude Include="jump.h">
+      <Filter>playGround\jiseop</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>playGround\jiseop</Filter>
+    </ClInclude>
     <ClInclude Include="cheerleader.h">
       <Filter>playGround\taeyong</Filter>
     </ClInclude>
@@ -165,14 +171,20 @@
     <ClInclude Include="enemyManager.h">
       <Filter>playGround\taeyong</Filter>
     </ClInclude>
-    <ClInclude Include="jump.h">
-      <Filter>playGround\jiseop</Filter>
+    <ClInclude Include="stageManager.h">
+      <Filter>playGround\sungyo</Filter>
     </ClInclude>
-    <ClInclude Include="player.h">
-      <Filter>playGround\jiseop</Filter>
+    <ClInclude Include="stage1.h">
+      <Filter>playGround\sungyo</Filter>
     </ClInclude>
-    <ClInclude Include="playerTest.h">
-      <Filter>playGround\taeyong</Filter>
+    <ClInclude Include="stage2.h">
+      <Filter>playGround\sungyo</Filter>
+    </ClInclude>
+    <ClInclude Include="stage3.h">
+      <Filter>playGround\sungyo</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionManager.h">
+      <Filter>playGround\nabin</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -245,6 +257,12 @@
     <ClCompile Include="camera.cpp">
       <Filter>2DGameFramework\camera</Filter>
     </ClCompile>
+    <ClCompile Include="jump.cpp">
+      <Filter>playGround\jiseop</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>playGround\jiseop</Filter>
+    </ClCompile>
     <ClCompile Include="cheerleader.cpp">
       <Filter>playGround\taeyong</Filter>
     </ClCompile>
@@ -254,14 +272,20 @@
     <ClCompile Include="enemyManager.cpp">
       <Filter>playGround\taeyong</Filter>
     </ClCompile>
-    <ClCompile Include="jump.cpp">
-      <Filter>playGround\jiseop</Filter>
+    <ClCompile Include="stageManager.cpp">
+      <Filter>playGround\sungyo</Filter>
     </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>playGround\jiseop</Filter>
+    <ClCompile Include="stage1.cpp">
+      <Filter>playGround\sungyo</Filter>
     </ClCompile>
-    <ClCompile Include="playerTest.cpp">
-      <Filter>playGround\taeyong</Filter>
+    <ClCompile Include="stage2.cpp">
+      <Filter>playGround\sungyo</Filter>
+    </ClCompile>
+    <ClCompile Include="stage3.cpp">
+      <Filter>playGround\sungyo</Filter>
+    </ClCompile>
+    <ClCompile Include="collisionManager.cpp">
+      <Filter>playGround\nabin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

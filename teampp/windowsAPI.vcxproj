@@ -154,6 +154,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="cheerleader.h" />
     <ClInclude Include="collision.h" />
+    <ClInclude Include="collisionManager.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
@@ -167,7 +168,6 @@
     <ClInclude Include="keyAniManager.h" />
     <ClInclude Include="keyManager.h" />
     <ClInclude Include="player.h" />
-    <ClInclude Include="playerTest.h" />
     <ClInclude Include="playGround.h" />
     <ClInclude Include="progressBar.h" />
     <ClInclude Include="randomFunction.h" />
@@ -175,6 +175,10 @@
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="soundManager.h" />
+    <ClInclude Include="stage1.h" />
+    <ClInclude Include="stage2.h" />
+    <ClInclude Include="stage3.h" />
+    <ClInclude Include="stageManager.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="timeManager.h" />
@@ -190,6 +194,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="cheerleader.cpp" />
     <ClCompile Include="collision.cpp" />
+    <ClCompile Include="collisionManager.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
     <ClCompile Include="enemy.cpp" />
@@ -202,11 +207,14 @@
     <ClCompile Include="keyAniManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
     <ClCompile Include="player.cpp" />
-    <ClCompile Include="playerTest.cpp" />
     <ClCompile Include="playGround.cpp" />
     <ClCompile Include="progressBar.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="soundManager.cpp" />
+    <ClCompile Include="stage1.cpp" />
+    <ClCompile Include="stage2.cpp" />
+    <ClCompile Include="stage3.cpp" />
+    <ClCompile Include="stageManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
