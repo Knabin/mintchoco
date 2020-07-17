@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "camera.h"
 
+
 camera::camera()
 	: _cameraInfo(NULL)
 {
@@ -25,6 +26,10 @@ HRESULT camera::init(int width, int height, int backWidth, int backHeight)
 	_isShaking = false;
 	_shakeAmount = 0.f;
 	_shakeCount = 0;
+
+	_isFixed = false;
+	_fixedLeft = 0;
+	_fixedTop = 0;
 
 
 	if (_cameraInfo == NULL)
@@ -85,4 +90,24 @@ void camera::shakeStart()
 		}
 	}
 
+}
+
+void camera::cameraFixed(float x, float y)
+{
+}
+
+void camera::FixedStart()
+{
+}
+
+void camera::changePosition(float x, float y)
+{
+	int d = getDistance(x, y, _cameraInfo->x, _cameraInfo->y);
+	float angle = getAngle(_cameraInfo->x, _cameraInfo->y, x, y);
+
+	if (d > 50)
+	{
+		_cameraInfo->x += cosf(angle) * 5;
+		_cameraInfo->y -= sinf(angle) * 5;
+	}
 }
