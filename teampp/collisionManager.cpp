@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "collisionManager.h"
 #include "player.h"
+#include "enemyManager.h"
 
 HRESULT collisionManager::init()
 {
