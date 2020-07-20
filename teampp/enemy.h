@@ -6,48 +6,56 @@ using namespace std;
 
 enum ENEMYDIRECTION
 {
-	LEFT_IDLE,
-	RIGHT_IDLE,
-	LEFT_MOVE,
-	RIGHT_MOVE,
-	LEFT_ATTACK,
-	RIGHT_ATTACK,
-	LEFT_HIT,
-	RIGHT_HIT
+	ENEMY_LEFT_IDLE,
+	ENEMY_RIGHT_IDLE,
+	ENEMY_LEFT_MOVE,
+	ENEMY_RIGHT_MOVE,
+	ENEMY_LEFT_ATTACK,
+	ENEMY_RIGHT_ATTACK,
+	ENEMY_LEFT_COMBO1,
+	ENEMY_RIGHT_COMBO1,
+	ENEMY_LEFT_COMBO2,
+	ENEMY_RIGHT_COMBO2,
 };
 
 class enemy : public gameNode
 {
 protected:
-	image* _enemyImg;	//에너미 이미지
-	image* _eA;
-	image* _eW;
-	image* _ehit;
+	image* _enemyImg;
+	image* _move;
+	image* _attack;
+	image* _combo1;
+	image* _combo2;
+
+
+	//image* _ehit;
 
 	animation* _enemyMotion;
+	animation* _enemyMotion_L;
+	animation* _enemyMotion_R;
+	animation* _enemyMotion_L_A;
+	animation* _enemyMotion_R_A;
+	animation* _enemyMotion_L_COMBO1;
+	animation* _enemyMotion_R_COMBO1;
+	animation* _enemyMotion_L_COMBO2;
+	animation* _enemyMotion_R_COMBO2;
 
-	animation* _enemyMotionL;
-	animation* _enemyMotionR;
-	animation* _enemyMotionL_A;
-	animation* _enemyMotionR_A;
-	animation* _enemyMotionL_H;
-	animation* _enemyMotionR_H;
 
-	string _imageName;
+	string _imageName;	//에너미 이미지 받을 것
 	float _x, _y;		//에너미 x축 y축
-	float _speed;
-	int _count, _index;
-	int _width, _height;
+	float _speed;		//에너미 스피드
 	MYRECT _rc;			//에너미 렉트
-	bool _leftMove, _rightMove;
 
-	float _playerX, _playerY;
+	float _playerX, _playerY;	//플레이어 위치 값 받으려는 변수
 	float angle;
 	float distance;
 	//float _hp;		//에너미체력
 	//float _Maxhp;		//에너미맥스체력
 
 	ENEMYDIRECTION _direction;
+
+	int _random;
+
 private:
 
 
@@ -59,8 +67,6 @@ public:
 	virtual void release();
 	virtual void update();
 	virtual void render();
-
-	void enemyDirection();
 
 	void setPlayerPos(float x, float y);
 };
