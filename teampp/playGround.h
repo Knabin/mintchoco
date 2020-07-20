@@ -14,6 +14,8 @@ private:
 	player* _player;
 	enemyManager* _enemyManger;
 	collisionManager* _collisionManager;
+
+	image* _test;
 	
 public:
 	playGround();

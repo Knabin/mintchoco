@@ -28,12 +28,12 @@ HRESULT playGround::init()
 	_collisionManager->setPlayerMemoryAddressLink(_player);
 	_collisionManager->setEnemyManagerMemoryAddressLink(_enemyManger);
 
-
-
-
-
 	_stageManger = new stageManager;
 	_stageManger->init();
+
+	IMAGEMANAGER->addImage("테스트", "images/background/Stage1_1_Pillar.bmp", 207, 864, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("테스트22", "images/background/Stage1_1_Pillar_alpha.bmp", 207, 843, true, RGB(255, 0, 255));
+
 	// ==========================================
 	// ## 카메라 중점 초기화 ##
 	// ==========================================
@@ -77,9 +77,13 @@ void playGround::render()
 	PatBlt(getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
 	//=================================================
 	_stageManger->render();
+	//IMAGEMANAGER->findImage("테스트")->render(getMemDC(), 500, 0);			=> 스테이지에서
+	
 	_player->render();
 
 	ZORDER->render();
+
+	IMAGEMANAGER->findImage("테스트22")->alphaRender(getMemDC(), 500, 0, 150);
 	
 	//=============================================
 	_backBuffer->render(getHDC(), 0, CAMERA->getBlackSize() * 0.5,
