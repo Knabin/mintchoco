@@ -186,7 +186,7 @@ void zOrder::sortVector(int start, int end)
 {
 	//cout << start << ", " << end << endl;
 	if (start >= end) return;
-	int pivot = _vObject[(start+end) / 2].z;
+	float pivot = _vObject[(start+end) / 2].z;
 	int left = start;
 	int right = end;
 

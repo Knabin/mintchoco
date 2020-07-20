@@ -19,13 +19,14 @@ void enemy::release()
 }
 
 void enemy::update()
-{		
-	_enemyMotion->frameUpdate(TIMEMANAGER->getElapsedTime() * 10);
+{	
+	_isAttackCount++;
+	_enemyMotion->frameUpdate(TIMEMANAGER->getElapsedTime() * 8);
 
 	distance = getDistance(_x, _y, _playerX, _playerY);
 	angle = getAngle(_x, _y, _playerX, _playerY);
 
-	if (distance > 165)
+	if (distance > 165 && (_direction == ENEMY_RIGHT_MOVE || _direction == ENEMY_LEFT_MOVE))
 	{
 		_x += cosf(angle) * _speed;
 		_y -= sinf(angle) * _speed;
@@ -34,89 +35,105 @@ void enemy::update()
 	// ==============================		에너미 움직임 및 공격      ==============================//
 	if (_x < _playerX)
 	{
-		_direction = ENEMY_RIGHT_MOVE;
-		_enemyMotion = _enemyMotion_R;
-
-		if (distance < 170)
+		
+		_enemyMotion = _enemyMotion_R_IDLE;
+		_direction = ENEMY_RIGHT_IDLE;
+		if (_isAttackCount > 75)
 		{
-			switch (_random)
+			_enemyMotion = _enemyMotion_R;
+			_direction = ENEMY_RIGHT_MOVE;
+			if (distance < 170)
 			{
-			case 0:
-				_direction = ENEMY_RIGHT_ATTACK;
-				_enemyMotion = _enemyMotion_R_A;
-				if (_enemyMotion->isPlay() == false)
+				switch (_random)
 				{
-					_enemyMotion_R_A->start();
-					_random = RND->getInt(3);
+				case 0:
+
+					_direction = ENEMY_RIGHT_ATTACK;
+					_enemyMotion = _enemyMotion_R_A;
+					if (_enemyMotion->isPlay() == false)
+					{
+						_enemyMotion->start();
+						_random = RND->getInt(3);
+						_isAttackCount = 0;
+					}
+
+					break;
+				case 1:
+					_direction = ENEMY_RIGHT_COMBO1;
+					_enemyMotion = _enemyMotion_R_COMBO1;
+					if (_enemyMotion->isPlay() == false)
+					{
+						_enemyMotion->start();
+						_random = RND->getInt(3);
+						_isAttackCount = 0;
+					}
+					break;
+				case 2:
+					_direction = ENEMY_RIGHT_COMBO2;
+					_enemyMotion = _enemyMotion_R_COMBO2;
+					if (_enemyMotion->isPlay() == false)
+					{
+						_enemyMotion->start();
+						_random = RND->getInt(3);
+						_isAttackCount = 0;
+					}
+					break;
 				}
-				break;
-			case 1:
-				_direction = ENEMY_RIGHT_COMBO1;
-				_enemyMotion = _enemyMotion_R_COMBO1;
-				if (_enemyMotion->isPlay() == false) 
-				{
-					_enemyMotion_R_COMBO1->start();
-					_random = RND->getInt(3);
-				}
-				break;
-			case 2:
-				_direction = ENEMY_RIGHT_COMBO2;
-				_enemyMotion = _enemyMotion_R_COMBO2;
-				if (_enemyMotion->isPlay() == false) 
-				{
-					_enemyMotion_R_COMBO2->start();
-					_random = RND->getInt(3);
-				}
-				break;
 			}
 		}
-		else
-		{
-			if (_enemyMotion->isPlay() == false)	_enemyMotion_R->start();
-		}
+			
+		if (_enemyMotion->isPlay() == false)	_enemyMotion->start();
+		
 	}
 	else
 	{
-		_direction = ENEMY_LEFT_MOVE;
-		_enemyMotion = _enemyMotion_L;
+		_enemyMotion = _enemyMotion_L_IDLE;
+		_direction = ENEMY_LEFT_IDLE;
 		
-
-		if (distance < 170)
+		if (_isAttackCount > 75)
 		{
-			switch (_random)
+			_enemyMotion = _enemyMotion_L;
+			_direction = ENEMY_LEFT_MOVE;
+			if (distance < 170 )
 			{
-			case 0:
-				_direction = ENEMY_LEFT_ATTACK;
-				_enemyMotion = _enemyMotion_L_A;
-				if (_enemyMotion->isPlay() == false)
+				switch (_random)
 				{
-					_enemyMotion_L_A->start();
-					_random = RND->getInt(3);
+				case 0:
+					_direction = ENEMY_LEFT_ATTACK;
+					_enemyMotion = _enemyMotion_L_A;
+					if (_enemyMotion->isPlay() == false)
+					{
+						_enemyMotion->start();
+						_random = RND->getInt(3);
+						_isAttackCount = 0;
+					}
+					break;
+				case 1:
+					_direction = ENEMY_LEFT_COMBO1;
+					_enemyMotion = _enemyMotion_L_COMBO1;
+					if (_enemyMotion->isPlay() == false)
+					{
+						_enemyMotion_L_COMBO1->start();
+						_random = RND->getInt(3);
+						_isAttackCount = 0;
+					}
+					break;
+				case 2:
+					_direction = ENEMY_LEFT_COMBO2;
+					_enemyMotion = _enemyMotion_L_COMBO2;
+					if (_enemyMotion->isPlay() == false)
+					{
+						_enemyMotion_L_COMBO2->start();
+						_random = RND->getInt(3);
+						_isAttackCount = 0;
+					}
+					break;
 				}
-				break;
-			case 1:
-				_direction = ENEMY_LEFT_COMBO1;
-				_enemyMotion = _enemyMotion_L_COMBO1;
-				if (_enemyMotion->isPlay() == false)
-				{
-					_enemyMotion_L_COMBO1->start();
-					_random = RND->getInt(3);
-				}
-				break;
-			case 2:
-				_direction = ENEMY_LEFT_COMBO2;
-				_enemyMotion = _enemyMotion_L_COMBO2;
-				if (_enemyMotion->isPlay() == false)
-				{
-					_enemyMotion_L_COMBO2->start();
-					_random = RND->getInt(3);
-				}
-				break;
 			}
 		}
 		else
 		{
-			if (_enemyMotion->isPlay() == false)	_enemyMotion_L->start();
+			if (_enemyMotion->isPlay() == false)	_enemyMotion->start();
 		}
 
 	}
@@ -128,7 +145,8 @@ void enemy::update()
 
 void enemy::render()
 {
-	_enemyImg->aniRender(getMemDC(),_rc.left,_rc.top,_enemyMotion);
+	//_enemyImg->aniRender(getMemDC(),_rc.left,_rc.top,_enemyMotion);
+	//ZORDER->pushObject(getMemDC(), _enemyImg, _enemyMotion, 1, _rc.getCenterX(), 0, _rc.bottom);
 }
 
 void enemy::setPlayerPos(float x, float y)

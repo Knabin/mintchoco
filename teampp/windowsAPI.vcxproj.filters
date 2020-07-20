@@ -189,6 +189,9 @@
     <ClInclude Include="schoolboy.h">
       <Filter>playGround\taeyong</Filter>
     </ClInclude>
+    <ClInclude Include="schoolgirl.h">
+      <Filter>playGround\taeyong</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -291,6 +294,9 @@
       <Filter>playGround\nabin</Filter>
     </ClCompile>
     <ClCompile Include="schoolboy.cpp">
+      <Filter>playGround\taeyong</Filter>
+    </ClCompile>
+    <ClCompile Include="schoolgirl.cpp">
       <Filter>playGround\taeyong</Filter>
     </ClCompile>
   </ItemGroup>

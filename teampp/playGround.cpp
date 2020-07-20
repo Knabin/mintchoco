@@ -31,6 +31,7 @@ HRESULT playGround::init()
 
 	_enemyManager->setEnemyCheerMove();
 	_enemyManager->setEnemySchoolBoyMove();
+	_enemyManager->setEnemySchoolGirlMove();
 
 
 	_stageManger = new stageManager;

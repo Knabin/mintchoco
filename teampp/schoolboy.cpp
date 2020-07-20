@@ -11,10 +11,11 @@ schoolboy::~schoolboy()
 
 HRESULT schoolboy::init(string imageName, float x, float y, float speed)
 {
+	_idle = IMAGEMANAGER->addFrameImage("schoolboy_idle", "images/enemys/SchoolBoy_Idle.bmp", 1224, 432, 8, 2, true, RGB(255, 0, 255));
 	_move = IMAGEMANAGER->addFrameImage("schoolboy_move", "images/enemys/SchoolBoy_Walk.bmp", 1620, 444, 12, 2, true, RGB(255, 0, 255));
-	_attack = IMAGEMANAGER->addFrameImage("schoolboy_attack", "images/enemys/SchoolBoy_ComboAttack1.bmp", 1764, 426, 7, 2, true, RGB(255, 0, 255));
-	_combo1 = IMAGEMANAGER->addFrameImage("schoolboy_combo1", "images/enemys/SchoolBoy_ComboAttack2.bmp", 2364, 444, 7, 2, true, RGB(255, 0, 255));
-	_combo2 = IMAGEMANAGER->addFrameImage("schoolboy_combo2", "images/enemys/SchoolBoy_ComboAttack3.bmp", 1863, 558, 9, 2, true, RGB(255, 0, 255));
+	_attack = IMAGEMANAGER->addFrameImage("schoolboy_attack", "images/enemys/SchoolBoy_ComboAttack1.bmp", 2352, 426, 7, 2, true, RGB(255, 0, 255));
+	_combo1 = IMAGEMANAGER->addFrameImage("schoolboy_combo1", "images/enemys/SchoolBoy_ComboAttack2.bmp", 1757, 444, 7, 2, true, RGB(255, 0, 255));
+	_combo2 = IMAGEMANAGER->addFrameImage("schoolboy_combo2", "images/enemys/SchoolBoy_ComboAttack3.bmp", 1890, 558, 9, 2, true, RGB(255, 0, 255));
 
 	_enemyImg = IMAGEMANAGER->findImage(imageName);
 	_imageName = imageName;
@@ -24,6 +25,19 @@ HRESULT schoolboy::init(string imageName, float x, float y, float speed)
 	_random = RND->getInt(3);
 
 	_direction = ENEMY_LEFT_MOVE;
+
+	// ============================	스쿨보이 아이들 ============================ //
+	_enemyMotion_L_IDLE = new animation;
+	_enemyMotion_L_IDLE->init(_idle->getWidth(), _idle->getHeight(), _idle->getFrameWidth(), _idle->getFrameHeight());
+	_enemyMotion_L_IDLE->setPlayFrame(0, 7, false, true);
+	_enemyMotion_L_IDLE->setFPS(1);
+	_enemyMotion_L_IDLE->start();
+	_enemyMotion_R_IDLE = new animation;
+	_enemyMotion_R_IDLE->init(_idle->getWidth(), _idle->getHeight(), _idle->getFrameWidth(), _idle->getFrameHeight());
+	_enemyMotion_R_IDLE->setPlayFrame(15, 8, false, true);
+	_enemyMotion_R_IDLE->setFPS(1);
+	_enemyMotion_R_IDLE->start();
+	// ============================	스쿨보이 아이들 ============================ //
 
 	// ============================	스쿨보이 무브 ============================ //
 	_enemyMotion_L = new animation;
@@ -92,10 +106,14 @@ void schoolboy::release()
 
 void schoolboy::render()
 {
-	_enemyImg->aniRender(getMemDC(), _rc.left, _rc.top, _enemyMotion);
-
 	switch (_direction)
 	{
+	case ENEMY_LEFT_IDLE:
+		_enemyImg = _idle;
+		break;
+	case ENEMY_RIGHT_IDLE:
+		_enemyImg = _idle;
+		break;
 	case ENEMY_LEFT_MOVE:
 		_enemyImg = _move;
 		break;
@@ -121,6 +139,7 @@ void schoolboy::render()
 		_enemyImg = _combo2;
 		break;
 	}
+	ZORDER->pushObject(getMemDC(), _enemyImg, _enemyMotion, 1, _rc.getCenterX(), 0, _rc.bottom);
 }
 
 
