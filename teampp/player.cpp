@@ -632,7 +632,7 @@ void player::frameDraw()
 		{
 			_jumpAttackImage->setFrameX(_jumpAttackImage->getFrameX() - 1);
 			_attackRc.set(0, 0, 50, 100);
-			_attackRc.setCenterPos(_rc.left, _rc.getCenterY());
+			_attackRc.setCenterPos(_rc.left, _rc.getCenterY() + 40);
 			if (_jumpAttackImage->getFrameX() <= 0)
 			{
 				_jumpAttackImage->setFrameX(_jumpAttackImage->getMaxFrameX());
@@ -651,7 +651,7 @@ void player::frameDraw()
 		{
 			_jumpAttackImage->setFrameX(_jumpAttackImage->getFrameX() + 1);
 			_attackRc.set(0, 0, 50, 100);
-			_attackRc.setCenterPos(_rc.right + 15, _rc.getCenterY());
+			_attackRc.setCenterPos(_rc.right + 20, _rc.getCenterY() + 40);
 			if (_jumpAttackImage->getFrameX() >= _jumpAttackImage->getMaxFrameX())
 			{
 				_jumpAttackImage->setFrameX(0);
@@ -671,7 +671,7 @@ void player::frameDraw()
 		{
 			_dashAttackImage->setFrameX(_dashAttackImage->getFrameX() - 1);
 			_attackRc.set(0, 0, 100, 50);
-			_attackRc.setCenterPos(_rc.left, _rc.getCenterY());
+			_attackRc.setCenterPos(_rc.left - 10, _rc.getCenterY() + 10);
 			if (_dashAttackImage->getFrameX() <= 0)
 			{
 				_dashAttackImage->setFrameX(_dashAttackImage->getMaxFrameX());
@@ -689,7 +689,7 @@ void player::frameDraw()
 		{
 			_dashAttackImage->setFrameX(_dashAttackImage->getFrameX() + 1);
 			_attackRc.set(0, 0, 100, 50);
-			_attackRc.setCenterPos(_rc.right + 35, _rc.getCenterY());
+			_attackRc.setCenterPos(_rc.right + 30, _rc.getCenterY() + 10);
 			if (_dashAttackImage->getFrameX() >= _dashAttackImage->getMaxFrameX())
 			{
 				_dashAttackImage->setFrameX(0);
