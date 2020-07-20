@@ -57,7 +57,7 @@ void enemyManager::setEnemyCheerMove()
 	float x[] = {500};
 	float y[] = {350};
 
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		enemy* _tempCheer = new cheerleader;
 		_tempCheer->init("cheer_move", x[i], y[i], 2.3f);
