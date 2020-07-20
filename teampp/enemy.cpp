@@ -128,7 +128,9 @@ void enemy::update()
 
 void enemy::render()
 {
-	_enemyImg->aniRender(getMemDC(),_rc.left,_rc.top,_enemyMotion);
+	//_enemyImg->aniRender(getMemDC(),_rc.left,_rc.top,_enemyMotion);
+	//ZORDER->pushObject(getMemDC(), _enemyImg, _enemyMotion, 1, _rc.getCenterX(), 0, _rc.bottom);
+
 }
 
 void enemy::setPlayerPos(float x, float y)
