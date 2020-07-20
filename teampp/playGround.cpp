@@ -19,14 +19,14 @@ HRESULT playGround::init()
 	_player = new player;
 	_player->init();
 
-	_enemyManger = new enemyManager;
+	_enemyManager = new enemyManager;
 
 
 	_collisionManager = new collisionManager;
 	_collisionManager->init();
 
 	_collisionManager->setPlayerMemoryAddressLink(_player);
-	_collisionManager->setEnemyManagerMemoryAddressLink(_enemyManger);
+	_collisionManager->setEnemyManagerMemoryAddressLink(_enemyManager);
 
 	_stageManger = new stageManager;
 	_stageManger->init();
