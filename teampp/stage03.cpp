@@ -11,6 +11,12 @@ stage03::~stage03()
 
 HRESULT stage03::init()
 {
+	// 스테이지 3 픽셀 배경 선언
+
+	_Stage3PixelBackGround._pixelCollision = IMAGEMANAGER->addImage("stage3_pixel", "images/stage/stage03_pixel.bmp", 2769, 1280, false, NULL);
+
+	//==================================================================================================================================================//
+
 	//스테이지 3 배경 선언
 
 	IMAGEMANAGER->addImage("Test_Stage3", "images/stage/stage03.bmp", 2769, 1280, false, RGB(0, 0, 0));

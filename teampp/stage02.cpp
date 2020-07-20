@@ -11,6 +11,13 @@ stage02::~stage02()
 
 HRESULT stage02::init()
 {
+
+	// 스테이지 2 픽셀 배경 선언
+
+	_Stage2PixelBackGround._pixelCollision = IMAGEMANAGER->addImage("stage2_pixel", "images/stage/stage02_pixel.bmp", 2112, 864, false, NULL);
+
+	//==================================================================================================================================================//
+
 	//스테이지 2 배경 선언
 
 	IMAGEMANAGER->addImage("Test_Stage2", "images/stage/stage02.bmp", 2112, 864, false, RGB(0, 0, 0));

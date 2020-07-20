@@ -41,15 +41,15 @@ HRESULT playGround::init()
 	_enemyManager->setEnemySchoolBoyMove();
 
 
-	_stageManger = new stageManager;
-	_stageManger->init();
+	_stageManger2 = new stageManager2;
+	_stageManger2->init();
 	// ==========================================
 	// ## 카메라 중점 초기화 ##
 	// ==========================================
 	// 플레이어 센터나 테스트용 렉트(MYRECT) 만들어서 사용하세요
 	CAMERA->setPosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
-	CAMERA->setBackWidth(_stageManger->getPixelImage()->getWidth());
-	CAMERA->setBackHeight(_stageManger->getPixelImage()->getHeight());
+	CAMERA->setBackWidth(_stageManger2->getPixelImage()->getWidth());
+	CAMERA->setBackHeight(_stageManger2->getPixelImage()->getHeight());
 
 	return S_OK;
 }
@@ -57,7 +57,7 @@ HRESULT playGround::init()
 //메모리 해제
 void playGround::release()
 {
-	_stageManger->release();
+	_stageManger2->release();
 	_player->release();
 	_enemyManager->release();
 }
@@ -69,7 +69,7 @@ void playGround::update()
 	_enemyManager->update();
 	_player->update();
 	_collisionManager->update();
-	_stageManger->update();
+	_stageManger2->update();
 	_uiManager->update();
 
 
@@ -89,7 +89,7 @@ void playGround::render()
 {	
 	PatBlt(getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
 	//=================================================
-	_stageManger->render();
+	_stageManger2->render();
 	_player->render();
 	_enemyManager->render();
 	_uiManager->render();
