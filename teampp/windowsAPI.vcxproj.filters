@@ -186,6 +186,9 @@
     <ClInclude Include="collisionManager.h">
       <Filter>playGround\nabin</Filter>
     </ClInclude>
+    <ClInclude Include="schoolboy.h">
+      <Filter>playGround\taeyong</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -286,6 +289,9 @@
     </ClCompile>
     <ClCompile Include="collisionManager.cpp">
       <Filter>playGround\nabin</Filter>
+    </ClCompile>
+    <ClCompile Include="schoolboy.cpp">
+      <Filter>playGround\taeyong</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

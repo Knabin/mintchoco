@@ -9,6 +9,7 @@ HRESULT stageManager::init()
 	_stage3 = new stage3;
 	_stage1->init();
 	_stageSelect = STAGE1;
+	_currentPixelCollision = _stage1->getPixel();
 	return S_OK;
 }
 

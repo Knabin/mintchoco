@@ -18,6 +18,7 @@ HRESULT player::init()
 	_runImage = IMAGEMANAGER->addFrameImage("playerRun", "images/player/Kyoko_Run.bmp", 2736, 384, 16, 2, true, RGB(255, 0, 255));//플레이어 달리는 프레임 이미지
 	_jumpImage = IMAGEMANAGER->addFrameImage("playerJump", "images/player/Kyoko_Jump.bmp", 405, 414, 3, 2, true, RGB(255, 0, 255));//플레이어 점프 프레임 이미지
 	_comboAttackImage1 = IMAGEMANAGER->addFrameImage("playerComboAttack1", "images/player/Kyoko_ComboAttack1.bmp", 1548, 390, 6, 2, true, RGB(255, 0, 255));//플레이어 공격 프레임 이미지
+	_strongAttackImage = IMAGEMANAGER->addFrameImage("playerStrongAttack", "images/player/Kyoko_StrongAttack.bmp", 4001, 861, 13, 2, true, RGB(255, 0, 255));//플레이어 강공격 프레임 이미지
 	_jumpAttackImage = IMAGEMANAGER->addFrameImage("plyaerJumpAttack", "images/player/Kyoko_Jump_Attack.bmp", 1560, 432, 10, 2, true, RGB(255, 0, 255));//플레이어 점프 공격 이미지
 	_dashAttackImage = IMAGEMANAGER->addFrameImage("playerDashAttack", "images/player/Kyoko_DashAttack.bmp", 2700, 600, 8, 2, true, RGB(255, 0, 255));//플레이어 대쉬 공격 이미지
 	_shadow = IMAGEMANAGER->addImage("shadow", "images/player/Kyoko_Shadow.bmp", 128, 38, true, RGB(255, 0, 255));//그림자 이미지
@@ -54,6 +55,10 @@ HRESULT player::init()
 	_dashAttackImage->setFrameX(0);
 	_dashAttackImage->setFrameY(0);
 	//플레이어 대쉬 공격 이미지의 현재 프레임 초기화
+
+	_strongAttackImage->setFrameX(0);
+	_strongAttackImage->setFrameY(0);
+	//플레이어 강공격 이미지의 현재 프레임 초기화
 
 	_jump = new jump;
 	_jump->init();
@@ -150,6 +155,12 @@ void player::render()
 	case PLAYERDIRECTION_LEFT_DASH_ATTACK:
 		ZORDER->pushObject(getMemDC(), _dashAttackImage, _dashAttackImage->getFrameX(), _dashAttackImage->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
 		break;
+	case PLAYERDIRECTION_RIGHT_STRONG_ATTACK:
+		ZORDER->pushObject(getMemDC(), _strongAttackImage, _strongAttackImage->getFrameX(), _strongAttackImage->getFrameY(), 0, _rc.left - 110 - FRAMEPOSX, _jump->getJumpPower(), _rc.top - 120);
+		break;
+	case PLAYERDIRECTION_LEFT_STRONG_ATTACK:
+		ZORDER->pushObject(getMemDC(), _strongAttackImage, _strongAttackImage->getFrameX(), _strongAttackImage->getFrameY(), 0, _rc.left - 110 - FRAMEPOSX, _jump->getJumpPower(), _rc.top - 120);
+		break;
 	}
 }
 
@@ -159,7 +170,7 @@ void player::release()
 
 void player::attack()
 {
-	if (KEYMANAGER->isOnceKeyDown('A') && !keyJump())//주먹공격
+	if (KEYMANAGER->isOnceKeyDown('A') && !keyJump())//약공격
 	{
 		if (!_jumping)//점프중이 아닐때
 		{
@@ -210,6 +221,28 @@ void player::attack()
 				_jumpAttackImage->setFrameY(1);
 			}
 
+		}
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('S') && !keyJump())//강공격
+	{
+		if (!_jumping)
+		{
+			if (_playerDirection == PLAYERDIRECTION_RIGHT_STOP || _playerDirection == PLAYERDIRECTION_RIGHT_WALK)
+			{
+				_attack = true;
+				_playerDirection = PLAYERDIRECTION_RIGHT_STRONG_ATTACK;
+				_strongAttackImage->setFrameX(0);
+				_strongAttackImage->setFrameY(1);
+			}
+
+			if (_playerDirection == PLAYERDIRECTION_LEFT_STOP || _playerDirection == PLAYERDIRECTION_LEFT_WALK)
+			{
+				_attack = true;
+				_playerDirection = PLAYERDIRECTION_LEFT_STRONG_ATTACK;
+				_strongAttackImage->setFrameX(_strongAttackImage->getMaxFrameX());
+				_strongAttackImage->setFrameY(0);
+			}
 		}
 	}
 }
@@ -618,6 +651,42 @@ void player::frameDraw()
 			if (_comboAttackImage1->getFrameX() >= _comboAttackImage1->getMaxFrameX())
 			{
 				_comboAttackImage1->setFrameX(0);
+				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
+				_attack = false;
+				_attackRc.set(0, 0, 0, 0);
+			}
+			_count = 0;
+		}
+		break;
+
+	case PLAYERDIRECTION_LEFT_STRONG_ATTACK:
+		_count++;
+		if (_count % 5 == 0)
+		{
+			_strongAttackImage->setFrameX(_strongAttackImage->getFrameX() - 1);
+			_attackRc.set(0, 0, 100, 200);
+			_attackRc.setCenterPos(_rc.left, _rc.getCenterY());
+			if (_strongAttackImage->getFrameX() <= 0)
+			{
+				_strongAttackImage->setFrameX(_strongAttackImage->getMaxFrameX());
+				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
+				_attack = false;
+				_attackRc.set(0, 0, 0, 0);
+			}
+			_count = 0;
+		}
+		break;
+
+	case PLAYERDIRECTION_RIGHT_STRONG_ATTACK:
+		_count++;
+		if (_count % 5 == 0)
+		{
+			_strongAttackImage->setFrameX(_strongAttackImage->getFrameX() + 1);
+			_attackRc.set(0, 0, 100, 200);
+			_attackRc.setCenterPos(_rc.right, _rc.getCenterY());
+			if (_strongAttackImage->getFrameX() >= _strongAttackImage->getMaxFrameX())
+			{
+				_strongAttackImage->setFrameX(0);
 				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
 				_attack = false;
 				_attackRc.set(0, 0, 0, 0);
