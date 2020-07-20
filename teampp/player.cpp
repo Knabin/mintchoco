@@ -114,46 +114,46 @@ void player::render()
 	switch (_playerDirection)//플레이어의 프레임 상태값에 따른 렌더
 	{
 	case PLAYERDIRECTION_RIGHT_STOP:
-		ZORDER->pushObject(getMemDC(), _idleImage, _idleImage->getFrameX(), _idleImage->getFrameY(), 0, _rc.left - FRAMEPOSX, _jump->getJumpPower(), _rc.top - 25);
+		ZORDER->pushObject(getMemDC(), _idleImage, _idleImage->getFrameX(), _idleImage->getFrameY(), 0, _rc.getCenterX() , _jump->getJumpPower(), _rc.bottom);
 		break;
 	case PLAYERDIRECTION_LEFT_STOP:
-		ZORDER->pushObject(getMemDC(), _idleImage, _idleImage->getFrameX(), _idleImage->getFrameY(), 0, _rc.left - FRAMEPOSX, _jump->getJumpPower(), _rc.top - 25);
+		ZORDER->pushObject(getMemDC(), _idleImage, _idleImage->getFrameX(), _idleImage->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
 		break;
 	case PLAYERDIRECTION_RIGHT_WALK:
-		ZORDER->pushObject(getMemDC(), _walkImage, _walkImage->getFrameX(), _walkImage->getFrameY(), 0, _rc.left - FRAMEPOSX, _jump->getJumpPower(), _rc.top );
+		ZORDER->pushObject(getMemDC(), _walkImage, _walkImage->getFrameX(), _walkImage->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
 		break;
 	case PLAYERDIRECTION_LEFT_WALK:
-		ZORDER->pushObject(getMemDC(), _walkImage, _walkImage->getFrameX(), _walkImage->getFrameY(), 0, _rc.left - FRAMEPOSX, _jump->getJumpPower(), _rc.top);
+		ZORDER->pushObject(getMemDC(), _walkImage, _walkImage->getFrameX(), _walkImage->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
 		break;
 	case PLAYERDIRECTION_RIGHT_MOVE:
-		ZORDER->pushObject(getMemDC(), _runImage, _runImage->getFrameX(), _runImage->getFrameY(), 0, _rc.left - 30 - FRAMEPOSX, _jump->getJumpPower(), _rc.top);
+		ZORDER->pushObject(getMemDC(), _runImage, _runImage->getFrameX(), _runImage->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
 		break;
 	case PLAYERDIRECTION_LEFT_MOVE:
-		ZORDER->pushObject(getMemDC(), _runImage, _runImage->getFrameX(), _runImage->getFrameY(), 0, _rc.left - FRAMEPOSX, _jump->getJumpPower(), _rc.top);
+		ZORDER->pushObject(getMemDC(), _runImage, _runImage->getFrameX(), _runImage->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
 		break;
 	case PLAYERDIRECTION_RIGHT_COMBO_ATTACK1:
-		ZORDER->pushObject(getMemDC(), _comboAttackImage1, _comboAttackImage1->getFrameX(), _comboAttackImage1->getFrameY(), 0, _rc.left - 70 - FRAMEPOSX, _jump->getJumpPower(), _rc.top + 5);
+		ZORDER->pushObject(getMemDC(), _comboAttackImage1, _comboAttackImage1->getFrameX(), _comboAttackImage1->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
 		break;
 	case PLAYERDIRECTION_LEFT_COBMO_ATTACK1:
-		ZORDER->pushObject(getMemDC(), _comboAttackImage1, _comboAttackImage1->getFrameX(), _comboAttackImage1->getFrameY(), 0, _rc.left - 70 - FRAMEPOSX, _jump->getJumpPower(), _rc.top + 5);
+		ZORDER->pushObject(getMemDC(), _comboAttackImage1, _comboAttackImage1->getFrameX(), _comboAttackImage1->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
 		break;
 	case PLAYERDIRECTION_RIGHT_JUMP:
-		ZORDER->pushObject(getMemDC(), _jumpImage, _jumpImage->getFrameX(), _jumpImage->getFrameY(), 0, _rc.left - FRAMEPOSX, _jump->getJumpPower(), _rc.top);
+		ZORDER->pushObject(getMemDC(), _jumpImage, _jumpImage->getFrameX(), _jumpImage->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
 		break;
 	case PLAYERDIRECTION_LEFT_JUMP:
-		ZORDER->pushObject(getMemDC(), _jumpImage, _jumpImage->getFrameX(), _jumpImage->getFrameY(), 0, _rc.left - FRAMEPOSX, _jump->getJumpPower(), _rc.top);
+		ZORDER->pushObject(getMemDC(), _jumpImage, _jumpImage->getFrameX(), _jumpImage->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
 		break;
 	case PLAYERDIRECTION_RIGHT_JUMP_ATTACK:
-		ZORDER->pushObject(getMemDC(), _jumpAttackImage, _jumpAttackImage->getFrameX(), _jumpAttackImage->getFrameY(), 0, _rc.left - FRAMEPOSX, _jump->getJumpPower(), _rc.top);
+		ZORDER->pushObject(getMemDC(), _jumpAttackImage, _jumpAttackImage->getFrameX(), _jumpAttackImage->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
 		break;
 	case PLAYERDIRECTION_LEFT_JUMP_ATTACK:
-		ZORDER->pushObject(getMemDC(), _jumpAttackImage, _jumpAttackImage->getFrameX(), _jumpAttackImage->getFrameY(), 0, _rc.left - FRAMEPOSX, _jump->getJumpPower(), _rc.top);
+		ZORDER->pushObject(getMemDC(), _jumpAttackImage, _jumpAttackImage->getFrameX(), _jumpAttackImage->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
 		break;
 	case PLAYERDIRECTION_RIGHT_DASH_ATTACK:
-		ZORDER->pushObject(getMemDC(), _dashAttackImage, _dashAttackImage->getFrameX(), _dashAttackImage->getFrameY(), 0, _rc.left - 90 - FRAMEPOSX, _jump->getJumpPower(), _rc.top - 50);
+		ZORDER->pushObject(getMemDC(), _dashAttackImage, _dashAttackImage->getFrameX(), _dashAttackImage->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
 		break;
 	case PLAYERDIRECTION_LEFT_DASH_ATTACK:
-		ZORDER->pushObject(getMemDC(), _dashAttackImage, _dashAttackImage->getFrameX(), _dashAttackImage->getFrameY(), 0, _rc.left - 110 - FRAMEPOSX, _jump->getJumpPower(), _rc.top - 50);
+		ZORDER->pushObject(getMemDC(), _dashAttackImage, _dashAttackImage->getFrameX(), _dashAttackImage->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
 		break;
 	case PLAYERDIRECTION_RIGHT_STRONG_ATTACK:
 		ZORDER->pushObject(getMemDC(), _strongAttackImage, _strongAttackImage->getFrameX(), _strongAttackImage->getFrameY(), 0, _rc.left - 110 - FRAMEPOSX, _jump->getJumpPower(), _rc.top - 120);
