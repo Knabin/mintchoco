@@ -54,6 +54,8 @@ private:
 	image* _runImage;//플레이어 달리는 이미지
 	image* _jumpImage;//플레이어 점프 이미지
 	image* _comboAttackImage1;//플레이어 공격 이미지
+	image* _comboAttackImage2;//플레이어 공격 이미지2
+	image* _comboAttackImage3;//플레이어 공격 이미지3
 	image* _strongAttackImage;//플레이어 강공격 이미지
 	image* _ultimateImage;//플레이어 궁극기 이미지
 	image* _ultimateAfterImage[ULTIMATECOUNT];//플레이어 궁극기 잔상 이미지
@@ -82,6 +84,7 @@ private:
 	bool _jumping;//점프함수를 실행한 이후 렉트값을 계속 변경시켜주기 위한 값
 	bool _attack;//공격이 실행중인지 아닌지 여부확인용 값
 	bool _ultimate;//궁극기
+	bool _frameAttackCollision;//콤보공격 프레임에 사용할 변수
 
 public:
 	player();
@@ -147,9 +150,11 @@ public:
 		return false;
 	}
 
+	bool getFrameAttackCollision() { return _frameAttackCollision; }
+
 	float getPlayerX() { return _x; }
 	float getPlayerY() { return _y; }
 	MYRECT getPlayerRect() { return _rc; }
-
+	MYRECT getAttackRc() { return _attackRc; }
 };
 
