@@ -19,26 +19,23 @@ HRESULT playGround::init()
 	_player = new player;
 	_player->init();
 
-	_enemyManger = new enemyManager;
-
+	_enemyManager = new enemyManager;
+	_enemyManager->init();
 
 	_collisionManager = new collisionManager;
 	_collisionManager->init();
 
 	_collisionManager->setPlayerMemoryAddressLink(_player);
-	_collisionManager->setEnemyManagerMemoryAddressLink(_enemyManger);
+	_collisionManager->setEnemyManagerMemoryAddressLink(_enemyManager);
 
-
-
-
-
+	_enemyManager->setEnemyCheerMove();
 	_stageManger = new stageManager;
 	_stageManger->init();
 	// ==========================================
 	// ## 카메라 중점 초기화 ##
 	// ==========================================
 	// 플레이어 센터나 테스트용 렉트(MYRECT) 만들어서 사용하세요
-	CAMERA->setPosition(_player->getPlayerX(), _player->getPlayerY());
+	CAMERA->setPosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
 	/*
 	CAMERA->setBackWidth(배경 가로 크기);
 	CAMERA->setBackHeight(배경 세로 크기);*/
@@ -50,6 +47,7 @@ HRESULT playGround::init()
 void playGround::release()
 {
 	_stageManger->release();
+	_enemyManager->release();
 }
 
 //연산
@@ -61,6 +59,11 @@ void playGround::update()
 	_collisionManager->update();
 	_stageManger->update();
 	_player->update();
+	_enemyManager->update();
+
+	_enemyManager->setPlayerPos(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+
+
 	// ==========================================
 	// ## 카메라 중점 초기화 ##
 	// ==========================================
@@ -78,7 +81,7 @@ void playGround::render()
 	//=================================================
 	_stageManger->render();
 	_player->render();
-
+	_enemyManager->render();
 	ZORDER->render();
 	
 	//=============================================

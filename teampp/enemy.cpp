@@ -13,7 +13,6 @@ HRESULT enemy::init(string imageName, float x, float y, float speed)
 {
 	_eA = IMAGEMANAGER->addFrameImage("attack", "images/CheerLeader_ComboAttack3.bmp", 1827, 426, 7, 2, true, RGB(255, 0, 255));
 	_eW = IMAGEMANAGER->addFrameImage("move", "images/CheerLeader_Walk.bmp", 2736, 438, 12, 2, true, RGB(255, 0, 255));
-	_ehit = IMAGEMANAGER->addFrameImage("hit", "images/hit.bmp", 384, 192, 4, 2, true, RGB(255, 0, 255));
 
 	_enemyImg = IMAGEMANAGER->findImage(imageName);
 	_imageName = imageName;
@@ -45,17 +44,6 @@ HRESULT enemy::init(string imageName, float x, float y, float speed)
 	_enemyMotionR_A->setFPS(1);
 	_enemyMotionR_A->start();
 
-	_enemyMotionL_H = new animation;
-	_enemyMotionL_H->init(_ehit->getWidth(), _ehit->getHeight(), _ehit->getFrameWidth(), _ehit->getFrameHeight());
-	_enemyMotionL_H->setPlayFrame(0, 3, false, true);
-	_enemyMotionL_H->setFPS(1);
-	_enemyMotionL_H->start();
-
-	_enemyMotionL_H = new animation;
-	_enemyMotionL_H->init(_ehit->getWidth(), _ehit->getHeight(), _ehit->getFrameWidth(), _ehit->getFrameHeight());
-	_enemyMotionL_H->setPlayFrame(7, 4, false, true);
-	_enemyMotionL_H->setFPS(1);
-	_enemyMotionL_H->start();
 
 	_rc.set(0, 0, _enemyImg->getFrameWidth(), _enemyImg->getFrameHeight());
 	_rc.setCenterPos(_x, _y);

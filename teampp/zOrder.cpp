@@ -184,7 +184,7 @@ void zOrder::pushObject(HDC hdc, const char * imageName, animation * ani, int ty
 
 void zOrder::sortVector(int start, int end)
 {
-	cout << start << ", " << end << endl;
+	//cout << start << ", " << end << endl;
 	if (start >= end) return;
 	int pivot = _vObject[(start+end) / 2].z;
 	int left = start;

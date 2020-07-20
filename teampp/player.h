@@ -30,6 +30,9 @@ enum PLAYERDIRECTION
 	PLAYERDIRECTION_RIGHT_COMBO_ATTACK3,
 	PLAYERDIRECTION_LEFT_COMBO_ATTACK3,
 
+	PLAYERDIRECTION_RIGHT_STRONG_ATTACK,
+	PLAYERDIRECTION_LEFT_STRONG_ATTACK,
+
 	PLAYERDIRECTION_RIGHT_JUMP_ATTACK,
 	PLAYERDIRECTION_LEFT_JUMP_ATTACK,
 
@@ -47,6 +50,7 @@ private:
 	image* _runImage;//플레이어 달리는 이미지
 	image* _jumpImage;//플레이어 점프 이미지
 	image* _comboAttackImage1;//플레이어 공격 이미지
+	image* _strongAttackImage;//플레이어 강공격 이미지
 	image* _shadow;//그림자 이미지
 	image* _jumpAttackImage;//플레이어 점프 공격 이미지
 	image* _dashAttackImage;//대쉬 공격 이미지
