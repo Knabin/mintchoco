@@ -186,6 +186,36 @@
     <ClInclude Include="collisionManager.h">
       <Filter>playGround\nabin</Filter>
     </ClInclude>
+    <ClInclude Include="schoolboy.h">
+      <Filter>playGround\taeyong</Filter>
+    </ClInclude>
+    <ClInclude Include="UiManager.h">
+      <Filter>playGround\heasyeong</Filter>
+    </ClInclude>
+    <ClInclude Include="money.h">
+      <Filter>playGround\heasyeong</Filter>
+    </ClInclude>
+    <ClInclude Include="itemManager.h">
+      <Filter>playGround\heasyeong</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>playGround\heasyeong</Filter>
+    </ClInclude>
+    <ClInclude Include="scene.h">
+      <Filter>playGround\heasyeong</Filter>
+    </ClInclude>
+    <ClInclude Include="stage01.h">
+      <Filter>playGround\heasyeong</Filter>
+    </ClInclude>
+    <ClInclude Include="stage02.h">
+      <Filter>playGround\heasyeong</Filter>
+    </ClInclude>
+    <ClInclude Include="stage03.h">
+      <Filter>playGround\heasyeong</Filter>
+    </ClInclude>
+    <ClInclude Include="stageManager2.h">
+      <Filter>playGround\heasyeong</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -286,6 +316,36 @@
     </ClCompile>
     <ClCompile Include="collisionManager.cpp">
       <Filter>playGround\nabin</Filter>
+    </ClCompile>
+    <ClCompile Include="schoolboy.cpp">
+      <Filter>playGround\taeyong</Filter>
+    </ClCompile>
+    <ClCompile Include="UiManager.cpp">
+      <Filter>playGround\heasyeong</Filter>
+    </ClCompile>
+    <ClCompile Include="money.cpp">
+      <Filter>playGround\heasyeong</Filter>
+    </ClCompile>
+    <ClCompile Include="itemManager.cpp">
+      <Filter>playGround\heasyeong</Filter>
+    </ClCompile>
+    <ClCompile Include="item.cpp">
+      <Filter>playGround\heasyeong</Filter>
+    </ClCompile>
+    <ClCompile Include="scene.cpp">
+      <Filter>playGround\heasyeong</Filter>
+    </ClCompile>
+    <ClCompile Include="stage01.cpp">
+      <Filter>playGround\heasyeong</Filter>
+    </ClCompile>
+    <ClCompile Include="stage02.cpp">
+      <Filter>playGround\heasyeong</Filter>
+    </ClCompile>
+    <ClCompile Include="stage03.cpp">
+      <Filter>playGround\heasyeong</Filter>
+    </ClCompile>
+    <ClCompile Include="stageManager2.cpp">
+      <Filter>playGround\heasyeong</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

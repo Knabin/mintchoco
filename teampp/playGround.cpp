@@ -16,32 +16,40 @@ HRESULT playGround::init()
 {
 	gameNode::init(true);
 	
+
 	_player = new player;
 	_player->init();
 
 	_enemyManager = new enemyManager;
-
+	_enemyManager->init();
 
 	_collisionManager = new collisionManager;
 	_collisionManager->init();
 
+	_uiManager = new UiManager;
+	_uiManager->init();
+
+	//_itemManager = new itemManager;
+	//_itemManager->init();
+
+
 	_collisionManager->setPlayerMemoryAddressLink(_player);
 	_collisionManager->setEnemyManagerMemoryAddressLink(_enemyManager);
 
+
+	_enemyManager->setEnemyCheerMove();
+	_enemyManager->setEnemySchoolBoyMove();
+
+
 	_stageManger = new stageManager;
 	_stageManger->init();
-
-	IMAGEMANAGER->addImage("테스트", "images/background/Stage1_1_Pillar.bmp", 207, 864, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("테스트22", "images/background/Stage1_1_Pillar_alpha.bmp", 207, 843, true, RGB(255, 0, 255));
-
 	// ==========================================
 	// ## 카메라 중점 초기화 ##
 	// ==========================================
 	// 플레이어 센터나 테스트용 렉트(MYRECT) 만들어서 사용하세요
-	CAMERA->setPosition(_player->getPlayerX(), _player->getPlayerY());
-	/*
-	CAMERA->setBackWidth(배경 가로 크기);
-	CAMERA->setBackHeight(배경 세로 크기);*/
+	CAMERA->setPosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+	CAMERA->setBackWidth(_stageManger->getPixelImage()->getWidth());
+	CAMERA->setBackHeight(_stageManger->getPixelImage()->getHeight());
 
 	return S_OK;
 }
@@ -50,25 +58,30 @@ HRESULT playGround::init()
 void playGround::release()
 {
 	_stageManger->release();
+	_player->release();
+	_enemyManager->release();
 }
 
 //연산
 void playGround::update()
 {
 	gameNode::update();
-
-	
+	_enemyManager->update();
+	_player->update();
 	_collisionManager->update();
 	_stageManger->update();
-	_player->update();
+	_uiManager->update();
+
+
+	_enemyManager->setPlayerPos(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
 	// ==========================================
 	// ## 카메라 중점 초기화 ##
 	// ==========================================
 	CAMERA->shakeStart();
 	// 플레이어 센터나 테스트용 렉트(MYRECT) 만들어서 사용하세요
-	CAMERA->setPosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+	//CAMERA->setPosition(WINSIZEX/2, WINSIZEY/2);
 	// 따라오는 카메라
-	//CAMERA->changePosition(_rc.getCenterX(), _rc.getCenterY());
+	CAMERA->changePosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
 }
 
 //그리기 전용
@@ -77,14 +90,12 @@ void playGround::render()
 	PatBlt(getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
 	//=================================================
 	_stageManger->render();
-	//IMAGEMANAGER->findImage("테스트")->render(getMemDC(), 500, 0);			=> 스테이지에서
-	
 	_player->render();
-
+	_enemyManager->render();
+	_uiManager->render();
+	//_itemManager->render();
 	ZORDER->render();
 
-	IMAGEMANAGER->findImage("테스트22")->alphaRender(getMemDC(), 500, 0, 150);
-	
 	//=============================================
 	_backBuffer->render(getHDC(), 0, CAMERA->getBlackSize() * 0.5,
 		CAMERA->getLeft(), CAMERA->getTop() + CAMERA->getShakeNumber(),
