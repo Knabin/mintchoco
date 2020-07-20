@@ -93,12 +93,13 @@ void playGround::render()
 	_stageManger2->render();
 	_player->render();
 	_enemyManager->render();
-	_uiManager->render();
 	//_itemManager->render();
+	
 	ZORDER->render();
-
+	
 	//=============================================
 	_backBuffer->render(getHDC(), 0, CAMERA->getBlackSize() * 0.5,
 		CAMERA->getLeft(), CAMERA->getTop() + CAMERA->getShakeNumber(),
 		CAMERA->getWidth(), CAMERA->getHeight());
+	_uiManager->render(getHDC());
 }
