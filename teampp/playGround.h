@@ -6,6 +6,8 @@
 #include "collisionManager.h"
 #include "player.h"
 #include "enemyManager.h"
+#include "UiManager.h"
+#include "itemManager.h"
 
 class playGround : public gameNode
 {
@@ -14,6 +16,8 @@ private:
 	player* _player;
 	enemyManager* _enemyManager;
 	collisionManager* _collisionManager;
+	UiManager* _uiManager;
+	itemManager* _itemManager;
 
 	image* _test;
 	

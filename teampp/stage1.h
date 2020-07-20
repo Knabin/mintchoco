@@ -17,3 +17,4 @@ public:
 	image* getPixel() { return _pixelCollision; }
 };
 
+
