@@ -20,6 +20,8 @@ HRESULT stageManager2::init()
 	_Stage3 = new stage03;
 	_Stage3->init();
 
+	_currentPixelCollision = _Stage1->getPixel();
+
 	_NowStage = S1;
 	_NowStage1 = true;
 	_NowStage2 = false;
@@ -30,6 +32,15 @@ HRESULT stageManager2::init()
 
 void stageManager2::release()
 {
+	_Stage1->release();
+	_Stage2->release();
+	_Stage3->release();
+
+	SAFE_DELETE(_Stage1);
+	SAFE_DELETE(_Stage2);
+	SAFE_DELETE(_Stage3);
+
+	ReleaseDC(_hWnd, getMemDC());
 }
 
 void stageManager2::update()
@@ -45,21 +56,23 @@ void stageManager2::NowStage()
 {
 	switch (_NowStage)
 	{
-	case S1:
-	{
-		_Stage1->render();
-	}
-	break;
-	case S2:
-	{
-		_Stage2->render();
-	}
-	break;
-	case S3:
-	{
-		_Stage3->render();
-	}
-	break;
+		case S1:
+		{
+			_Stage1->render();
+		}
+		break;
+
+		case S2:
+		{
+			_Stage2->render();
+		}
+		break;
+
+		case S3:
+		{
+			_Stage3->render();
+		}
+		break;
 	}
 }
 
@@ -69,6 +82,7 @@ void stageManager2::Stage1Move()
 	_NowStage1 = true;
 	_NowStage2 = false;
 	_NowStage3 = false;
+	_currentPixelCollision = _Stage1->getPixel();
 }
 
 void stageManager2::Stage2Move()
@@ -77,6 +91,7 @@ void stageManager2::Stage2Move()
 	_NowStage1 = false;
 	_NowStage2 = true;
 	_NowStage3 = false;
+	_currentPixelCollision = _Stage2->getPixel();
 }
 
 void stageManager2::Stage3Move()
@@ -85,4 +100,5 @@ void stageManager2::Stage3Move()
 	_NowStage1 = false;
 	_NowStage2 = false;
 	_NowStage3 = true;
+	_currentPixelCollision = _Stage3->getPixel();
 }

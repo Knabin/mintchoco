@@ -4,13 +4,16 @@
 struct tagStage1
 {
 	image* _StageImage;
-	RECT _rc;
+	MYRECT _rc;
 	float _x, _y;
+
+	image* _pixelCollision;
 };
 class stage01 : public gameNode
 {
 private:
 
+	tagStage1 _Stage1PixelBackGround;   //1스테이지 픽셀 배경 화면
 	tagStage1 _Stage1BackGround;		//1스테이지 배경 화면
 	tagStage1 _Stage1RightDoor;			//1스테이지 RightDoor
 
@@ -25,5 +28,7 @@ public:
 	void update();
 	void render();
 
-	inline RECT getRect() { return _Stage1RightDoor._rc; }	//1스테이지 Door 접근자
+	image* getPixel() { return _Stage1PixelBackGround._pixelCollision; }
+
+	inline MYRECT getRect() { return _Stage1RightDoor._rc; }	//1스테이지 Door 접근자
 };

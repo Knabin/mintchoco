@@ -105,15 +105,15 @@ void UiManager::update()
 	MiniMapMove(); //미니맵 이동,상태 함수
 }
 
-void UiManager::render()
+void UiManager::render(HDC hdc)
 {
-	IMAGEMANAGER->findImage("HPbar")->render(getMemDC(), _PlayerHpBar._x - 175, _PlayerHpBar._y - 40);
+	IMAGEMANAGER->findImage("HPbar")->render(hdc, _PlayerHpBar._x - 175, _PlayerHpBar._y - 40);
 
-	IMAGEMANAGER->findImage("PlayerImage")->render(getMemDC(), _PlayerImage._x - 50, _PlayerImage._y - 62);
+	IMAGEMANAGER->findImage("PlayerImage")->render(hdc, _PlayerImage._x - 50, _PlayerImage._y - 62);
 
 	for (int i = 0; i < 29; i++)
 	{
-		IMAGEMANAGER->findImage("HPpoint")->render(getMemDC(), _PlayerHpPoint[i]._x - 11 * i, _PlayerHpPoint[i]._y);
+		IMAGEMANAGER->findImage("HPpoint")->render(hdc, _PlayerHpPoint[i]._x - 11 * i, _PlayerHpPoint[i]._y);
 	}
 
 	//IMAGEMANAGER->findImage("BossHPbar")->render(getMemDC(), _BossHpbar._x - 280, _BossHpbar._y - 42);
@@ -122,7 +122,7 @@ void UiManager::render()
 
 	//IMAGEMANAGER->findImage("BossName")->render(getMemDC(), _BossName._x, _BossName._y);
 
-	IMAGEMANAGER->findImage("MiniMap1")->render(getMemDC(), _MiniMap._x - 175, _MiniMap._y - 305);
+	IMAGEMANAGER->findImage("MiniMap1")->render(hdc, _MiniMap._x - 175, _MiniMap._y - 305);
 
 }
 

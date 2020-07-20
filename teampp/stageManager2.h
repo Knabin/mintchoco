@@ -20,6 +20,8 @@ private:
 	stage02* _Stage2;
 	stage03* _Stage3;
 
+	image* _currentPixelCollision;  //픽셀이미지
+
 	//현재 스테이지 상태 정의
 	NowStage _NowStage;
 
@@ -60,6 +62,8 @@ public:
 	stage01* getVStage1() { return _Stage1; }
 	stage02* getVStage2() { return _Stage2; }
 	stage03* getVStage3() { return _Stage3; }
+
+	image* getPixelImage() { return _currentPixelCollision; } //픽셀이미지 겟
 
 
 };

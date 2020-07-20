@@ -2,7 +2,7 @@
 #include "gameNode.h"
 #include <Vfw.h>
 #pragma comment(lib, "vfw32.lib")
-#include "stageManager.h"
+#include "stageManager2.h"
 #include "collisionManager.h"
 #include "player.h"
 #include "enemyManager.h"
@@ -12,7 +12,7 @@
 class playGround : public gameNode
 {
 private:
-	stageManager* _stageManger;
+	stageManager2* _stageManager2;
 	player* _player;
 	enemyManager* _enemyManager;
 	collisionManager* _collisionManager;
