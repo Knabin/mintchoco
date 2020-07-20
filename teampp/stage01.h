@@ -4,7 +4,7 @@
 struct tagStage1
 {
 	image* _StageImage;
-	RECT _rc;
+	MYRECT _rc;
 	float _x, _y;
 
 	image* _pixelCollision;
@@ -30,5 +30,5 @@ public:
 
 	image* getPixel() { return _Stage1PixelBackGround._pixelCollision; }
 
-	inline RECT getRect() { return _Stage1RightDoor._rc; }	//1스테이지 Door 접근자
+	inline MYRECT getRect() { return _Stage1RightDoor._rc; }	//1스테이지 Door 접근자
 };

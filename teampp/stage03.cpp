@@ -31,7 +31,7 @@ HRESULT stage03::init()
 	_Stage3LeftDoor._x = 100;
 	_Stage3LeftDoor._y = WINSIZEY / 2;
 
-	_Stage3LeftDoor._rc = RectMakeCenter(_Stage3LeftDoor._x, _Stage3LeftDoor._y, _Stage3LeftDoor._StageImage->getWidth(), _Stage3LeftDoor._StageImage->getHeight());
+	_Stage3LeftDoor._rc.setCenterPos(_Stage3LeftDoor._x, _Stage3LeftDoor._y);
 
 	//==================================================================================================================================================//
 

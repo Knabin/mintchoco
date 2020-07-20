@@ -11,7 +11,6 @@ stage02::~stage02()
 
 HRESULT stage02::init()
 {
-
 	// 스테이지 2 픽셀 배경 선언
 
 	_Stage2PixelBackGround._pixelCollision = IMAGEMANAGER->addImage("stage2_pixel", "images/stage/stage02_pixel.bmp", 2112, 864, false, NULL);
@@ -29,10 +28,10 @@ HRESULT stage02::init()
 	_Stage2RightDoor._StageImage = IMAGEMANAGER->addImage("Door_Stage2", "images/stage/UI_UnLocked_Door.bmp", 78, 114, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Door2_Stage2", "images/stage/UI_UnLocked_Door2.bmp", 78, 114, true, RGB(255, 0, 255));
 
-	_Stage2RightDoor._x = WINSIZEX - 100;
-	_Stage2RightDoor._y = WINSIZEY / 2;
+	_Stage2RightDoor._x = WINSIZEX + 600;
+	_Stage2RightDoor._y = WINSIZEY / 2 + 225;
 
-	_Stage2RightDoor._rc = RectMakeCenter(_Stage2RightDoor._x, _Stage2RightDoor._y, _Stage2RightDoor._StageImage->getWidth(), _Stage2RightDoor._StageImage->getHeight());
+	_Stage2RightDoor._rc.setCenterPos(_Stage2RightDoor._x, _Stage2RightDoor._y);
 
 	//==================================================================================================================================================//
 
@@ -40,10 +39,10 @@ HRESULT stage02::init()
 
 	_Stage2LeftDoor._StageImage = IMAGEMANAGER->addImage("Door_Stage2", "images/stage/UI_UnLocked_Door2.bmp", 78, 114, true, RGB(255, 0, 255));
 
-	_Stage2LeftDoor._x = 100;
-	_Stage2LeftDoor._y = WINSIZEY / 2;
+	_Stage2LeftDoor._x = 200;
+	_Stage2LeftDoor._y = WINSIZEY / 2 + 225;
 
-	_Stage2LeftDoor._rc = RectMakeCenter(_Stage2LeftDoor._x, _Stage2LeftDoor._y, _Stage2LeftDoor._StageImage->getWidth(), _Stage2LeftDoor._StageImage->getHeight());
+	_Stage2LeftDoor._rc.setCenterPos(_Stage2LeftDoor._x, _Stage2LeftDoor._y);
 
 
 	return S_OK;

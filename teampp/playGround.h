@@ -12,7 +12,7 @@
 class playGround : public gameNode
 {
 private:
-	stageManager2* _stageManger2;
+	stageManager2* _stageManager2;
 	player* _player;
 	enemyManager* _enemyManager;
 	collisionManager* _collisionManager;
