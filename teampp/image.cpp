@@ -89,10 +89,10 @@ HRESULT image::init(const char * fileName, int width, int height, BOOL trans, CO
 	_blendImage->loadType = LOAD_EMPTY;
 	_blendImage->resID = 0;
 	_blendImage->hMemDC = CreateCompatibleDC(hdc);
-	_blendImage->hBit = (HBITMAP)CreateCompatibleBitmap(hdc, WINSIZEX, WINSIZEY);
+	_blendImage->hBit = (HBITMAP)CreateCompatibleBitmap(hdc, WINSIZEX, WINSIZEY * 2);
 	_blendImage->hOBit = (HBITMAP)SelectObject(_blendImage->hMemDC, _blendImage->hBit);
 	_blendImage->width = WINSIZEX;
-	_blendImage->height = WINSIZEY;
+	_blendImage->height = WINSIZEY * 2;
 
 
 	ReleaseDC(_hWnd, hdc);
@@ -532,8 +532,3 @@ void image::aniRender(HDC hdc, int destX, int destY, animation* ani)
 {
 	render(hdc, destX, destY, ani->getFramePos().x, ani->getFramePos().y, ani->getFrameWidth(), ani->getFrameHeight());
 }
-
-
-
-
-
