@@ -75,7 +75,7 @@ void enemy::update()
 			if (_enemyMotion->isPlay() == false)	_enemyMotion_R->start();
 		}
 	}
-	else if (_x > _playerX + 150)
+	else
 	{
 		_direction = ENEMY_LEFT_MOVE;
 		_enemyMotion = _enemyMotion_L;

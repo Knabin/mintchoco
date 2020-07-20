@@ -14,7 +14,7 @@ HRESULT cheerleader::init(string imageName, float x, float y, float speed)
 	_move = IMAGEMANAGER->addFrameImage("cheer_move", "images/enemys/CheerLeader_Walk.bmp", 2736, 438, 12, 2, true, RGB(255, 0, 255));
 	_attack = IMAGEMANAGER->addFrameImage("cheer_attack", "images/enemys/CheerLeader_ComboAttack3.bmp", 1827, 426, 7, 2, true, RGB(255, 0, 255));
 	_combo1 = IMAGEMANAGER->addFrameImage("cheer_combo1", "images/enemys/CheerLeader_ComboAttack1.bmp", 1332, 468, 6, 2, true, RGB(255, 0, 255));
-	_combo2 = IMAGEMANAGER->addFrameImage("cheer_combo2", "images/enemys/CheerLeader_ComboAttack2.bmp", 540,474,3,2,true,RGB(255,0,255));
+	_combo2 = IMAGEMANAGER->addFrameImage("cheer_combo2", "images/enemys/CheerLeader_ComboAttack2.bmp", 540, 474, 3, 2, true, RGB(255, 0, 255));
 
 	_enemyImg = IMAGEMANAGER->findImage(imageName);
 	_imageName = imageName;
@@ -94,7 +94,8 @@ void cheerleader::release()
 
 void cheerleader::render()
 {
-	_enemyImg->aniRender(getMemDC(), _rc.left, _rc.top, _enemyMotion);
+	//_enemyImg->aniRender(getMemDC(), _rc.left, _rc.top, _enemyMotion);
+	ZORDER->pushObject(getMemDC(), _enemyImg, _enemyMotion, 1, _rc.getCenterX(), 0, _rc.bottom);
 
 	switch (_direction)
 	{

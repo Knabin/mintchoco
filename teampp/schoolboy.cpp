@@ -13,8 +13,8 @@ HRESULT schoolboy::init(string imageName, float x, float y, float speed)
 {
 	_move = IMAGEMANAGER->addFrameImage("schoolboy_move", "images/enemys/SchoolBoy_Walk.bmp", 1620, 444, 12, 2, true, RGB(255, 0, 255));
 	_attack = IMAGEMANAGER->addFrameImage("schoolboy_attack", "images/enemys/SchoolBoy_ComboAttack1.bmp", 1764, 426, 7, 2, true, RGB(255, 0, 255));
-	_combo1 = IMAGEMANAGER->addFrameImage("schoolboy_combo1","images/enemys/SchoolBoy_ComboAttack2.bmp",2364,444,7,2,true,RGB(255,0,255));
-	_combo2 = IMAGEMANAGER->addFrameImage("schoolboy_combo2","images/enemys/SchoolBoy_ComboAttack3.bmp",1863,558,9,2,true,RGB(255,0,255));
+	_combo1 = IMAGEMANAGER->addFrameImage("schoolboy_combo1", "images/enemys/SchoolBoy_ComboAttack2.bmp", 2364, 444, 7, 2, true, RGB(255, 0, 255));
+	_combo2 = IMAGEMANAGER->addFrameImage("schoolboy_combo2", "images/enemys/SchoolBoy_ComboAttack3.bmp", 1863, 558, 9, 2, true, RGB(255, 0, 255));
 
 	_enemyImg = IMAGEMANAGER->findImage(imageName);
 	_imageName = imageName;
