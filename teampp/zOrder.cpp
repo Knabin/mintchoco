@@ -64,17 +64,17 @@ void zOrder::render()
 		if (_vObject[i].ani != nullptr)
 		{
 			// ¾Ö´Ï ·»´õ
-			_vObject[i].image->aniRender(_vObject[i].hdc, _vObject[i].x, _vObject[i].z - _vObject[i].jumpPower, _vObject[i].ani);
+			_vObject[i].image->aniRender(_vObject[i].hdc, _vObject[i].x -_vObject[i].image->getFrameWidth()/2, _vObject[i].z -_vObject[i].image->getFrameHeight() - _vObject[i].jumpPower, _vObject[i].ani);
 		}
 		else if (_vObject[i].frameX > -1 && _vObject[i].frameY > -1)
 		{
 			// ÇÁ·¹ÀÓ ·»´õ
-			_vObject[i].image->frameRender(_vObject[i].hdc, _vObject[i].x, _vObject[i].z - _vObject[i].jumpPower, _vObject[i].frameX, _vObject[i].frameY);
+			_vObject[i].image->frameRender(_vObject[i].hdc, _vObject[i].x - _vObject[i].image->getFrameWidth() / 2, _vObject[i].z - _vObject[i].image->getFrameHeight() - _vObject[i].jumpPower, _vObject[i].frameX, _vObject[i].frameY);
 		}
 		else
 		{
 			// ÀÏ¹Ý ·»´õ
-			_vObject[i].image->render(_vObject[i].hdc, _vObject[i].x, _vObject[i].z - _vObject[i].jumpPower);
+			_vObject[i].image->render(_vObject[i].hdc, _vObject[i].x - _vObject[i].image->getWidth() / 2, _vObject[i].z - _vObject[i].image->getHeight() - _vObject[i].jumpPower);
 		}
 	}
 
