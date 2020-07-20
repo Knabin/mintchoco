@@ -216,6 +216,9 @@
     <ClInclude Include="stageManager2.h">
       <Filter>playGround\heasyeong</Filter>
     </ClInclude>
+    <ClInclude Include="schoolgirl.h">
+      <Filter>playGround\taeyong</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -346,6 +349,9 @@
     </ClCompile>
     <ClCompile Include="stageManager2.cpp">
       <Filter>playGround\heasyeong</Filter>
+    </ClCompile>
+    <ClCompile Include="schoolgirl.cpp">
+      <Filter>playGround\taeyong</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

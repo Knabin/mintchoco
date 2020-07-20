@@ -178,6 +178,7 @@
     <ClInclude Include="scene.h" />
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="schoolboy.h" />
+    <ClInclude Include="schoolgirl.h" />
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="stage01.h" />
@@ -225,6 +226,7 @@
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="schoolboy.cpp" />
+    <ClCompile Include="schoolgirl.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="stage01.cpp" />
     <ClCompile Include="stage02.cpp" />

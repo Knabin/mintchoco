@@ -29,7 +29,10 @@ void enemyManager::update()
 	{
 		_vSchoolBoy[i]->update();
 	}
-	
+	for (int i = 0; i < _vSchoolGirl.size(); i++)
+	{
+		_vSchoolGirl[i]->update();
+	}
 	
 }
 
@@ -43,12 +46,16 @@ void enemyManager::render()
 	{
 		_vSchoolBoy[i]->render();
 	}
+	for (int i = 0; i < _vSchoolGirl.size(); i++)
+	{
+		_vSchoolGirl[i]->render();
+	}
 }
 
 void enemyManager::setEnemyCheerMove()
 {
-	float x[] = {500,1000};
-	float y[] = {350,450};
+	float x[] = {500};
+	float y[] = {350};
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -71,6 +78,19 @@ void enemyManager::setEnemySchoolBoyMove()
 	}
 }
 
+void enemyManager::setEnemySchoolGirlMove()
+{
+	float x[] = { 1000 };
+	float y[] = { 450 };
+
+	for (int i = 0; i < 1; i++)
+	{
+		enemy* _tempSchoolGirl = new schoolgirl;
+		_tempSchoolGirl->init("schoolgirl_move", x[i], y[i], 2.3f);
+		_vSchoolGirl.push_back(_tempSchoolGirl);
+	}
+}
+
 
 void enemyManager::setPlayerPos(float x, float y)
 {
@@ -81,5 +101,9 @@ void enemyManager::setPlayerPos(float x, float y)
 	for (int i = 0; i < _vSchoolBoy.size(); i++)
 	{
 		_vSchoolBoy[i]->setPlayerPos(x, y);
+	}
+	for (int i = 0; i < _vSchoolGirl.size(); i++)
+	{
+		_vSchoolGirl[i]->setPlayerPos(x, y);
 	}
 }

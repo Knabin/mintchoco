@@ -18,9 +18,33 @@ HRESULT player::init()
 	_runImage = IMAGEMANAGER->addFrameImage("playerRun", "images/player/Kyoko_Run.bmp", 2736, 384, 16, 2, true, RGB(255, 0, 255));//플레이어 달리는 프레임 이미지
 	_jumpImage = IMAGEMANAGER->addFrameImage("playerJump", "images/player/Kyoko_Jump.bmp", 405, 414, 3, 2, true, RGB(255, 0, 255));//플레이어 점프 프레임 이미지
 	_comboAttackImage1 = IMAGEMANAGER->addFrameImage("playerComboAttack1", "images/player/Kyoko_ComboAttack1.bmp", 1548, 390, 6, 2, true, RGB(255, 0, 255));//플레이어 공격 프레임 이미지
-	_strongAttackImage = IMAGEMANAGER->addFrameImage("playerStrongAttack", "images/player/Kyoko_StrongAttack.bmp", 4001, 861, 13, 2, true, RGB(255, 0, 255));//플레이어 강공격 프레임 이미지
+	_strongAttackImage = IMAGEMANAGER->addFrameImage("playerStrongAttack", "images/player/Kyoko_StrongAttack.bmp", 3030, 474, 10, 2, true, RGB(255, 0, 255));//플레이어 강공격 프레임 이미지
 	_jumpAttackImage = IMAGEMANAGER->addFrameImage("plyaerJumpAttack", "images/player/Kyoko_Jump_Attack.bmp", 1560, 432, 10, 2, true, RGB(255, 0, 255));//플레이어 점프 공격 이미지
-	_dashAttackImage = IMAGEMANAGER->addFrameImage("playerDashAttack", "images/player/Kyoko_DashAttack.bmp", 2700, 600, 8, 2, true, RGB(255, 0, 255));//플레이어 대쉬 공격 이미지
+	_dashAttackImage = IMAGEMANAGER->addFrameImage("playerDashAttack", "images/player/Kyoko_DashAttack.bmp", 2700, 436, 8, 2, true, RGB(255, 0, 255));//플레이어 대쉬 공격 이미지
+	_ultimateImage = IMAGEMANAGER->addFrameImage("playerUltimate", "images/player/Kyoko_Ultimate.bmp", 3675, 384, 25, 2, true, RGB(255, 0, 255));//플레이어 궁극기 이미지
+
+	
+	_ultimateAfterImage[0] = IMAGEMANAGER->addFrameImage("playerUltimateAfter", "images/player/Kyoko_Ultimate_Afterimage.bmp", 2793, 352, 19, 2, true, RGB(255, 0, 255));//플레이어 궁극기 잔상 이미지
+	_ultimateAfterImage[1] = IMAGEMANAGER->addFrameImage("playerUltimateAfter2", "images/player/Kyoko_Ultimate_Afterimage.bmp", 2793, 352, 19, 2, true, RGB(255, 0, 255));//플레이어 궁극기 잔상 이미지
+	_ultimateAfterImage[2] = IMAGEMANAGER->addFrameImage("playerUltimateAfter3", "images/player/Kyoko_Ultimate_Afterimage.bmp", 2793, 352, 19, 2, true, RGB(255, 0, 255));//플레이어 궁극기 잔상 이미지
+	_ultimateAfterImage[3] = IMAGEMANAGER->addFrameImage("playerUltimateAfter4", "images/player/Kyoko_Ultimate_Afterimage.bmp", 2793, 352, 19, 2, true, RGB(255, 0, 255));//플레이어 궁극기 잔상 이미지
+	_ultimateAfterImage[4] = IMAGEMANAGER->addFrameImage("playerUltimateAfter5", "images/player/Kyoko_Ultimate_Afterimage.bmp", 2793, 352, 19, 2, true, RGB(255, 0, 255));//플레이어 궁극기 잔상 이미지
+	_ultimateAfterImage[5] = IMAGEMANAGER->addFrameImage("playerUltimateAfter6", "images/player/Kyoko_Ultimate_Afterimage.bmp", 2793, 352, 19, 2, true, RGB(255, 0, 255));//플레이어 궁극기 잔상 이미지
+	_ultimateAfterImage[6] = IMAGEMANAGER->addFrameImage("playerUltimateAfter7", "images/player/Kyoko_Ultimate_Afterimage.bmp", 2793, 352, 19, 2, true, RGB(255, 0, 255));//플레이어 궁극기 잔상 이미지
+	_ultimateAfterImage[7] = IMAGEMANAGER->addFrameImage("playerUltimateAfter8", "images/player/Kyoko_Ultimate_Afterimage.bmp", 2793, 352, 19, 2, true, RGB(255, 0, 255));//플레이어 궁극기 잔상 이미지
+	_ultimateAfterImage[8] = IMAGEMANAGER->addFrameImage("playerUltimateAfter9", "images/player/Kyoko_Ultimate_Afterimage.bmp", 2793, 352, 19, 2, true, RGB(255, 0, 255));//플레이어 궁극기 잔상 이미지
+	_ultimateAfterImage[9] = IMAGEMANAGER->addFrameImage("playerUltimateAfter10", "images/player/Kyoko_Ultimate_Afterimage.bmp", 2793, 352, 19, 2, true, RGB(255, 0, 255));//플레이어 궁극기 잔상 이미지
+	_ultimateAfterImage[10] = IMAGEMANAGER->addFrameImage("playerUltimateAfter11", "images/player/Kyoko_Ultimate_Afterimage.bmp", 2793, 352, 19, 2, true, RGB(255, 0, 255));//플레이어 궁극기 잔상 이미지
+	_ultimateAfterImage[11] = IMAGEMANAGER->addFrameImage("playerUltimateAfter12", "images/player/Kyoko_Ultimate_Afterimage.bmp", 2793, 352, 19, 2, true, RGB(255, 0, 255));//플레이어 궁극기 잔상 이미지
+	_ultimateAfterImage[12] = IMAGEMANAGER->addFrameImage("playerUltimateAfter13", "images/player/Kyoko_Ultimate_Afterimage.bmp", 2793, 352, 19, 2, true, RGB(255, 0, 255));//플레이어 궁극기 잔상 이미지
+	_ultimateAfterImage[13] = IMAGEMANAGER->addFrameImage("playerUltimateAfter14", "images/player/Kyoko_Ultimate_Afterimage.bmp", 2793, 352, 19, 2, true, RGB(255, 0, 255));//플레이어 궁극기 잔상 이미지
+	_ultimateAfterImage[14] = IMAGEMANAGER->addFrameImage("playerUltimateAfter15", "images/player/Kyoko_Ultimate_Afterimage.bmp", 2793, 352, 19, 2, true, RGB(255, 0, 255));//플레이어 궁극기 잔상 이미지
+	_ultimateAfterImage[15] = IMAGEMANAGER->addFrameImage("playerUltimateAfter16", "images/player/Kyoko_Ultimate_Afterimage.bmp", 2793, 352, 19, 2, true, RGB(255, 0, 255));//플레이어 궁극기 잔상 이미지
+	_ultimateAfterImage[16] = IMAGEMANAGER->addFrameImage("playerUltimateAfter17", "images/player/Kyoko_Ultimate_Afterimage.bmp", 2793, 352, 19, 2, true, RGB(255, 0, 255));//플레이어 궁극기 잔상 이미지
+	_ultimateAfterImage[17] = IMAGEMANAGER->addFrameImage("playerUltimateAfter18", "images/player/Kyoko_Ultimate_Afterimage.bmp", 2793, 352, 19, 2, true, RGB(255, 0, 255));//플레이어 궁극기 잔상 이미지
+	_ultimateAfterImage[18] = IMAGEMANAGER->addFrameImage("playerUltimateAfter19", "images/player/Kyoko_Ultimate_Afterimage.bmp", 2793, 352, 19, 2, true, RGB(255, 0, 255));//플레이어 궁극기 잔상 이미지
+	_ultimateAfterImage[19] = IMAGEMANAGER->addFrameImage("playerUltimateAfter20", "images/player/Kyoko_Ultimate_Afterimage.bmp", 2793, 352, 19, 2, true, RGB(255, 0, 255));//플레이어 궁극기 잔상 이미지
+	
 	_shadow = IMAGEMANAGER->addImage("shadow", "images/player/Kyoko_Shadow.bmp", 128, 38, true, RGB(255, 0, 255));//그림자 이미지
 
 	_playerDirection = PLAYERDIRECTION_LEFT_STOP;//플레이어 프레임 상태 초기화
@@ -60,6 +84,10 @@ HRESULT player::init()
 	_strongAttackImage->setFrameY(0);
 	//플레이어 강공격 이미지의 현재 프레임 초기화
 
+	_ultimateImage->setFrameX(0);
+	_ultimateImage->setFrameY(0);
+	//플레이어 궁극기 이미지의 현재 프레임 초기화
+
 	_jump = new jump;
 	_jump->init();
 	//점프 상속할당
@@ -69,12 +97,13 @@ HRESULT player::init()
 	_b = 255;
 	//픽셀충돌에 사용할 rgb값
 
-	_count = _index = _time = _clickTime = 0;//플레이어 프레임에 사용할 변수
+	_ultimateAfterCount = _count = _index = _time = _clickTime = 0;//플레이어 프레임에 사용할 변수
 	_jumpPower = 12.0f;//플레이어 점프값
 	_gravity = 0.4f;//플레이어 점프값
 	_jumping = false;//플레이어가 점프이후 렉트를 실시간으로 업데이트 시켜주기 위한 변수
 	_attack = false;//공격이 실행중인지 여부 확인
 	_dash = false;//대쉬
+	_ultimate = false;//궁극기
 	_probeX = _x + _walkImage->getFrameWidth() / 2;//x좌표 픽셀충돌
 	_probeY = _y + _walkImage->getFrameHeight() / 2;//y좌표 픽셀충돌
 
@@ -103,14 +132,43 @@ void player::update()
 
 	_rc.setCenterPos(_x, _y);
 
-	cout << "jumping : " << _jumping << endl;
+	cout << "_playerDirection : " << _playerDirection << endl;
+
 }
 
 void player::render()
 {
 	_rc.render(getMemDC());//플레이어 렉트
-	_attackRc.render(getMemDC());//플레이어 공격 렉트
-	_shadow->render(getMemDC(), _rc.left - FRAMEPOSX, _rc.bottom);//그림자
+	//_attackRc.render(getMemDC());//플레이어 공격 렉트
+	if (!_jumping)
+	{
+		_shadow->render(getMemDC(), _rc.left - FRAMEPOSX, _rc.bottom - 20);//그림자
+	}
+	else
+	{
+		_shadow->render(getMemDC(), _rc.left - FRAMEPOSX, _startY + 60);//그림자
+	}
+	if (_ultimate)
+	{
+		for (int i = 0; i < ULTIMATECOUNT; i++)
+		{
+			_ultimateAfterCount++;
+			if (_ultimateAfterCount % 5 == 0)
+			{
+				if (_playerDirection == PLAYERDIRECTION_RIGHT_ULTIMATE)
+				{
+					_ultimateAfterImage[i]->frameRender(getMemDC(), _rc.left - 40 - ((i + 1) * 5), _rc.top);
+				}
+
+				if (_playerDirection == PLAYERDIRECTION_LEFT_ULTIMATE)
+				{
+					_ultimateAfterImage[i]->frameRender(getMemDC(), _rc.left + ((i + 1) * 5), _rc.top + 10);
+				}
+				
+				_ultimateAfterCount = 0;
+			}
+		}
+	}
 	switch (_playerDirection)//플레이어의 프레임 상태값에 따른 렌더
 	{
 	case PLAYERDIRECTION_RIGHT_STOP:
@@ -156,10 +214,16 @@ void player::render()
 		ZORDER->pushObject(getMemDC(), _dashAttackImage, _dashAttackImage->getFrameX(), _dashAttackImage->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
 		break;
 	case PLAYERDIRECTION_RIGHT_STRONG_ATTACK:
-		ZORDER->pushObject(getMemDC(), _strongAttackImage, _strongAttackImage->getFrameX(), _strongAttackImage->getFrameY(), 0, _rc.left - 110 - FRAMEPOSX, _jump->getJumpPower(), _rc.top - 120);
+		ZORDER->pushObject(getMemDC(), _strongAttackImage, _strongAttackImage->getFrameX(), _strongAttackImage->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
 		break;
 	case PLAYERDIRECTION_LEFT_STRONG_ATTACK:
-		ZORDER->pushObject(getMemDC(), _strongAttackImage, _strongAttackImage->getFrameX(), _strongAttackImage->getFrameY(), 0, _rc.left - 110 - FRAMEPOSX, _jump->getJumpPower(), _rc.top - 120);
+		ZORDER->pushObject(getMemDC(), _strongAttackImage, _strongAttackImage->getFrameX(), _strongAttackImage->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
+		break;
+	case PLAYERDIRECTION_RIGHT_ULTIMATE:
+		ZORDER->pushObject(getMemDC(), _ultimateImage, _ultimateImage->getFrameX(), _ultimateImage->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
+		break;
+	case PLAYERDIRECTION_LEFT_ULTIMATE:
+		ZORDER->pushObject(getMemDC(), _ultimateImage, _ultimateImage->getFrameX(), _ultimateImage->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
 		break;
 	}
 }
@@ -232,7 +296,7 @@ void player::attack()
 			{
 				_attack = true;
 				_playerDirection = PLAYERDIRECTION_RIGHT_STRONG_ATTACK;
-				_strongAttackImage->setFrameX(0);
+				_strongAttackImage->setFrameX(_strongAttackImage->getMaxFrameX());
 				_strongAttackImage->setFrameY(1);
 			}
 
@@ -240,8 +304,41 @@ void player::attack()
 			{
 				_attack = true;
 				_playerDirection = PLAYERDIRECTION_LEFT_STRONG_ATTACK;
-				_strongAttackImage->setFrameX(_strongAttackImage->getMaxFrameX());
+				_strongAttackImage->setFrameX(0);
 				_strongAttackImage->setFrameY(0);
+			}
+		}
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('F') && !keyJump())//궁극기
+	{
+		if (!_jumping)
+		{
+			if (_playerDirection == PLAYERDIRECTION_RIGHT_STOP || _playerDirection == PLAYERDIRECTION_RIGHT_WALK)
+			{
+				_attack = true;
+				_playerDirection = PLAYERDIRECTION_RIGHT_ULTIMATE;
+				_ultimateImage->setFrameX(0);
+				_ultimateImage->setFrameY(1);
+				for (int i = 0; i < ULTIMATECOUNT; i++)
+				{
+					_ultimateAfterImage[i]->setFrameX(i);
+					_ultimateAfterImage[i]->setFrameY(1);
+				}	
+			}
+
+			if (_playerDirection == PLAYERDIRECTION_LEFT_STOP || _playerDirection == PLAYERDIRECTION_LEFT_WALK)
+			{
+				_attack = true;
+				_playerDirection = PLAYERDIRECTION_LEFT_ULTIMATE;
+				_ultimateImage->setFrameX(_ultimateImage->getMaxFrameX());
+				_ultimateImage->setFrameY(0);
+
+				for (int i = 0; i < ULTIMATECOUNT; i++)
+				{
+					_ultimateAfterImage[i]->setFrameX(i);
+					_ultimateAfterImage[i]->setFrameY(0);
+				}
 			}
 		}
 	}
@@ -251,7 +348,7 @@ void player::jumpMove()
 {
 	if (KEYMANAGER->isOnceKeyDown('D') && !keyAttack())//점프
 	{
-		if (!_attack && !keyJump())//공격중이 아닐때 && 점프중복방지
+		if (!_attack && !_jumping)//공격중이 아닐때 && 점프중복방지
 		{
 			_jumping = true;
 			_startY = _y;
@@ -271,7 +368,6 @@ void player::jumpMove()
 			}
 		}
 	}
-
 	_jump->update();//점프 업데이트
 }
 
@@ -285,6 +381,18 @@ void player::leftMove()
 			{
 				_playerDirection = PLAYERDIRECTION_LEFT_WALK;
 				_walkImage->setFrameY(0);
+			}
+
+			if (!_jumping && !_attack && keyRight())
+			{
+				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
+			}
+
+			if (_jumping && !_attack)//점프중에 프레임 변경
+			{
+				_playerDirection = PLAYERDIRECTION_LEFT_JUMP;
+				_jumpImage->setFrameX(_jumpImage->getMaxFrameX());
+				_jumpImage->setFrameY(0);
 			}
 
 			if (!_attack && !keyRight())//점프중에 움직이는거 허용
@@ -303,6 +411,11 @@ void player::leftMove()
 			{
 				_playerDirection = PLAYERDIRECTION_LEFT_MOVE;
 				_runImage->setFrameY(0);
+			}
+
+			if (!_jumping && !_attack && keyRight())
+			{
+				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
 			}
 
 			if (!_attack && !keyRight())//점프중에 움직이는거 허용
@@ -343,6 +456,18 @@ void player::rightMove()
 				_walkImage->setFrameY(1);
 			}
 
+			if (!_jumping && !_attack && keyLeft())
+			{
+				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
+			}
+
+			if (_jumping && !_attack)//점프중에 프레임 변경
+			{
+				_playerDirection = PLAYERDIRECTION_RIGHT_JUMP;
+				_jumpImage->setFrameX(0);
+				_jumpImage->setFrameY(1);
+			}
+
 			if (!_attack && !keyLeft())//점프중에 움직이는거 허용
 			{
 				_x += _walkSpeed;
@@ -358,6 +483,11 @@ void player::rightMove()
 			{
 				_playerDirection = PLAYERDIRECTION_RIGHT_MOVE;
 				_runImage->setFrameY(1);
+			}
+
+			if (!_jumping && !_attack && keyLeft())
+			{
+				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
 			}
 
 			if (!_attack && !keyLeft())//점프중에 움직이는거 허용
@@ -406,11 +536,24 @@ void player::upMove()
 			}
 		}
 
+		if (!_jumping && !_attack && keyDown())
+		{
+			if (_playerDirection == PLAYERDIRECTION_LEFT_STOP || _playerDirection == PLAYERDIRECTION_LEFT_WALK)
+			{
+				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
+			}
+
+			if (_playerDirection == PLAYERDIRECTION_RIGHT_STOP || _playerDirection == PLAYERDIRECTION_RIGHT_WALK)
+			{
+				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
+			}
+		}
+
 		if (!_attack)
 		{
 			if (_jumping)
 			{
-				_startY -= _walkSpeed;
+				_startY -= _walkSpeed;//점프한 상태에서 위쪽으로 움직일경우 점프의 시작점을 옮겨주기 위한 코드
 			}
 			_y -= _walkSpeed;
 		}
@@ -456,11 +599,24 @@ void player::downMove()
 			}
 		}
 
+		if (!_jumping && !_attack && keyUp())
+		{
+			if (_playerDirection == PLAYERDIRECTION_LEFT_STOP || _playerDirection == PLAYERDIRECTION_LEFT_WALK)
+			{
+				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
+			}
+
+			if (_playerDirection == PLAYERDIRECTION_RIGHT_STOP || _playerDirection == PLAYERDIRECTION_RIGHT_WALK)
+			{
+				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
+			}
+		}
+
 		if (!_attack)
 		{
 			if (_jumping)
 			{
-				_startY -= _walkSpeed;
+				_startY -= _walkSpeed;//점프한 상태에서 위쪽으로 움직일경우 점프의 시작점을 옮겨주기 위한 코드
 			}
 			_y += _walkSpeed;
 		}
@@ -629,7 +785,7 @@ void player::frameDraw()
 		{
 			_comboAttackImage1->setFrameX(_comboAttackImage1->getFrameX() - 1);
 			_attackRc.set(0, 0, 100, 50);
-			_attackRc.setCenterPos(_rc.left, _rc.getCenterY());
+			_attackRc.setCenterPos(_rc.left, _rc.getCenterY() - 10);
 			if (_comboAttackImage1->getFrameX() <= 0)
 			{
 				_comboAttackImage1->setFrameX(_comboAttackImage1->getMaxFrameX());
@@ -647,7 +803,7 @@ void player::frameDraw()
 		{
 			_comboAttackImage1->setFrameX(_comboAttackImage1->getFrameX() + 1);
 			_attackRc.set(0, 0, 100, 50);
-			_attackRc.setCenterPos(_rc.right + 35, _rc.getCenterY());
+			_attackRc.setCenterPos(_rc.right, _rc.getCenterY() - 10);
 			if (_comboAttackImage1->getFrameX() >= _comboAttackImage1->getMaxFrameX())
 			{
 				_comboAttackImage1->setFrameX(0);
@@ -661,15 +817,18 @@ void player::frameDraw()
 
 	case PLAYERDIRECTION_LEFT_STRONG_ATTACK:
 		_count++;
-		if (_count % 5 == 0)
+		_jumping = true;
+		_jump->jumping(&_x, &_y, 5.0f, 0.25f);
+		if (_count % 4 == 0)
 		{
-			_strongAttackImage->setFrameX(_strongAttackImage->getFrameX() - 1);
+			_strongAttackImage->setFrameX(_strongAttackImage->getFrameX() + 1);
 			_attackRc.set(0, 0, 100, 200);
 			_attackRc.setCenterPos(_rc.left, _rc.getCenterY());
-			if (_strongAttackImage->getFrameX() <= 0)
+			if (_strongAttackImage->getFrameX() >= _strongAttackImage->getMaxFrameX())
 			{
 				_strongAttackImage->setFrameX(_strongAttackImage->getMaxFrameX());
 				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
+				_jumping = false;
 				_attack = false;
 				_attackRc.set(0, 0, 0, 0);
 			}
@@ -679,15 +838,18 @@ void player::frameDraw()
 
 	case PLAYERDIRECTION_RIGHT_STRONG_ATTACK:
 		_count++;
-		if (_count % 5 == 0)
+		_jumping = true;
+		_jump->jumping(&_x, &_y, 5.0f, 0.25f);
+		if (_count % 4 == 0)
 		{
-			_strongAttackImage->setFrameX(_strongAttackImage->getFrameX() + 1);
+			_strongAttackImage->setFrameX(_strongAttackImage->getFrameX() - 1);
 			_attackRc.set(0, 0, 100, 200);
 			_attackRc.setCenterPos(_rc.right, _rc.getCenterY());
-			if (_strongAttackImage->getFrameX() >= _strongAttackImage->getMaxFrameX())
+			if (_strongAttackImage->getFrameX() <= 0)
 			{
 				_strongAttackImage->setFrameX(0);
 				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
+				_jumping = false;
 				_attack = false;
 				_attackRc.set(0, 0, 0, 0);
 			}
@@ -701,7 +863,7 @@ void player::frameDraw()
 		{
 			_jumpAttackImage->setFrameX(_jumpAttackImage->getFrameX() - 1);
 			_attackRc.set(0, 0, 50, 100);
-			_attackRc.setCenterPos(_rc.left, _rc.getCenterY() + 40);
+			_attackRc.setCenterPos(_rc.left, _rc.getCenterY());
 			if (_jumpAttackImage->getFrameX() <= 0)
 			{
 				_jumpAttackImage->setFrameX(_jumpAttackImage->getMaxFrameX());
@@ -720,7 +882,7 @@ void player::frameDraw()
 		{
 			_jumpAttackImage->setFrameX(_jumpAttackImage->getFrameX() + 1);
 			_attackRc.set(0, 0, 50, 100);
-			_attackRc.setCenterPos(_rc.right + 20, _rc.getCenterY() + 40);
+			_attackRc.setCenterPos(_rc.right, _rc.getCenterY());
 			if (_jumpAttackImage->getFrameX() >= _jumpAttackImage->getMaxFrameX())
 			{
 				_jumpAttackImage->setFrameX(0);
@@ -733,18 +895,21 @@ void player::frameDraw()
 		}
 		break;
 
-
 	case PLAYERDIRECTION_LEFT_DASH_ATTACK:
 		_count++;
+		_x -= _runSpeed;
+		_jumping = true;
+		_jump->jumping(&_x, &_y, 2.0f, 0.16f);
 		if (_count % 5 == 0)
 		{
 			_dashAttackImage->setFrameX(_dashAttackImage->getFrameX() - 1);
 			_attackRc.set(0, 0, 100, 50);
-			_attackRc.setCenterPos(_rc.left - 10, _rc.getCenterY() + 10);
+			_attackRc.setCenterPos(_rc.left, _rc.getCenterY() - 30);
 			if (_dashAttackImage->getFrameX() <= 0)
 			{
 				_dashAttackImage->setFrameX(_dashAttackImage->getMaxFrameX());
 				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
+				_jumping = false;
 				_attack = false;
 				_attackRc.set(0, 0, 0, 0);
 			}
@@ -754,19 +919,68 @@ void player::frameDraw()
 
 	case PLAYERDIRECTION_RIGHT_DASH_ATTACK:
 		_count++;
+		_x += _runSpeed;
+		_jumping = true;
+		_jump->jumping(&_x, &_y, 2.0f, 0.16f);
 		if (_count % 5 == 0)
 		{
 			_dashAttackImage->setFrameX(_dashAttackImage->getFrameX() + 1);
 			_attackRc.set(0, 0, 100, 50);
-			_attackRc.setCenterPos(_rc.right + 30, _rc.getCenterY() + 10);
+			_attackRc.setCenterPos(_rc.right, _rc.getCenterY() - 30);
 			if (_dashAttackImage->getFrameX() >= _dashAttackImage->getMaxFrameX())
 			{
 				_dashAttackImage->setFrameX(0);
 				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
+				_jumping = false;
 				_attack = false;
 				_attackRc.set(0, 0, 0, 0);
 			}
 			_count = 0;
+		}
+		break;
+
+	case PLAYERDIRECTION_LEFT_ULTIMATE:
+		_count++;
+		if (_count % 5 == 0)
+		{
+			_ultimateImage->setFrameX(_ultimateImage->getFrameX() - 1);
+			if (_ultimateImage->getFrameX() <= 20)
+			{
+				_ultimate = true;
+			}
+			_attackRc.set(0, 0, 300, 300);
+			_attackRc.setCenterPos(_rc.left, _rc.getCenterY());
+			if (_ultimateImage->getFrameX() <= 0)
+			{
+				_ultimateImage->setFrameX(_ultimateImage->getMaxFrameX());
+				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
+				_attack = false;
+				_ultimate = false;
+				_attackRc.set(0, 0, 0, 0);
+			}
+			_count = 0;
+		}
+		break;
+
+	case PLAYERDIRECTION_RIGHT_ULTIMATE:
+		_count++;
+		if (_count % 5 == 0)
+		{
+			_ultimateImage->setFrameX(_ultimateImage->getFrameX() + 1);
+			if (_ultimateImage->getFrameX() >= 5)
+			{
+				_ultimate = true;
+			}
+			_attackRc.set(0, 0, 300, 300);
+			_attackRc.setCenterPos(_rc.right, _rc.getCenterY());
+			if (_ultimateImage->getFrameX() >= _ultimateImage->getMaxFrameX())
+			{
+				_ultimateImage->setFrameX(0);
+				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
+				_attack = false;
+				_ultimate = false;
+				_attackRc.set(0, 0, 0, 0);
+			}
 		}
 		break;
 	}
