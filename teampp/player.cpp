@@ -111,6 +111,7 @@ HRESULT player::init()
 	_jumpPower = 12.0f;//플레이어 점프값
 	_gravity = 0.4f;//플레이어 점프값
 	_jumping = false;//플레이어가 점프이후 렉트를 실시간으로 업데이트 시켜주기 위한 변수
+	_dashAndStrongAttackShadow = false;//대쉬공격, 강공격시 그림자 위치조정을 위한 불값
 	_attack = false;//공격이 실행중인지 여부 확인
 	_dash = false;//대쉬
 	_ultimate = false;//궁극기
@@ -144,6 +145,15 @@ void player::update()
 
 	_rc.setCenterPos(_x, _y);
 
+	if (_comboAttack)
+	{
+		_comboAttackRc1.set(0, 0, 0, 0);
+	}
+	if (_comboAttack2)
+	{
+		_comboAttackRc2.set(0, 0, 0, 0);
+	}
+
 	cout << "attack" << _attack << endl;
 	cout << "comboAttack : " << _comboAttack << endl;
 	cout << "comboAttack2 : " << _comboAttack2 << endl;
@@ -153,14 +163,23 @@ void player::render()
 {
 	_rc.render(getMemDC());//플레이어 렉트
 	_attackRc.render(getMemDC());//플레이어 공격 렉트
-	if (!_jumping)
+	_comboAttackRc1.render(getMemDC());//1단계 콤보공격 렉트
+	_comboAttackRc2.render(getMemDC());//2단계 콤보공격 렉트
+
+	if (!_jumping && !_dashAndStrongAttackShadow)
 	{
-		_shadow->render(getMemDC(), _rc.left - FRAMEPOSX, _rc.bottom - 20);//그림자
+		_shadow->alphaRender(getMemDC(), _rc.left - FRAMEPOSX, _rc.bottom - 20, 100);//그림자
 	}
-	else
+	else if (_jumping && !_dashAndStrongAttackShadow)//점프중에 그림자 위치
 	{
-		_shadow->render(getMemDC(), _rc.left - FRAMEPOSX, _startY + 60);//그림자
+		_shadow->alphaRender(getMemDC(), _rc.left - FRAMEPOSX, _startY + 70, 100);//그림자
 	}
+
+	if (_dashAndStrongAttackShadow)//대쉬공격, 강공격시에 그림자 위치조정
+	{
+		_shadow->alphaRender(getMemDC(), _rc.left - FRAMEPOSX, _startY + 70, 100);//그림자
+	}
+
 	if (_ultimate)
 	{
 		for (int i = 0; i < ULTIMATECOUNT; i++)
@@ -182,6 +201,7 @@ void player::render()
 			}
 		}
 	}
+
 	switch (_playerDirection)//플레이어의 프레임 상태값에 따른 렌더
 	{
 	case PLAYERDIRECTION_RIGHT_STOP:
@@ -278,36 +298,38 @@ void player::attack()
 				_comboAttackImage1->setFrameY(1);
 			}
 
-			if (_playerDirection == PLAYERDIRECTION_LEFT_COMBO_ATTACK1 && _comboAttack)//2단콤보
+			if (_playerDirection == PLAYERDIRECTION_LEFT_COMBO_ATTACK1 && _comboAttack && _comboAttackImage1->getFrameX() <= 2)//2단콤보
 			{
 				_playerDirection = PLAYERDIRECTION_LEFT_COMBO_ATTACK2;
 				_comboAttackImage2->setFrameX(_comboAttackImage2->getMaxFrameX());
 				_comboAttackImage2->setFrameY(0);
 			}
 
-			if (_playerDirection == PLAYERDIRECTION_RIGHT_COMBO_ATTACK1 && _comboAttack)//2단콤보
+			if (_playerDirection == PLAYERDIRECTION_RIGHT_COMBO_ATTACK1 && _comboAttack && _comboAttackImage1->getFrameX() >= _comboAttackImage1->getMaxFrameX() - 2)//2단콤보
 			{
 				_playerDirection = PLAYERDIRECTION_RIGHT_COMBO_ATTACK2;
 				_comboAttackImage2->setFrameX(0);
 				_comboAttackImage2->setFrameY(1);
 			}
-
-			if (_playerDirection == PLAYERDIRECTION_LEFT_COMBO_ATTACK2 && _comboAttack2)//3단콤보
+			
+			if (_playerDirection == PLAYERDIRECTION_LEFT_COMBO_ATTACK2 && _comboAttack2 && _comboAttackImage2->getFrameX() <= 2)//3단콤보
 			{
 				_playerDirection = PLAYERDIRECTION_LEFT_COMBO_ATTACK3;
 				_comboAttackImage3->setFrameX(_comboAttackImage3->getMaxFrameX());
 				_comboAttackImage3->setFrameY(0);
 			}
 
-			if (_playerDirection == PLAYERDIRECTION_RIGHT_COMBO_ATTACK2 && _comboAttack2)//3단콤보
+			if (_playerDirection == PLAYERDIRECTION_RIGHT_COMBO_ATTACK2 && _comboAttack2 && _comboAttackImage2->getFrameX() >= _comboAttackImage2->getMaxFrameX() - 2)//3단콤보
 			{
 				_playerDirection = PLAYERDIRECTION_RIGHT_COMBO_ATTACK3;
 				_comboAttackImage3->setFrameX(0);
 				_comboAttackImage3->setFrameY(1);
 			}
-
+			
 			if (_playerDirection == PLAYERDIRECTION_LEFT_MOVE)//달리기
 			{
+				_dashAndStrongAttackShadow = true;
+				_startY = _y;
 				_playerDirection = PLAYERDIRECTION_LEFT_DASH_ATTACK;
 				_dashAttackImage->setFrameX(_dashAttackImage->getMaxFrameX());
 				_dashAttackImage->setFrameY(0);
@@ -315,6 +337,8 @@ void player::attack()
 
 			if (_playerDirection == PLAYERDIRECTION_RIGHT_MOVE)//달리기
 			{
+				_dashAndStrongAttackShadow = true;
+				_startY = _y;
 				_playerDirection = PLAYERDIRECTION_RIGHT_DASH_ATTACK;
 				_dashAttackImage->setFrameX(0);
 				_dashAttackImage->setFrameY(1);
@@ -348,6 +372,8 @@ void player::attack()
 			if (_playerDirection == PLAYERDIRECTION_RIGHT_STOP || _playerDirection == PLAYERDIRECTION_RIGHT_WALK)
 			{
 				_attack = true;
+				_dashAndStrongAttackShadow = true;
+				_startY = _y;
 				_playerDirection = PLAYERDIRECTION_RIGHT_STRONG_ATTACK;
 				_strongAttackImage->setFrameX(_strongAttackImage->getMaxFrameX());
 				_strongAttackImage->setFrameY(1);
@@ -356,6 +382,8 @@ void player::attack()
 			if (_playerDirection == PLAYERDIRECTION_LEFT_STOP || _playerDirection == PLAYERDIRECTION_LEFT_WALK)
 			{
 				_attack = true;
+				_dashAndStrongAttackShadow = true;
+				_startY = _y;
 				_playerDirection = PLAYERDIRECTION_LEFT_STRONG_ATTACK;
 				_strongAttackImage->setFrameX(0);
 				_strongAttackImage->setFrameY(0);
@@ -962,6 +990,7 @@ void player::frameDraw()
 				_strongAttackImage->setFrameX(_strongAttackImage->getMaxFrameX());
 				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
 				_attack = false;
+				_dashAndStrongAttackShadow = false;
 				_attackRc.set(0, 0, 0, 0);
 			}
 			_count = 0;
@@ -981,6 +1010,7 @@ void player::frameDraw()
 				_strongAttackImage->setFrameX(0);
 				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
 				_attack = false;
+				_dashAndStrongAttackShadow = false;
 				_attackRc.set(0, 0, 0, 0);
 			}
 			_count = 0;
@@ -1039,6 +1069,7 @@ void player::frameDraw()
 				_dashAttackImage->setFrameX(_dashAttackImage->getMaxFrameX());
 				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
 				_attack = false;
+				_dashAndStrongAttackShadow = false;
 				_attackRc.set(0, 0, 0, 0);
 			}
 			_count = 0;
@@ -1059,6 +1090,7 @@ void player::frameDraw()
 				_dashAttackImage->setFrameX(0);
 				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
 				_attack = false;
+				_dashAndStrongAttackShadow = false;
 				_attackRc.set(0, 0, 0, 0);
 			}
 			_count = 0;

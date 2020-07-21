@@ -84,6 +84,7 @@ private:
 
 	bool _dash;//플레이어가 달리기에 사용할 값
 	bool _jumping;//점프함수를 실행한 이후 렉트값을 계속 변경시켜주기 위한 값
+	bool _dashAndStrongAttackShadow;//대쉬공격, 강공격시 그림자 위치조정을 위한 불값
 	bool _attack;//공격이 실행중인지 아닌지 여부확인용 값
 	bool _ultimate;//궁극기
 	bool _comboAttack;//콤보공격 프레임에 사용할 변수
