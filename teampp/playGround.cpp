@@ -48,7 +48,7 @@ HRESULT playGround::init()
 	// ## 카메라 중점 초기화 ##
 	// ==========================================
 	// 플레이어 센터나 테스트용 렉트(MYRECT) 만들어서 사용하세요
-	CAMERA->setPosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+	CAMERA->setPosition(_player->getPlayerRect().getCenterX(), _player->getPlayerZ());
 	CAMERA->setBackWidth(_stageManager2->getPixelImage()->getWidth());
 	CAMERA->setBackHeight(_stageManager2->getPixelImage()->getHeight());
 
