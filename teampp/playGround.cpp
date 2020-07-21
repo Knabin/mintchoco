@@ -32,8 +32,8 @@ HRESULT playGround::init()
 	_stageManager2 = new stageManager2;
 	_stageManager2->init();
 
-	//_itemManager = new itemManager;
-	//_itemManager->init();
+	_itemManager = new itemManager;
+	_itemManager->init();
 
 
 	_collisionManager->setPlayerMemoryAddressLink(_player);
@@ -76,6 +76,19 @@ void playGround::update()
 
 
 	_enemyManager->setPlayerPos(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+
+	if (KEYMANAGER->isOnceKeyDown('1'))
+	{
+		CAMERA->cameraFixed();
+	}
+	if (KEYMANAGER->isOnceKeyDown('2'))
+	{
+		CAMERA->cameraFixed(200, 200);
+	}
+	if (KEYMANAGER->isOnceKeyDown('3'))
+	{
+		CAMERA->setIsFixed(false);
+	}
 	// ==========================================
 	// ## 카메라 중점 초기화 ##
 	// ==========================================
@@ -89,19 +102,22 @@ void playGround::update()
 
 //그리기 전용
 void playGround::render()
-{	
+{
+	PatBlt(CAMERA->getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
 	PatBlt(getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
 	//=================================================
 	_stageManager2->render();
 	_player->render();
 	_collisionManager->render();
 	_enemyManager->render();
-	//_itemManager->render();
-	
+	_itemManager->render();
+
 	ZORDER->render();
+
 	//=============================================
-	_backBuffer->render(getHDC(), 0, CAMERA->getBlackSize() * 0.5,
+	_backBuffer->render(CAMERA->getMemDC(), 0, CAMERA->getBlackSize() * 0.5,
 		CAMERA->getLeft(), CAMERA->getTop() + CAMERA->getShakeNumber(),
-		CAMERA->getWidth(), CAMERA->getHeight());
-	_uiManager->render(getHDC());
+		CAMERA->getViewWidth(), CAMERA->getViewHeight());
+	_uiManager->render(CAMERA->getMemDC());
+	CAMERA->render(getHDC());
 }

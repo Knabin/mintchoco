@@ -1111,3 +1111,35 @@ void player::frameDraw()
 		break;
 	}
 }
+
+//player가 stage 이동 시 player 위치 리셋
+//stageOpenDoor 좌표를 기준으로 player x,y 중점을 변경 해주는 함수입니다.
+//원하는 좌표로 바꿀 시 정수만 바꿔주세요
+
+void player::playerPosition_1at2()
+{
+	_x = 300;
+	_y = WINSIZEY / 2 + 225;
+	CAMERA->setPosition(_x, _y);
+}
+
+void player::playerPosition_2at3()
+{
+	_x = 375;
+	_y = WINSIZEY / 2 + 365;
+	CAMERA->setPosition(_x, _y);
+}
+
+void player::playerPosition_2at1()
+{
+	_x = WINSIZEX + 155;
+	_y = WINSIZEY / 2 - 25;
+	CAMERA->setPosition(_x, _y);
+}
+
+void player::playerPosition_3at2()
+{
+	_x = WINSIZEX + 510;
+	_y = WINSIZEY / 2 + 225;
+	CAMERA->setPosition(_x, _y);
+}
