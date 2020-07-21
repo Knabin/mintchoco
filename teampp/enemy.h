@@ -16,6 +16,10 @@ enum ENEMYDIRECTION
 	ENEMY_RIGHT_COMBO1,
 	ENEMY_LEFT_COMBO2,
 	ENEMY_RIGHT_COMBO2,
+	ENEMY_LEFT_SUBMOTION,
+	ENEMY_RIGHT_SUBMOTION,
+	ENEMY_LEFT_GETHIT,
+	ENEMY_RIGHT_GETHIT
 };
 
 class enemy : public gameNode
@@ -27,7 +31,9 @@ protected:
 	image* _attack;
 	image* _combo1;
 	image* _combo2;
-
+	image* _submotion;	//치어리더는 백덤블링, 남학생은 어퍼컷, 여학생은 어택
+	image* _gethit;
+	
 
 	//image* _ehit;
 
@@ -42,6 +48,10 @@ protected:
 	animation* _enemyMotion_R_COMBO1;
 	animation* _enemyMotion_L_COMBO2;
 	animation* _enemyMotion_R_COMBO2;
+	animation* _enemyMotion_L_submotion;
+	animation* _enemyMotion_R_submotion;
+	animation* _enemyMotion_L_hit;
+	animation* _enemyMotion_R_hit;
 
 
 	string _imageName;	//에너미 이미지 받을 것
@@ -52,6 +62,7 @@ protected:
 	bool _isJump;
 	MYRECT _rc;			//에너미 렉트
 
+	int _aniTime;	//치어리더 백플립 잔상
 	float _playerX, _playerY;	//플레이어 위치 값 받으려는 변수
 	float angle;
 	float distance;

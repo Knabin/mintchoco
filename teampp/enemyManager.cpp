@@ -91,6 +91,21 @@ void enemyManager::setEnemySchoolGirlMove()
 	}
 }
 
+void enemyManager::removeCheerLeader(int arrNum)
+{
+	_vCheerLeader.erase(_vCheerLeader.begin() + arrNum);
+}
+
+void enemyManager::removeSchoolBoy(int arrNum)
+{
+	_vSchoolBoy.erase(_vSchoolBoy.begin() + arrNum);
+}
+
+void enemyManager::removeSchoolGilr(int arrNum)
+{
+	_vSchoolGirl.erase(_vSchoolGirl.begin() + arrNum);
+}
+
 
 void enemyManager::setPlayerPos(float x, float y)
 {

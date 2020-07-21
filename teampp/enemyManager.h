@@ -37,6 +37,10 @@ public:
 	void setEnemySchoolBoyMove();
 	void setEnemySchoolGirlMove();
 
+	void removeCheerLeader(int arrNum);
+	void removeSchoolBoy(int arrNum);
+	void removeSchoolGilr(int arrNum);
+
 
 	vector<enemy*> getVCheerLeader() { return _vCheerLeader; }
 	vector<enemy*>::iterator getVICheerleader() { return _viCheerLeader; }
