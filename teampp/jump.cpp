@@ -26,14 +26,24 @@ void jump::update()
 {
 	if (!_isJumping) return;
 
-	*_y -= _jumpPower;
-	_jumpPower -= _gravity;
+	//*_y -= _jumpPower - _gravity;
+	//_jumpPower -= _gravity;
 
-	if (_startY < *_y)
+	_jumpPower += _gravity;
+	_gravity -= 0.4f;
+
+	if (_jumpPower < 0)
 	{
+		_jumpPower = 0;
 		_isJumping = false;
-		*_y = _startY;
 	}
+
+
+	//if (_startY < *_y)
+	//{
+	//	_isJumping = false;
+	//	*_y = _startY;
+	//}
 }
 
 void jump::release()

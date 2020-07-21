@@ -68,11 +68,10 @@ private:
 	MYRECT _comboAttackRc1;//1단계 콤보공격 렉트
 	MYRECT _comboAttackRc2;//2단계 콤보공격 렉트
 
-	float _x, _y;//플레이어 중점좌표
+	float _x, _y, _z;//플레이어 중점좌표
 	float _walkSpeed;//걷는 스피드
 	float _runSpeed;//달리는 스피드
 	float _jumpPower, _gravity;//플레이어 점프값
-	float _startY;//땅에 착지했는지 여부 확인
 
 	int _count, _ultimateAfterCount, _index;//프레임에 사용할 카운트, 인덱스
 	int _time, _clickTime;//달리기 조건문 시간체크
@@ -158,7 +157,8 @@ public:
 	void setComboAttack2(bool comboAttack2) { _comboAttack2 = comboAttack2; }
 	PLAYERDIRECTION getPlayerdirection() { return _playerDirection; }
 	float getPlayerX() { return _x; }
-	float getPlayerY() { return _y; }
+	float getPlayerZ() { return _z; }
+	//float getPlayerY() { return _y; }
 	MYRECT getPlayerRect() { return _rc; }
 	MYRECT getAttackRc() { return _attackRc; }
 	MYRECT getComboAttackRc1() { return _comboAttackRc1; }
