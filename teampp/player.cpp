@@ -19,6 +19,7 @@ HRESULT player::init()
 	_jumpImage = IMAGEMANAGER->addFrameImage("playerJump", "images/player/Kyoko_Jump.bmp", 405, 414, 3, 2, true, RGB(255, 0, 255));//플레이어 점프 프레임 이미지
 	_comboAttackImage1 = IMAGEMANAGER->addFrameImage("playerComboAttack1", "images/player/Kyoko_ComboAttack1.bmp", 1548, 390, 6, 2, true, RGB(255, 0, 255));//플레이어 공격 프레임 이미지
 	_comboAttackImage2 = IMAGEMANAGER->addFrameImage("playerComboAttack2", "images/player/Kyoko_ComboAttack2.bmp", 1869, 402, 7, 2, true, RGB(255, 0, 255));//플레이어 공격 프레임 이미지2
+	_comboAttackImage3 = IMAGEMANAGER->addFrameImage("playerComboAttack3", "images/player/Kyoko_ComboAttack3.bmp", 2970, 462, 9, 2, true, RGB(255, 0, 255));//플레이어 공격 프레임 이미지3
 	_strongAttackImage = IMAGEMANAGER->addFrameImage("playerStrongAttack", "images/player/Kyoko_StrongAttack.bmp", 3030, 474, 10, 2, true, RGB(255, 0, 255));//플레이어 강공격 프레임 이미지
 	_jumpAttackImage = IMAGEMANAGER->addFrameImage("plyaerJumpAttack", "images/player/Kyoko_Jump_Attack.bmp", 1560, 432, 10, 2, true, RGB(255, 0, 255));//플레이어 점프 공격 이미지
 	_dashAttackImage = IMAGEMANAGER->addFrameImage("playerDashAttack", "images/player/Kyoko_DashAttack.bmp", 2700, 436, 8, 2, true, RGB(255, 0, 255));//플레이어 대쉬 공격 이미지
@@ -77,6 +78,10 @@ HRESULT player::init()
 	_comboAttackImage2->setFrameY(0);
 	//플레이어 공격 이미지2의 현재 프레임 초기화
 
+	_comboAttackImage3->setFrameX(0);
+	_comboAttackImage3->setFrameY(0);
+	//플레이어 공격 이미지3의 현재 프레임 초기화
+
 	_jumpAttackImage->setFrameX(0);
 	_jumpAttackImage->setFrameY(0);
 	//플레이어 점프 공격 이미지의 현재 프레임 초기화
@@ -109,7 +114,8 @@ HRESULT player::init()
 	_attack = false;//공격이 실행중인지 여부 확인
 	_dash = false;//대쉬
 	_ultimate = false;//궁극기
-	_frameAttackCollision = false;//콤보공격 프레임에 사용할 변수
+	_comboAttack = false;//콤보공격 프레임에 사용할 변수
+	_comboAttack2 = false;//콤보공격 3단계 실행여부를 확인하기 위한 변수
 	_probeX = _x + _walkImage->getFrameWidth() / 2;//x좌표 픽셀충돌
 	_probeY = _y + _walkImage->getFrameHeight() / 2;//y좌표 픽셀충돌
 
@@ -138,8 +144,9 @@ void player::update()
 
 	_rc.setCenterPos(_x, _y);
 
-	cout << "_playerDirection : " << _playerDirection << endl;
-
+	cout << "attack" << _attack << endl;
+	cout << "comboAttack : " << _comboAttack << endl;
+	cout << "comboAttack2 : " << _comboAttack2 << endl;
 }
 
 void player::render()
@@ -198,7 +205,7 @@ void player::render()
 	case PLAYERDIRECTION_RIGHT_COMBO_ATTACK1:
 		ZORDER->pushObject(getMemDC(), _comboAttackImage1, _comboAttackImage1->getFrameX(), _comboAttackImage1->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
 		break;
-	case PLAYERDIRECTION_LEFT_COBMO_ATTACK1:
+	case PLAYERDIRECTION_LEFT_COMBO_ATTACK1:
 		ZORDER->pushObject(getMemDC(), _comboAttackImage1, _comboAttackImage1->getFrameX(), _comboAttackImage1->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
 		break;
 	case PLAYERDIRECTION_RIGHT_COMBO_ATTACK2:
@@ -206,6 +213,12 @@ void player::render()
 		break;
 	case PLAYERDIRECTION_LEFT_COMBO_ATTACK2:
 		ZORDER->pushObject(getMemDC(), _comboAttackImage2, _comboAttackImage2->getFrameX(), _comboAttackImage2->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
+		break;
+	case PLAYERDIRECTION_RIGHT_COMBO_ATTACK3:
+		ZORDER->pushObject(getMemDC(), _comboAttackImage3, _comboAttackImage3->getFrameX(), _comboAttackImage3->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
+		break;
+	case PLAYERDIRECTION_LEFT_COMBO_ATTACK3:
+		ZORDER->pushObject(getMemDC(), _comboAttackImage3, _comboAttackImage3->getFrameX(), _comboAttackImage3->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
 		break;
 	case PLAYERDIRECTION_RIGHT_JUMP:
 		ZORDER->pushObject(getMemDC(), _jumpImage, _jumpImage->getFrameX(), _jumpImage->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _rc.bottom);
@@ -251,20 +264,46 @@ void player::attack()
 		if (!_jumping)//점프중이 아닐때
 		{
 			_attack = true;
-			if (_playerDirection == PLAYERDIRECTION_LEFT_STOP || _playerDirection == PLAYERDIRECTION_LEFT_WALK)//기본, 걷기일때 공격
+			if (_playerDirection == PLAYERDIRECTION_LEFT_STOP && !_comboAttack || _playerDirection == PLAYERDIRECTION_LEFT_WALK && !_comboAttack)//기본, 걷기일때 공격
 			{
-				_frameAttackCollision = true;//콤보공격에 사용할 불값
-				_playerDirection = PLAYERDIRECTION_LEFT_COBMO_ATTACK1;
+				_playerDirection = PLAYERDIRECTION_LEFT_COMBO_ATTACK1;
 				_comboAttackImage1->setFrameX(_comboAttackImage1->getMaxFrameX());
 				_comboAttackImage1->setFrameY(0);
 			}
 
-			if (_playerDirection == PLAYERDIRECTION_RIGHT_STOP || _playerDirection == PLAYERDIRECTION_RIGHT_WALK)//기본, 걷기일때 공격
+			if (_playerDirection == PLAYERDIRECTION_RIGHT_STOP && !_comboAttack || _playerDirection == PLAYERDIRECTION_RIGHT_WALK && !_comboAttack)//기본, 걷기일때 공격
 			{
-				_frameAttackCollision = true;//콤보공격에 사용할 불값
 				_playerDirection = PLAYERDIRECTION_RIGHT_COMBO_ATTACK1;
 				_comboAttackImage1->setFrameX(0);
 				_comboAttackImage1->setFrameY(1);
+			}
+
+			if (_playerDirection == PLAYERDIRECTION_LEFT_COMBO_ATTACK1 && _comboAttack)//2단콤보
+			{
+				_playerDirection = PLAYERDIRECTION_LEFT_COMBO_ATTACK2;
+				_comboAttackImage2->setFrameX(_comboAttackImage2->getMaxFrameX());
+				_comboAttackImage2->setFrameY(0);
+			}
+
+			if (_playerDirection == PLAYERDIRECTION_RIGHT_COMBO_ATTACK1 && _comboAttack)//2단콤보
+			{
+				_playerDirection = PLAYERDIRECTION_RIGHT_COMBO_ATTACK2;
+				_comboAttackImage2->setFrameX(0);
+				_comboAttackImage2->setFrameY(1);
+			}
+
+			if (_playerDirection == PLAYERDIRECTION_LEFT_COMBO_ATTACK2 && _comboAttack2)//3단콤보
+			{
+				_playerDirection = PLAYERDIRECTION_LEFT_COMBO_ATTACK3;
+				_comboAttackImage3->setFrameX(_comboAttackImage3->getMaxFrameX());
+				_comboAttackImage3->setFrameY(0);
+			}
+
+			if (_playerDirection == PLAYERDIRECTION_RIGHT_COMBO_ATTACK2 && _comboAttack2)//3단콤보
+			{
+				_playerDirection = PLAYERDIRECTION_RIGHT_COMBO_ATTACK3;
+				_comboAttackImage3->setFrameX(0);
+				_comboAttackImage3->setFrameY(1);
 			}
 
 			if (_playerDirection == PLAYERDIRECTION_LEFT_MOVE)//달리기
@@ -792,20 +831,20 @@ void player::frameDraw()
 		}
 		break;
 
-	case PLAYERDIRECTION_LEFT_COBMO_ATTACK1:
+	case PLAYERDIRECTION_LEFT_COMBO_ATTACK1:
 		_count++;
 		if (_count % 5 == 0)
 		{
 			_comboAttackImage1->setFrameX(_comboAttackImage1->getFrameX() - 1);
-			_attackRc.set(0, 0, 100, 50);
-			_attackRc.setCenterPos(_rc.left, _rc.getCenterY() - 10);
+			_comboAttackRc1.set(0, 0, 100, 50);
+			_comboAttackRc1.setCenterPos(_rc.left, _rc.getCenterY() - 10);
 			if (_comboAttackImage1->getFrameX() <= 0)
 			{
 				_comboAttackImage1->setFrameX(_comboAttackImage1->getMaxFrameX());
 				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
-				_frameAttackCollision = false;
 				_attack = false;
-				_attackRc.set(0, 0, 0, 0);
+				_comboAttackRc1.set(0, 0, 0, 0);
+				_comboAttack = false;
 			}
 			_count = 0;
 		}
@@ -816,15 +855,15 @@ void player::frameDraw()
 		if (_count % 5 == 0)
 		{
 			_comboAttackImage1->setFrameX(_comboAttackImage1->getFrameX() + 1);
-			_attackRc.set(0, 0, 100, 50);
-			_attackRc.setCenterPos(_rc.right, _rc.getCenterY() - 10);
+			_comboAttackRc1.set(0, 0, 100, 50);
+			_comboAttackRc1.setCenterPos(_rc.right, _rc.getCenterY() - 10);
 			if (_comboAttackImage1->getFrameX() >= _comboAttackImage1->getMaxFrameX())
 			{
 				_comboAttackImage1->setFrameX(0);
 				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
-				_frameAttackCollision = false;
 				_attack = false;
-				_attackRc.set(0, 0, 0, 0);
+				_comboAttackRc1.set(0, 0, 0, 0);
+				_comboAttack = false;
 			}
 			_count = 0;
 		}
@@ -835,14 +874,16 @@ void player::frameDraw()
 		if (_count % 5 == 0)
 		{
 			_comboAttackImage2->setFrameX(_comboAttackImage2->getFrameX() - 1);
-			_attackRc.set(0, 0, 100, 50);
-			_attackRc.setCenterPos(_rc.left, _rc.getCenterY());
+			_comboAttackRc2.set(0, 0, 100, 50);
+			_comboAttackRc2.setCenterPos(_rc.left, _rc.getCenterY());
 			if (_comboAttackImage2->getFrameX() <= 0)
 			{
 				_comboAttackImage2->setFrameX(_comboAttackImage2->getMaxFrameX());
 				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
 				_attack = false;
-				_attackRc.set(0, 0, 0, 0);
+				_comboAttackRc2.set(0, 0, 0, 0);
+				_comboAttack = false;//2단콤보 실행조건 펄스
+				_comboAttack2 = false;//3단콤보 실행조건 펄스
 			}
 			_count = 0;
 		}
@@ -853,14 +894,56 @@ void player::frameDraw()
 		if (_count % 5 == 0)
 		{
 			_comboAttackImage2->setFrameX(_comboAttackImage2->getFrameX() + 1);
-			_attackRc.set(0, 0, 100, 50);
-			_attackRc.setCenterPos(_rc.left, _rc.getCenterY());
+			_comboAttackRc2.set(0, 0, 100, 50);
+			_comboAttackRc2.setCenterPos(_rc.right, _rc.getCenterY());
 			if (_comboAttackImage2->getFrameX() >= _comboAttackImage2->getMaxFrameX())
 			{
 				_comboAttackImage2->setFrameX(0);
 				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
 				_attack = false;
+				_comboAttackRc2.set(0, 0, 0, 0);
+				_comboAttack = false;//2단콤보 실행조건 펄스
+				_comboAttack2 = false;//3단콤보 실행조건 펄스
+			}
+			_count = 0;
+		}
+		break;
+
+	case PLAYERDIRECTION_LEFT_COMBO_ATTACK3:
+		_count++;
+		if (_count % 5 == 0)
+		{
+			_comboAttackImage3->setFrameX(_comboAttackImage3->getFrameX() - 1);
+			_attackRc.set(0, 0, 100, 50);
+			_attackRc.setCenterPos(_rc.left, _rc.getCenterY());
+			if (_comboAttackImage3->getFrameX() <= 0)
+			{
+				_comboAttackImage3->setFrameX(_comboAttackImage3->getMaxFrameX());
+				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
+				_attack = false;
 				_attackRc.set(0, 0, 0, 0);
+				_comboAttack = false;//2단콤보 실행조건 펄스
+				_comboAttack2 = false;//3단콤보 실행조건 펄스
+			}
+			_count = 0;
+		}
+		break;
+
+	case PLAYERDIRECTION_RIGHT_COMBO_ATTACK3:
+		_count++;
+		if (_count % 5 == 0)
+		{
+			_comboAttackImage3->setFrameX(_comboAttackImage3->getFrameX() + 1);
+			_attackRc.set(0, 0, 100, 50);
+			_attackRc.setCenterPos(_rc.right, _rc.getCenterY());
+			if (_comboAttackImage3->getFrameX() >= _comboAttackImage3->getMaxFrameX())
+			{
+				_comboAttackImage3->setFrameX(0);
+				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
+				_attack = false;
+				_attackRc.set(0, 0, 0, 0);
+				_comboAttack = false;//2단콤보 실행조건 펄스
+				_comboAttack2 = false;//3단콤보 실행조건 펄스
 			}
 			_count = 0;
 		}
