@@ -6,7 +6,7 @@ class item : public gameNode
 protected:
 
 	image* ItemImage;
-	RECT _rc;
+	MYRECT _rc;
 	float _x, _y;
 
 public:
@@ -19,6 +19,6 @@ public:
 	void update();
 	void render();
 
-	inline RECT getRect() { return _rc; }
+	inline MYRECT getRect() { return _rc; }
 
 };

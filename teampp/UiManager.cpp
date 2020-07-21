@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "UiManager.h"
+#include "stageManager2.h"
 
 UiManager::UiManager()
 {
@@ -11,9 +12,21 @@ UiManager::~UiManager()
 
 HRESULT UiManager::init()
 {
+
+	//ui 돈 선언
+
+	_UiCoin._UIimage = IMAGEMANAGER->addImage("UICoin", "images/ui/coin.bmp", 32, 32, true, RGB(255, 0, 255));
+	_UiCoin._x = WINSIZEX / 2 - 392;
+	_UiCoin._y = WINSIZEY / 2 - 258;
+	_UiCoin._rc = RectMakeCenter(_UiCoin._x, _UiCoin._y, _UiCoin._UIimage->getWidth(), _UiCoin._UIimage->getHeight());
+
+	//=============================================================================================================================//
+
 	//MiniMap 선언
 
 	_MiniMap._UIimage = IMAGEMANAGER->addImage("MiniMap1", "images/ui/miniMap_0.bmp", 350, 609, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("MiniMap2", "images/ui/miniMap_1.bmp", 350, 609, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("MiniMap3", "images/ui/miniMap_2.bmp", 350, 609, true, RGB(255, 0, 255));
 	_MiniMap._x = WINSIZEX / 2;
 	_MiniMap._y = WINSIZEY + 500;
 	_MiniMap._rc = RectMakeCenter(_MiniMap._x, _MiniMap._y, _MiniMap._UIimage->getWidth(), _MiniMap._UIimage->getHeight());
@@ -25,9 +38,9 @@ HRESULT UiManager::init()
 	//Player Image 선언
 
 
-	_PlayerImage._UIimage = IMAGEMANAGER->addImage("PlayerImage", "images/ui/UI_Kyoko_Portrait.bmp", 100, 113, true, RGB(255, 0, 255));
-	_PlayerImage._x = WINSIZEX / 2 - 485;
-	_PlayerImage._y = WINSIZEY / 2 - 298;
+	_PlayerImage._UIimage = IMAGEMANAGER->addImage("PlayerImage", "images/ui/UI_Kyoko_Portrait2.bmp", 120, 135, true, RGB(255, 0, 255));
+	_PlayerImage._x = WINSIZEX / 2 - 465;
+	_PlayerImage._y = WINSIZEY / 2 - 280;
 	_PlayerImage._rc = RectMakeCenter(_PlayerImage._x, _PlayerImage._y,
 		_PlayerImage._UIimage->getWidth(),
 		_PlayerImage._UIimage->getHeight());
@@ -37,10 +50,10 @@ HRESULT UiManager::init()
 
 	//Player HpbarPoint 선언
 
-	for (int i = 0; i < 29; i++)
+	for (int i = 0; i < 25; i++)
 	{
 		_PlayerHpPoint[i]._UIimage = IMAGEMANAGER->addImage("HPpoint", "images/ui/HP_Point.bmp", 20, 18, true, RGB(255, 0, 255));
-		_PlayerHpPoint[i]._x = WINSIZEX / 2 - 127;
+		_PlayerHpPoint[i]._x = WINSIZEX / 2 - 138;
 		_PlayerHpPoint[i]._y = WINSIZEY / 2 - 325;
 		_PlayerHpPoint[i]._rc = RectMakeCenter(_PlayerHpPoint[i]._x - 11 * i, _PlayerHpPoint[i]._y,
 			_PlayerHpPoint[i]._UIimage->getWidth(),
@@ -51,9 +64,9 @@ HRESULT UiManager::init()
 
 	//Player_Hpbar 선언
 
-	_PlayerHpBar._UIimage = IMAGEMANAGER->addImage("HPbar", "images/ui/UI_Player_bar_Empty.bmp", 350, 79, true, RGB(255, 0, 255));
-	_PlayerHpBar._x = WINSIZEX / 2 - 275;
-	_PlayerHpBar._y = WINSIZEY / 2 - 290;
+	_PlayerHpBar._UIimage = IMAGEMANAGER->addImage("HPbar", "images/ui/UI_Player_bar_Empty3.bmp", 310, 90, true, RGB(255, 0, 255));
+	_PlayerHpBar._x = WINSIZEX / 2 - 255;
+	_PlayerHpBar._y = WINSIZEY / 2 - 285;
 	_PlayerHpBar._rc = RectMakeCenter(_PlayerHpBar._x, _PlayerHpBar._y,
 		_PlayerHpBar._UIimage->getWidth(),
 		_PlayerHpBar._UIimage->getHeight());
@@ -107,14 +120,24 @@ void UiManager::update()
 
 void UiManager::render(HDC hdc)
 {
-	IMAGEMANAGER->findImage("HPbar")->render(hdc, _PlayerHpBar._x - 175, _PlayerHpBar._y - 40);
+												//Player//
+	//=============================================================================================================================//
 
-	IMAGEMANAGER->findImage("PlayerImage")->render(hdc, _PlayerImage._x - 50, _PlayerImage._y - 62);
+	IMAGEMANAGER->findImage("HPbar")->render(hdc, _PlayerHpBar._x - 165, _PlayerHpBar._y - 45);
 
-	for (int i = 0; i < 29; i++)
+	IMAGEMANAGER->findImage("PlayerImage")->render(hdc, _PlayerImage._x - 60, _PlayerImage._y - 78);
+
+	for (int i = 0; i < 25; i++)
 	{
 		IMAGEMANAGER->findImage("HPpoint")->render(hdc, _PlayerHpPoint[i]._x - 11 * i, _PlayerHpPoint[i]._y);
 	}
+
+	//=============================================================================================================================//
+
+
+
+												 //Boss//
+	//=============================================================================================================================//
 
 	//IMAGEMANAGER->findImage("BossHPbar")->render(getMemDC(), _BossHpbar._x - 280, _BossHpbar._y - 42);
 
@@ -122,9 +145,29 @@ void UiManager::render(HDC hdc)
 
 	//IMAGEMANAGER->findImage("BossName")->render(getMemDC(), _BossName._x, _BossName._y);
 
-	IMAGEMANAGER->findImage("MiniMap1")->render(hdc, _MiniMap._x - 175, _MiniMap._y - 305);
+	//=============================================================================================================================//
 
+
+
+	IMAGEMANAGER->findImage("UICoin")->render(hdc, _UiCoin._x - 18, _UiCoin._y - 18);
+	
+
+
+	// 스테이지 이동 시 미니맵 렌더링 변경
+	if (_stageManager2->getNowstage1() == true)
+	{
+		IMAGEMANAGER->findImage("MiniMap1")->render(hdc, _MiniMap._x - 175, _MiniMap._y - 305);
+	}
+	if (_stageManager2->getNowstage2() == true)
+	{
+		IMAGEMANAGER->findImage("MiniMap2")->render(hdc, _MiniMap._x - 175, _MiniMap._y - 305);
+	}
+	if (_stageManager2->getNowstage3() == true)
+	{
+		IMAGEMANAGER->findImage("MiniMap3")->render(hdc, _MiniMap._x - 175, _MiniMap._y - 305);
+	}
 }
+
 
 void UiManager::MiniMapMove()
 {
@@ -180,9 +223,11 @@ void UiManager::MiniMapMove()
 	}
 }
 
+
+//player Hp 감소
 void UiManager::PlayerHpMinus()
 {
-	for (int i = 0; i < 29; i++)
+	for (int i = 0; i < 25; i++)
 	{
 		if (_PlayerHpPoint[i]._y < -400) continue;  // if문의 정수 변경시 감소 속도 조절
 		{

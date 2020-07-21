@@ -11,7 +11,6 @@ private:
 	item* _Item;
 	money* _Money;
 
-
 public:
 
 	itemManager();
@@ -22,6 +21,8 @@ public:
 	void update();
 	void render();
 
+	item* getVItem() { return _Item; }
 
+	
 
 };

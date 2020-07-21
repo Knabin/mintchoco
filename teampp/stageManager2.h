@@ -12,6 +12,13 @@ enum NowStage  //현재 스테이지 상태 정의
 	S3			//스테이지3
 };
 
+struct tagMiniMap
+{
+	image* _MiniMapImage;
+	RECT _rc;
+	float _x, _y;
+
+};
 class stageManager2 : public gameNode
 {
 private:
@@ -29,6 +36,9 @@ private:
 	bool _NowStage1;
 	bool _NowStage2;
 	bool _NowStage3;
+
+	//현재 스테이지의 npc를 가지고 있을 vector
+	vector<class npc*> _vNpcs;
 
 
 public:
@@ -70,7 +80,6 @@ public:
 	stage03* getVStage3() { return _Stage3; }
 
 	image* getPixelImage() { return _currentPixelCollision; } //픽셀이미지 겟
-
 
 };
 

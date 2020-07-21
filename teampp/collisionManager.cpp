@@ -3,6 +3,8 @@
 #include "player.h"
 #include "enemyManager.h"
 #include "stageManager2.h"
+#include "itemManager.h"
+#include "UiManager.h"
 
 HRESULT collisionManager::init()
 {
@@ -13,13 +15,16 @@ HRESULT collisionManager::init()
 void collisionManager::render()
 {
 	stagedoor_collision_image();
-
 }
 
 void collisionManager::update()
 {
 	stagedoor_collision();
+
+	playerHpMinus();
+
 	enemy_collision();//적이랑 플레이어 공격이랑 충돌시
+
 }
 
 void collisionManager::release()
@@ -60,7 +65,7 @@ void collisionManager::stagedoor_collision() //스테이지 이동
 	}	
 }
 
-void collisionManager::stagedoor_collision_image()
+void collisionManager::stagedoor_collision_image()	//스테이지 이동 이미지 변경
 {
 	//1스테이지 -> 2스테이지
 	if (isCollision(_stageManager2->getVStage1()->getRect(), _player->getPlayerRect()) && _stageManager2->getNowstage1() == true)
@@ -87,6 +92,16 @@ void collisionManager::stagedoor_collision_image()
 
 }
 
+
+//충돌시 Hp 감소
+void collisionManager::playerHpMinus()
+{
+	if (isCollision(_itemManager->getVItem()->getRect(), _player->getPlayerRect()))
+	{
+		_uiManager->PlayerHpMinus();
+	}
+
+}
 void collisionManager::enemy_collision()
 {
 	if (isCollision(_enemyManager->getEnemyRc(), _player->getComboAttackRc1()) && _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_COMBO_ATTACK1
@@ -100,4 +115,5 @@ void collisionManager::enemy_collision()
 	{
 		_player->setComboAttack2(true);//3단콤보공격 트루
 	}
+
 }
