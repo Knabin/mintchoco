@@ -83,6 +83,8 @@ void stageManager2::Stage1Move()
 	_NowStage2 = false;
 	_NowStage3 = false;
 	_currentPixelCollision = _Stage1->getPixel();
+	CAMERA->setBackWidth(_currentPixelCollision->getWidth());
+	CAMERA->setBackHeight(_currentPixelCollision->getHeight());
 }
 
 void stageManager2::Stage2Move()
@@ -92,6 +94,8 @@ void stageManager2::Stage2Move()
 	_NowStage2 = true;
 	_NowStage3 = false;
 	_currentPixelCollision = _Stage2->getPixel();
+	CAMERA->setBackWidth(_currentPixelCollision->getWidth());
+	CAMERA->setBackHeight(_currentPixelCollision->getHeight());
 }
 
 void stageManager2::Stage3Move()
@@ -101,4 +105,28 @@ void stageManager2::Stage3Move()
 	_NowStage2 = false;
 	_NowStage3 = true;
 	_currentPixelCollision = _Stage3->getPixel();
+	CAMERA->setBackWidth(_currentPixelCollision->getWidth());
+	CAMERA->setBackHeight(_currentPixelCollision->getHeight());
+}
+
+void stageManager2::Stage1_Stage2_Ok()
+{
+	_Stage1->Stage1RightDoorOpenDraw();
+
+}
+
+void stageManager2::Stage2_Stage3_Ok()
+{
+	_Stage2->Stage2RightDoorOpenDraw();
+}
+
+void stageManager2::Stage2_Stage1_Ok()
+{
+	_Stage2->Stage2LeftDoorOpenDraw();
+}
+
+void stageManager2::Stage3_Stage2_Ok()
+{
+
+
 }

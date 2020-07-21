@@ -51,6 +51,12 @@ public:
 	void Stage2Move();
 	void Stage3Move();
 
+	//stagedoor 충돌 시 이미지가 바뀝니다.
+	void Stage1_Stage2_Ok();
+	void Stage2_Stage3_Ok();
+	void Stage2_Stage1_Ok();
+	void Stage3_Stage2_Ok();
+
 
 	//스테이지 상태 bool값 접근자
 	bool getNowstage1() { return _NowStage1; }
