@@ -12,7 +12,5 @@ public:
 	HRESULT init(string imageName, float x, float y, float speed);
 	void release();
 	void render();
-
-	void direction();
 };
 

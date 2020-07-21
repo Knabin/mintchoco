@@ -186,7 +186,7 @@ void zOrder::sortVector(int start, int end)
 {
 	//cout << start << ", " << end << endl;
 	if (start >= end) return;
-	int pivot = _vObject[(start+end) / 2].z;
+	float pivot = _vObject[(start+end) / 2].z;
 	int left = start;
 	int right = end;
 
@@ -195,7 +195,10 @@ void zOrder::sortVector(int start, int end)
 		// left랑 pivot 비교해서 left가 작으면 ++
 		while (_vObject[left].z < pivot) ++left;
 		// right랑 pivot 비교해서 right가 크면 --
-		while (_vObject[right].z > pivot) --right;
+		while (_vObject[right].z > pivot)
+		{
+			--right;
+		}
 
 		// 두 개 스왑
 		if (left <= right)
