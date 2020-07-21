@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "stage01.h"
+#include "npc.h"
 
 stage01::stage01()
 {

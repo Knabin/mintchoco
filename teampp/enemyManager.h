@@ -23,6 +23,8 @@ private:
 
 	image* _enemyImg;
 
+	MYRECT _enemyRc;
+
 
 public:
 	enemyManager();
@@ -37,6 +39,10 @@ public:
 	void setEnemySchoolBoyMove();
 	void setEnemySchoolGirlMove();
 
+	void removeCheerLeader(int arrNum);
+	void removeSchoolBoy(int arrNum);
+	void removeSchoolGilr(int arrNum);
+
 
 	vector<enemy*> getVCheerLeader() { return _vCheerLeader; }
 	vector<enemy*>::iterator getVICheerleader() { return _viCheerLeader; }
@@ -46,6 +52,8 @@ public:
 
 	vector<enemy*> getVSchoolGirl() { return _vSchoolGirl; }
 	vector<enemy*>::iterator getVISchoolGirl() { return _viSchoolGirl; }
+
+	MYRECT getEnemyRc() { return _enemyRc; }
 
 	void setPlayerPos(float x, float y);
 };

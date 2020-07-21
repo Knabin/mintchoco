@@ -15,7 +15,6 @@ playGround::~playGround()
 HRESULT playGround::init()
 {
 	gameNode::init(true);
-	
 
 	_player = new player;
 	_player->init();
@@ -77,7 +76,6 @@ void playGround::update()
 	_collisionManager->update();
 	_stageManager2->update();
 	_uiManager->update();
-
 
 	_enemyManager->setPlayerPos(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
 

@@ -11,7 +11,8 @@ enemyManager::~enemyManager()
 
 HRESULT enemyManager::init()
 {
-
+	_enemyRc.set(0, 0, 100, 200);
+	_enemyRc.setCenterPos(WINSIZEX / 2, WINSIZEY / 2);
 	return S_OK;
 }
 
@@ -38,6 +39,7 @@ void enemyManager::update()
 
 void enemyManager::render()
 {
+	_enemyRc.render(getMemDC());
 	for (int i = 0; i < _vCheerLeader.size(); i++)
 	{
 		_vCheerLeader[i]->render();
@@ -89,6 +91,21 @@ void enemyManager::setEnemySchoolGirlMove()
 		_tempSchoolGirl->init("schoolgirl_move", x[i], y[i], 2.3f);
 		_vSchoolGirl.push_back(_tempSchoolGirl);
 	}
+}
+
+void enemyManager::removeCheerLeader(int arrNum)
+{
+	_vCheerLeader.erase(_vCheerLeader.begin() + arrNum);
+}
+
+void enemyManager::removeSchoolBoy(int arrNum)
+{
+	_vSchoolBoy.erase(_vSchoolBoy.begin() + arrNum);
+}
+
+void enemyManager::removeSchoolGilr(int arrNum)
+{
+	_vSchoolGirl.erase(_vSchoolGirl.begin() + arrNum);
 }
 
 

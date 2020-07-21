@@ -8,6 +8,7 @@
 
 HRESULT collisionManager::init()
 {
+	_count = 0;
 	return S_OK;
 }
 
@@ -19,7 +20,11 @@ void collisionManager::render()
 void collisionManager::update()
 {
 	stagedoor_collision();
+<<<<<<< HEAD
 	playerHpMinus();
+=======
+	enemy_collision();//적이랑 플레이어 공격이랑 충돌시
+>>>>>>> 6826daa34b45ff52297fd4b911c730c3fddd4343
 }
 
 void collisionManager::release()
@@ -87,6 +92,7 @@ void collisionManager::stagedoor_collision_image()	//스테이지 이동 이미지 변경
 
 }
 
+<<<<<<< HEAD
 //충돌시 Hp 감소
 void collisionManager::playerHpMinus()
 {
@@ -95,4 +101,19 @@ void collisionManager::playerHpMinus()
 		_uiManager->PlayerHpMinus();
 	}
 
+=======
+void collisionManager::enemy_collision()
+{
+	if (isCollision(_enemyManager->getEnemyRc(), _player->getComboAttackRc1()) && _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_COMBO_ATTACK1
+		|| isCollision(_enemyManager->getEnemyRc(), _player->getComboAttackRc1()) && _player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_COMBO_ATTACK1)//적이랑 플레이어 공격이 충돌시
+	{
+		_player->setComboAttack(true);//2단콤보변수 트루
+	}
+
+	if (isCollision(_enemyManager->getEnemyRc(), _player->getComboAttackRc2()) && _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_COMBO_ATTACK2
+		|| isCollision(_enemyManager->getEnemyRc(), _player->getComboAttackRc2()) && _player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_COMBO_ATTACK2)//적이랑 플레이어의 2단콤보 공격 렉트랑 충돌시
+	{
+		_player->setComboAttack2(true);//3단콤보공격 트루
+	}
+>>>>>>> 6826daa34b45ff52297fd4b911c730c3fddd4343
 }

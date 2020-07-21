@@ -1,7 +1,6 @@
 #pragma once
 #include "singletonBase.h"
 #include <bitset>
-#include <list>
 
 #define KEYMAX 256
 
@@ -12,9 +11,6 @@ class keyManager : public singletonBase<keyManager>
 private:
 	bitset<KEYMAX> _keyUp;
 	bitset<KEYMAX> _keyDown;
-
-	list<int> _lKey;
-	list<int>::iterator _liKey;
 
 public:
 	keyManager();
