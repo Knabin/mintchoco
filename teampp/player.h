@@ -5,7 +5,6 @@
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 using namespace std;
 
-#define FRAMEPOSX 20
 #define ULTIMATECOUNT 19
 
 enum PLAYERDIRECTION
@@ -30,6 +29,9 @@ enum PLAYERDIRECTION
 
 	PLAYERDIRECTION_RIGHT_COMBO_ATTACK3,
 	PLAYERDIRECTION_LEFT_COMBO_ATTACK3,
+
+	PLAYERDIRECTION_RIGHT_GUARD,
+	PLAYERDIRECTION_LEFT_GUARD,
 
 	PLAYERDIRECTION_RIGHT_ULTIMATE,
 	PLAYERDIRECTION_LEFT_ULTIMATE,
@@ -62,13 +64,14 @@ private:
 	image* _shadow;//그림자 이미지
 	image* _jumpAttackImage;//플레이어 점프 공격 이미지
 	image* _dashAttackImage;//대쉬 공격 이미지
+	image* _guardImage;//플레이어 방어 이미지
 
 	MYRECT _rc;//플레이어 렉트
 	MYRECT _attackRc;//공격용으로 사용할 렉트
 	MYRECT _comboAttackRc1;//1단계 콤보공격 렉트
 	MYRECT _comboAttackRc2;//2단계 콤보공격 렉트
 
-	float _x, _y, _z;//플레이어 중점좌표
+	float _x, _z;//플레이어 중점좌표
 	float _walkSpeed;//걷는 스피드
 	float _runSpeed;//달리는 스피드
 	float _jumpPower, _gravity;//플레이어 점프값
@@ -83,7 +86,6 @@ private:
 
 	bool _dash;//플레이어가 달리기에 사용할 값
 	bool _jumping;//점프함수를 실행한 이후 렉트값을 계속 변경시켜주기 위한 값
-	bool _dashAndStrongAttackShadow;//대쉬공격, 강공격시 그림자 위치조정을 위한 불값
 	bool _attack;//공격이 실행중인지 아닌지 여부확인용 값
 	bool _ultimate;//궁극기
 	bool _comboAttack;//콤보공격 프레임에 사용할 변수
@@ -107,6 +109,7 @@ public:
 	void upMove();
 	void downMove();
 	void runTime();//키보드 따닥 시간
+	void guard();//플레이어 방어
 
 	void frameDraw();//프레임 재생
 	void hitDamage(int hitDamage) { _hp -= hitDamage; }//플레이어가 받을 데미지
@@ -158,7 +161,6 @@ public:
 	PLAYERDIRECTION getPlayerdirection() { return _playerDirection; }
 	float getPlayerX() { return _x; }
 	float getPlayerZ() { return _z; }
-	//float getPlayerY() { return _y; }
 	MYRECT getPlayerRect() { return _rc; }
 	MYRECT getAttackRc() { return _attackRc; }
 	MYRECT getComboAttackRc1() { return _comboAttackRc1; }
