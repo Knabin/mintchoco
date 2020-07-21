@@ -5,16 +5,39 @@ class camera : public singletonBase<camera>
 {
 	typedef struct tagCameraInfo
 	{
+		HDC hMemDC;
+		HBITMAP hBit;
+		HBITMAP hOBit;
+
 		float x;
 		float y;
 
-		int blackSize;
+		int blackSize;	// 상하단 검은색 부분 크기
 
-		int backWidth;
-		int backHeight;
+		int backWidth;	// 백버퍼 가로 크기
+		int backHeight;	// 백버퍼 세로 크기
 
-		int width;	//보여질 영역 가로 크기
-		int height;	//보여질 영역 세로 크기
+		int width;		// 전체 영역 가로 크기
+		int height;		// 전체 영역 세로 크기
+
+		int viewWidth;	// 보여질 영역(stage) 가로 크기
+		int viewHeight;	// 보여질 영역(stage) 세로 크기
+
+		tagCameraInfo()
+		{
+			hMemDC = NULL;
+			hBit = NULL;
+			hOBit = NULL;
+			x = 0.0f;
+			y = 0.0f;
+			blackSize = 0;
+			backWidth = 0;
+			backHeight = 0;
+			width = 0;
+			height = 0;
+			viewWidth = 0;
+			viewHeight = 0;
+		}
 
 	} CAMERA_INFO, *LPCAMERA_INFO;
 
@@ -38,6 +61,9 @@ public:
 	HRESULT init(int width, int height, int backWidth, int backHeight);
 
 	void release();
+	void render(HDC hdc);
+
+	inline HDC getMemDC() { return _cameraInfo->hMemDC; }
 
 	bool checkCameraX();
 	bool checkCameraY();
@@ -72,13 +98,19 @@ public:
 	inline void setBackWidth(int width) { _cameraInfo->backWidth = width; }
 	inline void setBackHeight(int height) { _cameraInfo->backHeight = height; }
 
+	inline void setViewWidth(int width) { _cameraInfo->viewWidth = width; }
+	inline int getViewWidth() { return _cameraInfo->viewWidth; }
+
+	inline void setViewHeight(int height) { _cameraInfo->viewHeight = height; }
+	inline int getViewHeight() { return _cameraInfo->viewHeight; }
+
 	inline int getLeft() {
-		if (!checkCameraX()) return (_cameraInfo->x <= _cameraInfo->backWidth / 2) ? 0 : _cameraInfo->backWidth - _cameraInfo->width;
-		return _cameraInfo->x - _cameraInfo->width / 2;
+		if (!checkCameraX()) return (_cameraInfo->x <= _cameraInfo->backWidth / 2) ? 0 : _cameraInfo->backWidth - _cameraInfo->viewWidth;
+		return _cameraInfo->x - _cameraInfo->viewWidth / 2;
 	}
 	inline int getTop() {
-		if (!checkCameraY()) return (_cameraInfo->y <= _cameraInfo->backHeight / 2) ? 0 : _cameraInfo->backHeight - _cameraInfo->height;
-		return _cameraInfo->y - _cameraInfo->height / 2;
+		if (!checkCameraY()) return (_cameraInfo->y <= _cameraInfo->backHeight / 2) ? 0 : _cameraInfo->backHeight - _cameraInfo->viewHeight;
+		return _cameraInfo->y - _cameraInfo->viewHeight / 2;
 	}
 
 	inline void setIsShaking(bool isShaking) { _isShaking = isShaking; _shakeAmount = _isShaking ? 6.0f : 0; }

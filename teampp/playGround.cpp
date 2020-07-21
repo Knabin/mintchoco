@@ -89,7 +89,8 @@ void playGround::update()
 
 //그리기 전용
 void playGround::render()
-{	
+{
+	PatBlt(CAMERA->getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
 	PatBlt(getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
 	//=================================================
 	_stageManager2->render();
@@ -97,11 +98,13 @@ void playGround::render()
 	_collisionManager->render();
 	_enemyManager->render();
 	//_itemManager->render();
-	
+
 	ZORDER->render();
+
 	//=============================================
-	_backBuffer->render(getHDC(), 0, CAMERA->getBlackSize() * 0.5,
+	_backBuffer->render(CAMERA->getMemDC(), 0, CAMERA->getBlackSize() * 0.5,
 		CAMERA->getLeft(), CAMERA->getTop() + CAMERA->getShakeNumber(),
-		CAMERA->getWidth(), CAMERA->getHeight());
-	_uiManager->render(getHDC());
+		CAMERA->getViewWidth(), CAMERA->getViewHeight());
+	_uiManager->render(CAMERA->getMemDC());
+	CAMERA->render(getHDC());
 }
