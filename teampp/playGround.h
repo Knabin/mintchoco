@@ -19,8 +19,7 @@ private:
 	UiManager* _uiManager;
 	itemManager* _itemManager;
 
-	image* _test;
-	
+
 public:
 	playGround();
 	~playGround();
