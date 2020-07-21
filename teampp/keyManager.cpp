@@ -27,31 +27,54 @@ bool keyManager::isOnceKeyDown(int key)
 {
 	if (GetAsyncKeyState(key) & 0x8000)
 	{
-		if (!this->getKeyDown()[key])
+		_liKey = find(_lKey.begin(), _lKey.end(), key);
+		
+		// 키가 이미 있다면 true 반환
+		if (_liKey != _lKey.end())
 		{
-			this->setKeyDown(key, true);
-
+			return true;
+		}
+		else
+		{
+			_lKey.push_back(key);
 			return true;
 		}
 	}
-	else this->setKeyDown(key, false);
+	else
+	{
+		_liKey = find(_lKey.begin(), _lKey.end(), key);
+
+		if (_liKey != _lKey.end())
+		{
+			_lKey.erase(_liKey);
+		}
+	}
 
 	return false;
 }
 
 bool keyManager::isOnceKeyUp(int key)
 {
-	if (GetAsyncKeyState(key) & 0x8000) this->setKeyUp(key, true);
+	if (GetAsyncKeyState(key) & 0x8000)
+	{
+		_liKey = find(_lKey.begin(), _lKey.end(), key);
+
+		// 찾지 못했다면 새로 추가
+		if (_liKey == _lKey.end())
+		{
+			_lKey.push_back(key);
+		}
+	}
 	else
 	{
-		if (this->getKeyUp()[key])
-		{
-			this->setKeyUp(key, false);
+		_liKey = find(_lKey.begin(), _lKey.end(), key);
 
+		if (_liKey != _lKey.end())
+		{
+			_lKey.erase(_liKey);
 			return true;
 		}
 	}
-
 	return false;
 }
 

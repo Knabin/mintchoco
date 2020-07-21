@@ -9,8 +9,8 @@ class camera : public singletonBase<camera>
 		HBITMAP hBit;
 		HBITMAP hOBit;
 
-		float x;
-		float y;
+		float x;		// 카메라 center x
+		float y;		// 카메라 center y
 
 		int blackSize;	// 상하단 검은색 부분 크기
 
@@ -45,36 +45,48 @@ private:
 	LPCAMERA_INFO _cameraInfo;
 
 
-	bool _isShaking;
-	float _shakeAmount;
-	int _shakeCount;
+	bool _isShaking;		// 흔들리고 있는지
+	float _shakeAmount;		// 흔들림 세기
+	int _shakeCount;		// 흔들림 시간
 	int _flag = -1;
 
-	bool _isFixed;
-	int _fixedLeft;
-	int _fixedTop;
+	bool _isFixed;			// 카메라가 고정되었는지
+	int _fixedLeft;			// 고정된 left
+	int _fixedTop;			// 고정된 top
 
 public:
 	camera();
 	~camera();
 
+	// 카메라 초기화 함수(카메라 width(윈도우 X), 카메라 height(윈도우 Y), 배경 width, 배경 height)
 	HRESULT init(int width, int height, int backWidth, int backHeight);
 
 	void release();
 	void render(HDC hdc);
 
-	inline HDC getMemDC() { return _cameraInfo->hMemDC; }
-
+	// 카메라 X축을 체크해야 하는지
 	bool checkCameraX();
+	// 카메라 Y축을 체크해야 하는지
 	bool checkCameraY();
 
+	// 흔들 때 필요한 값을 설정함, 카메라 흔들어야 할 때 해당 함수를 호출하세요
 	void cameraShake();
+	// 흔들 때 필요한 값이 설정되어 있다면 해당 값에 따라서 화면이 흔들림
 	void shakeStart();
 
+	// 현재 카메라 위치 기준으로 카메라 고정
 	void cameraFixed();
+	// 특정 좌표 기준으로 카메라 고정(left, top)
 	void cameraFixed(float x, float y);
 
+	// 자연스럽게 따라오는 카메라(centerX, centerY)
 	void changePosition(float x, float y);
+
+
+	// =======================================================
+	// ##				카메라 getter / setter				##
+
+	inline HDC getMemDC() { return _cameraInfo->hMemDC; }
 
 	inline float getShakeNumber() { return _shakeAmount * _flag; }
 
@@ -122,5 +134,7 @@ public:
 	inline bool getIsFixed() { return _isFixed; }
 
 	inline RECT getRect() { return RectMakeCenter(_cameraInfo->x, _cameraInfo->y, _cameraInfo->width, _cameraInfo->height); }
+
+	// =======================================================
 };
 
