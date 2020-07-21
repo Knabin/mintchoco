@@ -219,6 +219,9 @@
     <ClInclude Include="schoolgirl.h">
       <Filter>playGround\taeyong</Filter>
     </ClInclude>
+    <ClInclude Include="npc.h">
+      <Filter>playGround\nabin</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -352,6 +355,9 @@
     </ClCompile>
     <ClCompile Include="schoolgirl.cpp">
       <Filter>playGround\taeyong</Filter>
+    </ClCompile>
+    <ClCompile Include="npc.cpp">
+      <Filter>playGround\nabin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

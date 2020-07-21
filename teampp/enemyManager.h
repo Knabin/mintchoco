@@ -23,6 +23,8 @@ private:
 
 	image* _enemyImg;
 
+	MYRECT _enemyRc;
+
 
 public:
 	enemyManager();
@@ -50,6 +52,8 @@ public:
 
 	vector<enemy*> getVSchoolGirl() { return _vSchoolGirl; }
 	vector<enemy*>::iterator getVISchoolGirl() { return _viSchoolGirl; }
+
+	MYRECT getEnemyRc() { return _enemyRc; }
 
 	void setPlayerPos(float x, float y);
 };

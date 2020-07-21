@@ -15,7 +15,6 @@ playGround::~playGround()
 HRESULT playGround::init()
 {
 	gameNode::init(true);
-	
 
 	_player = new player;
 	_player->init();
@@ -29,28 +28,29 @@ HRESULT playGround::init()
 	_uiManager = new UiManager;
 	_uiManager->init();
 
-	//_itemManager = new itemManager;
-	//_itemManager->init();
+	_stageManager2 = new stageManager2;
+	_stageManager2->init();
+
+	_itemManager = new itemManager;
+	_itemManager->init();
 
 
 	_collisionManager->setPlayerMemoryAddressLink(_player);
 	_collisionManager->setEnemyManagerMemoryAddressLink(_enemyManager);
+	_collisionManager->setStageManager2MemoryAddressLink(_stageManager2);
 
 
 	_enemyManager->setEnemyCheerMove();
 	_enemyManager->setEnemySchoolBoyMove();
 	_enemyManager->setEnemySchoolGirlMove();
 
-
-	_stageManger = new stageManager;
-	_stageManger->init();
 	// ==========================================
 	// ## 카메라 중점 초기화 ##
 	// ==========================================
 	// 플레이어 센터나 테스트용 렉트(MYRECT) 만들어서 사용하세요
 	CAMERA->setPosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
-	CAMERA->setBackWidth(_stageManger->getPixelImage()->getWidth());
-	CAMERA->setBackHeight(_stageManger->getPixelImage()->getHeight());
+	CAMERA->setBackWidth(_stageManager2->getPixelImage()->getWidth());
+	CAMERA->setBackHeight(_stageManager2->getPixelImage()->getHeight());
 
 	return S_OK;
 }
@@ -58,7 +58,7 @@ HRESULT playGround::init()
 //메모리 해제
 void playGround::release()
 {
-	_stageManger->release();
+	_stageManager2->release();
 	_player->release();
 	_enemyManager->release();
 }
@@ -70,11 +70,23 @@ void playGround::update()
 	_enemyManager->update();
 	_player->update();
 	_collisionManager->update();
-	_stageManger->update();
+	_stageManager2->update();
 	_uiManager->update();
 
-
 	_enemyManager->setPlayerPos(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+
+	if (KEYMANAGER->isOnceKeyDown('1'))
+	{
+		CAMERA->cameraFixed();
+	}
+	if (KEYMANAGER->isOnceKeyDown('2'))
+	{
+		CAMERA->cameraFixed(200, 200);
+	}
+	if (KEYMANAGER->isOnceKeyDown('3'))
+	{
+		CAMERA->setIsFixed(false);
+	}
 	// ==========================================
 	// ## 카메라 중점 초기화 ##
 	// ==========================================
@@ -83,22 +95,27 @@ void playGround::update()
 	//CAMERA->setPosition(WINSIZEX/2, WINSIZEY/2);
 	// 따라오는 카메라
 	CAMERA->changePosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+	
 }
 
 //그리기 전용
 void playGround::render()
-{	
+{
+	PatBlt(CAMERA->getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
 	PatBlt(getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
 	//=================================================
-	_stageManger->render();
+	_stageManager2->render();
 	_player->render();
+	_collisionManager->render();
 	_enemyManager->render();
-	_uiManager->render();
-	//_itemManager->render();
+	_itemManager->render();
+
 	ZORDER->render();
 
 	//=============================================
-	_backBuffer->render(getHDC(), 0, CAMERA->getBlackSize() * 0.5,
+	_backBuffer->render(CAMERA->getMemDC(), 0, CAMERA->getBlackSize() * 0.5,
 		CAMERA->getLeft(), CAMERA->getTop() + CAMERA->getShakeNumber(),
-		CAMERA->getWidth(), CAMERA->getHeight());
+		CAMERA->getViewWidth(), CAMERA->getViewHeight());
+	_uiManager->render(CAMERA->getMemDC());
+	CAMERA->render(getHDC());
 }
