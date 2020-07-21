@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "stageManager2.h"
+#include "npc.h"
 
 stageManager2::stageManager2()
 {
@@ -45,11 +46,15 @@ void stageManager2::release()
 
 void stageManager2::update()
 {
+	for (int i = 0; i < _vNpcs.size(); ++i)
+		_vNpcs[i]->update();
 }
 
 void stageManager2::render()
 {
 	NowStage();
+	for (int i = 0; i < _vNpcs.size(); ++i)
+		_vNpcs[i]->render();
 }
 
 void stageManager2::NowStage()
@@ -85,6 +90,8 @@ void stageManager2::Stage1Move()
 	_currentPixelCollision = _Stage1->getPixel();
 	CAMERA->setBackWidth(_currentPixelCollision->getWidth());
 	CAMERA->setBackHeight(_currentPixelCollision->getHeight());
+
+	_vNpcs = _Stage1->getNPCs();
 }
 
 void stageManager2::Stage2Move()
@@ -96,6 +103,8 @@ void stageManager2::Stage2Move()
 	_currentPixelCollision = _Stage2->getPixel();
 	CAMERA->setBackWidth(_currentPixelCollision->getWidth());
 	CAMERA->setBackHeight(_currentPixelCollision->getHeight());
+
+	_vNpcs = _Stage2->getNPCs();
 }
 
 void stageManager2::Stage3Move()
@@ -107,6 +116,8 @@ void stageManager2::Stage3Move()
 	_currentPixelCollision = _Stage3->getPixel();
 	CAMERA->setBackWidth(_currentPixelCollision->getWidth());
 	CAMERA->setBackHeight(_currentPixelCollision->getHeight());
+
+	_vNpcs = _Stage3->getNPCs();
 }
 
 void stageManager2::Stage1_Stage2_Ok()

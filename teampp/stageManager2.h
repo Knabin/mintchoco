@@ -30,6 +30,9 @@ private:
 	bool _NowStage2;
 	bool _NowStage3;
 
+	//현재 스테이지의 npc를 가지고 있을 vector
+	vector<class npc*> _vNpcs;
+
 
 public:
 
