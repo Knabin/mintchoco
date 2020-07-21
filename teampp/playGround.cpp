@@ -39,6 +39,10 @@ HRESULT playGround::init()
 	_collisionManager->setPlayerMemoryAddressLink(_player);
 	_collisionManager->setEnemyManagerMemoryAddressLink(_enemyManager);
 	_collisionManager->setStageManager2MemoryAddressLink(_stageManager2);
+	_collisionManager->setItemManagerMemoryAddressLink(_itemManager);
+	_collisionManager->setUiManagerMemoryAddressLink(_uiManager);
+
+	_uiManager->setStageManager2MemoryAddressLink(_stageManager2);
 
 
 	_enemyManager->setEnemyCheerMove();

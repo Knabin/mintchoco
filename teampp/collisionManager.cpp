@@ -3,6 +3,8 @@
 #include "player.h"
 #include "enemyManager.h"
 #include "stageManager2.h"
+#include "itemManager.h"
+#include "UiManager.h"
 
 HRESULT collisionManager::init()
 {
@@ -12,12 +14,12 @@ HRESULT collisionManager::init()
 void collisionManager::render()
 {
 	stagedoor_collision_image();
-
 }
 
 void collisionManager::update()
 {
 	stagedoor_collision();
+	playerHpMinus();
 }
 
 void collisionManager::release()
@@ -58,7 +60,7 @@ void collisionManager::stagedoor_collision() //스테이지 이동
 	}	
 }
 
-void collisionManager::stagedoor_collision_image()
+void collisionManager::stagedoor_collision_image()	//스테이지 이동 이미지 변경
 {
 	//1스테이지 -> 2스테이지
 	if (isCollision(_stageManager2->getVStage1()->getRect(), _player->getPlayerRect()) && _stageManager2->getNowstage1() == true)
@@ -81,6 +83,16 @@ void collisionManager::stagedoor_collision_image()
 	if (isCollision(_stageManager2->getVStage3()->getRect(), _player->getPlayerRect()) && _stageManager2->getNowstage3() == true)
 	{
 		_stageManager2->Stage3_Stage2_Ok();
+	}
+
+}
+
+//충돌시 Hp 감소
+void collisionManager::playerHpMinus()
+{
+	if (isCollision(_itemManager->getVItem()->getRect(), _player->getPlayerRect()))
+	{
+		_uiManager->PlayerHpMinus();
 	}
 
 }

@@ -45,6 +45,7 @@ void stageManager2::release()
 
 void stageManager2::update()
 {
+
 }
 
 void stageManager2::render()
@@ -58,7 +59,7 @@ void stageManager2::NowStage()
 	{
 		case S1:
 		{
-			_Stage1->render();
+			_Stage1->render();	
 		}
 		break;
 

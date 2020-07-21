@@ -16,8 +16,7 @@ private:
 	tagStage1 _Stage1PixelBackGround;   //1스테이지 픽셀 배경 화면
 	tagStage1 _Stage1BackGround;		//1스테이지 배경 화면
 	tagStage1 _Stage1RightDoor;			//1스테이지 RightDoor
-	tagStage1 _Stage1RightDoorOpen;		//1스테이지 RightDoor 이미지 변경
-
+	tagStage1 _Stage1RightDoorOpen;		//1스테이지 RightDoor 이미지 변경]
 
 public:
 

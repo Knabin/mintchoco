@@ -11,7 +11,9 @@ itemManager::~itemManager()
 
 HRESULT itemManager::init()
 {
-	
+	_Item = new item;
+	_Item->init();
+
 	return S_OK;
 }
 
@@ -25,5 +27,6 @@ void itemManager::update()
 
 void itemManager::render()
 {
-
+	_Item->render();
 }
+
