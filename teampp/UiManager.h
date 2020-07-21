@@ -1,9 +1,9 @@
 #pragma once
 #include "gameNode.h"
-#define PLAYERHPPOINT 25
+#define PLAYERHPPOINT 26
 
 
-class stageManager2;
+class stageManager;
 
 enum MiniMapState // 미니맵 상태
 {
@@ -34,7 +34,7 @@ private:
 
 	tagUIbar _MiniMap;						  //미니맵
 
-	stageManager2* _stageManager2;			//stageManager 전방선언
+	stageManager* _stageManager;			//stageManager 전방선언
 
 
 public:
@@ -51,6 +51,6 @@ public:
 	void PlayerHpMinus();					//PlayerHpPoint 감소 함수
 
 
-	void setStageManager2MemoryAddressLink(stageManager2* stageManager) { _stageManager2 = stageManager; }
+	void setStageManagerMemoryAddressLink(stageManager* stageManager) { _stageManager = stageManager; }
 
 };

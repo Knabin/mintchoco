@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "UiManager.h"
-#include "stageManager2.h"
+#include "stageManager.h"
 
 UiManager::UiManager()
 {
@@ -17,16 +17,16 @@ HRESULT UiManager::init()
 
 	_UiCoin._UIimage = IMAGEMANAGER->addImage("UICoin", "images/ui/coin.bmp", 32, 32, true, RGB(255, 0, 255));
 	_UiCoin._x = WINSIZEX / 2 - 392;
-	_UiCoin._y = WINSIZEY / 2 - 258;
+	_UiCoin._y = WINSIZEY / 2 - 251;
 	_UiCoin._rc = RectMakeCenter(_UiCoin._x, _UiCoin._y, _UiCoin._UIimage->getWidth(), _UiCoin._UIimage->getHeight());
 
 	//=============================================================================================================================//
 
 	//MiniMap 선언
 
-	_MiniMap._UIimage = IMAGEMANAGER->addImage("MiniMap1", "images/ui/miniMap_0.bmp", 350, 609, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("MiniMap2", "images/ui/miniMap_1.bmp", 350, 609, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("MiniMap3", "images/ui/miniMap_2.bmp", 350, 609, true, RGB(255, 0, 255));
+	_MiniMap._UIimage = IMAGEMANAGER->addImage("MiniMap1", "images/ui/miniMap_01.bmp", 350, 609, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("MiniMap2", "images/ui/miniMap_02.bmp", 350, 609, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("MiniMap3", "images/ui/miniMap_03.bmp", 350, 609, true, RGB(255, 0, 255));
 	_MiniMap._x = WINSIZEX / 2;
 	_MiniMap._y = WINSIZEY + 500;
 	_MiniMap._rc = RectMakeCenter(_MiniMap._x, _MiniMap._y, _MiniMap._UIimage->getWidth(), _MiniMap._UIimage->getHeight());
@@ -37,8 +37,7 @@ HRESULT UiManager::init()
 
 	//Player Image 선언
 
-
-	_PlayerImage._UIimage = IMAGEMANAGER->addImage("PlayerImage", "images/ui/UI_Kyoko_Portrait2.bmp", 120, 135, true, RGB(255, 0, 255));
+	_PlayerImage._UIimage = IMAGEMANAGER->addImage("PlayerImage", "images/ui/UI_Kyoko_Portrait.bmp", 120, 135, true, RGB(255, 0, 255));
 	_PlayerImage._x = WINSIZEX / 2 - 465;
 	_PlayerImage._y = WINSIZEY / 2 - 280;
 	_PlayerImage._rc = RectMakeCenter(_PlayerImage._x, _PlayerImage._y,
@@ -50,11 +49,11 @@ HRESULT UiManager::init()
 
 	//Player HpbarPoint 선언
 
-	for (int i = 0; i < 25; i++)
+	for (int i = 0; i < 26; i++)
 	{
 		_PlayerHpPoint[i]._UIimage = IMAGEMANAGER->addImage("HPpoint", "images/ui/HP_Point.bmp", 20, 18, true, RGB(255, 0, 255));
-		_PlayerHpPoint[i]._x = WINSIZEX / 2 - 138;
-		_PlayerHpPoint[i]._y = WINSIZEY / 2 - 325;
+		_PlayerHpPoint[i]._x = WINSIZEX / 2 - 127;
+		_PlayerHpPoint[i]._y = WINSIZEY / 2 - 320;
 		_PlayerHpPoint[i]._rc = RectMakeCenter(_PlayerHpPoint[i]._x - 11 * i, _PlayerHpPoint[i]._y,
 			_PlayerHpPoint[i]._UIimage->getWidth(),
 			_PlayerHpPoint[i]._UIimage->getHeight());
@@ -64,9 +63,9 @@ HRESULT UiManager::init()
 
 	//Player_Hpbar 선언
 
-	_PlayerHpBar._UIimage = IMAGEMANAGER->addImage("HPbar", "images/ui/UI_Player_bar_Empty3.bmp", 310, 90, true, RGB(255, 0, 255));
+	_PlayerHpBar._UIimage = IMAGEMANAGER->addImage("HPbar", "images/ui/UI_Player_bar_Empty.bmp", 322, 92, true, RGB(255, 0, 255));
 	_PlayerHpBar._x = WINSIZEX / 2 - 255;
-	_PlayerHpBar._y = WINSIZEY / 2 - 285;
+	_PlayerHpBar._y = WINSIZEY / 2 - 280;
 	_PlayerHpBar._rc = RectMakeCenter(_PlayerHpBar._x, _PlayerHpBar._y,
 		_PlayerHpBar._UIimage->getWidth(),
 		_PlayerHpBar._UIimage->getHeight());
@@ -127,7 +126,7 @@ void UiManager::render(HDC hdc)
 
 	IMAGEMANAGER->findImage("PlayerImage")->render(hdc, _PlayerImage._x - 60, _PlayerImage._y - 78);
 
-	for (int i = 0; i < 25; i++)
+	for (int i = 0; i < 26; i++)
 	{
 		IMAGEMANAGER->findImage("HPpoint")->render(hdc, _PlayerHpPoint[i]._x - 11 * i, _PlayerHpPoint[i]._y);
 	}
@@ -154,15 +153,15 @@ void UiManager::render(HDC hdc)
 
 
 	// 스테이지 이동 시 미니맵 렌더링 변경
-	if (_stageManager2->getNowstage1() == true)
+	if (_stageManager->getNowstage1() == true)
 	{
 		IMAGEMANAGER->findImage("MiniMap1")->render(hdc, _MiniMap._x - 175, _MiniMap._y - 305);
 	}
-	if (_stageManager2->getNowstage2() == true)
+	if (_stageManager->getNowstage2() == true)
 	{
 		IMAGEMANAGER->findImage("MiniMap2")->render(hdc, _MiniMap._x - 175, _MiniMap._y - 305);
 	}
-	if (_stageManager2->getNowstage3() == true)
+	if (_stageManager->getNowstage3() == true)
 	{
 		IMAGEMANAGER->findImage("MiniMap3")->render(hdc, _MiniMap._x - 175, _MiniMap._y - 305);
 	}
@@ -227,11 +226,11 @@ void UiManager::MiniMapMove()
 //player Hp 감소
 void UiManager::PlayerHpMinus()
 {
-	for (int i = 0; i < 25; i++)
+	for (int i = 0; i < 26; i++)
 	{
 		if (_PlayerHpPoint[i]._y < -400) continue;  // if문의 정수 변경시 감소 속도 조절
 		{
-			_PlayerHpPoint[i]._y -= 50;
+			_PlayerHpPoint[i]._y -= 60;
 			break;
 		}
 	}

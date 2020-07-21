@@ -28,8 +28,8 @@ HRESULT playGround::init()
 	_uiManager = new UiManager;
 	_uiManager->init();
 
-	_stageManager2 = new stageManager2;
-	_stageManager2->init();
+	_stageManager = new stageManager;
+	_stageManager->init();
 
 	_itemManager = new itemManager;
 	_itemManager->init();
@@ -37,11 +37,11 @@ HRESULT playGround::init()
 
 	_collisionManager->setPlayerMemoryAddressLink(_player);
 	_collisionManager->setEnemyManagerMemoryAddressLink(_enemyManager);
-	_collisionManager->setStageManager2MemoryAddressLink(_stageManager2);
+	_collisionManager->setStageManagerMemoryAddressLink(_stageManager);
 	_collisionManager->setItemManagerMemoryAddressLink(_itemManager);
 	_collisionManager->setUiManagerMemoryAddressLink(_uiManager);
 
-	_uiManager->setStageManager2MemoryAddressLink(_stageManager2);
+	_uiManager->setStageManagerMemoryAddressLink(_stageManager);
 
 
 	_enemyManager->setEnemyCheerMove();
@@ -53,8 +53,8 @@ HRESULT playGround::init()
 	// ==========================================
 	// 플레이어 센터나 테스트용 렉트(MYRECT) 만들어서 사용하세요
 	CAMERA->setPosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
-	CAMERA->setBackWidth(_stageManager2->getPixelImage()->getWidth());
-	CAMERA->setBackHeight(_stageManager2->getPixelImage()->getHeight());
+	CAMERA->setBackWidth(_stageManager->getPixelImage()->getWidth());
+	CAMERA->setBackHeight(_stageManager->getPixelImage()->getHeight());
 
 	return S_OK;
 }
@@ -62,7 +62,7 @@ HRESULT playGround::init()
 //메모리 해제
 void playGround::release()
 {
-	_stageManager2->release();
+	_stageManager->release();
 	_player->release();
 	_enemyManager->release();
 }
@@ -74,7 +74,7 @@ void playGround::update()
 	_enemyManager->update();
 	_player->update();
 	_collisionManager->update();
-	_stageManager2->update();
+	_stageManager->update();
 	_uiManager->update();
 
 	_enemyManager->setPlayerPos(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
@@ -108,7 +108,7 @@ void playGround::render()
 	PatBlt(CAMERA->getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
 	PatBlt(getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
 	//=================================================
-	_stageManager2->render();
+	_stageManager->render();
 	_player->render();
 	_collisionManager->render();
 	_enemyManager->render();

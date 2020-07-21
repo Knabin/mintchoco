@@ -2,7 +2,7 @@
 #include "collisionManager.h"
 #include "player.h"
 #include "enemyManager.h"
-#include "stageManager2.h"
+#include "stageManager.h"
 #include "itemManager.h"
 #include "UiManager.h"
 
@@ -36,30 +36,30 @@ void collisionManager::stagedoor_collision() //스테이지 이동
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{	
 		//1스테이지 -> 2스테이지
-		if (isCollision(_stageManager2->getVStage1()->getRect(), _player->getPlayerRect()) && _stageManager2->getNowstage1() == true)
+		if (isCollision(_stageManager->getVStage1()->getRect(), _player->getPlayerRect()) && _stageManager->getNowstage1() == true)
 		{
-			_stageManager2->Stage2Move();
+			_stageManager->Stage2Move();
 			_player->playerPosition_1at2();
 		}
 
 		//2스테이지 -> 3스테이지
-		if (isCollision(_stageManager2->getVStage2()->getRect(), _player->getPlayerRect()) && _stageManager2->getNowstage2() == true)
+		if (isCollision(_stageManager->getVStage2()->getRect(), _player->getPlayerRect()) && _stageManager->getNowstage2() == true)
 		{
-			_stageManager2->Stage3Move();
+			_stageManager->Stage3Move();
 			_player->playerPosition_2at3();			
 		}
 
 		//2스테이지 -> 1스테이지
-		if (isCollision(_stageManager2->getVStage2()->getRect2(), _player->getPlayerRect()) && _stageManager2->getNowstage2() == true)
+		if (isCollision(_stageManager->getVStage2()->getRect2(), _player->getPlayerRect()) && _stageManager->getNowstage2() == true)
 		{
-			_stageManager2->Stage1Move();
+			_stageManager->Stage1Move();
 			_player->playerPosition_2at1();
 		}
 
 		//3스테이지 -> 2스테이지
-		if (isCollision(_stageManager2->getVStage3()->getRect(), _player->getPlayerRect()) && _stageManager2->getNowstage3() == true)
+		if (isCollision(_stageManager->getVStage3()->getRect(), _player->getPlayerRect()) && _stageManager->getNowstage3() == true)
 		{
-			_stageManager2->Stage2Move();
+			_stageManager->Stage2Move();
 			_player->playerPosition_3at2();
 		}
 	}	
@@ -68,26 +68,26 @@ void collisionManager::stagedoor_collision() //스테이지 이동
 void collisionManager::stagedoor_collision_image()	//스테이지 이동 이미지 변경
 {
 	//1스테이지 -> 2스테이지
-	if (isCollision(_stageManager2->getVStage1()->getRect(), _player->getPlayerRect()) && _stageManager2->getNowstage1() == true)
+	if (isCollision(_stageManager->getVStage1()->getRect(), _player->getPlayerRect()) && _stageManager->getNowstage1() == true)
 	{
-		_stageManager2->Stage1_Stage2_Ok();
+		_stageManager->Stage1_Stage2_Ok();
 	}
 
 	//2스테이지 -> 3스테이지
-	if (isCollision(_stageManager2->getVStage2()->getRect(), _player->getPlayerRect()) && _stageManager2->getNowstage2() == true)
+	if (isCollision(_stageManager->getVStage2()->getRect(), _player->getPlayerRect()) && _stageManager->getNowstage2() == true)
 	{
-		_stageManager2->Stage2_Stage3_Ok();
+		_stageManager->Stage2_Stage3_Ok();
 	}
 
 	//2스테이지 -> 1스테이지
-	if (isCollision(_stageManager2->getVStage2()->getRect2(), _player->getPlayerRect()) && _stageManager2->getNowstage2() == true)
+	if (isCollision(_stageManager->getVStage2()->getRect2(), _player->getPlayerRect()) && _stageManager->getNowstage2() == true)
 	{
-		_stageManager2->Stage2_Stage1_Ok();
+		_stageManager->Stage2_Stage1_Ok();
 	}
 	//3스테이지 -> 2스테이지
-	if (isCollision(_stageManager2->getVStage3()->getRect(), _player->getPlayerRect()) && _stageManager2->getNowstage3() == true)
+	if (isCollision(_stageManager->getVStage3()->getRect(), _player->getPlayerRect()) && _stageManager->getNowstage3() == true)
 	{
-		_stageManager2->Stage3_Stage2_Ok();
+		_stageManager->Stage3_Stage2_Ok();
 	}
 
 }

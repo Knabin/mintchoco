@@ -1,27 +1,45 @@
 #include "stdafx.h"
 #include "stageManager.h"
+#include "npc.h"
+
+stageManager::stageManager()
+{
+}
+
+stageManager::~stageManager()
+{
+}
 
 HRESULT stageManager::init()
 {
-	//스테이지 초기화
-	_stage1 = new stage1;
-	_stage2 = new stage2;
-	_stage3 = new stage3;
-	_stage1->init();
-	_stageSelect = STAGE1;
-	_currentPixelCollision = _stage1->getPixel();
+	_Stage1 = new stage01;
+	_Stage1->init();
+
+	_Stage2 = new stage02;
+	_Stage2->init();
+
+	_Stage3 = new stage03;
+	_Stage3->init();
+
+	_currentPixelCollision = _Stage1->getPixel();
+
+	_NowStage = S1;
+	_NowStage1 = true;
+	_NowStage2 = false;
+	_NowStage3 = false;
+
 	return S_OK;
 }
 
 void stageManager::release()
 {
-	_stage1->release();
-	_stage2->release();
-	_stage3->release();
+	_Stage1->release();
+	_Stage2->release();
+	_Stage3->release();
 
-	SAFE_DELETE(_stage1);
-	SAFE_DELETE(_stage2);
-	SAFE_DELETE(_stage3);
+	SAFE_DELETE(_Stage1);
+	SAFE_DELETE(_Stage2);
+	SAFE_DELETE(_Stage3);
 
 	ReleaseDC(_hWnd, getMemDC());
 }
@@ -29,82 +47,99 @@ void stageManager::release()
 void stageManager::update()
 {
 
-	//스테이지 셀렉트
-	switch (_stageSelect)
-	{
-	case 0:
-		_stage1->update();
-		break;
-	case 1:
-
-		_stage2->update();
-		break;
-	case 2:
-	
-		_stage3->update();
-		break;
-	}
-
-	//스테이지 변경 test
-	if (KEYMANAGER->isOnceKeyDown(VK_F1))
-	{
-		stageClear();
-		_stage1->init();
-		_stageSelect = STAGE1;
-		_currentPixelCollision = _stage1->getPixel();
-	}
-	if (KEYMANAGER->isOnceKeyDown(VK_F2))
-	{
-		stageClear();
-		_stage2->init();
-		_stageSelect = STAGE2;
-		_currentPixelCollision = _stage2->getPixel();
-	}
-	if (KEYMANAGER->isOnceKeyDown(VK_F3))
-	{
-		stageClear();
-		_stage3->init();
-		_stageSelect = STAGE3;
-		_currentPixelCollision = _stage3->getPixel();
-	}
 
 
-	
+	for (int i = 0; i < _vNpcs.size(); ++i)
+		_vNpcs[i]->update();
+
 }
 
 void stageManager::render()
 {
-	//스테이지 렌더
-	switch (_stageSelect)
-	{
-	case 0:
-		_stage1->render();
-		break;
-	case 1:
-		_stage2->render();
-		break;
-	case 2:
-		_stage3->render();
-		break;
-	}
-
+	NowStage();
+	for (int i = 0; i < _vNpcs.size(); ++i)
+		_vNpcs[i]->render();
 }
 
-void stageManager::stageClear()
+void stageManager::NowStage()
 {
-	switch (_stageSelect)
+	switch (_NowStage)
 	{
-	case 0:
-		_stage1->release();
-		
+		case S1:
+		{
+			_Stage1->render();	
+		}
 		break;
-	case 1:
-		_stage2->release();
+
+		case S2:
+		{
+			_Stage2->render();
+		}
 		break;
-	case 2:
-		_stage3->release();
+
+		case S3:
+		{
+			_Stage3->render();
+		}
 		break;
 	}
+}
 
-	ReleaseDC(_hWnd, getMemDC());
+void stageManager::Stage1Move()
+{
+	_NowStage = S1;
+	_NowStage1 = true;
+	_NowStage2 = false;
+	_NowStage3 = false;
+	_currentPixelCollision = _Stage1->getPixel();
+	CAMERA->setBackWidth(_currentPixelCollision->getWidth());
+	CAMERA->setBackHeight(_currentPixelCollision->getHeight());
+
+	_vNpcs = _Stage1->getNPCs();
+}
+
+void stageManager::Stage2Move()
+{
+	_NowStage = S2;
+	_NowStage1 = false;
+	_NowStage2 = true;
+	_NowStage3 = false;
+	_currentPixelCollision = _Stage2->getPixel();
+	CAMERA->setBackWidth(_currentPixelCollision->getWidth());
+	CAMERA->setBackHeight(_currentPixelCollision->getHeight());
+
+	_vNpcs = _Stage2->getNPCs();
+}
+
+void stageManager::Stage3Move()
+{
+	_NowStage = S3;
+	_NowStage1 = false;
+	_NowStage2 = false;
+	_NowStage3 = true;
+	_currentPixelCollision = _Stage3->getPixel();
+	CAMERA->setBackWidth(_currentPixelCollision->getWidth());
+	CAMERA->setBackHeight(_currentPixelCollision->getHeight());
+
+	_vNpcs = _Stage3->getNPCs();
+}
+
+void stageManager::Stage1_Stage2_Ok()
+{
+	_Stage1->Stage1RightDoorOpenDraw();
+}
+
+void stageManager::Stage2_Stage3_Ok()
+{
+	_Stage2->Stage2RightDoorOpenDraw();
+}
+
+void stageManager::Stage2_Stage1_Ok()
+{
+	_Stage2->Stage2LeftDoorOpenDraw();
+}
+
+void stageManager::Stage3_Stage2_Ok()
+{
+	_Stage3->Stage3LeftDoorOpenDraw();
 }
