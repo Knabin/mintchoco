@@ -33,7 +33,7 @@ void collisionManager::release()
 
 void collisionManager::stagedoor_collision() //스테이지 이동
 {
-	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+	if (KEYMANAGER->isOnceKeyDown('Q'))
 	{	
 		//1스테이지 -> 2스테이지
 		if (isCollision(_stageManager->getVStage1()->getRect(), _player->getPlayerRect()) && _stageManager->getNowstage1() == true)
