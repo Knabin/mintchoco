@@ -71,8 +71,8 @@ public:
 	void cameraShake();
 	void shakeStart();
 
+	void cameraFixed();
 	void cameraFixed(float x, float y);
-	void FixedStart();
 
 	void changePosition(float x, float y);
 
@@ -105,16 +105,21 @@ public:
 	inline int getViewHeight() { return _cameraInfo->viewHeight; }
 
 	inline int getLeft() {
+		if (_isFixed) return _fixedLeft;
 		if (!checkCameraX()) return (_cameraInfo->x <= _cameraInfo->backWidth / 2) ? 0 : _cameraInfo->backWidth - _cameraInfo->viewWidth;
 		return _cameraInfo->x - _cameraInfo->viewWidth / 2;
 	}
 	inline int getTop() {
+		if (_isFixed) return _fixedTop;
 		if (!checkCameraY()) return (_cameraInfo->y <= _cameraInfo->backHeight / 2) ? 0 : _cameraInfo->backHeight - _cameraInfo->viewHeight;
 		return _cameraInfo->y - _cameraInfo->viewHeight / 2;
 	}
 
 	inline void setIsShaking(bool isShaking) { _isShaking = isShaking; _shakeAmount = _isShaking ? 6.0f : 0; }
 	inline bool getIsShaking() { return _isShaking; }
+
+	inline void setIsFixed(bool isFixed) { _isFixed = isFixed; }
+	inline bool getIsFixed() { return _isFixed; }
 
 	inline RECT getRect() { return RectMakeCenter(_cameraInfo->x, _cameraInfo->y, _cameraInfo->width, _cameraInfo->height); }
 };

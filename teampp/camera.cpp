@@ -116,12 +116,18 @@ void camera::shakeStart()
 
 }
 
-void camera::cameraFixed(float x, float y)
+void camera::cameraFixed()
 {
+	_fixedLeft = getLeft();
+	_fixedTop = getTop();
+	_isFixed = true;
 }
 
-void camera::FixedStart()
+void camera::cameraFixed(float x, float y)
 {
+	_fixedLeft = x;
+	_fixedTop = y;
+	_isFixed = true;
 }
 
 void camera::changePosition(float x, float y)

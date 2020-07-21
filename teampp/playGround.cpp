@@ -76,6 +76,19 @@ void playGround::update()
 
 
 	_enemyManager->setPlayerPos(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+
+	if (KEYMANAGER->isOnceKeyDown('1'))
+	{
+		CAMERA->cameraFixed();
+	}
+	if (KEYMANAGER->isOnceKeyDown('2'))
+	{
+		CAMERA->cameraFixed(200, 200);
+	}
+	if (KEYMANAGER->isOnceKeyDown('3'))
+	{
+		CAMERA->setIsFixed(false);
+	}
 	// ==========================================
 	// ## 카메라 중점 초기화 ##
 	// ==========================================
