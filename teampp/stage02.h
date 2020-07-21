@@ -17,6 +17,8 @@ private:
 	tagStage2 _Stage2BackGround;		//2스테이지 배경 화면
 	tagStage2 _Stage2RightDoor;			//2스테이지 RightDoor
 	tagStage2 _Stage2LeftDoor;			//2스테이지 LeftDoor
+	tagStage2 _Stage2RightDoorOpen;		//2스테이지 RightDoor 이미지 변경
+	tagStage2 _Stage2LeftDoorOpen;		//2스테이지 LeftDoor 이미지 변경
 
 
 public:
@@ -28,6 +30,9 @@ public:
 	void release();
 	void update();
 	void render();
+
+	void Stage2RightDoorOpenDraw();    // 스테이지2 오른쪽door 접근 시 이미지 변경
+	void Stage2LeftDoorOpenDraw();		// 스테이지2 왼쪽door 접근 시 이미지 변경
 
 	image* getPixel() { return _Stage2PixelBackGround._pixelCollision; }
 

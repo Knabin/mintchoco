@@ -84,6 +84,7 @@ void playGround::update()
 	//CAMERA->setPosition(WINSIZEX/2, WINSIZEY/2);
 	// 따라오는 카메라
 	CAMERA->changePosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+	
 }
 
 //그리기 전용
@@ -93,6 +94,7 @@ void playGround::render()
 	//=================================================
 	_stageManager2->render();
 	_player->render();
+	_collisionManager->render();
 	_enemyManager->render();
 	//_itemManager->render();
 	
