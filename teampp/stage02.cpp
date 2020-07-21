@@ -93,5 +93,5 @@ void stage02::Stage2RightDoorOpenDraw()   // 스테이지 2 오른쪽 door 접근 시 이미
 
 void stage02::Stage2LeftDoorOpenDraw()   // 스테이지 2 왼쪽 door 접근 시 이미지 변경
 {
-	IMAGEMANAGER->findImage("Door_Stage2")->render(getMemDC(), _Stage2RightDoor._x - 39, _Stage2RightDoor._y - 57);
+	IMAGEMANAGER->findImage("Door_Stage2")->render(getMemDC(), _Stage2LeftDoor._x - 39, _Stage2LeftDoor._y - 57);
 }

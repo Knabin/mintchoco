@@ -73,6 +73,11 @@ void collisionManager::stagedoor_collision_image()
 	{
 		_stageManager2->Stage2_Stage1_Ok();
 	}
+	//3스테이지 -> 2스테이지
+	if (isCollision(_stageManager2->getVStage3()->getRect(), _player->getPlayerRect()) && _stageManager2->getNowstage3() == true)
+	{
+		_stageManager2->Stage3_Stage2_Ok();
+	}
 
 
 }
