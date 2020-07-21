@@ -162,5 +162,10 @@ public:
 	MYRECT getAttackRc() { return _attackRc; }
 	MYRECT getComboAttackRc1() { return _comboAttackRc1; }
 	MYRECT getComboAttackRc2() { return _comboAttackRc2; }
+
+	void playerPosition_1at2();
+	void playerPosition_2at3();
+	void playerPosition_2at1();
+	void playerPosition_3at2();
 };
 
