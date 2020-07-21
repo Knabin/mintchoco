@@ -11,7 +11,8 @@ enemyManager::~enemyManager()
 
 HRESULT enemyManager::init()
 {
-
+	_enemyRc.set(0, 0, 100, 200);
+	_enemyRc.setCenterPos(WINSIZEX / 2, WINSIZEY / 2);
 	return S_OK;
 }
 
@@ -38,6 +39,7 @@ void enemyManager::update()
 
 void enemyManager::render()
 {
+	_enemyRc.render(getMemDC());
 	for (int i = 0; i < _vCheerLeader.size(); i++)
 	{
 		_vCheerLeader[i]->render();

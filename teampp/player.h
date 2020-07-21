@@ -23,7 +23,7 @@ enum PLAYERDIRECTION
 	PLAYERDIRECTION_LEFT_JUMP,
 
 	PLAYERDIRECTION_RIGHT_COMBO_ATTACK1,
-	PLAYERDIRECTION_LEFT_COBMO_ATTACK1,
+	PLAYERDIRECTION_LEFT_COMBO_ATTACK1,
 
 	PLAYERDIRECTION_RIGHT_COMBO_ATTACK2,
 	PLAYERDIRECTION_LEFT_COMBO_ATTACK2,
@@ -54,6 +54,8 @@ private:
 	image* _runImage;//플레이어 달리는 이미지
 	image* _jumpImage;//플레이어 점프 이미지
 	image* _comboAttackImage1;//플레이어 공격 이미지
+	image* _comboAttackImage2;//플레이어 공격 이미지2
+	image* _comboAttackImage3;//플레이어 공격 이미지3
 	image* _strongAttackImage;//플레이어 강공격 이미지
 	image* _ultimateImage;//플레이어 궁극기 이미지
 	image* _ultimateAfterImage[ULTIMATECOUNT];//플레이어 궁극기 잔상 이미지
@@ -63,6 +65,8 @@ private:
 
 	MYRECT _rc;//플레이어 렉트
 	MYRECT _attackRc;//공격용으로 사용할 렉트
+	MYRECT _comboAttackRc1;//1단계 콤보공격 렉트
+	MYRECT _comboAttackRc2;//2단계 콤보공격 렉트
 
 	float _x, _y;//플레이어 중점좌표
 	float _walkSpeed;//걷는 스피드
@@ -82,6 +86,8 @@ private:
 	bool _jumping;//점프함수를 실행한 이후 렉트값을 계속 변경시켜주기 위한 값
 	bool _attack;//공격이 실행중인지 아닌지 여부확인용 값
 	bool _ultimate;//궁극기
+	bool _comboAttack;//콤보공격 프레임에 사용할 변수
+	bool _comboAttack2;//콤보공격 3단계 실행여부를 확인하기 위한 변수
 
 public:
 	player();
@@ -147,9 +153,19 @@ public:
 		return false;
 	}
 
+	void setComboAttack(bool comboAttack) {  _comboAttack = comboAttack; }
+	void setComboAttack2(bool comboAttack2) { _comboAttack2 = comboAttack2; }
+	PLAYERDIRECTION getPlayerdirection() { return _playerDirection; }
 	float getPlayerX() { return _x; }
 	float getPlayerY() { return _y; }
 	MYRECT getPlayerRect() { return _rc; }
+	MYRECT getAttackRc() { return _attackRc; }
+	MYRECT getComboAttackRc1() { return _comboAttackRc1; }
+	MYRECT getComboAttackRc2() { return _comboAttackRc2; }
 
+	void playerPosition_1at2();
+	void playerPosition_2at3();
+	void playerPosition_2at1();
+	void playerPosition_3at2();
 };
 

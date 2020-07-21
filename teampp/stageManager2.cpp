@@ -112,7 +112,6 @@ void stageManager2::Stage3Move()
 void stageManager2::Stage1_Stage2_Ok()
 {
 	_Stage1->Stage1RightDoorOpenDraw();
-
 }
 
 void stageManager2::Stage2_Stage3_Ok()
@@ -127,6 +126,5 @@ void stageManager2::Stage2_Stage1_Ok()
 
 void stageManager2::Stage3_Stage2_Ok()
 {
-
-
+	_Stage3->Stage3LeftDoorOpenDraw();
 }
