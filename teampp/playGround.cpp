@@ -32,8 +32,8 @@ HRESULT playGround::init()
 	_stageManager2 = new stageManager2;
 	_stageManager2->init();
 
-	//_itemManager = new itemManager;
-	//_itemManager->init();
+	_itemManager = new itemManager;
+	_itemManager->init();
 
 
 	_collisionManager->setPlayerMemoryAddressLink(_player);
@@ -97,7 +97,7 @@ void playGround::render()
 	_player->render();
 	_collisionManager->render();
 	_enemyManager->render();
-	//_itemManager->render();
+	_itemManager->render();
 
 	ZORDER->render();
 
