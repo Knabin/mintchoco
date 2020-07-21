@@ -151,5 +151,13 @@ public:
 	float getPlayerY() { return _y; }
 	MYRECT getPlayerRect() { return _rc; }
 
+
+
+	//player가 stage 이동 시 player 위치 리셋
+	void playerPosition_1at2();
+	void playerPosition_2at3();
+	void playerPosition_2at1();
+	void playerPosition_3at2();
+
 };
 

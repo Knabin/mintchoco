@@ -32,24 +32,28 @@ void collisionManager::stagedoor_collision() //스테이지 이동
 		if (isCollision(_stageManager2->getVStage1()->getRect(), _player->getPlayerRect()) && _stageManager2->getNowstage1() == true)
 		{
 			_stageManager2->Stage2Move();
+			_player->playerPosition_1at2();
 		}
 
 		//2스테이지 -> 3스테이지
 		if (isCollision(_stageManager2->getVStage2()->getRect(), _player->getPlayerRect()) && _stageManager2->getNowstage2() == true)
 		{
 			_stageManager2->Stage3Move();
+			_player->playerPosition_2at3();			
 		}
 
 		//2스테이지 -> 1스테이지
 		if (isCollision(_stageManager2->getVStage2()->getRect2(), _player->getPlayerRect()) && _stageManager2->getNowstage2() == true)
 		{
 			_stageManager2->Stage1Move();
+			_player->playerPosition_2at1();
 		}
 
 		//3스테이지 -> 2스테이지
 		if (isCollision(_stageManager2->getVStage3()->getRect(), _player->getPlayerRect()) && _stageManager2->getNowstage3() == true)
 		{
 			_stageManager2->Stage2Move();
+			_player->playerPosition_3at2();
 		}
 	}	
 }
@@ -78,6 +82,5 @@ void collisionManager::stagedoor_collision_image()
 	{
 		_stageManager2->Stage3_Stage2_Ok();
 	}
-
 
 }

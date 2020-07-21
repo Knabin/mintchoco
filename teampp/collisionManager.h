@@ -10,8 +10,6 @@ private:
 	enemyManager* _enemyManager;
 	stageManager2* _stageManager2;
 
-	
-
 public:
 	collisionManager() {}
 	~collisionManager() {}
