@@ -15,7 +15,6 @@ playGround::~playGround()
 HRESULT playGround::init()
 {
 	gameNode::init(true);
-	
 
 	_player = new player;
 	_player->init();
@@ -74,7 +73,6 @@ void playGround::update()
 	_stageManager2->update();
 	_uiManager->update();
 
-
 	_enemyManager->setPlayerPos(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
 	// ==========================================
 	// ## 카메라 중점 초기화 ##
@@ -99,6 +97,7 @@ void playGround::render()
 	//_itemManager->render();
 	
 	ZORDER->render();
+
 	//=============================================
 	_backBuffer->render(getHDC(), 0, CAMERA->getBlackSize() * 0.5,
 		CAMERA->getLeft(), CAMERA->getTop() + CAMERA->getShakeNumber(),
