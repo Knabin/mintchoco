@@ -45,6 +45,7 @@ HRESULT playGround::init()
 	_enemyManager->setStageManagerMemoryAddressLink(_stageManager);
 	_uiManager->setStageManagerMemoryAddressLink(_stageManager);
 
+	_enemyManager->setBossMove();
 
 	//_enemyManager->setEnemyCheerMove();
 	//_enemyManager->setEnemySchoolBoyMove();
@@ -133,6 +134,22 @@ void playGround::render()
 	_itemManager->render();
 
 	ZORDER->render();
+	/*
+	SetBkMode(getMemDC(), TRANSPARENT);
+	char str[1024];
+	HFONT font, oldFont;
+	RECT rcText = RectMake(WINSIZEX / 2, WINSIZEY / 2, 400, 100);
+	font = CreateFont(40, 0, 50, 0, 400, false, false, false,
+		DEFAULT_CHARSET,
+		OUT_STRING_PRECIS,
+		CLIP_DEFAULT_PRECIS,
+		PROOF_QUALITY,
+		DEFAULT_PITCH | FF_SWISS,
+		TEXT("굴림체"));
+
+	oldFont = (HFONT)SelectObject(getMemDC(), font);
+	DrawText(getMemDC(), TEXT("끄악"), strlen("끄악"), &rcText,
+		DT_LEFT | DT_WORDBREAK);*/
 
 	//=============================================
 	_backBuffer->render(CAMERA->getMemDC(), 0, CAMERA->getBlackSize() * 0.5,

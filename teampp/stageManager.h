@@ -88,6 +88,8 @@ public:
 
 	image* getPixelImage() { return _currentPixelCollision; } //«»ºø¿ÃπÃ¡ˆ ∞Ÿ
 
+	vector<class npc*>& getNpcVector() { return _vNpcs; }
+
 	void setEnemyManagerMemoryAddressLink(class enemyManager* em) { _em = em; }
 
 };
