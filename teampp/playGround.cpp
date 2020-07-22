@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "playGround.h"
 
 
@@ -35,6 +35,9 @@ HRESULT playGround::init()
 	_itemManager = new itemManager;
 	_itemManager->init();
 
+	_scene = new scene;
+	_scene->init();
+
 
 	_collisionManager->setPlayerMemoryAddressLink(_player);
 	_collisionManager->setEnemyManagerMemoryAddressLink(_enemyManager);
@@ -50,6 +53,8 @@ HRESULT playGround::init()
 	//_enemyManager->setEnemySchoolBoyMove();
 	//_enemyManager->setEnemySchoolGirlMove();
 
+	_enemyManager->setBossMove();
+
 	// ==========================================
 	// ## 카메라 중점 초기화 ##
 	// ==========================================
@@ -61,67 +66,141 @@ HRESULT playGround::init()
 	return S_OK;
 }
 
-//메모리 해제
 void playGround::release()
 {
 	_stageManager->release();
 	_player->release();
 	_enemyManager->release();
+	_scene->release();
 }
 
-//연산
 void playGround::update()
 {
 	gameNode::update();
-	_enemyManager->update();
-	_player->update();
-	_collisionManager->update();
-	_stageManager->update();
-	_uiManager->update();
 
-	_enemyManager->setPlayerPos(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == false )
+	{
+		_scene->PointerMove();
+	}
 
-	if (KEYMANAGER->isOnceKeyDown('1'))
+	if (_scene->getGameStart() == false && _scene->getSaveLoading() == true && _scene->getLoading() == false)
 	{
-		CAMERA->cameraFixed();
+		_scene->SaveLoadMove();
 	}
-	if (KEYMANAGER->isOnceKeyDown('2'))
+
+	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == true)
 	{
-		CAMERA->cameraFixed(200, 200);
+		_scene->LoadingCountPlus();
+		_scene->GameStart();
+		
 	}
-	if (KEYMANAGER->isOnceKeyDown('3'))
+
+	if (_scene->getGameStart() == true && _scene->getSaveLoading() == false && _scene->getLoading() == false)
 	{
-		CAMERA->setIsFixed(false);
+		//==========================================================================================================================//
+
+		_enemyManager->update();
+		_player->update();
+		_collisionManager->update();
+		_stageManager->update();
+		_uiManager->update();
+
+		_enemyManager->setPlayerPos(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+
+		if (KEYMANAGER->isOnceKeyDown('1'))
+		{
+			CAMERA->cameraFixed();
+		}
+		if (KEYMANAGER->isOnceKeyDown('2'))
+		{
+			CAMERA->cameraFixed(200, 200);
+		}
+		if (KEYMANAGER->isOnceKeyDown('3'))
+		{
+			CAMERA->setIsFixed(false);
+		}
+		if (KEYMANAGER->isOnceKeyDown('4'))
+		{
+			vector<string> temp;
+			temp.push_back(to_string(100));
+			temp.push_back(to_string(10));
+			temp.push_back(to_string(_stageManager->getNowStage()));
+			TXTDATA->txtSave("data/player.data", temp);
+		}
+		if (KEYMANAGER->isOnceKeyDown('5'))
+		{
+			cout << TXTDATA->txtLoad("data/player.data")[0] << endl;
+			cout << TXTDATA->txtLoad("data/player.data")[1] << endl;
+			cout << TXTDATA->txtLoad("data/player.data")[2] << endl;
+		}
+		// ==========================================
+		// ## 카메라 중점 초기화 ##
+		// ==========================================
+		CAMERA->shakeStart();
+		// 플레이어 센터나 테스트용 렉트(MYRECT) 만들어서 사용하세요
+		//CAMERA->setPosition(WINSIZEX/2, WINSIZEY/2);
+		// 따라오는 카메라
+		CAMERA->changePosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
 	}
-	// ==========================================
-	// ## 카메라 중점 초기화 ##
-	// ==========================================
-	CAMERA->shakeStart();
-	// 플레이어 센터나 테스트용 렉트(MYRECT) 만들어서 사용하세요
-	//CAMERA->setPosition(WINSIZEX/2, WINSIZEY/2);
-	// 따라오는 카메라
-	CAMERA->changePosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
-	
 }
 
-//그리기 전용
 void playGround::render()
 {
-	PatBlt(CAMERA->getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
-	PatBlt(getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
-	//=================================================
-	_stageManager->render();
-	_player->render();
-	_collisionManager->render();
-	_enemyManager->render();
-	_itemManager->render();
+	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == false)
+	{
+		_scene->TitleBackGroundDraw(getHDC());
+	}
+	if (_scene->getGameStart() == false && _scene->getSaveLoading() == true && _scene->getLoading() == false)
+	{
+		_scene->SaveLoadingBackGroundDraw(getHDC());
+	}
 
-	ZORDER->render();
+	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == true)
+	{
+		_scene->LoadingBackGroundDraw(getHDC());
+	}
 
-	//=============================================
-	_backBuffer->render(CAMERA->getMemDC(), 0, CAMERA->getBlackSize() * 0.5,
-		CAMERA->getLeft(), CAMERA->getTop() + CAMERA->getShakeNumber(),
-		CAMERA->getViewWidth(), CAMERA->getViewHeight());
-	_uiManager->render(CAMERA->getMemDC());
-	CAMERA->render(getHDC());
+	if (_scene->getGameStart() == true && _scene->getSaveLoading() == false && _scene->getLoading() == false)
+	{
+		//==========================================================================================================================//
+
+
+		PatBlt(CAMERA->getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
+		PatBlt(getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
+		//=================================================
+
+
+
+		_stageManager->render();
+		_player->render();
+		_collisionManager->render();
+		_enemyManager->render();
+		_itemManager->render();
+		_scene->render();
+
+		ZORDER->render();
+
+		SetBkMode(getMemDC(), TRANSPARENT);
+		char str[1024];
+		HFONT font, oldFont;
+		RECT rcText = RectMake(WINSIZEX / 2, WINSIZEY / 2, 800, 800);
+		font = CreateFont(40, 0, 100, 0, 400, false, false, false,
+			DEFAULT_CHARSET,
+			OUT_STRING_PRECIS,
+			CLIP_DEFAULT_PRECIS,
+			PROOF_QUALITY,
+			DEFAULT_PITCH | FF_SWISS,
+			TEXT("굴림체"));
+
+		oldFont = (HFONT)SelectObject(getMemDC(), font);
+		DrawText(getMemDC(), TEXT("으아아아아"), strlen("으아아아아"), &rcText,
+			DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
+
+		//=============================================
+		_backBuffer->render(CAMERA->getMemDC(), 0, CAMERA->getBlackSize() * 0.5,
+			CAMERA->getLeft(), CAMERA->getTop() + CAMERA->getShakeNumber(),
+			CAMERA->getViewWidth(), CAMERA->getViewHeight());
+		_uiManager->render(CAMERA->getMemDC());
+		CAMERA->render(getHDC());
+	}
 }

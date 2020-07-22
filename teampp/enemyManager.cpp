@@ -1,4 +1,4 @@
-#include "..\..\..\..\..\Desktop\teampp (1)\enemyManager.h"
+//#include "..\..\..\..\..\Desktop\teampp (1)\enemyManager.h"
 #include "stdafx.h"
 #include "enemyManager.h"
 
@@ -67,8 +67,11 @@ void enemyManager::update()
 		_vSchoolGirl[i]->update();
 	}
 	for (int i = 0; i < _vEnemies.size(); ++i)
+	{
 		_vEnemies[i]->update();
+	}
 	
+	_boss->update();  // 보스 업데이트
 }
 
 void enemyManager::render()
@@ -88,6 +91,8 @@ void enemyManager::render()
 	}
 	for (int i = 0; i < _vEnemies.size(); ++i)
 		_vEnemies[i]->render();
+
+	_boss->render();	// 보스 이미지 띄우기
 }
 
 void enemyManager::setEnemyCheerMove()
@@ -128,6 +133,13 @@ void enemyManager::setEnemySchoolGirlMove()
 		_vEnemies.push_back(_tempSchoolGirl);
 	}
 }
+
+void enemyManager::setBossMove()	//보스 무브 추가
+{
+	_boss = new boss;
+	_boss->init("BOOSIDLE", WINSIZEX / 2, WINSIZEY / 2, 0.0f);
+}
+
 
 
 void enemyManager::setEnemiesVector(int stageNum)
@@ -270,4 +282,6 @@ void enemyManager::setPlayerPos(float x, float y)
 	}
 	for (int i = 0; i < _vEnemies.size(); ++i)
 		_vEnemies[i]->setPlayerPos(x, y);
+
+	_boss->setPlayerPos(x, y);
 }

@@ -3,6 +3,7 @@
 #include "cheerleader.h"
 #include "schoolboy.h"
 #include "schoolgirl.h"
+#include "boss.h"			// 운천 보스 추가 
 #include <vector>
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 using namespace std;
@@ -42,6 +43,9 @@ private:
 
 	MYRECT _enemyRc;	//플레이어 공격이랑 충돌할 에너미 렉트
 
+	// === 운천 추가 === 
+	boss* _boss;
+	//=================
 
 
 public:
@@ -56,6 +60,10 @@ public:
 	void setEnemyCheerMove();
 	void setEnemySchoolBoyMove();
 	void setEnemySchoolGirlMove();
+	// === 운천 추가 === 
+	void setBossMove();
+	//=================
+
 
 	// 스테이지 전환할 때, 해당 스테이지에서 처음부터 보여 줘야 하는 enemy들 설정하는 함수
 	void setEnemiesVector(int stageNum);

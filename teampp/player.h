@@ -166,10 +166,35 @@ public:
 	MYRECT getAttackRc() { return _attackRc; }
 	MYRECT getComboAttackRc1() { return _comboAttackRc1; }
 	MYRECT getComboAttackRc2() { return _comboAttackRc2; }
+	bool getIsAttacking() { 
+		switch (_playerDirection)
+		{
+		case PLAYERDIRECTION_RIGHT_COMBO_ATTACK1:
+		case PLAYERDIRECTION_LEFT_COMBO_ATTACK1:
+		case PLAYERDIRECTION_RIGHT_COMBO_ATTACK2:
+		case PLAYERDIRECTION_LEFT_COMBO_ATTACK2:
+		case PLAYERDIRECTION_RIGHT_COMBO_ATTACK3:
+		case PLAYERDIRECTION_LEFT_COMBO_ATTACK3:
+		case PLAYERDIRECTION_RIGHT_ULTIMATE:
+		case PLAYERDIRECTION_LEFT_ULTIMATE:
+		case PLAYERDIRECTION_RIGHT_STRONG_ATTACK:
+		case PLAYERDIRECTION_LEFT_STRONG_ATTACK:
+		case PLAYERDIRECTION_RIGHT_JUMP_ATTACK:
+		case PLAYERDIRECTION_LEFT_JUMP_ATTACK:
+		case PLAYERDIRECTION_RIGHT_DASH_ATTACK:
+		case PLAYERDIRECTION_LEFT_DASH_ATTACK:
+			return true;
+		default:
+			return false;
+		}
+	}
 
 	void playerPosition_1at2();
 	void playerPosition_2at3();
 	void playerPosition_2at1();
 	void playerPosition_3at2();
+	void playerPosition_3at4();
+	void playerPosition_4atBoss();
+	void playerPosition_4at3();
 };
 

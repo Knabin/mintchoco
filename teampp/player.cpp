@@ -1174,28 +1174,49 @@ void player::frameDraw()
 
 void player::playerPosition_1at2()
 {
-	_x = 300;
-	_z = WINSIZEY / 2 + 225;
+	_x = 350;
+	_z = WINSIZEY / 2 + 250;
 	CAMERA->setPosition(_x, _z);
 }
 
 void player::playerPosition_2at3()
 {
-	_x = 375;
-	_z = WINSIZEY / 2 + 365;
+	_x = WINSIZEX / 2 + 625;
+	_z = WINSIZEY / 2 + 165;
 	CAMERA->setPosition(_x, _z);
 }
 
 void player::playerPosition_2at1()
 {
 	_x = WINSIZEX + 155;
-	_z = WINSIZEY / 2 - 25;
+	_z = WINSIZEY / 2 + 100;
 	CAMERA->setPosition(_x, _z);
 }
 
 void player::playerPosition_3at2()
 {
-	_x = WINSIZEX + 510;
-	_z = WINSIZEY / 2 + 225;
+	_x = WINSIZEX - 245;
+	_z = WINSIZEY / 2 + 150;
+	CAMERA->setPosition(_x, _z);
+}
+
+void player::playerPosition_3at4()
+{
+	_x = 350;
+	_z = WINSIZEY / 2 + 325;
+	CAMERA->setPosition(_x, _z);
+}
+
+void player::playerPosition_4atBoss()
+{
+	_x = 400;
+	_z = WINSIZEY / 2 + 425;
+	CAMERA->setPosition(_x, _z);
+}
+
+void player::playerPosition_4at3()
+{
+	_x = WINSIZEX + 800;
+	_z = WINSIZEY / 2 + 300;
 	CAMERA->setPosition(_x, _z);
 }
