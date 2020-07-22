@@ -151,6 +151,7 @@
   <ItemGroup>
     <ClInclude Include="animation.h" />
     <ClInclude Include="boss.h" />
+    <ClInclude Include="bossStage.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="cheerleader.h" />
@@ -186,6 +187,7 @@
     <ClInclude Include="stage01.h" />
     <ClInclude Include="stage02.h" />
     <ClInclude Include="stage03.h" />
+    <ClInclude Include="stage04.h" />
     <ClInclude Include="stageManager.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -200,6 +202,7 @@
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="boss.cpp" />
+    <ClCompile Include="bossStage.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="cheerleader.cpp" />
@@ -231,6 +234,7 @@
     <ClCompile Include="stage01.cpp" />
     <ClCompile Include="stage02.cpp" />
     <ClCompile Include="stage03.cpp" />
+    <ClCompile Include="stage04.cpp" />
     <ClCompile Include="stageManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

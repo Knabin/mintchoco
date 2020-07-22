@@ -3,13 +3,17 @@
 #include "stage01.h"
 #include "stage02.h"
 #include "stage03.h"
+#include "stage04.h"
+#include "bossStage.h"
 
 
 enum NowStage  //현재 스테이지 상태 정의
 {
 	S1 = 0,		//스테이지1
 	S2,			//스테이지2
-	S3			//스테이지3
+	S3,			//스테이지3
+	S4,			//스테이지4
+	BS			//보스 스테이지
 };
 
 struct tagMiniMap
@@ -26,6 +30,8 @@ private:
 	stage01* _Stage1;
 	stage02* _Stage2;
 	stage03* _Stage3;
+	stage04* _Stage4;
+	bossStage* _BossStage;
 
 	image* _currentPixelCollision;  //픽셀이미지
 
@@ -36,6 +42,8 @@ private:
 	bool _NowStage1;
 	bool _NowStage2;
 	bool _NowStage3;
+	bool _NowStage4;
+	bool _NowBossStage;
 
 	//현재 스테이지의 npc를 가지고 있을 vector
 	vector<class npc*> _vNpcs;
@@ -58,33 +66,39 @@ public:
 
 	//현재 스테이지는 어디인가? swtich문
 	void NowStage();
+	int getNowStage() { return _NowStage; }
 
 
 	//현재 스테이지는 여기입니다.
 	void Stage1Move();
 	void Stage2Move();
 	void Stage3Move();
+	void Stage4Move();
+	void BossStageMove();
 
 	//stagedoor 충돌 시 이미지가 바뀝니다.
 	void Stage1_Stage2_Ok();
 	void Stage2_Stage3_Ok();
 	void Stage2_Stage1_Ok();
+	void Stage3_Stage4_Ok();
 	void Stage3_Stage2_Ok();
+	void Stage4_BossStage_Ok();
+	void Stage4_Stage3_Ok();
 
 
 	//스테이지 상태 bool값 접근자
 	bool getNowstage1() { return _NowStage1; }
 	bool getNowstage2() { return _NowStage2; }
 	bool getNowstage3() { return _NowStage3; }
-
-	//스테이지 상태 enum(int) 접근자
-	int getNowStage() { return _NowStage; }
+	bool getNowstage4() { return _NowStage4; }
+	bool getNowbossStage() { return _NowBossStage; }
 
 
 	//스테이지 이동 문 접근자
 	stage01* getVStage1() { return _Stage1; }
 	stage02* getVStage2() { return _Stage2; }
 	stage03* getVStage3() { return _Stage3; }
+	stage04* getVStage4() { return _Stage4; }
 
 	image* getPixelImage() { return _currentPixelCollision; } //픽셀이미지 겟
 
