@@ -12,6 +12,8 @@ enemy::~enemy()
 HRESULT enemy::init(string imageName, float x, float y, float speed)
 {
 	_hp = 70;
+	_isStart = false;
+
 	return S_OK;
 }
 
@@ -21,6 +23,22 @@ void enemy::release()
 
 void enemy::update()
 {	
+	if (distance > 165 && !_isStart)
+	{
+		if (_playerX > _x)
+		{
+			_enemyMotion = _enemyMotion_R;
+			_direction = ENEMY_RIGHT_MOVE;
+		}
+		else
+		{
+			_enemyMotion = _enemyMotion_L;
+			_direction = ENEMY_LEFT_MOVE;
+		}
+
+		_isStart = true;
+	}
+
 	_isAttackCount++;
 	_isStunCount++;
 	_enemyMotion->frameUpdate(TIMEMANAGER->getElapsedTime() * 10);
@@ -28,7 +46,20 @@ void enemy::update()
 	distance = getDistance(_x, _y, _playerX, _playerY);
 	angle = getAngle(_x, _y, _playerX, _playerY);
 
-	
+	if (distance > 165 && (_direction == ENEMY_RIGHT_IDLE || _direction == ENEMY_LEFT_IDLE))
+	{
+		if (_playerX > _x)
+		{
+			_enemyMotion = _enemyMotion_R;
+			_direction = ENEMY_RIGHT_MOVE;
+		}
+		else
+		{
+			_enemyMotion = _enemyMotion_L;
+			_direction = ENEMY_LEFT_MOVE;
+		}
+		
+	}
 
 	if (distance > 165 && (_direction == ENEMY_RIGHT_MOVE || _direction == ENEMY_LEFT_MOVE) && (_direction != ENEMY_LEFT_SUBMOTION && _direction != ENEMY_RIGHT_SUBMOTION))
 	{
@@ -41,12 +72,26 @@ void enemy::update()
 	{
 		if (_x < _playerX)
 		{
-			_enemyMotion = _enemyMotion_R_IDLE;
-			_direction = ENEMY_RIGHT_IDLE;
+			if (_enemyMotion->isPlay() == false)
+			{
+				_enemyMotion = _enemyMotion_R_IDLE;
+				_direction = ENEMY_RIGHT_IDLE;
+			}
+		
+			//if (_hp < 30)
+			//{
+			//	_direction = ENEMY_RIGHT_STUN;
+			//	if (_isStunCount % 40 == 0)
+			//	{
+			//		_direction = ENEMY_RIGHT_MOVE;
+			//	}
+			//	_isStunCount = 0;
+			//}
+
 			if (_isAttackCount > 75)
 			{
-				_enemyMotion = _enemyMotion_R;
-				_direction = ENEMY_RIGHT_MOVE;
+				//_enemyMotion = _enemyMotion_R;
+				//_direction = ENEMY_RIGHT_MOVE;
 				if (distance < 170)
 				{
 					switch (_random)
@@ -95,13 +140,16 @@ void enemy::update()
 		}
 		else
 		{
-			_enemyMotion = _enemyMotion_L_IDLE;
-			_direction = ENEMY_LEFT_IDLE;
+			if (_enemyMotion->isPlay() == false)
+			{
+				_enemyMotion = _enemyMotion_L_IDLE;
+				_direction = ENEMY_LEFT_IDLE;
+			}
 
 			if (_isAttackCount > 75)
 			{
-				_enemyMotion = _enemyMotion_L;
-				_direction = ENEMY_LEFT_MOVE;
+				//_enemyMotion = _enemyMotion_L;
+				//_direction = ENEMY_LEFT_MOVE;
 				if (distance < 170)
 				{
 					switch (_random)
@@ -149,6 +197,7 @@ void enemy::update()
 
 		}
 	}
+	_isStunCount = 0;
 
 	if (_direction == ENEMY_LEFT_SUBMOTION || _direction == ENEMY_RIGHT_SUBMOTION)
 	{

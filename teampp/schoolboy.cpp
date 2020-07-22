@@ -29,7 +29,6 @@ HRESULT schoolboy::init(string imageName, float x, float y, float speed)
 	_y = _y + y;
 	_random = RND->getInt(4);
 
-	_direction = ENEMY_LEFT_MOVE;
 
 	// ============================	스쿨보이 아이들 ============================ //
 	_enemyMotion_L_IDLE = new animation;
@@ -141,7 +140,8 @@ HRESULT schoolboy::init(string imageName, float x, float y, float speed)
 	_attackRC.set(0, 0, 0, 0);
 	_rc.setCenterPos(0, 0);
 
-	_enemyMotion = _enemyMotion_L;
+	_enemyMotion = _enemyMotion_R;
+	_direction = ENEMY_RIGHT_MOVE;
 
 	return S_OK;
 }
