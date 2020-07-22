@@ -103,7 +103,6 @@ void enemyManager::setEnemyCheerMove()
 	{
 		enemy* _tempCheer = new cheerleader;
 		_tempCheer->init("cheer_move", x[i], y[i], 2.3f);
-		//_vCheerLeader.push_back(_tempCheer);
 		_vEnemies.push_back(_tempCheer);
 	}
 }
@@ -117,7 +116,6 @@ void enemyManager::setEnemySchoolBoyMove()
 	{
 		enemy* _tempSchoolBoy = new schoolboy;
 		_tempSchoolBoy->init("schoolboy_move", x[i], y[i], 2.3f);
-		//_vSchoolBoy.push_back(_tempSchoolBoy);
 		_vEnemies.push_back(_tempSchoolBoy);
 	}
 }
@@ -131,7 +129,6 @@ void enemyManager::setEnemySchoolGirlMove()
 	{
 		enemy* _tempSchoolGirl = new schoolgirl;
 		_tempSchoolGirl->init("schoolgirl_move", x[i], y[i], 2.3f);
-		//_vSchoolGirl.push_back(_tempSchoolGirl);
 		_vEnemies.push_back(_tempSchoolGirl);
 	}
 }
@@ -139,6 +136,7 @@ void enemyManager::setEnemySchoolGirlMove()
 
 void enemyManager::setEnemiesVector(int stageNum)
 {
+	if (stageNum > 1) return;	// for test
 	if (_vEnemies.size() != 0)
 	{
 		for (int i = 0; i < _vEnemies.size(); ++i)
@@ -155,7 +153,6 @@ void enemyManager::setEnemiesVector(int stageNum)
 	{
 	case 0:
 		// 스테이지 1
-		//setEnemyCheerMove();
 		for (int i = 0; i < temp.size(); i++)
 		{
 			if (i < 2)	_vEnemies.push_back(createEnemy(1, temp[i].x, temp[i].y));
@@ -164,7 +161,6 @@ void enemyManager::setEnemiesVector(int stageNum)
 	break;
 	case 1:
 		// 스테이지 2
-		//setEnemySchoolBoyMove();
 	{
 		for (int i = 0; i < temp.size(); i++)
 		{

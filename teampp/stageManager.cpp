@@ -53,7 +53,7 @@ void stageManager::update()
 {
 	_spawnCount++;
 
-	if (_spawnCount % 100 == 0)
+	if (_spawnCount % 1000 == 0)
 	{
 		_em->spawnEnemy(_NowStage);
 		_spawnCount = 0;
