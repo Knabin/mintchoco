@@ -170,5 +170,8 @@ public:
 	void playerPosition_2at3();
 	void playerPosition_2at1();
 	void playerPosition_3at2();
+	void playerPosition_3at4();
+	void playerPosition_4atBoss();
+	void playerPosition_4at3();
 };
 

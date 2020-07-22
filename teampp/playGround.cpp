@@ -34,6 +34,9 @@ HRESULT playGround::init()
 	_itemManager = new itemManager;
 	_itemManager->init();
 
+	_scene = new scene;
+	_scene->init();
+
 
 	_collisionManager->setPlayerMemoryAddressLink(_player);
 	_collisionManager->setEnemyManagerMemoryAddressLink(_enemyManager);
@@ -65,61 +68,119 @@ void playGround::release()
 	_stageManager->release();
 	_player->release();
 	_enemyManager->release();
+	_scene->release();
 }
 
 //연산
 void playGround::update()
 {
 	gameNode::update();
-	_enemyManager->update();
-	_player->update();
-	_collisionManager->update();
-	_stageManager->update();
-	_uiManager->update();
 
-	_enemyManager->setPlayerPos(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == false )
+	{
+		_scene->PointerMove();
+	}
 
-	if (KEYMANAGER->isOnceKeyDown('1'))
+	if (_scene->getGameStart() == false && _scene->getSaveLoading() == true && _scene->getLoading() == false)
 	{
-		CAMERA->cameraFixed();
+		_scene->SaveLoadMove();
 	}
-	if (KEYMANAGER->isOnceKeyDown('2'))
+
+	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == true)
 	{
-		CAMERA->cameraFixed(200, 200);
+		_scene->LoadingCountPlus();
+		_scene->GameStart();
+		
 	}
-	if (KEYMANAGER->isOnceKeyDown('3'))
+
+	if (_scene->getGameStart() == true && _scene->getSaveLoading() == false && _scene->getLoading() == false)
 	{
-		CAMERA->setIsFixed(false);
+		//==========================================================================================================================//
+
+		_enemyManager->update();
+		_player->update();
+		_collisionManager->update();
+		_stageManager->update();
+		_uiManager->update();
+
+		_enemyManager->setPlayerPos(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+
+		if (KEYMANAGER->isOnceKeyDown('1'))
+		{
+			CAMERA->cameraFixed();
+		}
+		if (KEYMANAGER->isOnceKeyDown('2'))
+		{
+			CAMERA->cameraFixed(200, 200);
+		}
+		if (KEYMANAGER->isOnceKeyDown('3'))
+		{
+			CAMERA->setIsFixed(false);
+		}
+		// ==========================================
+		// ## 카메라 중점 초기화 ##
+		// ==========================================
+		CAMERA->shakeStart();
+		// 플레이어 센터나 테스트용 렉트(MYRECT) 만들어서 사용하세요
+		//CAMERA->setPosition(WINSIZEX/2, WINSIZEY/2);
+		// 따라오는 카메라
+		CAMERA->changePosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+
+		//==========================================================================================================================//
+
 	}
-	// ==========================================
-	// ## 카메라 중점 초기화 ##
-	// ==========================================
-	CAMERA->shakeStart();
-	// 플레이어 센터나 테스트용 렉트(MYRECT) 만들어서 사용하세요
-	//CAMERA->setPosition(WINSIZEX/2, WINSIZEY/2);
-	// 따라오는 카메라
-	CAMERA->changePosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
 	
 }
 
 //그리기 전용
 void playGround::render()
 {
-	PatBlt(CAMERA->getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
-	PatBlt(getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
-	//=================================================
-	_stageManager->render();
-	_player->render();
-	_collisionManager->render();
-	_enemyManager->render();
-	_itemManager->render();
 
-	ZORDER->render();
+	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == false)
+	{
+		_scene->TitleBackGroundDraw(getHDC());
+	}
+	if (_scene->getGameStart() == false && _scene->getSaveLoading() == true && _scene->getLoading() == false)
+	{
+		_scene->SaveLoadingBackGroundDraw(getHDC());
+	}
 
-	//=============================================
-	_backBuffer->render(CAMERA->getMemDC(), 0, CAMERA->getBlackSize() * 0.5,
-		CAMERA->getLeft(), CAMERA->getTop() + CAMERA->getShakeNumber(),
-		CAMERA->getViewWidth(), CAMERA->getViewHeight());
-	_uiManager->render(CAMERA->getMemDC());
-	CAMERA->render(getHDC());
+	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == true)
+	{
+		_scene->LoadingBackGroundDraw(getHDC());
+	}
+
+	if (_scene->getGameStart() == true && _scene->getSaveLoading() == false && _scene->getLoading() == false )
+	{
+		//==========================================================================================================================//
+
+
+		PatBlt(CAMERA->getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
+		PatBlt(getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
+		//=================================================
+
+
+
+		_stageManager->render();
+		_player->render();
+		_collisionManager->render();
+		_enemyManager->render();
+		_itemManager->render();
+		_scene->render();
+
+		ZORDER->render();
+
+
+
+		//=============================================
+		_backBuffer->render(CAMERA->getMemDC(), 0, CAMERA->getBlackSize() * 0.5,
+			CAMERA->getLeft(), CAMERA->getTop() + CAMERA->getShakeNumber(),
+			CAMERA->getViewWidth(), CAMERA->getViewHeight());
+		_uiManager->render(CAMERA->getMemDC());
+		CAMERA->render(getHDC());
+
+
+		//==========================================================================================================================//
+	}
+
 }

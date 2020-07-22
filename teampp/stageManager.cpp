@@ -21,12 +21,20 @@ HRESULT stageManager::init()
 	_Stage3 = new stage03;
 	_Stage3->init();
 
+	_Stage4 = new stage04;
+	_Stage4->init();
+
+	_BossStage = new bossStage;
+	_BossStage->init();
+
 	_currentPixelCollision = _Stage1->getPixel();
 
 	_NowStage = S1;
 	_NowStage1 = true;
 	_NowStage2 = false;
 	_NowStage3 = false;
+	_NowStage4 = false;
+	_NowBossStage = false;
 
 	return S_OK;
 }
@@ -36,10 +44,14 @@ void stageManager::release()
 	_Stage1->release();
 	_Stage2->release();
 	_Stage3->release();
+	_Stage4->release();
+	_BossStage->release();
 
 	SAFE_DELETE(_Stage1);
 	SAFE_DELETE(_Stage2);
 	SAFE_DELETE(_Stage3);
+	SAFE_DELETE(_Stage4);
+	SAFE_DELETE(_BossStage);
 
 	ReleaseDC(_hWnd, getMemDC());
 }
@@ -82,6 +94,18 @@ void stageManager::NowStage()
 			_Stage3->render();
 		}
 		break;
+
+		case S4:
+		{
+			_Stage4->render();
+		}
+		break;
+
+		case BS:
+		{
+			_BossStage->render();
+		}
+		break;
 	}
 }
 
@@ -91,6 +115,8 @@ void stageManager::Stage1Move()
 	_NowStage1 = true;
 	_NowStage2 = false;
 	_NowStage3 = false;
+	_NowStage4 = false;
+	_NowBossStage = false;
 	_currentPixelCollision = _Stage1->getPixel();
 	CAMERA->setBackWidth(_currentPixelCollision->getWidth());
 	CAMERA->setBackHeight(_currentPixelCollision->getHeight());
@@ -104,6 +130,8 @@ void stageManager::Stage2Move()
 	_NowStage1 = false;
 	_NowStage2 = true;
 	_NowStage3 = false;
+	_NowStage4 = false;
+	_NowBossStage = false;
 	_currentPixelCollision = _Stage2->getPixel();
 	CAMERA->setBackWidth(_currentPixelCollision->getWidth());
 	CAMERA->setBackHeight(_currentPixelCollision->getHeight());
@@ -117,11 +145,41 @@ void stageManager::Stage3Move()
 	_NowStage1 = false;
 	_NowStage2 = false;
 	_NowStage3 = true;
+	_NowStage4 = false;
+	_NowBossStage = false;
 	_currentPixelCollision = _Stage3->getPixel();
 	CAMERA->setBackWidth(_currentPixelCollision->getWidth());
 	CAMERA->setBackHeight(_currentPixelCollision->getHeight());
 
 	_vNpcs = _Stage3->getNPCs();
+}
+
+void stageManager::Stage4Move()
+{
+	_NowStage = S4;
+	_NowStage1 = false;
+	_NowStage2 = false;
+	_NowStage3 = false;
+	_NowStage4 = true;
+	_NowBossStage = false;
+	_currentPixelCollision = _Stage4->getPixel();
+	CAMERA->setBackWidth(_currentPixelCollision->getWidth());
+	CAMERA->setBackHeight(_currentPixelCollision->getHeight());
+	
+	_vNpcs = _Stage4->getNPCs();
+}
+
+void stageManager::BossStageMove()
+{
+	_NowStage = BS;
+	_NowStage1 = false;
+	_NowStage2 = false;
+	_NowStage3 = false;
+	_NowStage4 = false;
+	_NowBossStage = true;
+	_currentPixelCollision = _BossStage->getPixel();
+	CAMERA->setBackWidth(_currentPixelCollision->getWidth());
+	CAMERA->setBackHeight(_currentPixelCollision->getHeight());
 }
 
 void stageManager::Stage1_Stage2_Ok()
@@ -139,7 +197,22 @@ void stageManager::Stage2_Stage1_Ok()
 	_Stage2->Stage2LeftDoorOpenDraw();
 }
 
+void stageManager::Stage3_Stage4_Ok()
+{
+	_Stage3->Stage3RightDoorOpenDraw();
+}
+
 void stageManager::Stage3_Stage2_Ok()
 {
 	_Stage3->Stage3LeftDoorOpenDraw();
+}
+
+void stageManager::Stage4_BossStage_Ok()
+{
+	_Stage4->Stage4RightDoorOpenDraw();
+}
+
+void stageManager::Stage4_Stage3_Ok()
+{
+	_Stage4->Stage4LeftDoorOpenDraw();
 }

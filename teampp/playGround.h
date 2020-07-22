@@ -8,6 +8,7 @@
 #include "enemyManager.h"
 #include "UiManager.h"
 #include "itemManager.h"
+#include "scene.h"
 
 class playGround : public gameNode
 {
@@ -18,6 +19,7 @@ private:
 	collisionManager* _collisionManager;
 	UiManager* _uiManager;
 	itemManager* _itemManager;
+	scene* _scene;
 
 
 public:
