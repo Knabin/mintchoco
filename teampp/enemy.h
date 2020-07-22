@@ -65,6 +65,7 @@ protected:
 	int _isAttackCount;	//에너미 공격 딜레이속도
 	int _isStunCount;	//에너미 스턴 시간
 	bool _isJump;
+	bool _isStart;
 	MYRECT _rc;			//에너미 렉트
 	MYRECT _attackRC;	//에너미 공격렉트
 
