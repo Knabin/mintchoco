@@ -93,6 +93,22 @@ void playGround::update()
 	{
 		CAMERA->setIsFixed(false);
 	}
+	if (KEYMANAGER->isOnceKeyDown('4'))
+	{
+		//INIDATA->addData("플레이어", "HP", to_string(_player->getPlayerHP()).c_str());
+		//INIDATA->addData("플레이어", "코인", to_string(_player->getCoin()).c_str());
+		vector<string> temp;
+		temp.push_back(to_string(100));
+		temp.push_back(to_string(10));
+		temp.push_back(to_string(_stageManager->getNowStage()));
+		TXTDATA->txtSave("data/player.data", temp);
+	}
+	if (KEYMANAGER->isOnceKeyDown('5'))
+	{
+		cout << TXTDATA->txtLoad("data/player.data")[0] << endl;
+		cout << TXTDATA->txtLoad("data/player.data")[1] << endl;
+		cout << TXTDATA->txtLoad("data/player.data")[2] << endl;
+	}
 	// ==========================================
 	// ## 카메라 중점 초기화 ##
 	// ==========================================
