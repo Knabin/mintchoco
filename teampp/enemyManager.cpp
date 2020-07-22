@@ -19,15 +19,11 @@ HRESULT enemyManager::init()
 	{
 		vector<MYPOINT> vP;
 
-		MYPOINT p1(192, 500);
-		MYPOINT p2(1010, 300);
-		MYPOINT p3(1500, 350);
-		MYPOINT p4(1750, 500);
+		MYPOINT p1(1375, 300);
+		MYPOINT p2(1500, 300);
 
 		vP.push_back(p1);
 		vP.push_back(p2);
-		vP.push_back(p3);
-		vP.push_back(p4);
 
 		_mPoint.insert(make_pair(0, vP));
 	}
@@ -36,17 +32,15 @@ HRESULT enemyManager::init()
 	{
 		vector<MYPOINT> vP;
 
-		MYPOINT p1(800, 400);
-		MYPOINT p2(1300, 520);
-		MYPOINT p3(1050, 710);
-		MYPOINT p4(1750, 700);
-		MYPOINT p5(550, 650);
+		MYPOINT p1(300, 600);
+		MYPOINT p2(400, 520);
+		MYPOINT p3(1750, 500);
+		MYPOINT p4(1850, 600);
 
 		vP.push_back(p1);
 		vP.push_back(p2);
 		vP.push_back(p3);
 		vP.push_back(p4);
-		vP.push_back(p5);
 
 		_mPoint.insert(make_pair(1, vP));
 	}
@@ -149,26 +143,30 @@ void enemyManager::setEnemiesVector(int stageNum)
 		_vEnemies.clear();
 	}
 
-	vPoint temp = _mPoint.at(stageNum);
-
 	switch (stageNum)
 	{
 	case 0:
 		// 스테이지 1
-		for (int i = 0; i < temp.size(); i++)
+	{
+		float x[] = { 192, 1010, 1500, 1750 };
+		float y[] = { 500, 300, 350, 500 };
+		for (int i = 0; i < 4; i++)
 		{
-			if (i < 2)	_vEnemies.push_back(createEnemy(1, temp[i].x, temp[i].y));
-			else		_vEnemies.push_back(createEnemy(2, temp[i].x, temp[i].y));
+			if (i < 2)	_vEnemies.push_back(createEnemy(1, x[i], y[i]));
+			else		_vEnemies.push_back(createEnemy(2, x[i], y[i]));
 		}
+	}
 	break;
 	case 1:
 		// 스테이지 2
 	{
-		for (int i = 0; i < temp.size(); i++)
+		float x[] = { 800, 1300, 1050, 1750, 550 };
+		float y[] = { 400, 520, 710, 700, 650 };
+		for (int i = 0; i < 5; i++)
 		{
-			if (i < 2)		_vEnemies.push_back(createEnemy(1, temp[i].x, temp[i].y));
-			else if (i > 4) _vEnemies.push_back(createEnemy(0, temp[i].x, temp[i].y));
-			else			_vEnemies.push_back(createEnemy(2, temp[i].x, temp[i].y));
+			if (i < 2)		_vEnemies.push_back(createEnemy(1, x[i], y[i]));
+			else if (i > 4) _vEnemies.push_back(createEnemy(0, x[i], y[i]));
+			else			_vEnemies.push_back(createEnemy(2, x[i], y[i]));
 		}
 	}
 	break;
@@ -225,7 +223,7 @@ enemy* enemyManager::createEnemy(int enemyType, float x, float y)
 
 void enemyManager::spawnEnemy(int stageNum)
 {
-	if (stageNum != 0) return;	// for test
+	if (stageNum > 1) return;	// for test
 	vPoint temp = _mPoint.at(stageNum);
 
 	// spawn될 포인트를 랜덤으로 결정함
