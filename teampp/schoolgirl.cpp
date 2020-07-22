@@ -18,14 +18,18 @@ HRESULT schoolgirl::init(string imageName, float x, float y, float speed)
 	_combo2 = IMAGEMANAGER->addFrameImage("schoolgirl_combo2", "images/enemys/SchoolGirl_ComboAttack3.bmp", 2412, 414, 12, 2, true, RGB(255, 0, 255));
 	_submotion = IMAGEMANAGER->addFrameImage("schoolgirl_attack1", "images/enemys/Schoolgirl_attack1.bmp", 2208, 354, 8, 2, true, RGB(255, 0, 255));
 	//_gethit = IMAGEMANAGER->addFrameImage("schoolgirl_gethit", "images/enemys/SchoolGirl_gethit.bmp", 1431, 360, 9, 2, true, RGB(255, 0, 255));
+	_stun = IMAGEMANAGER->addFrameImage("schoolgirl_stun", "images/enemys/SchoolGirl_Stun.bmp", 456, 324, 4, 2, true, RGB(255, 0, 255));
 
+	IMAGEMANAGER->addImage("schoolgirl_shadow", "images/enemys/SchoolGirl_Shadow.bmp", 150, 44, true, RGB(255, 0, 255));
 
 	_enemyImg = IMAGEMANAGER->findImage(imageName);
 	_imageName = imageName;
 	_speed = speed;
-	_x = _x + y;
+	_x = _x + x;
 	_y = _y + y;
 	_random = RND->getInt(4);
+
+	_direction = ENEMY_LEFT_MOVE;
 
 	// ============================	여학우 아이들 ============================ //
 	_enemyMotion_L_IDLE = new animation;
@@ -43,12 +47,12 @@ HRESULT schoolgirl::init(string imageName, float x, float y, float speed)
 	// ============================	여학우 무브 ============================ //
 	_enemyMotion_L = new animation;
 	_enemyMotion_L->init(_move->getWidth(), _move->getHeight(), _move->getFrameWidth(), _move->getFrameHeight());
-	_enemyMotion_L->setPlayFrame(0, 11, false, true);
+	_enemyMotion_L->setPlayFrame(11, 0, false, true);
 	_enemyMotion_L->setFPS(1.5);
 	_enemyMotion_L->start();
 	_enemyMotion_R = new animation;
 	_enemyMotion_R->init(_move->getWidth(), _move->getHeight(), _move->getFrameWidth(), _move->getFrameHeight());
-	_enemyMotion_R->setPlayFrame(23, 12, false, true);
+	_enemyMotion_R->setPlayFrame(12, 23, false, true);
 	_enemyMotion_R->setFPS(1.5);
 	_enemyMotion_R->start();
 	// ============================	여학우 무브 ============================ //
@@ -118,9 +122,25 @@ HRESULT schoolgirl::init(string imageName, float x, float y, float speed)
 	//_enemyMotion_R_hit->start();
 	// ============================	여학우 히트 ============================ //
 
+	// ============================	여학우 스턴 ============================ //
+	_enemyMotion_L_stun = new animation;
+	_enemyMotion_L_stun->init(_stun->getWidth(), _stun->getHeight(), _stun->getFrameWidth(), _stun->getFrameHeight());
+	_enemyMotion_L_stun->setPlayFrame(4, 7, false, false);
+	_enemyMotion_L_stun->setFPS(1);
+	_enemyMotion_L_stun->start();
+	_enemyMotion_R_stun = new animation;
+	_enemyMotion_R_stun->init(_stun->getWidth(), _stun->getHeight(), _stun->getFrameWidth(), _stun->getFrameHeight());
+	_enemyMotion_R_stun->setPlayFrame(0, 4, false, false);
+	_enemyMotion_R_stun->setFPS(1);
+	_enemyMotion_R_stun->start();
+	// ============================	여학우 스턴 ============================ //
+
 
 	_rc.set(0, 0, _enemyImg->getFrameWidth(), _enemyImg->getFrameHeight());
 	_rc.setCenterPos(_x, _y);
+
+	_attackRC.set(0, 0, 0, 0);
+	_attackRC.setCenterPos(0, 0);
 
 	_enemyMotion = _enemyMotion_L;
 	return S_OK;
@@ -132,6 +152,7 @@ void schoolgirl::release()
 
 void schoolgirl::render()
 {
+	_attackRC.set(0, 0, 0, 0);
 	switch (_direction)
 	{
 	case ENEMY_LEFT_IDLE:
@@ -148,27 +169,43 @@ void schoolgirl::render()
 		break;
 	case ENEMY_LEFT_ATTACK:
 		_enemyImg = _attack;
+		_attackRC.set(0, 0, 200, 100);
+		_attackRC.setCenterPos(_rc.left, _rc.getCenterY());
 		break;
 	case ENEMY_RIGHT_ATTACK:
 		_enemyImg = _attack;
+		_attackRC.set(0, 0, 200, 100);
+		_attackRC.setCenterPos(_rc.right, _rc.getCenterY());
 		break;
 	case ENEMY_LEFT_COMBO1:
 		_enemyImg = _combo1;
+		_attackRC.set(0, 0, 200, 100);
+		_attackRC.setCenterPos(_rc.left, _rc.getCenterY());
 		break;
 	case ENEMY_RIGHT_COMBO1:
 		_enemyImg = _combo1;
+		_attackRC.set(0, 0, 200, 100);
+		_attackRC.setCenterPos(_rc.right, _rc.getCenterY());
 		break;
 	case ENEMY_LEFT_COMBO2:
 		_enemyImg = _combo2;
+		_attackRC.set(0, 0, 200, 100);
+		_attackRC.setCenterPos(_rc.left, _rc.getCenterY());
 		break;
 	case ENEMY_RIGHT_COMBO2:
 		_enemyImg = _combo2;
+		_attackRC.set(0, 0, 200, 100);
+		_attackRC.setCenterPos(_rc.right, _rc.getCenterY());
 		break;
 	case ENEMY_LEFT_SUBMOTION:
 		_enemyImg = _submotion;
+		_attackRC.set(0, 0, 200, 100);
+		_attackRC.setCenterPos(_rc.left, _rc.getCenterY());
 		break;
 	case ENEMY_RIGHT_SUBMOTION:
 		_enemyImg = _submotion;
+		_attackRC.set(0, 0, 200, 100);
+		_attackRC.setCenterPos(_rc.right, _rc.getCenterY());
 		break;
 	//case ENEMY_LEFT_GETHIT:
 	//	_enemyImg = _gethit;
@@ -176,6 +213,15 @@ void schoolgirl::render()
 	//case ENEMY_RIGHT_GETHIT:
 	//	_enemyImg = _gethit;
 	//	break;
+	case ENEMY_LEFT_STUN:
+		_enemyImg = _stun;
+		break;
+	case ENEMY_RIGHT_STUN:
+		_enemyImg = _stun;
+		break;
 	}
+	_rc.render(getMemDC());
+	_attackRC.render(getMemDC());
+	IMAGEMANAGER->findImage("schoolgirl_shadow")->alphaRender(getMemDC(), _rc.left - 19, _rc.bottom - 25, 100);
 	ZORDER->pushObject(getMemDC(), _enemyImg, _enemyMotion, 1, _rc.getCenterX(), 0, _rc.bottom);
 }

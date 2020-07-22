@@ -18,6 +18,7 @@ HRESULT schoolboy::init(string imageName, float x, float y, float speed)
 	_combo2 = IMAGEMANAGER->addFrameImage("schoolboy_combo2", "images/enemys/SchoolBoy_ComboAttack3.bmp", 1890, 558, 9, 2, true, RGB(255, 0, 255));
 	_submotion = IMAGEMANAGER->addFrameImage("schoolboy_upercut", "images/enemys/SchoolBoy_upercut.bmp", 1386, 510, 7, 2, true, RGB(255, 0, 255));
 	_gethit = IMAGEMANAGER->addFrameImage("schoolboy_gethit", "images/enemys/SchoolBoy_gethit.bmp", 1728, 450, 9, 2, true, RGB(255, 0, 255));
+	_stun = IMAGEMANAGER->addFrameImage("schoolboy_stun", "images/enemys/SchoolBoy_Stun.bmp", 633, 408, 4, 2, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addImage("schoolboy_shadow", "images/enemys/SchoolBoy_Shadow.bmp", 180, 53, true, RGB(255, 0, 255));
 
@@ -46,12 +47,12 @@ HRESULT schoolboy::init(string imageName, float x, float y, float speed)
 	// ============================	스쿨보이 무브 ============================ //
 	_enemyMotion_L = new animation;
 	_enemyMotion_L->init(_move->getWidth(), _move->getHeight(), _move->getFrameWidth(), _move->getFrameHeight());
-	_enemyMotion_L->setPlayFrame(0, 11, false, true);
+	_enemyMotion_L->setPlayFrame(11, 0, false, true);
 	_enemyMotion_L->setFPS(1.5);
 	_enemyMotion_L->start();
 	_enemyMotion_R = new animation;
 	_enemyMotion_R->init(_move->getWidth(), _move->getHeight(), _move->getFrameWidth(), _move->getFrameHeight());
-	_enemyMotion_R->setPlayFrame(21, 12, false, true);
+	_enemyMotion_R->setPlayFrame(12, 23, false, true);
 	_enemyMotion_R->setFPS(1.5);
 	_enemyMotion_R->start();
 	// ============================	스쿨보이 무브 ============================ //
@@ -121,8 +122,24 @@ HRESULT schoolboy::init(string imageName, float x, float y, float speed)
 	//_enemyMotion_R_hit->start();
 	// ============================	스쿨보이 히트 ============================ //
 
+	// ============================	스쿨보이 스턴 ============================ //
+	_enemyMotion_L_stun = new animation;
+	_enemyMotion_L_stun->init(_stun->getWidth(), _stun->getHeight(), _stun->getFrameWidth(), _stun->getFrameHeight());
+	_enemyMotion_L_stun->setPlayFrame(4, 7, false, false);
+	_enemyMotion_L_stun->setFPS(1);
+	_enemyMotion_L_stun->start();
+	_enemyMotion_R_stun = new animation;
+	_enemyMotion_R_stun->init(_stun->getWidth(), _stun->getHeight(), _stun->getFrameWidth(), _stun->getFrameHeight());
+	_enemyMotion_R_stun->setPlayFrame(0, 4, false, false);
+	_enemyMotion_R_stun->setFPS(1);
+	_enemyMotion_R_stun->start();
+	// ============================	스쿨보이 스턴 ============================ //
+
 	_rc.set(0, 0, _enemyImg->getFrameWidth(), _enemyImg->getFrameHeight());
 	_rc.setCenterPos(_x, _y);
+
+	_attackRC.set(0, 0, 0, 0);
+	_rc.setCenterPos(0, 0);
 
 	_enemyMotion = _enemyMotion_L;
 
@@ -136,6 +153,7 @@ void schoolboy::release()
 
 void schoolboy::render()
 {
+	_attackRC.set(0, 0, 0, 0);
 	switch (_direction)
 	{
 	case ENEMY_LEFT_IDLE:
@@ -152,27 +170,43 @@ void schoolboy::render()
 		break;
 	case ENEMY_LEFT_ATTACK:
 		_enemyImg = _attack;
+		_attackRC.set(0, 0, 200, 100);
+		_attackRC.setCenterPos(_rc.left, _rc.getCenterY());
 		break;
 	case ENEMY_RIGHT_ATTACK:
 		_enemyImg = _attack;
+		_attackRC.set(0, 0, 200, 100);
+		_attackRC.setCenterPos(_rc.right, _rc.getCenterY());
 		break;
 	case ENEMY_LEFT_COMBO1:
 		_enemyImg = _combo1;
+		_attackRC.set(0, 0, 200, 100);
+		_attackRC.setCenterPos(_rc.left, _rc.getCenterY());
 		break;
 	case ENEMY_RIGHT_COMBO1:
 		_enemyImg = _combo1;
+		_attackRC.set(0, 0, 200, 100);
+		_attackRC.setCenterPos(_rc.right, _rc.getCenterY());
 		break;
 	case ENEMY_LEFT_COMBO2:
 		_enemyImg = _combo2;
+		_attackRC.set(0, 0, 200, 100);
+		_attackRC.setCenterPos(_rc.left, _rc.getCenterY());
 		break;
 	case ENEMY_RIGHT_COMBO2:
 		_enemyImg = _combo2;
+		_attackRC.set(0, 0, 200, 100);
+		_attackRC.setCenterPos(_rc.right, _rc.getCenterY());
 		break;
 	case ENEMY_LEFT_SUBMOTION:
 		_enemyImg = _submotion;
+		_attackRC.set(0, 0, 200, 100);
+		_attackRC.setCenterPos(_rc.left, _rc.getCenterY());
 		break;
 	case ENEMY_RIGHT_SUBMOTION:
 		_enemyImg = _submotion;
+		_attackRC.set(0, 0, 200, 100);
+		_attackRC.setCenterPos(_rc.right, _rc.getCenterY());
 		break;
 	//case ENEMY_LEFT_GETHIT:
 	//	_enemyImg = _gethit;
@@ -180,8 +214,16 @@ void schoolboy::render()
 	//case ENEMY_RIGHT_GETHIT:
 	//	_enemyImg = _gethit;
 	//	break;
+	case ENEMY_LEFT_STUN:
+		_enemyImg = _stun;
+		break;
+	case ENEMY_RIGHT_STUN:
+		_enemyImg = _stun;
+		break;
 	}
-	IMAGEMANAGER->findImage("schoolboy_shadow")->render(getMemDC(), _rc.left-20, _rc.bottom - 25);
+	_rc.render(getMemDC());
+	_attackRC.render(getMemDC());
+	IMAGEMANAGER->findImage("schoolboy_shadow")->alphaRender(getMemDC(), _rc.left - 20, _rc.bottom - 30, 100);
 	ZORDER->pushObject(getMemDC(), _enemyImg, _enemyMotion, 1, _rc.getCenterX(), 0, _rc.bottom);
 }
 
