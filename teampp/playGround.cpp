@@ -35,6 +35,9 @@ HRESULT playGround::init()
 	_itemManager = new itemManager;
 	_itemManager->init();
 
+	_scene = new scene;
+	_scene->init();
+
 
 	_collisionManager->setPlayerMemoryAddressLink(_player);
 	_collisionManager->setEnemyManagerMemoryAddressLink(_enemyManager);
@@ -45,11 +48,12 @@ HRESULT playGround::init()
 	_enemyManager->setStageManagerMemoryAddressLink(_stageManager);
 	_uiManager->setStageManagerMemoryAddressLink(_stageManager);
 
-	_enemyManager->setBossMove();
 
 	//_enemyManager->setEnemyCheerMove();
 	//_enemyManager->setEnemySchoolBoyMove();
 	//_enemyManager->setEnemySchoolGirlMove();
+
+	_enemyManager->setBossMove();
 
 	// ==========================================
 	// ## 移대찓??以묒젏 珥덇린??##
@@ -68,70 +72,117 @@ void playGround::release()
 	_stageManager->release();
 	_player->release();
 	_enemyManager->release();
+	_scene->release();
 }
 
 //?곗궛
 void playGround::update()
 {
 	gameNode::update();
-	_enemyManager->update();
-	_player->update();
-	_collisionManager->update();
-	_stageManager->update();
-	_uiManager->update();
 
-	_enemyManager->setPlayerPos(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == false )
+	{
+		_scene->PointerMove();
+	}
 
-	if (KEYMANAGER->isOnceKeyDown('1'))
+	if (_scene->getGameStart() == false && _scene->getSaveLoading() == true && _scene->getLoading() == false)
 	{
-		CAMERA->cameraFixed();
+		_scene->SaveLoadMove();
 	}
-	if (KEYMANAGER->isOnceKeyDown('2'))
+
+	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == true)
 	{
-		CAMERA->cameraFixed(200, 200);
+		_scene->LoadingCountPlus();
+		_scene->GameStart();
+		
 	}
-	if (KEYMANAGER->isOnceKeyDown('3'))
+
+	if (_scene->getGameStart() == true && _scene->getSaveLoading() == false && _scene->getLoading() == false)
 	{
-		CAMERA->setIsFixed(false);
+		//==========================================================================================================================//
+
+		_enemyManager->update();
+		_player->update();
+		_collisionManager->update();
+		_stageManager->update();
+		_uiManager->update();
+
+		_enemyManager->setPlayerPos(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+
+		if (KEYMANAGER->isOnceKeyDown('1'))
+		{
+			CAMERA->cameraFixed();
+		}
+		if (KEYMANAGER->isOnceKeyDown('2'))
+		{
+			CAMERA->cameraFixed(200, 200);
+		}
+		if (KEYMANAGER->isOnceKeyDown('3'))
+		{
+			CAMERA->setIsFixed(false);
+		}
+		if (KEYMANAGER->isOnceKeyDown('4'))
+		{
+			//INIDATA->addData("?뚮젅?댁뼱", "HP", to_string(_player->getPlayerHP()).c_str());
+			//INIDATA->addData("?뚮젅?댁뼱", "肄붿씤", to_string(_player->getCoin()).c_str());
+			vector<string> temp;
+			temp.push_back(to_string(100));
+			temp.push_back(to_string(10));
+			temp.push_back(to_string(_stageManager->getNowStage()));
+			TXTDATA->txtSave("data/player.data", temp);
+		}
+		if (KEYMANAGER->isOnceKeyDown('5'))
+		{
+			cout << TXTDATA->txtLoad("data/player.data")[0] << endl;
+			cout << TXTDATA->txtLoad("data/player.data")[1] << endl;
+			cout << TXTDATA->txtLoad("data/player.data")[2] << endl;
+		}
+		// ==========================================
+		// ## 移대찓??以묒젏 珥덇린??##
+		// ==========================================
+		CAMERA->shakeStart();
+		// ?뚮젅?댁뼱 ?쇳꽣???뚯뒪?몄슜 ?됲듃(MYRECT) 留뚮뱾?댁꽌 ?ъ슜?섏꽭??
+		//CAMERA->setPosition(WINSIZEX/2, WINSIZEY/2);
+		// ?곕씪?ㅻ뒗 移대찓??
+		CAMERA->changePosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
 	}
-	if (KEYMANAGER->isOnceKeyDown('4'))
-	{
-		//INIDATA->addData("?뚮젅?댁뼱", "HP", to_string(_player->getPlayerHP()).c_str());
-		//INIDATA->addData("?뚮젅?댁뼱", "肄붿씤", to_string(_player->getCoin()).c_str());
-		vector<string> temp;
-		temp.push_back(to_string(100));
-		temp.push_back(to_string(10));
-		temp.push_back(to_string(_stageManager->getNowStage()));
-		TXTDATA->txtSave("data/player.data", temp);
-	}
-	if (KEYMANAGER->isOnceKeyDown('5'))
-	{
-		cout << TXTDATA->txtLoad("data/player.data")[0] << endl;
-		cout << TXTDATA->txtLoad("data/player.data")[1] << endl;
-		cout << TXTDATA->txtLoad("data/player.data")[2] << endl;
-	}
-	// ==========================================
-	// ## 移대찓??以묒젏 珥덇린??##
-	// ==========================================
-	CAMERA->shakeStart();
-	// ?뚮젅?댁뼱 ?쇳꽣???뚯뒪?몄슜 ?됲듃(MYRECT) 留뚮뱾?댁꽌 ?ъ슜?섏꽭??
-	//CAMERA->setPosition(WINSIZEX/2, WINSIZEY/2);
-	// ?곕씪?ㅻ뒗 移대찓??
-	CAMERA->changePosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
-	
 }
 
 //끄억
 void playGround::render()
 {
-	PatBlt(CAMERA->getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
-	PatBlt(getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
-	//=================================================
-	_stageManager->render();
-	_player->render();
-	_collisionManager->render();
-	_enemyManager->render();
-	_itemManager->render();
+
+	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == false)
+	{
+		_scene->TitleBackGroundDraw(getHDC());
+	}
+	if (_scene->getGameStart() == false && _scene->getSaveLoading() == true && _scene->getLoading() == false)
+	{
+		_scene->SaveLoadingBackGroundDraw(getHDC());
+	}
+
+	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == true)
+	{
+		_scene->LoadingBackGroundDraw(getHDC());
+	}
+
+	if (_scene->getGameStart() == true && _scene->getSaveLoading() == false && _scene->getLoading() == false )
+	{
+		//==========================================================================================================================//
+
+
+		PatBlt(CAMERA->getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
+		PatBlt(getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
+		//=================================================
+
+
+
+		_stageManager->render();
+		_player->render();
+		_collisionManager->render();
+		_enemyManager->render();
+		_itemManager->render();
+		_scene->render();
 
 	ZORDER->render();
 
