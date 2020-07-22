@@ -20,6 +20,7 @@ private:
 
 	vector<class npc*> _vNpcs;
 
+
 public:
 
 	stage01();

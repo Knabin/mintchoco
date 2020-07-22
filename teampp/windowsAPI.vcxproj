@@ -185,11 +185,7 @@
     <ClInclude Include="stage01.h" />
     <ClInclude Include="stage02.h" />
     <ClInclude Include="stage03.h" />
-    <ClInclude Include="stage1.h" />
-    <ClInclude Include="stage2.h" />
-    <ClInclude Include="stage3.h" />
     <ClInclude Include="stageManager.h" />
-    <ClInclude Include="stageManager2.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="timeManager.h" />
@@ -233,11 +229,7 @@
     <ClCompile Include="stage01.cpp" />
     <ClCompile Include="stage02.cpp" />
     <ClCompile Include="stage03.cpp" />
-    <ClCompile Include="stage1.cpp" />
-    <ClCompile Include="stage2.cpp" />
-    <ClCompile Include="stage3.cpp" />
     <ClCompile Include="stageManager.cpp" />
-    <ClCompile Include="stageManager2.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

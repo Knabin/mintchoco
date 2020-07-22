@@ -12,6 +12,7 @@ stage01::~stage01()
 
 HRESULT stage01::init()
 {
+
 	// 스테이지 1 door 이미지 변경 선언
 
 	_Stage1RightDoorOpen._StageImage = IMAGEMANAGER->addImage("Door_Stage1", "images/stage/UI_UnLocked_Door11.bmp", 52, 76, true, RGB(255, 0, 255));
@@ -68,3 +69,4 @@ void stage01::Stage1RightDoorOpenDraw()	// 스테이지 1 오른쪽 door 접근 시 이미지
 {
 	IMAGEMANAGER->findImage("Door_Stage1")->render(getMemDC(), _Stage1RightDoor._x - 26, _Stage1RightDoor._y - 93);
 }
+

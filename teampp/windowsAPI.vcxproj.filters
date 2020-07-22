@@ -171,18 +171,6 @@
     <ClInclude Include="enemyManager.h">
       <Filter>playGround\taeyong</Filter>
     </ClInclude>
-    <ClInclude Include="stageManager.h">
-      <Filter>playGround\sungyo</Filter>
-    </ClInclude>
-    <ClInclude Include="stage1.h">
-      <Filter>playGround\sungyo</Filter>
-    </ClInclude>
-    <ClInclude Include="stage2.h">
-      <Filter>playGround\sungyo</Filter>
-    </ClInclude>
-    <ClInclude Include="stage3.h">
-      <Filter>playGround\sungyo</Filter>
-    </ClInclude>
     <ClInclude Include="collisionManager.h">
       <Filter>playGround\nabin</Filter>
     </ClInclude>
@@ -213,14 +201,14 @@
     <ClInclude Include="stage03.h">
       <Filter>playGround\heasyeong</Filter>
     </ClInclude>
-    <ClInclude Include="stageManager2.h">
-      <Filter>playGround\heasyeong</Filter>
-    </ClInclude>
     <ClInclude Include="schoolgirl.h">
       <Filter>playGround\taeyong</Filter>
     </ClInclude>
     <ClInclude Include="npc.h">
       <Filter>playGround\nabin</Filter>
+    </ClInclude>
+    <ClInclude Include="stageManager.h">
+      <Filter>playGround\heasyeong</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -308,18 +296,6 @@
     <ClCompile Include="enemyManager.cpp">
       <Filter>playGround\taeyong</Filter>
     </ClCompile>
-    <ClCompile Include="stageManager.cpp">
-      <Filter>playGround\sungyo</Filter>
-    </ClCompile>
-    <ClCompile Include="stage1.cpp">
-      <Filter>playGround\sungyo</Filter>
-    </ClCompile>
-    <ClCompile Include="stage2.cpp">
-      <Filter>playGround\sungyo</Filter>
-    </ClCompile>
-    <ClCompile Include="stage3.cpp">
-      <Filter>playGround\sungyo</Filter>
-    </ClCompile>
     <ClCompile Include="collisionManager.cpp">
       <Filter>playGround\nabin</Filter>
     </ClCompile>
@@ -350,14 +326,14 @@
     <ClCompile Include="stage03.cpp">
       <Filter>playGround\heasyeong</Filter>
     </ClCompile>
-    <ClCompile Include="stageManager2.cpp">
-      <Filter>playGround\heasyeong</Filter>
-    </ClCompile>
     <ClCompile Include="schoolgirl.cpp">
       <Filter>playGround\taeyong</Filter>
     </ClCompile>
     <ClCompile Include="npc.cpp">
       <Filter>playGround\nabin</Filter>
+    </ClCompile>
+    <ClCompile Include="stageManager.cpp">
+      <Filter>playGround\heasyeong</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
