@@ -18,6 +18,7 @@ struct tagMiniMap
 	RECT _rc;
 	float _x, _y;
 };
+
 class stageManager : public gameNode
 {
 private:
@@ -39,6 +40,10 @@ private:
 	//현재 스테이지의 npc를 가지고 있을 vector
 	vector<class npc*> _vNpcs;
 
+	// 스테이지에 일정 시간마다 enemy를 spawn하기 위한 int 값
+	int _spawnCount;
+
+	class enemyManager* _em;
 
 public:
 
@@ -72,6 +77,9 @@ public:
 	bool getNowstage2() { return _NowStage2; }
 	bool getNowstage3() { return _NowStage3; }
 
+	//스테이지 상태 enum(int) 접근자
+	int getNowStage() { return _NowStage; }
+
 
 	//스테이지 이동 문 접근자
 	stage01* getVStage1() { return _Stage1; }
@@ -79,6 +87,8 @@ public:
 	stage03* getVStage3() { return _Stage3; }
 
 	image* getPixelImage() { return _currentPixelCollision; } //픽셀이미지 겟
+
+	void setEnemyManagerMemoryAddressLink(class enemyManager* em) { _em = em; }
 
 };
 

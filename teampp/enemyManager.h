@@ -4,12 +4,20 @@
 #include "schoolboy.h"
 #include "schoolgirl.h"
 #include <vector>
+#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
+using namespace std;
 
 class enemyManager:public gameNode
 {
 private:
 	typedef vector<enemy*>				vEnemy;
 	typedef vector<enemy*>::iterator	viEnemy;
+
+	typedef vector<MYPOINT>				vPoint;
+	typedef vector<MYPOINT>::iterator	viPoint;
+
+	typedef map<int, vPoint>			mSpawnPoint;
+	typedef map<int, vPoint>::iterator miSpawnPoint;
 private:
 
 	vEnemy	_vCheerLeader;
@@ -21,9 +29,20 @@ private:
 	vEnemy _vSchoolGirl;
 	viEnemy _viSchoolGirl;
 
+	// ===== ³ªºó Ãß°¡ ===== //
+	vEnemy _vEnemies;
+	viEnemy _viEnemies;
+
+	mSpawnPoint _mPoint;
+
+
+	class stageManager* _sm;
+	// ==================== //
+
 	image* _enemyImg;
 
 	MYRECT _enemyRc;
+
 
 
 public:
@@ -38,6 +57,10 @@ public:
 	void setEnemyCheerMove();
 	void setEnemySchoolBoyMove();
 	void setEnemySchoolGirlMove();
+
+	void setEnemiesVector(int stageNum);
+	void spawnEnemy(int stageNum);
+	enemy* createEnemy(int enemyType, float x, float y);
 
 	void removeCheerLeader(int arrNum);
 	void removeSchoolBoy(int arrNum);
@@ -56,5 +79,7 @@ public:
 	MYRECT getEnemyRc() { return _enemyRc; }
 
 	void setPlayerPos(float x, float y);
+
+	void setStageManagerMemoryAddressLink(class stageManager* sm) { _sm = sm; }
 };
 
