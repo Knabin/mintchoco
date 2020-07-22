@@ -260,11 +260,49 @@ void player::release()
 {
 }
 
+void player::guard()
+{
+	if (KEYMANAGER->isStayKeyDown(VK_SPACE) && !keyAttack())
+	{
+		if (!_jumping && !_attack)
+		{	
+			if (_playerDirection == PLAYERDIRECTION_LEFT_STOP || _playerDirection == PLAYERDIRECTION_LEFT_WALK || _playerDirection == PLAYERDIRECTION_LEFT_MOVE)
+			{
+				_guard = true;
+				_playerDirection = PLAYERDIRECTION_LEFT_GUARD;
+				_guardImage->setFrameX(_guardImage->getMaxFrameX());
+				_guardImage->setFrameY(0);
+			}
+
+			if (_playerDirection == PLAYERDIRECTION_RIGHT_STOP || _playerDirection == PLAYERDIRECTION_RIGHT_WALK || _playerDirection == PLAYERDIRECTION_RIGHT_MOVE)
+			{
+				_guard = true;
+				_playerDirection = PLAYERDIRECTION_RIGHT_GUARD;
+				_guardImage->setFrameX(0);
+				_guardImage->setFrameY(1);
+			}
+		}
+	}
+
+	if (KEYMANAGER->isOnceKeyUp(VK_SPACE))
+	{
+		_guard = false;
+		if (_playerDirection == PLAYERDIRECTION_LEFT_GUARD)
+		{
+			_playerDirection = PLAYERDIRECTION_LEFT_STOP;
+		}
+		if (_playerDirection == PLAYERDIRECTION_RIGHT_GUARD)
+		{
+			_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
+		}
+	}
+}
+
 void player::attack()
 {
 	if (KEYMANAGER->isOnceKeyDown('A') && !keyJump())//약공격
 	{
-		if (!_jumping)//점프중이 아닐때
+		if (!_jumping && !_guard)//점프중이 아닐때
 		{
 			_attack = true;
 			if (_playerDirection == PLAYERDIRECTION_LEFT_STOP && !_comboAttack || _playerDirection == PLAYERDIRECTION_LEFT_WALK && !_comboAttack)//기본, 걷기일때 공격
@@ -324,7 +362,7 @@ void player::attack()
 			}
 
 		}
-		else//점프중일때
+		else if (_jumping && !_guard)//점프중일때
 		{
 			_attack = true;
 			if (_playerDirection == PLAYERDIRECTION_LEFT_JUMP)
@@ -346,7 +384,7 @@ void player::attack()
 
 	if (KEYMANAGER->isOnceKeyDown('S') && !keyJump())//강공격
 	{
-		if (!_jumping)
+		if (!_jumping && !_guard)
 		{
 			if (_playerDirection == PLAYERDIRECTION_RIGHT_STOP || _playerDirection == PLAYERDIRECTION_RIGHT_WALK)
 			{
@@ -368,7 +406,7 @@ void player::attack()
 
 	if (KEYMANAGER->isOnceKeyDown('F') && !keyJump())//궁극기
 	{
-		if (!_jumping)
+		if (!_jumping && !_guard)
 		{
 			if (_playerDirection == PLAYERDIRECTION_RIGHT_STOP || _playerDirection == PLAYERDIRECTION_RIGHT_WALK)
 			{
@@ -404,7 +442,7 @@ void player::jumpMove()
 {
 	if (KEYMANAGER->isOnceKeyDown('D') && !keyAttack())//점프
 	{
-		if (!_attack && !_jumping)//공격중이 아닐때 && 점프중복방지
+		if (!_attack && !_jumping && !_guard)//공격중이 아닐때 && 점프중복방지
 		{
 			_jumping = true;
 			_jump->jumping(&_x, &_z, _jumpPower, _gravity);
@@ -432,18 +470,18 @@ void player::leftMove()
 	{
 		if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 		{
-			if (!_jumping && !_attack && !keyRight())
+			if (!_jumping && !_attack && !_guard && !keyRight())
 			{
 				_playerDirection = PLAYERDIRECTION_LEFT_WALK;
 				_walkImage->setFrameY(0);
 			}
 
-			if (!_jumping && !_attack && keyRight())
+			if (!_jumping && !_attack && !_guard && keyRight())
 			{
 				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
 			}
 
-			if (!_attack && !keyRight())//점프중에 움직이는거 허용
+			if (!_attack && !keyRight() && !_guard)//점프중에 움직이는거 허용
 			{
 				_x -= _walkSpeed;
 			}
@@ -455,18 +493,18 @@ void player::leftMove()
 	{
 		if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 		{
-			if (!_jumping && !_attack && !keyRight())
+			if (!_jumping && !_attack && !_guard && !keyRight())
 			{
 				_playerDirection = PLAYERDIRECTION_LEFT_MOVE;
 				_runImage->setFrameY(0);
 			}
 
-			if (!_jumping && !_attack && keyRight())
+			if (!_jumping && !_attack && !_guard && keyRight())
 			{
 				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
 			}
 
-			if (!_attack && !keyRight())//점프중에 움직이는거 허용
+			if (!_attack && !keyRight() && !_guard)//점프중에 움직이는거 허용
 			{
 				_x -= _runSpeed;
 			}
@@ -476,7 +514,7 @@ void player::leftMove()
 
 	if (KEYMANAGER->isOnceKeyUp(VK_LEFT))//왼쪽키를 뗏으면
 	{
-		if (!_jumping && !_attack)
+		if (!_jumping && !_attack && !_guard)
 		{
 			_playerDirection = PLAYERDIRECTION_LEFT_STOP;
 		}
@@ -489,7 +527,7 @@ void player::leftMove()
 
 	if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
 	{
-		if (_jumping && !_attack)//점프중에 프레임 변경
+		if (_jumping && !_attack && !_guard)//점프중에 프레임 변경
 		{
 			_playerDirection = PLAYERDIRECTION_LEFT_JUMP;
 			_jumpImage->setFrameX(_jumpImage->getFrameX());
@@ -505,18 +543,18 @@ void player::rightMove()
 	{
 		if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
 		{
-			if (!_jumping && !_attack && !keyLeft())
+			if (!_jumping && !_attack && !_guard && !keyLeft())
 			{
 				_playerDirection = PLAYERDIRECTION_RIGHT_WALK;
 				_walkImage->setFrameY(1);
 			}
 
-			if (!_jumping && !_attack && keyLeft())
+			if (!_jumping && !_attack && !_guard && keyLeft())
 			{
 				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
 			}
 
-			if (!_attack && !keyLeft())//점프중에 움직이는거 허용
+			if (!_attack && !keyLeft() && !_guard)//점프중에 움직이는거 허용
 			{
 				_x += _walkSpeed;
 			}
@@ -527,18 +565,18 @@ void player::rightMove()
 	{
 		if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
 		{
-			if (!_jumping && !_attack && !keyLeft())
+			if (!_jumping && !_attack && !_guard && !keyLeft())
 			{
 				_playerDirection = PLAYERDIRECTION_RIGHT_MOVE;
 				_runImage->setFrameY(1);
 			}
 
-			if (!_jumping && !_attack && keyLeft())
+			if (!_jumping && !_attack && !_guard && keyLeft())
 			{
 				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
 			}
 
-			if (!_attack && !keyLeft())//점프중에 움직이는거 허용
+			if (!_attack && !keyLeft() && !_guard)//점프중에 움직이는거 허용
 			{
 				_x += _runSpeed;
 			}
@@ -548,7 +586,7 @@ void player::rightMove()
 
 	if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))//오른쪽키를 뗏으면
 	{
-		if (!_jumping && !_attack)
+		if (!_jumping && !_attack && !_guard)
 		{
 			_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
 		}
@@ -560,7 +598,7 @@ void player::rightMove()
 
 	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
 	{
-		if (_jumping && !_attack)//점프중에 프레임 변경
+		if (_jumping && !_attack && !_guard)//점프중에 프레임 변경
 		{
 			_playerDirection = PLAYERDIRECTION_RIGHT_JUMP;
 			_jumpImage->setFrameX(_jumpImage->getFrameX());
@@ -575,7 +613,7 @@ void player::upMove()
 {
 	if (KEYMANAGER->isStayKeyDown(VK_UP))
 	{
-		if (!_jumping && !_attack && !keyDown())
+		if (!_jumping && !_attack && !_guard && !keyDown())
 		{
 			if (_playerDirection == PLAYERDIRECTION_LEFT_STOP || _playerDirection == PLAYERDIRECTION_LEFT_WALK)
 			{
@@ -590,7 +628,7 @@ void player::upMove()
 			}
 		}
 
-		if (!_jumping && !_attack && keyDown())
+		if (!_jumping && !_attack && !_guard && keyDown())
 		{
 			if (_playerDirection == PLAYERDIRECTION_LEFT_STOP || _playerDirection == PLAYERDIRECTION_LEFT_WALK)
 			{
@@ -603,7 +641,7 @@ void player::upMove()
 			}
 		}
 
-		if (!_attack)
+		if (!_attack && !_guard)
 		{
 			if (_jumping)
 			{
@@ -616,7 +654,7 @@ void player::upMove()
 
 	if (KEYMANAGER->isOnceKeyUp(VK_UP))//위쪽키를 뗏으면
 	{
-		if (!_jumping && !_attack)
+		if (!_jumping && !_attack && !_guard)
 		{
 			if (_playerDirection == PLAYERDIRECTION_LEFT_WALK)
 			{
@@ -639,7 +677,7 @@ void player::downMove()
 {
 	if (KEYMANAGER->isStayKeyDown(VK_DOWN))
 	{
-		if (!_jumping && !_attack && !keyUp())
+		if (!_jumping && !_attack && !_guard && !keyUp())
 		{
 			if (_playerDirection == PLAYERDIRECTION_LEFT_STOP || _playerDirection == PLAYERDIRECTION_LEFT_WALK)
 			{
@@ -654,7 +692,7 @@ void player::downMove()
 			}
 		}
 
-		if (!_jumping && !_attack && keyUp())
+		if (!_jumping && !_attack && !_guard && keyUp())
 		{
 			if (_playerDirection == PLAYERDIRECTION_LEFT_STOP || _playerDirection == PLAYERDIRECTION_LEFT_WALK)
 			{
@@ -667,7 +705,7 @@ void player::downMove()
 			}
 		}
 
-		if (!_attack)
+		if (!_attack && !_guard)
 		{
 			if (_jumping)
 			{
@@ -680,7 +718,7 @@ void player::downMove()
 
 	if (KEYMANAGER->isOnceKeyUp(VK_DOWN))//아래키를 뗏으면
 	{
-		if (!_jumping && !_attack)
+		if (!_jumping && !_attack && !_guard)
 		{
 			if (_playerDirection == PLAYERDIRECTION_LEFT_WALK)
 			{
@@ -712,11 +750,6 @@ void player::runTime()
 		_time = 0;
 		_clickTime = 0;
 	}
-}
-
-void player::guard()
-{
-	
 }
 
 void player::frameDraw()
@@ -1104,6 +1137,32 @@ void player::frameDraw()
 				_ultimate = false;
 				_attackRc.set(0, 0, 0, 0);
 			}
+		}
+		break;
+
+	case PLAYERDIRECTION_LEFT_GUARD:
+		_count++;
+		if (_count % 5 == 0)
+		{
+			_guardImage->setFrameX(_guardImage->getFrameX() - 1);
+			if (_guardImage->getFrameX() <= 0)
+			{
+				_guardImage->setFrameX(_guardImage->getMaxFrameX());
+			}
+			_count = 0;
+		}
+		break;
+
+	case PLAYERDIRECTION_RIGHT_GUARD:
+		_count++;
+		if (_count % 5 == 0)
+		{
+			_guardImage->setFrameX(_guardImage->getFrameX() + 1);
+			if (_guardImage->getFrameX() >= _guardImage->getMaxFrameX())
+			{
+				_guardImage->setFrameX(0);
+			}
+			_count = 0;
 		}
 		break;
 	}

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "stageManager.h"
 #include "npc.h"
+#include "enemyManager.h"
 
 stageManager::stageManager()
 {
@@ -36,6 +37,10 @@ HRESULT stageManager::init()
 	_NowStage4 = false;
 	_NowBossStage = false;
 
+	_em->setEnemiesVector(_NowStage);
+
+	_spawnCount = 0;
+
 	return S_OK;
 }
 
@@ -58,7 +63,14 @@ void stageManager::release()
 
 void stageManager::update()
 {
+	_spawnCount++;
 
+	// 너무 빠르거나 느리면 숫자 수정해 주세요
+	if (_spawnCount % 900 == 0)
+	{
+		_em->spawnEnemy(_NowStage);
+		_spawnCount = 0;
+	}
 
 
 	for (int i = 0; i < _vNpcs.size(); ++i)
@@ -122,6 +134,9 @@ void stageManager::Stage1Move()
 	CAMERA->setBackHeight(_currentPixelCollision->getHeight());
 
 	_vNpcs = _Stage1->getNPCs();
+	_em->setEnemiesVector(_NowStage);
+
+	_spawnCount = 0;
 }
 
 void stageManager::Stage2Move()
@@ -137,6 +152,9 @@ void stageManager::Stage2Move()
 	CAMERA->setBackHeight(_currentPixelCollision->getHeight());
 
 	_vNpcs = _Stage2->getNPCs();
+	_em->setEnemiesVector(_NowStage);
+
+	_spawnCount = 0;
 }
 
 void stageManager::Stage3Move()
@@ -152,6 +170,9 @@ void stageManager::Stage3Move()
 	CAMERA->setBackHeight(_currentPixelCollision->getHeight());
 
 	_vNpcs = _Stage3->getNPCs();
+	_em->setEnemiesVector(_NowStage);
+
+	_spawnCount = 0;
 }
 
 void stageManager::Stage4Move()

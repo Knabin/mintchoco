@@ -210,11 +210,8 @@
     <ClInclude Include="stageManager.h">
       <Filter>playGround\heasyeong</Filter>
     </ClInclude>
-    <ClInclude Include="stage04.h">
-      <Filter>playGround\heasyeong</Filter>
-    </ClInclude>
-    <ClInclude Include="bossStage.h">
-      <Filter>playGround\heasyeong</Filter>
+    <ClInclude Include="boss.h">
+      <Filter>playGround\uncheon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -341,11 +338,8 @@
     <ClCompile Include="stageManager.cpp">
       <Filter>playGround\heasyeong</Filter>
     </ClCompile>
-    <ClCompile Include="stage04.cpp">
-      <Filter>playGround\heasyeong</Filter>
-    </ClCompile>
-    <ClCompile Include="bossStage.cpp">
-      <Filter>playGround\heasyeong</Filter>
+    <ClCompile Include="boss.cpp">
+      <Filter>playGround\uncheon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

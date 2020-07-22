@@ -87,6 +87,7 @@ private:
 	bool _dash;//플레이어가 달리기에 사용할 값
 	bool _jumping;//점프함수를 실행한 이후 렉트값을 계속 변경시켜주기 위한 값
 	bool _attack;//공격이 실행중인지 아닌지 여부확인용 값
+	bool _guard;//플레이어 방어
 	bool _ultimate;//궁극기
 	bool _comboAttack;//콤보공격 프레임에 사용할 변수
 	bool _comboAttack2;//콤보공격 3단계 실행여부를 확인하기 위한 변수
