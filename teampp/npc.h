@@ -50,6 +50,9 @@ public:
 		return false;
 	}
 	
+	float getX() { return _x; }
+	float getY() { return _y; }
+
 	MYRECT& getRect() { return _rc; }
 };
 

@@ -5,6 +5,7 @@
 #include "stageManager.h"
 #include "itemManager.h"
 #include "UiManager.h"
+#include "npc.h"
 
 HRESULT collisionManager::init()
 {
@@ -24,6 +25,8 @@ void collisionManager::update()
 	playerHpMinus();
 
 	enemy_collision();//적이랑 플레이어 공격이랑 충돌시
+
+	npcCollision();
 
 }
 
@@ -147,4 +150,18 @@ void collisionManager::enemy_collision()
 		_player->setComboAttack2(true);//3단콤보공격 트루
 	}
 
+}
+
+void collisionManager::npcCollision()
+{
+	vector<npc*> temp = _stageManager->getNpcVector();
+	
+	for (int i = 0; i < temp.size(); ++i)
+	{
+		if (_player->getIsAttacking() && getDistance(0, temp[i]->getRect().bottom, 0, _player->getPlayerZ()) <= 100 &&
+			getDistance(temp[i]->getX(), temp[i]->getY(), _player->getPlayerX(), _player->getPlayerRect().getCenterY()) <= 200)
+		{
+			temp[i]->doReact();
+		}
+	}
 }
