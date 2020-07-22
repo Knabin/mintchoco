@@ -15,6 +15,7 @@ HRESULT enemyManager::init()
 	_enemyRc.set(0, 0, 100, 200);
 	_enemyRc.setCenterPos(WINSIZEX / 2, WINSIZEY / 2);
 
+	// 스테이지 1 spawn 포인트 초기화
 	{
 		vector<MYPOINT> vP;
 
@@ -31,6 +32,7 @@ HRESULT enemyManager::init()
 		_mPoint.insert(make_pair(0, vP));
 	}
 
+	// 스테이지 2 spawn 포인트 초기화
 	{
 		vector<MYPOINT> vP;
 
@@ -194,8 +196,7 @@ enemy* enemyManager::createEnemy(int enemyType, float x, float y)
 {
 	switch (enemyType)
 	{
-	case 0:
-		// cheerleader
+	case 0:			// cheerleader
 	{
 		enemy* em = new cheerleader;
 		em->init("cheer_move", x, y, 2.3f);
@@ -203,24 +204,21 @@ enemy* enemyManager::createEnemy(int enemyType, float x, float y)
 	}
 	break;
 	case 1:
-	default:
-		// school boy
+	default:		// school boy
 	{
 		enemy* em = new schoolboy;
 		em->init("schoolboy_move", x, y, 2.3f);
 		return em;
 	}
 		break;
-	case 2:
-		// school girl
+	case 2: 		// school girl
 	{
 		enemy* em = new schoolgirl;
 		em->init("schoolgirl_move", x, y, 2.3f);
 		return em;
 	}
 		break;
-	case 3:
-		// 보스?
+	case 3:			// 보스?
 		break;
 	}
 }
@@ -230,12 +228,15 @@ void enemyManager::spawnEnemy(int stageNum)
 	if (stageNum != 0) return;	// for test
 	vPoint temp = _mPoint.at(stageNum);
 
-	int r = RND->getInt(4);
-	int r2 = RND->getInt(3);	// TODO: 숫자 변경
+	// spawn될 포인트를 랜덤으로 결정함
+	int r = RND->getInt(temp.size());
+	
+	// spawn될 enemy 타입을 랜덤으로 결정함
+	int r2 = RND->getInt(3);
+	// 치어리더는 스테이지 1에서 등장하지 않는다고 하여 조건문 걸었음! 자유롭게 수정해 주세요
 	if (stageNum == 0) r2 = RND->getFromIntTo(1, 3);
 
 	_vEnemies.push_back(createEnemy(r2, temp[r].x, temp[r].y));
-
 }
 
 void enemyManager::removeCheerLeader(int arrNum)
