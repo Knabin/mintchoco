@@ -17,7 +17,8 @@ HRESULT cheerleader::init(string imageName, float x, float y, float speed)
 	_combo1 = IMAGEMANAGER->addFrameImage("cheer_combo1", "images/enemys/CheerLeader_ComboAttack1.bmp", 1332, 468, 6, 2, true, RGB(255, 0, 255));
 	_combo2 = IMAGEMANAGER->addFrameImage("cheer_combo2", "images/enemys/CheerLeader_backflip.bmp", 3060, 1836, 10, 6, true, RGB(255, 0, 255));
 	_submotion = IMAGEMANAGER->addFrameImage("cheer_back", "images/enemys/CheerLeader_cartwheel.bmp", 2817, 978, 11, 4, true, RGB(255, 0, 255));
-	//_gethit = IMAGEMANAGER->addFrameImage("cheer_gethit", "images/enemys/CheerLeader_gethit.bmp", 1539, 426, 9, 2, true, RGB(255, 0, 255));
+	_gethit = IMAGEMANAGER->addFrameImage("cheer_gethit", "images/enemys/CheerLeader_gethit.bmp", 1539, 426, 9, 2, true, RGB(255, 0, 255));
+	_stun = IMAGEMANAGER->addFrameImage("cheer_stun", "images/enemys/CheerLeader_Stun.bmp", 540, 390, 4, 2, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addImage("cheer_shadow", "images/enemys/CheerLeader_Shadow.bmp", 150, 44, true, RGB(255, 0, 255));
 
@@ -28,7 +29,6 @@ HRESULT cheerleader::init(string imageName, float x, float y, float speed)
 	_y = _y + y;
 	_random = RND->getInt(4);
 	_direction = ENEMY_LEFT_MOVE;
-	_aniTime = 0;
 
 	// ============================	치어리더 아이들 ============================ //
 	_enemyMotion_L_IDLE = new animation;
@@ -46,12 +46,12 @@ HRESULT cheerleader::init(string imageName, float x, float y, float speed)
 	// ============================	치어리더 무브 ============================ //
 	_enemyMotion_L = new animation;
 	_enemyMotion_L->init(_move->getWidth(), _move->getHeight(), _move->getFrameWidth(), _move->getFrameHeight());
-	_enemyMotion_L->setPlayFrame(0, 11, false, true);
+	_enemyMotion_L->setPlayFrame(11, 0, false, true);
 	_enemyMotion_L->setFPS(1.5);
 	_enemyMotion_L->start();
 	_enemyMotion_R = new animation;
 	_enemyMotion_R->init(_move->getWidth(), _move->getHeight(), _move->getFrameWidth(), _move->getFrameHeight());
-	_enemyMotion_R->setPlayFrame(23, 12, false, true);
+	_enemyMotion_R->setPlayFrame(12, 23, false, true);
 	_enemyMotion_R->setFPS(1.5);
 	_enemyMotion_R->start();
 	// ============================	치어리더 무브 ============================ //
@@ -121,9 +121,25 @@ HRESULT cheerleader::init(string imageName, float x, float y, float speed)
 	//_enemyMotion_R_hit->start();
 	// ============================	치어리더 히트 ============================ //
 
+	// ============================	치어리더 스턴 ============================ //
+	_enemyMotion_L_stun = new animation;
+	_enemyMotion_L_stun->init(_stun->getWidth(), _stun->getHeight(), _stun->getFrameWidth(), _stun->getFrameHeight());
+	_enemyMotion_L_stun->setPlayFrame(0, 4, false, false);
+	_enemyMotion_L_stun->setFPS(1);
+	_enemyMotion_L_stun->start();
+	_enemyMotion_R_stun = new animation;
+	_enemyMotion_R_stun->init(_stun->getWidth(), _stun->getHeight(), _stun->getFrameWidth(), _stun->getFrameHeight());
+	_enemyMotion_R_stun->setPlayFrame(7, 4, false, false);
+	_enemyMotion_R_stun->setFPS(1);
+	_enemyMotion_R_stun->start();
+	// ============================	치어리더 스턴 ============================ //
+
 
 	_rc.set(0, 0, _enemyImg->getFrameWidth(), _enemyImg->getFrameHeight());
 	_rc.setCenterPos(_x, _y);
+
+	_attackRC.set(0, 0, 0, 0);
+	_rc.setCenterPos(0, 0);
 
 	_enemyMotion = _enemyMotion_L;
 
@@ -140,6 +156,7 @@ void cheerleader::release()
 
 void cheerleader::render()
 {
+	_attackRC.set(0, 0, 0, 0);
 	switch (_direction)
 	{
 	case ENEMY_LEFT_IDLE:
@@ -154,31 +171,43 @@ void cheerleader::render()
 	case ENEMY_RIGHT_MOVE:
 		_enemyImg = _move;
 		break;
-	case ENEMY_LEFT_ATTACK:
+	case ENEMY_LEFT_ATTACK:	//치어리더 콤보어택3.bmp
 		_enemyImg = _attack;
+		_attackRC.set(0, 0, 200, 100);
+		_attackRC.setCenterPos(_rc.left, _rc.getCenterY());
 		break;
 	case ENEMY_RIGHT_ATTACK:
 		_enemyImg = _attack;
+		_attackRC.set(0, 0, 200, 100);
+		_attackRC.setCenterPos(_rc.right, _rc.getCenterY());
 		break;
-	case ENEMY_LEFT_COMBO1:
+	case ENEMY_LEFT_COMBO1:	//치어리더 콤보어택1.bmp
 		_enemyImg = _combo1;
+		_attackRC.set(0, 0, 100, 100);
+		_attackRC.setCenterPos(_rc.left, _rc.getCenterY());
 		break;
 	case ENEMY_RIGHT_COMBO1:
 		_enemyImg = _combo1;
+		_attackRC.set(0, 0, 100, 100);
+		_attackRC.setCenterPos(_rc.right, _rc.getCenterY());
 		break;
-	case ENEMY_LEFT_COMBO2:
+	case ENEMY_LEFT_COMBO2:	//치어리더 백플립.bmp
 		_enemyImg = _combo2;
+		_attackRC.set(0, 0, 100,100);
+		_attackRC.setCenterPos(_rc.left, _rc.getCenterY());
 		break;
 	case ENEMY_RIGHT_COMBO2:
 		_enemyImg = _combo2;
+		_attackRC.set(0, 0, 100, 100);
+		_attackRC.setCenterPos(_rc.right, _rc.getCenterY());
 		break;
 	case ENEMY_LEFT_SUBMOTION:
 		_enemyImg = _submotion;
-		_x -= 5.f;
+		_x -= 8.f;
 		break;
 	case ENEMY_RIGHT_SUBMOTION:
 		_enemyImg = _submotion;
-		_x += 5.f;
+		_x += 8.f;
 			break;
 	//case ENEMY_LEFT_GETHIT:
 	//	_enemyImg = _gethit;
@@ -186,32 +215,16 @@ void cheerleader::render()
 	//case ENEMY_RIGHT_GETHIT:
 	//	_enemyImg = _gethit;
 	//	break;
-
+	case ENEMY_LEFT_STUN:
+		_enemyImg = _stun;
+		break;
+	case ENEMY_RIGHT_STUN:
+		_enemyImg = _stun;
+		break;
 	}
-	/*
-	if(_direction == ENEMY_LEFT_SUBMOTION)
-	{
-		_aniTime++;
-		if (_aniTime > 10)
-		{
-			for (int i = 0; i < 3; i++)
-			{
-				ZORDER->pushObject(getMemDC(), _enemyImg, _enemyMotion, 1, _rc.getCenterX() + 20*i, 0, _rc.bottom - 0.01);
-			}
-		}
-	}
-	else if (_direction == ENEMY_RIGHT_SUBMOTION)
-	{
-		_aniTime++;
-		if (_aniTime > 10)
-		{
-			for (int i = 0; i < 3; i++)
-			{
-				ZORDER->pushObject(getMemDC(), _enemyImg, _enemyMotion, 1, _rc.getCenterX() - 20*i, 0, _rc.bottom - 0.01);
-			}
-		}
-	}*/
-	IMAGEMANAGER->findImage("cheer_shadow")->render(getMemDC(), _rc.left + 35, _rc.bottom-25);
+	_rc.render(getMemDC());
+	_attackRC.render(getMemDC());
+	IMAGEMANAGER->findImage("cheer_shadow")->alphaRender(getMemDC(), _rc.left + 35, _rc.bottom - 25,100);
 	ZORDER->pushObject(getMemDC(), _enemyImg, _enemyMotion, 1, _rc.getCenterX(), 0, _rc.bottom);
 }
 

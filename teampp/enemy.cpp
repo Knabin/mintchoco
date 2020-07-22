@@ -11,6 +11,7 @@ enemy::~enemy()
 
 HRESULT enemy::init(string imageName, float x, float y, float speed)
 {
+	_hp = 70;
 	return S_OK;
 }
 
@@ -21,10 +22,13 @@ void enemy::release()
 void enemy::update()
 {	
 	_isAttackCount++;
+	_isStunCount++;
 	_enemyMotion->frameUpdate(TIMEMANAGER->getElapsedTime() * 10);
 
 	distance = getDistance(_x, _y, _playerX, _playerY);
 	angle = getAngle(_x, _y, _playerX, _playerY);
+
+	
 
 	if (distance > 165 && (_direction == ENEMY_RIGHT_MOVE || _direction == ENEMY_LEFT_MOVE) && (_direction != ENEMY_LEFT_SUBMOTION && _direction != ENEMY_RIGHT_SUBMOTION))
 	{
@@ -134,8 +138,7 @@ void enemy::update()
 						break;
 					case 3:
 						_direction = ENEMY_LEFT_SUBMOTION;
-						_enemyMotion = _enemyMotion_L_submotion;
-						
+						_enemyMotion = _enemyMotion_L_submotion;					
 					}
 				}
 			}
@@ -167,7 +170,6 @@ void enemy::update()
 			}
 		}
 	}
-	
 	
 	// ==============================		에너미 움직임 및 공격      ==============================//
 	

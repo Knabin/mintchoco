@@ -99,7 +99,7 @@ void enemyManager::setEnemyCheerMove()
 	float x[] = {500};
 	float y[] = {350};
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		enemy* _tempCheer = new cheerleader;
 		_tempCheer->init("cheer_move", x[i], y[i], 2.3f);
@@ -111,7 +111,7 @@ void enemyManager::setEnemyCheerMove()
 void enemyManager::setEnemySchoolBoyMove()
 {
 	float x[] = { 1300 };
-	float y[] = { 550 };
+	float y[] = { 250 };
 
 	for (int i = 0; i < 1; i++)
 	{
@@ -124,7 +124,7 @@ void enemyManager::setEnemySchoolBoyMove()
 
 void enemyManager::setEnemySchoolGirlMove()
 {
-	float x[] = { 1000 };
+	float x[] = { 200 };
 	float y[] = { 450 };
 
 	for (int i = 0; i < 1; i++)
