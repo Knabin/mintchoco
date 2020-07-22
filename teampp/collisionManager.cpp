@@ -170,8 +170,10 @@ void collisionManager::npcCollision()
 
 void collisionManager::player_collision()//플레이어랑 적 공격이랑 충돌시
 {
+	vector<enemy*> ve = _enemyManager->getEnemiesVector();
 	//if (isCollision(_player->getPlayerRect(), _enemyManager->get))
 	//{
 	//
 	//}
 }
+

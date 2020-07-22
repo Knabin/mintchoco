@@ -21,15 +21,6 @@ private:
 	typedef map<int, vPoint>::iterator miSpawnPoint;
 private:
 
-	vEnemy	_vCheerLeader;
-	viEnemy _viCheerLeader;
-
-	vEnemy _vSchoolBoy;
-	viEnemy _viSchoolBoy;
-
-	vEnemy _vSchoolGirl;
-	viEnemy _viSchoolGirl;
-
 	// ===== 나빈 추가 ===== //
 	vEnemy _vEnemies;		// 현재 스테이지에 있는 enemy들
 	viEnemy _viEnemies;
@@ -57,9 +48,6 @@ public:
 	void update();
 	void render();
 
-	void setEnemyCheerMove();
-	void setEnemySchoolBoyMove();
-	void setEnemySchoolGirlMove();
 	// === 운천 추가 === 
 	void setBossMove();
 	//=================
@@ -72,21 +60,9 @@ public:
 	// enemy를 만들어서 반환하는 함수 (enemyType(0: 치어리더, 1: 남학생, 2: 여학생), 중점 좌표X, 중점 좌표Y)
 	enemy* createEnemy(int enemyType, float x, float y);
 
-	void removeCheerLeader(int arrNum);
-	void removeSchoolBoy(int arrNum);
-	void removeSchoolGilr(int arrNum);
-
 	// 현재 스테이지에 있는 enemy들을 반환해 주는 함수
 	vector<enemy*>& getEnemiesVector() { return _vEnemies; }
-
-	vector<enemy*> getVCheerLeader() { return _vCheerLeader; }
-	vector<enemy*>::iterator getVICheerleader() { return _viCheerLeader; }
-
-	vector<enemy*> getVSchoolBoy() { return _vSchoolBoy; }
-	vector<enemy*>::iterator getVISchoolBoy() { return _viSchoolBoy; }
-
-	vector<enemy*> getVSchoolGirl() { return _vSchoolGirl; }
-	vector<enemy*>::iterator getVISchoolGirl() { return _viSchoolGirl; }
+	void removeEnemy(int index);
 
 	MYRECT& getEnemyRc() { return _enemyRc; } //플레이어 공격이랑 충돌할 에너미 렉트
 

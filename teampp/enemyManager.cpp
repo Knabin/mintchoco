@@ -54,18 +54,6 @@ void enemyManager::release()
 
 void enemyManager::update()
 {
-	for (int i = 0; i < _vCheerLeader.size(); i++)
-	{
-		_vCheerLeader[i]->update();
-	}
-	for (int i = 0; i < _vSchoolBoy.size(); i++)
-	{
-		_vSchoolBoy[i]->update();
-	}
-	for (int i = 0; i < _vSchoolGirl.size(); i++)
-	{
-		_vSchoolGirl[i]->update();
-	}
 	for (int i = 0; i < _vEnemies.size(); ++i)
 	{
 		_vEnemies[i]->update();
@@ -77,70 +65,18 @@ void enemyManager::update()
 void enemyManager::render()
 {
 	_enemyRc.render(getMemDC());
-	for (int i = 0; i < _vCheerLeader.size(); i++)
-	{
-		_vCheerLeader[i]->render();
-	}
-	for (int i = 0; i < _vSchoolBoy.size(); i++)
-	{
-		_vSchoolBoy[i]->render();
-	}
-	for (int i = 0; i < _vSchoolGirl.size(); i++)
-	{
-		_vSchoolGirl[i]->render();
-	}
 	for (int i = 0; i < _vEnemies.size(); ++i)
 		_vEnemies[i]->render();
 
 	_boss->render();	// 보스 이미지 띄우기
 }
 
-void enemyManager::setEnemyCheerMove()
-{
-	float x[] = {500};
-	float y[] = {350};
-
-	for (int i = 0; i < 1; i++)
-	{
-		enemy* _tempCheer = new cheerleader;
-		_tempCheer->init("cheer_move", x[i], y[i], 2.3f);
-		_vEnemies.push_back(_tempCheer);
-	}
-}
-
-void enemyManager::setEnemySchoolBoyMove()
-{
-	float x[] = { 1300 };
-	float y[] = { 250 };
-
-	for (int i = 0; i < 1; i++)
-	{
-		enemy* _tempSchoolBoy = new schoolboy;
-		_tempSchoolBoy->init("schoolboy_move", x[i], y[i], 2.3f);
-		_vEnemies.push_back(_tempSchoolBoy);
-	}
-}
-
-void enemyManager::setEnemySchoolGirlMove()
-{
-	float x[] = { 200 };
-	float y[] = { 450 };
-
-	for (int i = 0; i < 1; i++)
-	{
-		enemy* _tempSchoolGirl = new schoolgirl;
-		_tempSchoolGirl->init("schoolgirl_move", x[i], y[i], 2.3f);
-		_vEnemies.push_back(_tempSchoolGirl);
-	}
-}
 
 void enemyManager::setBossMove()	//보스 무브 추가
 {
 	_boss = new boss;
 	_boss->init("BOOSIDLE", WINSIZEX / 2, WINSIZEY / 2, 0.0f);
 }
-
-
 
 void enemyManager::setEnemiesVector(int stageNum)
 {
@@ -250,36 +186,16 @@ void enemyManager::spawnEnemy(int stageNum)
 	_vEnemies.push_back(createEnemy(r2, temp[r].x, temp[r].y));
 }
 
-void enemyManager::removeCheerLeader(int arrNum)
-{
-	_vCheerLeader.erase(_vCheerLeader.begin() + arrNum);
-}
 
-void enemyManager::removeSchoolBoy(int arrNum)
+void enemyManager::removeEnemy(int index)
 {
-	_vSchoolBoy.erase(_vSchoolBoy.begin() + arrNum);
+	_vEnemies[index]->release();
+	SAFE_DELETE(_vEnemies[index]);
+	_vEnemies.erase(_vEnemies.begin() + index);
 }
-
-void enemyManager::removeSchoolGilr(int arrNum)
-{
-	_vSchoolGirl.erase(_vSchoolGirl.begin() + arrNum);
-}
-
 
 void enemyManager::setPlayerPos(float x, float y)
 {
-	for (int i = 0; i < _vCheerLeader.size(); i++)
-	{
-		_vCheerLeader[i]->setPlayerPos(x, y);
-	}
-	for (int i = 0; i < _vSchoolBoy.size(); i++)
-	{
-		_vSchoolBoy[i]->setPlayerPos(x, y);
-	}
-	for (int i = 0; i < _vSchoolGirl.size(); i++)
-	{
-		_vSchoolGirl[i]->setPlayerPos(x, y);
-	}
 	for (int i = 0; i < _vEnemies.size(); ++i)
 		_vEnemies[i]->setPlayerPos(x, y);
 
