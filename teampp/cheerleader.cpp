@@ -11,6 +11,7 @@ cheerleader::~cheerleader()
 
 HRESULT cheerleader::init(string imageName, float x, float y, float speed)
 {
+	enemy::init(imageName, x, y, speed);
 	_idle = IMAGEMANAGER->addFrameImage("cheer_idle", "images/enemys/CheerLeader_Idle.bmp", 2304, 432, 12, 2, true, RGB(255, 0, 255));
 	_move = IMAGEMANAGER->addFrameImage("cheer_move", "images/enemys/CheerLeader_Walk.bmp", 2736, 438, 12, 2, true, RGB(255, 0, 255));
 	_attack = IMAGEMANAGER->addFrameImage("cheer_attack", "images/enemys/CheerLeader_ComboAttack3.bmp", 1827, 426, 7, 2, true, RGB(255, 0, 255));
@@ -19,6 +20,8 @@ HRESULT cheerleader::init(string imageName, float x, float y, float speed)
 	_submotion = IMAGEMANAGER->addFrameImage("cheer_back", "images/enemys/CheerLeader_cartwheel.bmp", 2817, 978, 11, 4, true, RGB(255, 0, 255));
 	_gethit = IMAGEMANAGER->addFrameImage("cheer_gethit", "images/enemys/CheerLeader_gethit.bmp", 1539, 426, 9, 2, true, RGB(255, 0, 255));
 	_stun = IMAGEMANAGER->addFrameImage("cheer_stun", "images/enemys/CheerLeader_Stun.bmp", 540, 390, 4, 2, true, RGB(255, 0, 255));
+	_dead = IMAGEMANAGER->addFrameImage("cheer_dead", "images/enemys/CheerLeader_weapon_swing.bmp", 2604, 432, 7, 2, true, RGB(255, 0, 255));
+	_block = IMAGEMANAGER->addFrameImage("cheer_block", "images/enemys/CheerLeader_block.bmp", 489, 428, 3, 2, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addImage("cheer_shadow", "images/enemys/CheerLeader_Shadow.bmp", 150, 44, true, RGB(255, 0, 255));
 
@@ -27,20 +30,20 @@ HRESULT cheerleader::init(string imageName, float x, float y, float speed)
 	_speed = speed;
 	_x = _x + x;
 	_y = _y + y;
-	_random = RND->getInt(4);
+	_random = RND->getInt(5);
 
 
 	// ============================	치어리더 아이들 ============================ //
-	_enemyMotion_L_IDLE = new animation;
-	_enemyMotion_L_IDLE->init(_idle->getWidth(), _idle->getHeight(), _idle->getFrameWidth(), _idle->getFrameHeight());
-	_enemyMotion_L_IDLE->setPlayFrame(0, 11, false, true);
-	_enemyMotion_L_IDLE->setFPS(1);
-	_enemyMotion_L_IDLE->start();
-	_enemyMotion_R_IDLE = new animation;
-	_enemyMotion_R_IDLE->init(_idle->getWidth(), _idle->getHeight(), _idle->getFrameWidth(), _idle->getFrameHeight());
-	_enemyMotion_R_IDLE->setPlayFrame(23, 12, false, true);
-	_enemyMotion_R_IDLE->setFPS(1);
-	_enemyMotion_R_IDLE->start();
+	_enemyMotion_L_idle = new animation;
+	_enemyMotion_L_idle->init(_idle->getWidth(), _idle->getHeight(), _idle->getFrameWidth(), _idle->getFrameHeight());
+	_enemyMotion_L_idle->setPlayFrame(0, 11, false, true);
+	_enemyMotion_L_idle->setFPS(1);
+	_enemyMotion_L_idle->start();
+	_enemyMotion_R_idle = new animation;
+	_enemyMotion_R_idle->init(_idle->getWidth(), _idle->getHeight(), _idle->getFrameWidth(), _idle->getFrameHeight());
+	_enemyMotion_R_idle->setPlayFrame(23, 12, false, true);
+	_enemyMotion_R_idle->setFPS(1);
+	_enemyMotion_R_idle->start();
 	// ============================	치어리더 아이들 ============================ //
 
 	// ============================	치어리더 무브 ============================ //
@@ -70,29 +73,29 @@ HRESULT cheerleader::init(string imageName, float x, float y, float speed)
 	// ============================	치어리더 공격 ============================ //
 
 	// ============================	치어리더 콤보1 ============================ //
-	_enemyMotion_L_COMBO1 = new animation;
-	_enemyMotion_L_COMBO1->init(_combo1->getWidth(), _combo1->getHeight(), _combo1->getFrameWidth(), _combo1->getFrameHeight());
-	_enemyMotion_L_COMBO1->setPlayFrame(11, 6, false, false);
-	_enemyMotion_L_COMBO1->setFPS(1.5);
-	_enemyMotion_L_COMBO1->start();
-	_enemyMotion_R_COMBO1 = new animation;
-	_enemyMotion_R_COMBO1->init(_combo1->getWidth(), _combo1->getHeight(), _combo1->getFrameWidth(), _combo1->getFrameHeight());
-	_enemyMotion_R_COMBO1->setPlayFrame(0, 5, false, false);
-	_enemyMotion_R_COMBO1->setFPS(1.5);
-	_enemyMotion_R_COMBO1->start();
+	_enemyMotion_L_combo1 = new animation;
+	_enemyMotion_L_combo1->init(_combo1->getWidth(), _combo1->getHeight(), _combo1->getFrameWidth(), _combo1->getFrameHeight());
+	_enemyMotion_L_combo1->setPlayFrame(11, 6, false, false);
+	_enemyMotion_L_combo1->setFPS(1.5);
+	_enemyMotion_L_combo1->start();
+	_enemyMotion_R_combo1 = new animation;
+	_enemyMotion_R_combo1->init(_combo1->getWidth(), _combo1->getHeight(), _combo1->getFrameWidth(), _combo1->getFrameHeight());
+	_enemyMotion_R_combo1->setPlayFrame(0, 5, false, false);
+	_enemyMotion_R_combo1->setFPS(1.5);
+	_enemyMotion_R_combo1->start();
 	// ============================	치어리더 콤보1 ============================ //
 
 	// ============================	치어리더 콤보2 ============================ //
-	_enemyMotion_L_COMBO2 = new animation;
-	_enemyMotion_L_COMBO2->init(_combo2->getWidth(), _combo2->getHeight(), _combo2->getFrameWidth(), _combo2->getFrameHeight());
-	_enemyMotion_L_COMBO2->setPlayFrame(59, 39, false, false);
-	_enemyMotion_L_COMBO2->setFPS(1.5);
-	_enemyMotion_L_COMBO2->start();
-	_enemyMotion_R_COMBO2 = new animation;
-	_enemyMotion_R_COMBO2->init(_combo2->getWidth(), _combo2->getHeight(), _combo2->getFrameWidth(), _combo2->getFrameHeight());
-	_enemyMotion_R_COMBO2->setPlayFrame(0, 21, false, false);
-	_enemyMotion_R_COMBO2->setFPS(1.5);
-	_enemyMotion_R_COMBO2->start();
+	_enemyMotion_L_combo2 = new animation;
+	_enemyMotion_L_combo2->init(_combo2->getWidth(), _combo2->getHeight(), _combo2->getFrameWidth(), _combo2->getFrameHeight());
+	_enemyMotion_L_combo2->setPlayFrame(59, 39, false, false);
+	_enemyMotion_L_combo2->setFPS(1.5);
+	_enemyMotion_L_combo2->start();
+	_enemyMotion_R_combo2 = new animation;
+	_enemyMotion_R_combo2->init(_combo2->getWidth(), _combo2->getHeight(), _combo2->getFrameWidth(), _combo2->getFrameHeight());
+	_enemyMotion_R_combo2->setPlayFrame(0, 21, false, false);
+	_enemyMotion_R_combo2->setFPS(1.5);
+	_enemyMotion_R_combo2->start();
 	// ============================	치어리더 콤보2 ============================ //
 
 	// ============================	치어리더 백플립 ============================ //
@@ -124,16 +127,41 @@ HRESULT cheerleader::init(string imageName, float x, float y, float speed)
 	// ============================	치어리더 스턴 ============================ //
 	_enemyMotion_L_stun = new animation;
 	_enemyMotion_L_stun->init(_stun->getWidth(), _stun->getHeight(), _stun->getFrameWidth(), _stun->getFrameHeight());
-	_enemyMotion_L_stun->setPlayFrame(0, 4, false, false);
-	_enemyMotion_L_stun->setFPS(1);
+	_enemyMotion_L_stun->setPlayFrame(7, 4, false, true);
+	_enemyMotion_L_stun->setFPS(0.7);
 	_enemyMotion_L_stun->start();
 	_enemyMotion_R_stun = new animation;
 	_enemyMotion_R_stun->init(_stun->getWidth(), _stun->getHeight(), _stun->getFrameWidth(), _stun->getFrameHeight());
-	_enemyMotion_R_stun->setPlayFrame(7, 4, false, false);
-	_enemyMotion_R_stun->setFPS(1);
+	_enemyMotion_R_stun->setPlayFrame(0, 3, false, true);
+	_enemyMotion_R_stun->setFPS(0.7);
 	_enemyMotion_R_stun->start();
 	// ============================	치어리더 스턴 ============================ //
 
+	// ============================	치어리더 죽음 ============================ //
+	_enemyMotion_L_dead = new animation;
+	_enemyMotion_L_dead->init(_dead->getWidth(), _dead->getHeight(), _dead->getFrameWidth(), _dead->getFrameHeight());
+	_enemyMotion_L_dead->setPlayFrame(7, 0, false, false);
+	_enemyMotion_L_dead->setFPS(0.5);
+	_enemyMotion_L_dead->start();
+	_enemyMotion_R_dead = new animation;
+	_enemyMotion_R_dead->init(_dead->getWidth(), _dead->getHeight(), _dead->getFrameWidth(), _dead->getFrameHeight());
+	_enemyMotion_R_dead->setPlayFrame(7, 13, false, false);
+	_enemyMotion_R_dead->setFPS(0.5);
+	_enemyMotion_R_dead->start();
+	// ============================	치어리더 죽음 ============================ //
+
+	// ============================	치어리더 막기 ============================ //
+	_enemyMotion_L_block = new animation;
+	_enemyMotion_L_block->init(_block->getWidth(), _block->getHeight(), _block->getFrameWidth(), _block->getFrameHeight());
+	_enemyMotion_L_block->setPlayFrame(5, 3, false, false);
+	_enemyMotion_L_block->setFPS(0.5);
+	_enemyMotion_L_block->start();
+	_enemyMotion_R_block = new animation;
+	_enemyMotion_R_block->init(_block->getWidth(), _block->getHeight(), _block->getFrameWidth(), _block->getFrameHeight());
+	_enemyMotion_R_block->setPlayFrame(0, 2, false, false);
+	_enemyMotion_R_block->setFPS(0.5);
+	_enemyMotion_R_block->start();
+	// ============================	치어리더 막기 ============================ //
 
 	_rc.set(0, 0, _enemyImg->getFrameWidth(), _enemyImg->getFrameHeight());
 	_rc.setCenterPos(_x, _y);
@@ -221,6 +249,18 @@ void cheerleader::render()
 		break;
 	case ENEMY_RIGHT_STUN:
 		_enemyImg = _stun;
+		break;
+	case ENEMY_LEFT_DEAD:
+		_enemyImg = _dead;
+		break;
+	case ENEMY_RIGHT_DEAD:
+		_enemyImg = _dead;
+		break;
+	case ENEMY_LEFT_BLOCK:
+		_enemyImg = _block;
+		break;
+	case ENEMY_RIGHT_BLOCK:
+		_enemyImg = _block;
 		break;
 	}
 	_rc.render(getMemDC());

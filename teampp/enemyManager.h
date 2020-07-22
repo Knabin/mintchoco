@@ -40,7 +40,7 @@ private:
 
 	image* _enemyImg;
 
-	MYRECT _enemyRc;
+	MYRECT _enemyRc;	//플레이어 공격이랑 충돌할 에너미 렉트
 
 
 
@@ -80,7 +80,7 @@ public:
 	vector<enemy*> getVSchoolGirl() { return _vSchoolGirl; }
 	vector<enemy*>::iterator getVISchoolGirl() { return _viSchoolGirl; }
 
-	MYRECT getEnemyRc() { return _enemyRc; }
+	MYRECT& getEnemyRc() { return _enemyRc; } //플레이어 공격이랑 충돌할 에너미 렉트
 
 	void setPlayerPos(float x, float y);
 

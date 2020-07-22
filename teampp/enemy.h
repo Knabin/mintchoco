@@ -21,7 +21,12 @@ enum ENEMYDIRECTION
 	ENEMY_LEFT_GETHIT,
 	ENEMY_RIGHT_GETHIT,
 	ENEMY_LEFT_STUN,
-	ENEMY_RIGHT_STUN
+	ENEMY_RIGHT_STUN,
+	ENEMY_POINT,
+	ENEMY_LEFT_DEAD,
+	ENEMY_RIGHT_DEAD,
+	ENEMY_LEFT_BLOCK,
+	ENEMY_RIGHT_BLOCK
 };
 
 class enemy : public gameNode
@@ -35,27 +40,36 @@ protected:
 	image* _combo2;		//에너미 공격모션
 	image* _submotion;	//치어리더는 백덤블링, 남학생은 어퍼컷, 여학생은 어택
 	image* _gethit;
-	image* _stun;	
+	image* _stun;
+	image* _point;
+	image* _dead;
+	image* _block;
 
 	//image* _ehit;
 
 	animation* _enemyMotion;
-	animation* _enemyMotion_L_IDLE;
-	animation* _enemyMotion_R_IDLE;
+	animation* _enemyMotion_L_idle;
+	animation* _enemyMotion_R_idle;
 	animation* _enemyMotion_L;
 	animation* _enemyMotion_R;
 	animation* _enemyMotion_L_A;
 	animation* _enemyMotion_R_A;
-	animation* _enemyMotion_L_COMBO1;
-	animation* _enemyMotion_R_COMBO1;
-	animation* _enemyMotion_L_COMBO2;
-	animation* _enemyMotion_R_COMBO2;
+	animation* _enemyMotion_L_combo1;
+	animation* _enemyMotion_R_combo1;
+	animation* _enemyMotion_L_combo2;
+	animation* _enemyMotion_R_combo2;
 	animation* _enemyMotion_L_submotion;
 	animation* _enemyMotion_R_submotion;
 	animation* _enemyMotion_L_hit;
 	animation* _enemyMotion_R_hit;
 	animation* _enemyMotion_L_stun;
 	animation* _enemyMotion_R_stun;
+	animation* _enemyMotion_L_dead;
+	animation* _enemyMotion_R_dead;
+	animation* _enemyMotion_L_block;
+	animation* _enemyMotion_R_block;
+
+	animation* _ani_point;
 
 
 	string _imageName;	//에너미 이미지 받을 것
@@ -66,6 +80,7 @@ protected:
 	int _isStunCount;	//에너미 스턴 시간
 	bool _isJump;
 	bool _isStart;
+	bool _isPoint;
 	MYRECT _rc;			//에너미 렉트
 	MYRECT _attackRC;	//에너미 공격렉트
 
@@ -91,5 +106,7 @@ public:
 	virtual void render();
 
 	void setPlayerPos(float x, float y);
+
+	MYRECT& getEnemyAttackRect() { return _attackRC; }
 };
 

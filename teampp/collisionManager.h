@@ -29,6 +29,7 @@ public:
 	void stagedoor_collision(); //스테이지 이동
 	void stagedoor_collision_image(); //스테이지 이동 이미지 변경
 	void enemy_collision();//적이랑 플레이어 공격이랑 충돌시
+	void player_collision();//플레이어랑 적 공격이랑 충돌시
 
 	void playerHpMinus();	//충돌 시 player hp 감소
 

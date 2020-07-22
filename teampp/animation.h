@@ -56,7 +56,7 @@ public:
 	void setPlayFrame(int start, int end, BOOL reverse, BOOL loop, CALLBACK_FUNCTION_PARAMETER cbFunction, void* obj);
 
 
-	void setFPS(int framePerSec);
+	void setFPS(float framePerSec);
 
 	void frameUpdate(float elapsedTime);
 

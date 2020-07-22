@@ -25,6 +25,8 @@ void collisionManager::update()
 
 	enemy_collision();//적이랑 플레이어 공격이랑 충돌시
 
+	player_collision();
+
 }
 
 void collisionManager::release()
@@ -102,7 +104,7 @@ void collisionManager::playerHpMinus()
 	}
 
 }
-void collisionManager::enemy_collision()
+void collisionManager::enemy_collision()//적이랑 플레이어 공격이랑 충돌시
 {
 	if (isCollision(_enemyManager->getEnemyRc(), _player->getComboAttackRc1()) && _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_COMBO_ATTACK1
 		|| isCollision(_enemyManager->getEnemyRc(), _player->getComboAttackRc1()) && _player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_COMBO_ATTACK1)//적이랑 플레이어 공격이 충돌시
@@ -116,4 +118,12 @@ void collisionManager::enemy_collision()
 		_player->setComboAttack2(true);//3단콤보공격 트루
 	}
 
+}
+
+void collisionManager::player_collision()//플레이어랑 적 공격이랑 충돌시
+{
+	//if (isCollision(_player->getPlayerRect(), _enemyManager->get))
+	//{
+	//
+	//}
 }

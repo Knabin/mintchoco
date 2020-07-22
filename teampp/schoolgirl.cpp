@@ -11,6 +11,7 @@ schoolgirl::~schoolgirl()
 
 HRESULT schoolgirl::init(string imageName, float x, float y, float speed)
 {
+	enemy::init(imageName, x, y, speed);
 	_idle = IMAGEMANAGER->addFrameImage("schoolgirl_idle", "images/enemys/SchoolGirl_Idle.bmp", 1170, 354, 10, 2, true, RGB(255, 0, 255));
 	_move = IMAGEMANAGER->addFrameImage("schoolgirl_move", "images/enemys/SchoolGirl_Walk.bmp", 1296, 372, 12, 2, true, RGB(255, 0, 255));
 	_attack = IMAGEMANAGER->addFrameImage("schoolgirl_attack", "images/enemys/SchoolGirl_ComboAttack1.bmp", 1239, 354, 7, 2, true, RGB(255, 0, 255));
@@ -19,6 +20,8 @@ HRESULT schoolgirl::init(string imageName, float x, float y, float speed)
 	_submotion = IMAGEMANAGER->addFrameImage("schoolgirl_attack1", "images/enemys/Schoolgirl_attack1.bmp", 2208, 354, 8, 2, true, RGB(255, 0, 255));
 	//_gethit = IMAGEMANAGER->addFrameImage("schoolgirl_gethit", "images/enemys/SchoolGirl_gethit.bmp", 1431, 360, 9, 2, true, RGB(255, 0, 255));
 	_stun = IMAGEMANAGER->addFrameImage("schoolgirl_stun", "images/enemys/SchoolGirl_Stun.bmp", 456, 324, 4, 2, true, RGB(255, 0, 255));
+	_dead = IMAGEMANAGER->addFrameImage("schoolgirl_dead", "images/enemys/SchoolGirl_weapon_swing.bmp", 2071, 354, 7, 2, true, RGB(255, 0, 255));
+	_block = IMAGEMANAGER->addFrameImage("schoolgirl_block", "images/enemys/SchoolGirl_block.bmp", 351, 337, 3, 2, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addImage("schoolgirl_shadow", "images/enemys/SchoolGirl_Shadow.bmp", 150, 44, true, RGB(255, 0, 255));
 
@@ -27,20 +30,20 @@ HRESULT schoolgirl::init(string imageName, float x, float y, float speed)
 	_speed = speed;
 	_x = _x + x;
 	_y = _y + y;
-	_random = RND->getInt(4);
+	_random = RND->getInt(5);
 
 
 	// ============================	여학우 아이들 ============================ //
-	_enemyMotion_L_IDLE = new animation;
-	_enemyMotion_L_IDLE->init(_idle->getWidth(), _idle->getHeight(), _idle->getFrameWidth(), _idle->getFrameHeight());
-	_enemyMotion_L_IDLE->setPlayFrame(0, 9, false, true);
-	_enemyMotion_L_IDLE->setFPS(1);
-	_enemyMotion_L_IDLE->start();
-	_enemyMotion_R_IDLE = new animation;
-	_enemyMotion_R_IDLE->init(_idle->getWidth(), _idle->getHeight(), _idle->getFrameWidth(), _idle->getFrameHeight());
-	_enemyMotion_R_IDLE->setPlayFrame(19, 10, false, true);
-	_enemyMotion_R_IDLE->setFPS(1);
-	_enemyMotion_R_IDLE->start();
+	_enemyMotion_L_idle = new animation;
+	_enemyMotion_L_idle->init(_idle->getWidth(), _idle->getHeight(), _idle->getFrameWidth(), _idle->getFrameHeight());
+	_enemyMotion_L_idle->setPlayFrame(0, 9, false, true);
+	_enemyMotion_L_idle->setFPS(1);
+	_enemyMotion_L_idle->start();
+	_enemyMotion_R_idle = new animation;
+	_enemyMotion_R_idle->init(_idle->getWidth(), _idle->getHeight(), _idle->getFrameWidth(), _idle->getFrameHeight());
+	_enemyMotion_R_idle->setPlayFrame(19, 10, false, true);
+	_enemyMotion_R_idle->setFPS(1);
+	_enemyMotion_R_idle->start();
 	// ============================	여학우 아이들 ============================ //
 
 	// ============================	여학우 무브 ============================ //
@@ -70,29 +73,29 @@ HRESULT schoolgirl::init(string imageName, float x, float y, float speed)
 	// ============================	여학우 공격 ============================ //
 
 	// ============================	여학우 콤보1 ============================ //
-	_enemyMotion_L_COMBO1 = new animation;
-	_enemyMotion_L_COMBO1->init(_combo1->getWidth(), _combo1->getHeight(), _combo1->getFrameWidth(), _combo1->getFrameHeight());
-	_enemyMotion_L_COMBO1->setPlayFrame(6, 0, false, false);
-	_enemyMotion_L_COMBO1->setFPS(1.5);
-	_enemyMotion_L_COMBO1->start();
-	_enemyMotion_R_COMBO1 = new animation;
-	_enemyMotion_R_COMBO1->init(_combo1->getWidth(), _combo1->getHeight(), _combo1->getFrameWidth(), _combo1->getFrameHeight());
-	_enemyMotion_R_COMBO1->setPlayFrame(7, 13, false, false);
-	_enemyMotion_R_COMBO1->setFPS(1.5);
-	_enemyMotion_R_COMBO1->start();
+	_enemyMotion_L_combo1 = new animation;
+	_enemyMotion_L_combo1->init(_combo1->getWidth(), _combo1->getHeight(), _combo1->getFrameWidth(), _combo1->getFrameHeight());
+	_enemyMotion_L_combo1->setPlayFrame(6, 0, false, false);
+	_enemyMotion_L_combo1->setFPS(1.5);
+	_enemyMotion_L_combo1->start();
+	_enemyMotion_R_combo1 = new animation;
+	_enemyMotion_R_combo1->init(_combo1->getWidth(), _combo1->getHeight(), _combo1->getFrameWidth(), _combo1->getFrameHeight());
+	_enemyMotion_R_combo1->setPlayFrame(7, 13, false, false);
+	_enemyMotion_R_combo1->setFPS(1.5);
+	_enemyMotion_R_combo1->start();
 	// ============================	여학우 콤보1 ============================ //
 
 	// ============================	여학우 콤보2 ============================ //
-	_enemyMotion_L_COMBO2 = new animation;
-	_enemyMotion_L_COMBO2->init(_combo2->getWidth(), _combo2->getHeight(), _combo2->getFrameWidth(), _combo2->getFrameHeight());
-	_enemyMotion_L_COMBO2->setPlayFrame(0, 11, false, false);
-	_enemyMotion_L_COMBO2->setFPS(1.5);
-	_enemyMotion_L_COMBO2->start();
-	_enemyMotion_R_COMBO2 = new animation;
-	_enemyMotion_R_COMBO2->init(_combo2->getWidth(), _combo2->getHeight(), _combo2->getFrameWidth(), _combo2->getFrameHeight());
-	_enemyMotion_R_COMBO2->setPlayFrame(23, 12, false, false);
-	_enemyMotion_R_COMBO2->setFPS(1.5);
-	_enemyMotion_R_COMBO2->start();
+	_enemyMotion_L_combo2 = new animation;
+	_enemyMotion_L_combo2->init(_combo2->getWidth(), _combo2->getHeight(), _combo2->getFrameWidth(), _combo2->getFrameHeight());
+	_enemyMotion_L_combo2->setPlayFrame(0, 11, false, false);
+	_enemyMotion_L_combo2->setFPS(1.5);
+	_enemyMotion_L_combo2->start();
+	_enemyMotion_R_combo2 = new animation;
+	_enemyMotion_R_combo2->init(_combo2->getWidth(), _combo2->getHeight(), _combo2->getFrameWidth(), _combo2->getFrameHeight());
+	_enemyMotion_R_combo2->setPlayFrame(23, 12, false, false);
+	_enemyMotion_R_combo2->setFPS(1.5);
+	_enemyMotion_R_combo2->start();
 	// ============================	여학우 콤보2 ============================ //
 
 	// ============================	여학우 서브모션 ============================ //
@@ -124,15 +127,41 @@ HRESULT schoolgirl::init(string imageName, float x, float y, float speed)
 	// ============================	여학우 스턴 ============================ //
 	_enemyMotion_L_stun = new animation;
 	_enemyMotion_L_stun->init(_stun->getWidth(), _stun->getHeight(), _stun->getFrameWidth(), _stun->getFrameHeight());
-	_enemyMotion_L_stun->setPlayFrame(4, 7, false, false);
-	_enemyMotion_L_stun->setFPS(1);
+	_enemyMotion_L_stun->setPlayFrame(0, 3, false, true);
+	_enemyMotion_L_stun->setFPS(0.7);
 	_enemyMotion_L_stun->start();
 	_enemyMotion_R_stun = new animation;
 	_enemyMotion_R_stun->init(_stun->getWidth(), _stun->getHeight(), _stun->getFrameWidth(), _stun->getFrameHeight());
-	_enemyMotion_R_stun->setPlayFrame(0, 4, false, false);
-	_enemyMotion_R_stun->setFPS(1);
+	_enemyMotion_R_stun->setPlayFrame(7, 4, false, true);
+	_enemyMotion_R_stun->setFPS(0.7);
 	_enemyMotion_R_stun->start();
 	// ============================	여학우 스턴 ============================ //
+
+	// ============================	여학우 죽음 ============================ //
+	_enemyMotion_L_dead = new animation;
+	_enemyMotion_L_dead->init(_dead->getWidth(), _dead->getHeight(), _dead->getFrameWidth(), _dead->getFrameHeight());
+	_enemyMotion_L_dead->setPlayFrame(13, 7, false, false);
+	_enemyMotion_L_dead->setFPS(1);
+	_enemyMotion_L_dead->start();
+	_enemyMotion_R_dead = new animation;
+	_enemyMotion_R_dead->init(_dead->getWidth(), _dead->getHeight(), _dead->getFrameWidth(), _dead->getFrameHeight());
+	_enemyMotion_R_dead->setPlayFrame(0, 7, false, false);
+	_enemyMotion_R_dead->setFPS(1);
+	_enemyMotion_R_dead->start();
+	// ============================	여학우 죽음 ============================ //
+
+	// ============================	여학우 막기 ============================ //
+	_enemyMotion_L_block = new animation;
+	_enemyMotion_L_block->init(_block->getWidth(), _block->getHeight(), _block->getFrameWidth(), _block->getFrameHeight());
+	_enemyMotion_L_block->setPlayFrame(5, 3, false, false);
+	_enemyMotion_L_block->setFPS(0.5);
+	_enemyMotion_L_block->start();
+	_enemyMotion_R_block = new animation;
+	_enemyMotion_R_block->init(_block->getWidth(), _block->getHeight(), _block->getFrameWidth(), _block->getFrameHeight());
+	_enemyMotion_R_block->setPlayFrame(0, 2, false, false);
+	_enemyMotion_R_block->setFPS(0.5);
+	_enemyMotion_R_block->start();
+	// ============================	여학우 막기 ============================ //
 
 
 	_rc.set(0, 0, _enemyImg->getFrameWidth(), _enemyImg->getFrameHeight());
@@ -218,6 +247,18 @@ void schoolgirl::render()
 		break;
 	case ENEMY_RIGHT_STUN:
 		_enemyImg = _stun;
+		break;
+	case ENEMY_LEFT_DEAD:
+		_enemyImg = _dead;
+		break;
+	case ENEMY_RIGHT_DEAD:
+		_enemyImg = _dead;
+		break;
+	case ENEMY_LEFT_BLOCK:
+		_enemyImg = _block;
+		break;
+	case ENEMY_RIGHT_BLOCK:
+		_enemyImg = _block;
 		break;
 	}
 	_rc.render(getMemDC());

@@ -152,7 +152,8 @@ void enemyManager::setEnemiesVector(int stageNum)
 		float y[] = { 500, 300, 350, 500 };
 		for (int i = 0; i < 4; i++)
 		{
-			if (i < 2)	_vEnemies.push_back(createEnemy(1, x[i], y[i]));
+			if (i < 1)	_vEnemies.push_back(createEnemy(0, x[i], y[i]));
+			else if(i == 3) _vEnemies.push_back(createEnemy(1, x[i], y[i]));
 			else		_vEnemies.push_back(createEnemy(2, x[i], y[i]));
 		}
 	}
