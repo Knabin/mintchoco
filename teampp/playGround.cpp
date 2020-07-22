@@ -11,7 +11,7 @@ playGround::~playGround()
 {
 }
 
-//珥덇린???⑥닔
+//초기화 함수
 HRESULT playGround::init()
 {
 	gameNode::init(true);
@@ -56,9 +56,9 @@ HRESULT playGround::init()
 	_enemyManager->setBossMove();
 
 	// ==========================================
-	// ## 移대찓??以묒젏 珥덇린??##
+	// ## 카메라 중점 초기화 ##
 	// ==========================================
-	// ?뚮젅?댁뼱 ?쇳꽣???뚯뒪?몄슜 ?됲듃(MYRECT) 留뚮뱾?댁꽌 ?ъ슜?섏꽭??
+	// 플레이어 센터나 테스트용 렉트(MYRECT) 만들어서 사용하세요
 	CAMERA->setPosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
 	CAMERA->setBackWidth(_stageManager->getPixelImage()->getWidth());
 	CAMERA->setBackHeight(_stageManager->getPixelImage()->getHeight());
@@ -66,7 +66,6 @@ HRESULT playGround::init()
 	return S_OK;
 }
 
-//硫붾え由??댁젣
 void playGround::release()
 {
 	_stageManager->release();
@@ -75,7 +74,6 @@ void playGround::release()
 	_scene->release();
 }
 
-//?곗궛
 void playGround::update()
 {
 	gameNode::update();
@@ -123,8 +121,6 @@ void playGround::update()
 		}
 		if (KEYMANAGER->isOnceKeyDown('4'))
 		{
-			//INIDATA->addData("?뚮젅?댁뼱", "HP", to_string(_player->getPlayerHP()).c_str());
-			//INIDATA->addData("?뚮젅?댁뼱", "肄붿씤", to_string(_player->getCoin()).c_str());
 			vector<string> temp;
 			temp.push_back(to_string(100));
 			temp.push_back(to_string(10));
@@ -138,20 +134,18 @@ void playGround::update()
 			cout << TXTDATA->txtLoad("data/player.data")[2] << endl;
 		}
 		// ==========================================
-		// ## 移대찓??以묒젏 珥덇린??##
+		// ## 카메라 중점 초기화 ##
 		// ==========================================
 		CAMERA->shakeStart();
-		// ?뚮젅?댁뼱 ?쇳꽣???뚯뒪?몄슜 ?됲듃(MYRECT) 留뚮뱾?댁꽌 ?ъ슜?섏꽭??
+		// 플레이어 센터나 테스트용 렉트(MYRECT) 만들어서 사용하세요
 		//CAMERA->setPosition(WINSIZEX/2, WINSIZEY/2);
-		// ?곕씪?ㅻ뒗 移대찓??
+		// 따라오는 카메라
 		CAMERA->changePosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
 	}
 }
 
-//끄억
 void playGround::render()
 {
-
 	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == false)
 	{
 		_scene->TitleBackGroundDraw(getHDC());
@@ -166,7 +160,7 @@ void playGround::render()
 		_scene->LoadingBackGroundDraw(getHDC());
 	}
 
-	if (_scene->getGameStart() == true && _scene->getSaveLoading() == false && _scene->getLoading() == false )
+	if (_scene->getGameStart() == true && _scene->getSaveLoading() == false && _scene->getLoading() == false)
 	{
 		//==========================================================================================================================//
 
@@ -184,28 +178,29 @@ void playGround::render()
 		_itemManager->render();
 		_scene->render();
 
-	ZORDER->render();
+		ZORDER->render();
 
-	//SetBkMode(getMemDC(), TRANSPARENT);
-	//char str[1024];
-	//HFONT font, oldFont;
-	//RECT rcText = RectMake(WINSIZEX / 2, WINSIZEY / 2, 800, 800);
-	//font = CreateFont(40, 0, 100, 0, 400, false, false, false,
-	//	DEFAULT_CHARSET,
-	//	OUT_STRING_PRECIS,
-	//	CLIP_DEFAULT_PRECIS,
-	//	PROOF_QUALITY,
-	//	DEFAULT_PITCH | FF_SWISS,
-	//	TEXT("굴림체"));
+		SetBkMode(getMemDC(), TRANSPARENT);
+		char str[1024];
+		HFONT font, oldFont;
+		RECT rcText = RectMake(WINSIZEX / 2, WINSIZEY / 2, 800, 800);
+		font = CreateFont(40, 0, 100, 0, 400, false, false, false,
+			DEFAULT_CHARSET,
+			OUT_STRING_PRECIS,
+			CLIP_DEFAULT_PRECIS,
+			PROOF_QUALITY,
+			DEFAULT_PITCH | FF_SWISS,
+			TEXT("굴림체"));
 
-	//oldFont = (HFONT)SelectObject(getMemDC(), font);
-	//DrawText(getMemDC(), TEXT("으아아아아"), strlen("으아아아아"), &rcText,
-	//	DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
+		oldFont = (HFONT)SelectObject(getMemDC(), font);
+		DrawText(getMemDC(), TEXT("으아아아아"), strlen("으아아아아"), &rcText,
+			DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
 
-	//=============================================
-	_backBuffer->render(CAMERA->getMemDC(), 0, CAMERA->getBlackSize() * 0.5,
-		CAMERA->getLeft(), CAMERA->getTop() + CAMERA->getShakeNumber(),
-		CAMERA->getViewWidth(), CAMERA->getViewHeight());
-	_uiManager->render(CAMERA->getMemDC());
-	CAMERA->render(getHDC());
+		//=============================================
+		_backBuffer->render(CAMERA->getMemDC(), 0, CAMERA->getBlackSize() * 0.5,
+			CAMERA->getLeft(), CAMERA->getTop() + CAMERA->getShakeNumber(),
+			CAMERA->getViewWidth(), CAMERA->getViewHeight());
+		_uiManager->render(CAMERA->getMemDC());
+		CAMERA->render(getHDC());
+	}
 }
