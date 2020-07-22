@@ -188,6 +188,9 @@ void stageManager::Stage4Move()
 	CAMERA->setBackHeight(_currentPixelCollision->getHeight());
 	
 	_vNpcs = _Stage4->getNPCs();
+	_em->setEnemiesVector(_NowStage);
+
+	_spawnCount = 0;
 }
 
 void stageManager::BossStageMove()
@@ -201,6 +204,8 @@ void stageManager::BossStageMove()
 	_currentPixelCollision = _BossStage->getPixel();
 	CAMERA->setBackWidth(_currentPixelCollision->getWidth());
 	CAMERA->setBackHeight(_currentPixelCollision->getHeight());
+
+	_em->setEnemiesVector(_NowStage);
 }
 
 void stageManager::Stage1_Stage2_Ok()

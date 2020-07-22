@@ -100,6 +100,19 @@ HRESULT scene::init()
 
 	//-----------------------------------------------------------------------------------------------------------------------------//
 
+	// 나빈 추가) 로드 씬 스테이지 이미지 추가
+
+	IMAGEMANAGER->addImage("ui_stage_image1", "images/ui/stage_ui_01.bmp", 114, 136, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ui_stage_image2", "images/ui/stage_ui_02.bmp", 114, 136, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ui_stage_image3", "images/ui/stage_ui_03.bmp", 114, 136, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ui_stage_image4", "images/ui/stage_ui_04.bmp", 114, 136, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ui_stage_image5", "images/ui/stage_ui_05.bmp", 114, 136, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("ui_stage_image1 off", "images/ui/stage_ui_01_off.bmp", 114, 136, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ui_stage_image2 off", "images/ui/stage_ui_02_off.bmp", 114, 136, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ui_stage_image3 off", "images/ui/stage_ui_03_off.bmp", 114, 136, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ui_stage_image4 off", "images/ui/stage_ui_04_off.bmp", 114, 136, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ui_stage_image5 off", "images/ui/stage_ui_05_off.bmp", 114, 136, true, RGB(255, 0, 255));
 	return S_OK;
 }
 
@@ -137,6 +150,7 @@ void scene::PointerMove()
 		_GameStart = false;
 		_Loading = false;
 		_SaveLoading = true;
+		getPlayerSaveData();
 	}
 
 	switch (_Pointer._PointerState)		//포인터가 현재 어디를 가르키고 있나?
@@ -216,22 +230,40 @@ void scene::SaveLoadingBackGroundDraw(HDC hdc)
 	case W1:
 	{
 		IMAGEMANAGER->findImage("SaveLoadOpen")->render(hdc, _SaveLoadWindow1._x - 244, _SaveLoadWindow1._y - 100);
+		_saveStage->render(hdc, _SaveLoadWindow1._x - 236, _SaveLoadWindow1._y - 54);
 	}
 	break;
 
 	case W2:
 	{
 		IMAGEMANAGER->findImage("SaveLoadOpen")->render(hdc, _SaveLoadWindow2._x - 244, _SaveLoadWindow2._y - 100);
+		_saveStageOff->render(hdc, _SaveLoadWindow1._x - 236, _SaveLoadWindow1._y - 54);
 	}
 	break;
 
 	case W3:
 	{
 		IMAGEMANAGER->findImage("SaveLoadOpen")->render(hdc, _SaveLoadWindow3._x - 244, _SaveLoadWindow3._y - 100);
+		_saveStageOff->render(hdc, _SaveLoadWindow1._x - 236, _SaveLoadWindow1._y - 54);
 	}
 	break;
 	}
 
+	SetBkMode(hdc, TRANSPARENT);
+	char str[1024];
+	HFONT font, oldFont;
+	RECT rcText = RectMake(_SaveLoadWindow1._x, _SaveLoadWindow1._y, 800, 800);
+	font = CreateFont(40, 0, 80, 0, 400, false, false, false,
+		DEFAULT_CHARSET,
+		OUT_STRING_PRECIS,
+		CLIP_DEFAULT_PRECIS,
+		PROOF_QUALITY,
+		DEFAULT_PITCH | FF_SWISS,
+		TEXT("굴림체"));
+
+	oldFont = (HFONT)SelectObject(getMemDC(), font);
+	DrawText(getMemDC(), _stageName.c_str(), _stageName.size(), &rcText,
+		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
 
 }
 
@@ -275,4 +307,43 @@ void scene::GameStart()
 		_GameStart = true;
 	}
 
+}
+
+void scene::getPlayerSaveData()
+{
+	cout << TXTDATA->txtLoad("data/player.data")[0] << endl;
+	cout << TXTDATA->txtLoad("data/player.data")[1] << endl;
+	cout << TXTDATA->txtLoad("data/player.data")[2] << endl;
+	_stageNum = atoi(TXTDATA->txtLoad("data/player.data")[2].c_str());
+
+	switch (_stageNum)
+	{
+	case 0:
+		_saveStage = IMAGEMANAGER->findImage("ui_stage_image1");
+		_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image1 off");
+		_stageName = "반성실";
+		break;
+	case 1:
+		_saveStage = IMAGEMANAGER->findImage("ui_stage_image2");
+		_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image2 off");
+		_stageName = "1층 복도";
+		break;
+	case 2:
+		_saveStage = IMAGEMANAGER->findImage("ui_stage_image3");
+		_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image3 off");
+		_stageName = "2층 복도";
+		break;
+	case 3:
+		_saveStage = IMAGEMANAGER->findImage("ui_stage_image4");
+		_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image4 off");
+		_stageName = "화학실";
+		break;
+	case 4:
+		_saveStage = IMAGEMANAGER->findImage("ui_stage_image5");
+		_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image5 off");
+		_stageName = "학교 로비";
+		break;
+	default:
+		break;
+	}
 }

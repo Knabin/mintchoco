@@ -486,10 +486,3 @@ void boss::render()
 		ZORDER->pushObject(getMemDC(), _bossImg, _bossMotion, 1, _rc.getCenterX(),0, _rc.bottom);
 		_rcA.render(getMemDC());
 }
-
-
-void boss::setPlayerPos(float x, float y)
-{
-	_playerX = x;
-	_playerY = y;
-}

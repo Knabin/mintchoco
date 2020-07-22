@@ -50,7 +50,6 @@ public:
 	void MiniMapMove();						//미니맵 이동 함수
 	void PlayerHpMinus();					//PlayerHpPoint 감소 함수
 
-
 	void setStageManagerMemoryAddressLink(stageManager* stageManager) { _stageManager = stageManager; }
 
 };

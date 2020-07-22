@@ -35,6 +35,14 @@ private:
 
 	SaveLoadWindowState _SaveLoadWindowState;
 
+	// ===== 나빈 추가 =====
+	image* _saveStage;
+	image* _saveStageOff;
+
+	int _stageNum;
+	string _stageName;
+	// ====================
+
 
 	bool _GameStart;			//게임 시작중인가?
 	bool _Loading;				//로딩 창인가?
@@ -64,6 +72,10 @@ public:
 	bool getGameStart() { return _GameStart; }
 	bool getLoading() { return _Loading; }
 	bool getSaveLoading() { return _SaveLoading; }
+
+	// ===== 나빈 추가 =====
+	void getPlayerSaveData();
+	// ====================
 
 };
 
