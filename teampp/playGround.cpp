@@ -29,6 +29,7 @@ HRESULT playGround::init()
 	_uiManager->init();
 
 	_stageManager = new stageManager;
+	_stageManager->setEnemyManagerMemoryAddressLink(_enemyManager);
 	_stageManager->init();
 
 	_itemManager = new itemManager;
@@ -41,12 +42,13 @@ HRESULT playGround::init()
 	_collisionManager->setItemManagerMemoryAddressLink(_itemManager);
 	_collisionManager->setUiManagerMemoryAddressLink(_uiManager);
 
+	_enemyManager->setStageManagerMemoryAddressLink(_stageManager);
 	_uiManager->setStageManagerMemoryAddressLink(_stageManager);
 
 
-	_enemyManager->setEnemyCheerMove();
-	_enemyManager->setEnemySchoolBoyMove();
-	_enemyManager->setEnemySchoolGirlMove();
+	//_enemyManager->setEnemyCheerMove();
+	//_enemyManager->setEnemySchoolBoyMove();
+	//_enemyManager->setEnemySchoolGirlMove();
 
 	// ==========================================
 	// ## 카메라 중점 초기화 ##
