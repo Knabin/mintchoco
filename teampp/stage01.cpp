@@ -70,3 +70,4 @@ void stage01::Stage1RightDoorOpenDraw()	// 스테이지 1 오른쪽 door 접근 시 이미지
 	IMAGEMANAGER->findImage("Door_Stage1")->render(getMemDC(), _Stage1RightDoor._x - 26, _Stage1RightDoor._y - 93);
 }
 
+

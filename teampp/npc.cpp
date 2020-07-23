@@ -77,11 +77,11 @@ void npc::update()
 	{
 	case NPCSTATE::LEFT_IDLE:
 	case NPCSTATE::RIGHT_IDLE:
-		_ani_idle->frameUpdate(TIMEMANAGER->getElapsedTime() * 3);
+		_ani_idle->frameUpdate(TIMEMANAGER->getElapsedTime() * 5);
 		break;
 	case NPCSTATE::LEFT_REACT:
 	case NPCSTATE::RIGHT_REACT:
-		_ani_react->frameUpdate(TIMEMANAGER->getElapsedTime() * 3);
+		_ani_react->frameUpdate(TIMEMANAGER->getElapsedTime() * 5);
 		if (!_ani_react->isPlay())
 		{
 			_state = isLeft() ? NPCSTATE::LEFT_IDLE : NPCSTATE::RIGHT_IDLE;
@@ -110,7 +110,6 @@ void npc::render()
 
 void npc::doReact()
 {
-	_image = IMAGEMANAGER->findImage("npc1 react");
 	if (isLeft())
 	{
 		_state = NPCSTATE::LEFT_REACT;

@@ -104,7 +104,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4828</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -150,12 +149,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="animation.h" />
+    <ClInclude Include="boss.h" />
+    <ClInclude Include="bossStage.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="cheerleader.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="collisionManager.h" />
     <ClInclude Include="commonMacroFunction.h" />
+    <ClInclude Include="dataManager.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
     <ClInclude Include="enemy.h" />
@@ -185,6 +187,7 @@
     <ClInclude Include="stage01.h" />
     <ClInclude Include="stage02.h" />
     <ClInclude Include="stage03.h" />
+    <ClInclude Include="stage04.h" />
     <ClInclude Include="stageManager.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -198,11 +201,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
+    <ClCompile Include="boss.cpp" />
+    <ClCompile Include="bossStage.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="cheerleader.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="collisionManager.cpp" />
+    <ClCompile Include="dataManager.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
     <ClCompile Include="enemy.cpp" />
@@ -229,6 +235,7 @@
     <ClCompile Include="stage01.cpp" />
     <ClCompile Include="stage02.cpp" />
     <ClCompile Include="stage03.cpp" />
+    <ClCompile Include="stage04.cpp" />
     <ClCompile Include="stageManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

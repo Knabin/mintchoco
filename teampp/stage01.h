@@ -18,7 +18,7 @@ private:
 	tagStage1 _Stage1RightDoor;			//1스테이지 RightDoor
 	tagStage1 _Stage1RightDoorOpen;		//1스테이지 RightDoor 이미지 변경
 
-	vector<class npc*> _vNpcs;
+vector<class npc*> _vNpcs;
 
 
 public:
@@ -37,4 +37,6 @@ public:
 	vector<class npc*>& getNPCs() { return _vNpcs; }	// 스테이지1 npc 벡터 접근자
 
 	inline MYRECT getRect() { return _Stage1RightDoor._rc; }	//1스테이지 Door 접근자
+
+
 };
