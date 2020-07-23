@@ -170,8 +170,5 @@ void collisionManager::npcCollision()
 
 void collisionManager::player_collision()//ÇÃ·¹ÀÌ¾î¶û Àû °ø°İÀÌ¶û Ãæµ¹½Ã
 {
-	//if (isCollision(_player->getPlayerRect(), _enemyManager->get))
-	//{
-	//
-	//}
+	
 }

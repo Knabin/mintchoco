@@ -172,6 +172,7 @@ void playGround::render()
 
 
 		_stageManager->render();
+
 		_player->render();
 		_collisionManager->render();
 		_enemyManager->render();

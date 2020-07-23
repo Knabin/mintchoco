@@ -72,10 +72,6 @@ public:
 	// enemy를 만들어서 반환하는 함수 (enemyType(0: 치어리더, 1: 남학생, 2: 여학생), 중점 좌표X, 중점 좌표Y)
 	enemy* createEnemy(int enemyType, float x, float y);
 
-	void removeCheerLeader(int arrNum);
-	void removeSchoolBoy(int arrNum);
-	void removeSchoolGilr(int arrNum);
-
 	// 현재 스테이지에 있는 enemy들을 반환해 주는 함수
 	vector<enemy*>& getEnemiesVector() { return _vEnemies; }
 

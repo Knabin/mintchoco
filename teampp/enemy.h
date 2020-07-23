@@ -10,6 +10,8 @@ enum ENEMYDIRECTION
 	ENEMY_RIGHT_IDLE,
 	ENEMY_LEFT_MOVE,
 	ENEMY_RIGHT_MOVE,
+	ENEMY_LEFT_BACK_MOVE,
+	ENEMY_RIGHT_BACK_MOVE,
 	ENEMY_LEFT_ATTACK,			//에너미 공격모션
 	ENEMY_RIGHT_ATTACK,			//에너미 공격모션
 	ENEMY_LEFT_COMBO1,			//에너미 공격모션 
@@ -26,7 +28,8 @@ enum ENEMYDIRECTION
 	ENEMY_LEFT_DEAD,
 	ENEMY_RIGHT_DEAD,
 	ENEMY_LEFT_BLOCK,
-	ENEMY_RIGHT_BLOCK
+	ENEMY_RIGHT_BLOCK,
+	ENEMY_STUNIMG
 };
 
 class enemy : public gameNode
@@ -41,9 +44,11 @@ protected:
 	image* _submotion;	//치어리더는 백덤블링, 남학생은 어퍼컷, 여학생은 어택
 	image* _gethit;
 	image* _stun;
-	image* _point;
 	image* _dead;
 	image* _block;
+	
+	image* _point;
+	image* _stunImg;
 
 	//image* _ehit;
 
@@ -52,6 +57,8 @@ protected:
 	animation* _enemyMotion_R_idle;
 	animation* _enemyMotion_L;
 	animation* _enemyMotion_R;
+	animation* _enemyMotion_L_back;
+	animation* _enemyMotion_R_back;
 	animation* _enemyMotion_L_A;
 	animation* _enemyMotion_R_A;
 	animation* _enemyMotion_L_combo1;
@@ -70,6 +77,7 @@ protected:
 	animation* _enemyMotion_R_block;
 
 	animation* _ani_point;
+	animation* _ani_stunImg;
 
 
 	string _imageName;	//에너미 이미지 받을 것
@@ -81,6 +89,8 @@ protected:
 	bool _isJump;
 	bool _isStart;
 	bool _isPoint;
+	bool _isStun;
+
 	MYRECT _rc;			//에너미 렉트
 	MYRECT _attackRC;	//에너미 공격렉트
 
@@ -92,6 +102,7 @@ protected:
 	ENEMYDIRECTION _direction;
 
 	int _random;
+	int _stageNum;
 
 private:
 
@@ -104,8 +115,11 @@ public:
 	virtual void release();
 	virtual void update();
 	virtual void render();
+	virtual void pixel(string stageName);
+	
 
 	void setPlayerPos(float x, float y);
+	void setStageNum(int num) { _stageNum = num; }
 
 	MYRECT& getEnemyAttackRect() { return _attackRC; }
 };

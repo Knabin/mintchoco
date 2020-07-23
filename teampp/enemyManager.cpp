@@ -97,7 +97,7 @@ void enemyManager::render()
 
 void enemyManager::setEnemyCheerMove()
 {
-	float x[] = {500};
+	float x[] = {800};
 	float y[] = {350};
 
 	for (int i = 0; i < 1; i++)
@@ -201,6 +201,9 @@ void enemyManager::setEnemiesVector(int stageNum)
 		// 보스 스테이지
 		break;
 	}
+
+	for (int i = 0; i < _vEnemies.size(); ++i)
+		_vEnemies[i]->setStageNum(stageNum);
 }
 
 enemy* enemyManager::createEnemy(int enemyType, float x, float y)
@@ -248,21 +251,6 @@ void enemyManager::spawnEnemy(int stageNum)
 	if (stageNum == 0) r2 = RND->getFromIntTo(1, 3);
 
 	_vEnemies.push_back(createEnemy(r2, temp[r].x, temp[r].y));
-}
-
-void enemyManager::removeCheerLeader(int arrNum)
-{
-	_vCheerLeader.erase(_vCheerLeader.begin() + arrNum);
-}
-
-void enemyManager::removeSchoolBoy(int arrNum)
-{
-	_vSchoolBoy.erase(_vSchoolBoy.begin() + arrNum);
-}
-
-void enemyManager::removeSchoolGilr(int arrNum)
-{
-	_vSchoolGirl.erase(_vSchoolGirl.begin() + arrNum);
 }
 
 
