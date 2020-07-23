@@ -365,7 +365,7 @@ void player::pixelCollision(string stageName)
 
 	if (!_pixelCollision && !_jumping)
 	{
-		for (int i = _rc.right - 100 + 3; i > _rc.right - 100 - 3; i--)//플레이어가 왼쪽에 있을경우
+		for (int i = _rc.right - 100 + 3; i > _rc.right - 100 - 3; i--)
 		{
 			COLORREF color = GetPixel(IMAGEMANAGER->findImage(stageName)->getMemDC(), i, _z);
 
@@ -375,14 +375,14 @@ void player::pixelCollision(string stageName)
 
 			//cout << r << ", " << g << ", " << b << endl;
 
-			if ((r == 255 && g == 0 && b == 0))//플레이어가 왼쪽에 있을경우
+			if ((r == 255 && g == 0 && b == 0))
 			{
 				_x = i + 103 - (_rc.getWidth() / 2);
 				break;
 			}
 		}
 
-		for (int i = _rc.left + 100 - 3; i < _rc.left + 100 + 3; i++)//플레이어가 오른쪽에 있을경우
+		for (int i = _rc.left + 100 - 3; i < _rc.left + 100 + 3; i++)
 		{
 			COLORREF color = GetPixel(IMAGEMANAGER->findImage(stageName)->getMemDC(), i, _z);
 
@@ -390,7 +390,7 @@ void player::pixelCollision(string stageName)
 			int g = GetGValue(color);
 			int b = GetBValue(color);
 
-			if ((r == 255 && g == 0 && b == 0))//플레이어가 오른쪽에 있을경우
+			if ((r == 255 && g == 0 && b == 0))
 			{
 				_x = i - 103 + (_rc.getWidth() / 2);
 				break;
@@ -426,11 +426,9 @@ void player::pixelCollision(string stageName)
 				break;
 			}
 		}
-
-		//cout << _z << ", " << _x << endl;
 	}
 
-	//cout << _jumping << endl;
+	
 
 	if (_jumping && _jump->getGravity() < 0 && _z < 560.f)
 	{
@@ -466,11 +464,13 @@ void player::pixelCollision(string stageName)
 		}
 	}
 
+
+
 	if (_pixelCollision && !_jumping )
 	{
 		if (_stageManager->getNowstage1())
 		{
-			for (int i = _x - 10; i < _x + 10; i++)//플레이어가 오른쪽에 있을경우
+			for (int i = _x - 10; i < _x + 10; i++)
 			{
 				COLORREF color = GetPixel(IMAGEMANAGER->findImage(stageName)->getMemDC(), i, _yPlayerY);
 
@@ -478,7 +478,7 @@ void player::pixelCollision(string stageName)
 				int g = GetGValue(color);
 				int b = GetBValue(color);
 
-				if ((r == 255 && g == 0 && b == 255) || (r == 255 && g == 0 && b == 0))//플레이어가 오른쪽에 있을경우
+				if ((r == 255 && g == 0 && b == 255) || (r == 255 && g == 0 && b == 0))
 				{
 					if (_playerDirection == PLAYERDIRECTION_LEFT_WALK || _playerDirection == PLAYERDIRECTION_LEFT_MOVE)
 					{
@@ -497,6 +497,8 @@ void player::pixelCollision(string stageName)
 				}
 			}
 
+			
+
 
 			_rc.setCenterPos(_x, _yPlayerY - _rc.getHeight() / 2);
 		}
@@ -506,7 +508,7 @@ void player::pixelCollision(string stageName)
 
 			if (_x > 700)
 			{
-				for (int i = _rc.right + 3; i > _rc.right - 3; i--)//플레이어가 왼쪽에 있을경우
+				for (int i = _rc.right + 3; i > _rc.right - 3; i--)
 				{
 					COLORREF color = GetPixel(IMAGEMANAGER->findImage(stageName)->getMemDC(), i, _yPlayerY);
 
@@ -514,17 +516,15 @@ void player::pixelCollision(string stageName)
 					int g = GetGValue(color);
 					int b = GetBValue(color);
 
-					//cout << r << ", " << g << ", " << b << endl;
-					//cout << _rc.right << ", " << _x << ", " << _rc.left << endl;
 
-					if ((r == 255 && g == 0 && b == 0))//플레이어가 왼쪽에 있을경우
+					if ((r == 255 && g == 0 && b == 0))
 					{
 						_x = i - 4 - (_rc.getWidth() / 2);
 						break;
 					}
 				}
 
-				for (int i = _x - 10; i < _x + 10; i++)//플레이어가 오른쪽에 있을경우
+				for (int i = _x - 10; i < _x + 10; i++)
 				{
 					COLORREF color = GetPixel(IMAGEMANAGER->findImage(stageName)->getMemDC(), i, _yPlayerY);
 
@@ -532,7 +532,7 @@ void player::pixelCollision(string stageName)
 					int g = GetGValue(color);
 					int b = GetBValue(color);
 
-					if ((r == 255 && g == 0 && b == 0))//플레이어가 오른쪽에 있을경우
+					if ((r == 255 && g == 0 && b == 0))
 					{
 						if (_playerDirection == PLAYERDIRECTION_LEFT_WALK || _playerDirection == PLAYERDIRECTION_LEFT_MOVE)
 						{
@@ -570,7 +570,7 @@ void player::pixelCollision(string stageName)
 					int g = GetGValue(color);
 					int b = GetBValue(color);
 
-					if ((r == 255 && g == 0 && b == 0))//플레이어가 오른쪽에 있을경우
+					if ((r == 255 && g == 0 && b == 0))
 					{
 						if (_playerDirection == PLAYERDIRECTION_LEFT_WALK || _playerDirection == PLAYERDIRECTION_LEFT_MOVE)
 						{
@@ -594,7 +594,7 @@ void player::pixelCollision(string stageName)
 
 
 				if (_pixelCollision)
-				for (int i = _rc.left - 3; i < _rc.left + 3; i++)//플레이어가 오른쪽에 있을경우
+				for (int i = _rc.left - 3; i < _rc.left + 3; i++)
 				{
 					COLORREF color = GetPixel(IMAGEMANAGER->findImage(stageName)->getMemDC(), i, _yPlayerY);
 
@@ -602,10 +602,8 @@ void player::pixelCollision(string stageName)
 					int g = GetGValue(color);
 					int b = GetBValue(color);
 
-					if ((r == 255 && g == 0 && b == 0))//플레이어가 오른쪽에 있을경우
+					if ((r == 255 && g == 0 && b == 0))
 					{
-
-						//cout << _yPlayerY << ", " << _x << endl;
 						_x = i + 4 + (_rc.getWidth() / 2);
 						break;
 					}
@@ -622,7 +620,6 @@ void player::pixelCollision(string stageName)
 
 				if ((r == 255 && g == 0 && b == 0))
 				{
-					//cout << r << ", " << g << ", " << b << endl;
 					_yPlayerY = i + 18;
 					break;
 				}
