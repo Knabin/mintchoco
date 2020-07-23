@@ -81,7 +81,7 @@ void npc::update()
 		break;
 	case NPCSTATE::LEFT_REACT:
 	case NPCSTATE::RIGHT_REACT:
-		_ani_react->frameUpdate(TIMEMANAGER->getElapsedTime() * 5);
+		_ani_react->frameUpdate(TIMEMANAGER->getElapsedTime() * 3);
 		if (!_ani_react->isPlay())
 		{
 			_state = isLeft() ? NPCSTATE::LEFT_IDLE : NPCSTATE::RIGHT_IDLE;
@@ -120,5 +120,5 @@ void npc::doReact()
 		_state = NPCSTATE::RIGHT_REACT;
 		_ani_react->setPlayFrame(3, 5, false, false);
 	}
-	_ani_react->start();
+	if(!_ani_react->isPlay()) _ani_react->start();
 }
