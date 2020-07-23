@@ -1621,6 +1621,13 @@ void player::frameDraw()
 //stageOpenDoor 좌표를 기준으로 player x,y 중점을 변경 해주는 함수입니다.
 //원하는 좌표로 바꿀 시 정수만 바꿔주세요
 
+void player::playerPosition_1()
+{
+	_x = 450;
+	_z = 400;
+	CAMERA->setPosition(_x, _z);
+}
+
 void player::playerPosition_1at2()
 {
 	_x = 350;

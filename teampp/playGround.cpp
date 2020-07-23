@@ -116,18 +116,23 @@ void playGround::update()
 				{
 				case 0:
 					_stageManager->Stage1Move();
+					_player->playerPosition_1();
 					break;
 				case 1:
 					_stageManager->Stage2Move();
+					_player->playerPosition_2at1();
 					break;
 				case 2:
 					_stageManager->Stage3Move();
+					_player->playerPosition_3at2();
 					break;
 				case 3:
 					_stageManager->Stage4Move();
+					_player->playerPosition_4at3();
 					break;
 				case 4:
 					_stageManager->BossStageMove();
+					_player->playerPosition_Bossat4();
 					break;
 				}
 			}

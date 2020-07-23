@@ -207,6 +207,7 @@ public:
 		}
 	}
 
+	void playerPosition_1();
 	void playerPosition_1at2();
 	void playerPosition_2at3();
 	void playerPosition_2at1();
