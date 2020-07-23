@@ -185,6 +185,9 @@ void enemyManager::setEnemiesVector(int stageNum)
 		_vEnemies.push_back(createEnemy(3, WINSIZEX / 2, WINSIZEY / 2));
 		break;
 	}
+
+	for (int i = 0; i < _vEnemies.size(); ++i)
+		_vEnemies[i]->setStageNum(stageNum);
 }
 
 enemy* enemyManager::createEnemy(int enemyType, float x, float y)

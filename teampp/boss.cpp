@@ -246,9 +246,9 @@ void boss::update()
 	_attackCount++;
 	_bossMotion->frameUpdate(TIMEMANAGER->getElapsedTime() * 8);
 
-	cout << _playerX << endl;
-	cout << _playerY << endl;
-	cout << "어택카운트" <<_attackCount << endl;
+	//cout << _playerX << endl;
+	//cout << _playerY << endl;
+	//cout << "어택카운트" <<_attackCount << endl;
 
 	_distance = getDistance(_x, _y, _playerX, _playerY);
 	_angle = getAngle(_x, _y, _playerX, _playerY);

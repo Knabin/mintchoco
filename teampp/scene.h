@@ -16,10 +16,11 @@ enum PointerState //포인터 렉트 현위치
 struct tagScene
 {
 	image* SceneImage;
-	RECT _rc;					//포인터 렉트
+	RECT _rc;							 //포인터 렉트
 	float _x, _y;
 
-	PointerState _PointerState;	//포인터 렉트 현위치
+	PointerState _PointerState;			 //포인터 렉트 현위치
+
 };
 typedef struct tagSaveData
 {
@@ -78,18 +79,22 @@ public:
 	void update();
 	void render();
 
-	void PointerMove();					       //포인터 이동 함수
-	void SaveLoadMove();				       //세이브 로드 창 이동 함수
-	void TitleBackGroundDraw(HDC hdc);		   //타이틀화면을 그려라
-	void SaveLoadingBackGroundDraw(HDC hdc);   //세이브로딩창 을 그려라
-	void LoadingBackGroundDraw(HDC hdc);	   //로딩화면을 그려라
-
+	void PointerMove();					         //포인터 이동 함수
+	void SaveLoadMove();				         //세이브 로드 창 이동 함수
 	void LoadingCountPlus();			//로딩 화면을 각기 다르게 출력해줄 count update 함수
 	void GameStart();					//로딩 화면이 끝나면 게임을 시작해라
+
+
+	void TitleBackGroundDraw(HDC hdc);		     //타이틀화면을 그려라
+	void SaveLoadingBackGroundDraw(HDC hdc);     //세이브로딩창 을 그려라
+	void LoadingBackGroundDraw(HDC hdc);	     //로딩화면을 그려라
+
 
 	bool getGameStart() { return _GameStart; }
 	bool getLoading() { return _Loading; }
 	bool getSaveLoading() { return _SaveLoading; }
+
+
 
 	// ===== 나빈 추가 =====
 	int getSaveLoadWindowState() { return _SaveLoadWindowState; }

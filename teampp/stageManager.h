@@ -16,11 +16,11 @@ enum NowStage  //현재 스테이지 상태 정의
 	BS			//보스 스테이지
 };
 
-struct tagMiniMap
+struct tagBattleStart	//배틀 스타트 구조체
 {
-	image* _MiniMapImage;
-	RECT _rc;
-	float _x, _y;
+	image* _BattleStartImage;
+	int _currentFrameX, _currentFrameY;  //배틀 스타트 재생프레임
+	int _FrameCount;					 //배틀 스타트 프레임 카운트
 };
 
 class stageManager : public gameNode
@@ -35,10 +35,13 @@ private:
 
 	image* _currentPixelCollision;  //픽셀이미지
 
+	tagBattleStart _BattleStart;	//배틀스타트 구조체
+	bool _PlayBattleStart;			//배틀스타트가 재생중인가?
+
 	//현재 스테이지 상태 정의
 	NowStage _NowStage;
 
-	//playground에서 참조하기 위한 스테이지 상태 bool값
+	//다른 클래스에서 참조하기 위한 스테이지 상태 bool값
 	bool _NowStage1;
 	bool _NowStage2;
 	bool _NowStage3;
@@ -84,6 +87,7 @@ public:
 	void Stage3_Stage2_Ok();
 	void Stage4_BossStage_Ok();
 	void Stage4_Stage3_Ok();
+	void BossStage_Stage4_Ok();
 
 
 	//스테이지 상태 bool값 접근자
@@ -99,12 +103,16 @@ public:
 	stage02* getVStage2() { return _Stage2; }
 	stage03* getVStage3() { return _Stage3; }
 	stage04* getVStage4() { return _Stage4; }
+	bossStage* getVBossStage() { return _BossStage; }
 
 	image* getPixelImage() { return _currentPixelCollision; } //픽셀이미지 겟
 
 	vector<class npc*>& getNpcVector() { return _vNpcs; }
 
 	void setEnemyManagerMemoryAddressLink(class enemyManager* em) { _em = em; }
+
+	void PlayBattleStartFrame();		     //배틀 스타트 프레임을 재생시켜라
+	void PlayBattleStartBackGroundDraw();    //배틀 스타트를 그려라
 
 };
 
