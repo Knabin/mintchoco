@@ -373,7 +373,7 @@ void enemy::update()
 		pixel("boss_stage_pixel");
 		break;
 	}
-	cout << _stageNum << endl;
+	//cout << _stageNum << endl;
 	_rc.setCenterPos(_x, _y);
 }
 
