@@ -129,6 +129,24 @@ HRESULT player::init()
 	_yPlayerY = 0;
 	_playerImage = _idleImage;
 
+	{
+		SOUNDMANAGER->addSound("attack1", "sounds/effect/player_punch_01.wav", false, false);
+		SOUNDMANAGER->addSound("attack2", "sounds/effect/player_punch_02.wav", false, false);
+		SOUNDMANAGER->addSound("attack3", "sounds/effect/player_punch_03.wav", false, false);
+		SOUNDMANAGER->addSound("attack1 v1", "sounds/effect/vo_kyoko_effort_15.wav", false, false);
+		SOUNDMANAGER->addSound("attack1 v2", "sounds/effect/vo_kyoko_effort_16.wav", false, false);
+		SOUNDMANAGER->addSound("attack3 v", "sounds/effect/vo_kyoko_effort_08.wav", false, false);
+		SOUNDMANAGER->addSound("attack dash", "sounds/effect/player_kyoko_dropkick.wav", false, false);
+		SOUNDMANAGER->addSound("attack dash v", "sounds/effect/vo_kyoko_effort_44.wav", false, false);
+		SOUNDMANAGER->addSound("attack str", "sounds/effect/player_kyoko_axe_kick.wav", false, false);
+		SOUNDMANAGER->addSound("attack str v1", "sounds/effect/vo_kyoko_effort_02.wav", false, false);
+		SOUNDMANAGER->addSound("attack str v2", "sounds/effect/vo_kyoko_effort_03.wav", false, false);
+
+		SOUNDMANAGER->addSound("jump", "sounds/effect/player_jump.wav", false, false);
+		SOUNDMANAGER->addSound("land", "sounds/effect/player_land.wav", false, false);
+		SOUNDMANAGER->addSound("dab", "sounds/effect/player_kyoko_dab_slam.wav", false, false);
+	}
+
 	return S_OK;
 }
 
@@ -441,6 +459,7 @@ void player::pixelCollision(string stageName)
 				{
 					_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
 				}
+				SOUNDMANAGER->play("land");
 
 				break;
 			}
@@ -650,6 +669,10 @@ void player::attack()
 				_playerDirection = PLAYERDIRECTION_LEFT_COMBO_ATTACK1;
 				_comboAttackImage1->setFrameX(_comboAttackImage1->getMaxFrameX());
 				_comboAttackImage1->setFrameY(0);
+				SOUNDMANAGER->play("attack1");
+				int r = RND->getInt(4);
+				if (r == 0) SOUNDMANAGER->play("attack1 v1", 0.7f);
+				else if (r == 1) SOUNDMANAGER->play("attack1 v2", 0.7f);
 			}
 
 			if (_playerDirection == PLAYERDIRECTION_RIGHT_STOP && !_comboAttack || _playerDirection == PLAYERDIRECTION_RIGHT_WALK && !_comboAttack)//기본, 걷기일때 공격
@@ -657,6 +680,10 @@ void player::attack()
 				_playerDirection = PLAYERDIRECTION_RIGHT_COMBO_ATTACK1;
 				_comboAttackImage1->setFrameX(0);
 				_comboAttackImage1->setFrameY(1);
+				SOUNDMANAGER->play("attack1");
+				int r = RND->getInt(4);
+				if (r == 0) SOUNDMANAGER->play("attack1 v1", 0.7f);
+				else if (r == 1) SOUNDMANAGER->play("attack1 v2", 0.7f);
 			}
 
 			if (_playerDirection == PLAYERDIRECTION_LEFT_COMBO_ATTACK1 && _comboAttack && _comboAttackImage1->getFrameX() <= 2)//2단콤보
@@ -664,6 +691,7 @@ void player::attack()
 				_playerDirection = PLAYERDIRECTION_LEFT_COMBO_ATTACK2;
 				_comboAttackImage2->setFrameX(_comboAttackImage2->getMaxFrameX());
 				_comboAttackImage2->setFrameY(0);
+				SOUNDMANAGER->play("attack2");
 			}
 
 			if (_playerDirection == PLAYERDIRECTION_RIGHT_COMBO_ATTACK1 && _comboAttack && _comboAttackImage1->getFrameX() >= _comboAttackImage1->getMaxFrameX() - 2)//2단콤보
@@ -671,6 +699,7 @@ void player::attack()
 				_playerDirection = PLAYERDIRECTION_RIGHT_COMBO_ATTACK2;
 				_comboAttackImage2->setFrameX(0);
 				_comboAttackImage2->setFrameY(1);
+				SOUNDMANAGER->play("attack2");
 			}
 			
 			if (_playerDirection == PLAYERDIRECTION_LEFT_COMBO_ATTACK2 && _comboAttack2 && _comboAttackImage2->getFrameX() <= 2)//3단콤보
@@ -678,6 +707,8 @@ void player::attack()
 				_playerDirection = PLAYERDIRECTION_LEFT_COMBO_ATTACK3;
 				_comboAttackImage3->setFrameX(_comboAttackImage3->getMaxFrameX());
 				_comboAttackImage3->setFrameY(0);
+				SOUNDMANAGER->play("attack3");
+				SOUNDMANAGER->play("attack3 v", 0.7f);
 			}
 
 			if (_playerDirection == PLAYERDIRECTION_RIGHT_COMBO_ATTACK2 && _comboAttack2 && _comboAttackImage2->getFrameX() >= _comboAttackImage2->getMaxFrameX() - 2)//3단콤보
@@ -685,6 +716,8 @@ void player::attack()
 				_playerDirection = PLAYERDIRECTION_RIGHT_COMBO_ATTACK3;
 				_comboAttackImage3->setFrameX(0);
 				_comboAttackImage3->setFrameY(1);
+				SOUNDMANAGER->play("attack3");
+				SOUNDMANAGER->play("attack3 v", 0.7f);
 			}
 			
 			if (_playerDirection == PLAYERDIRECTION_LEFT_MOVE)//달리기
@@ -692,6 +725,8 @@ void player::attack()
 				_playerDirection = PLAYERDIRECTION_LEFT_DASH_ATTACK;
 				_dashAttackImage->setFrameX(_dashAttackImage->getMaxFrameX());
 				_dashAttackImage->setFrameY(0);
+				SOUNDMANAGER->play("attack dash");
+				if(RND->getInt(2) == 0) SOUNDMANAGER->play("attack dash v", 0.7f);
 			}
 
 			if (_playerDirection == PLAYERDIRECTION_RIGHT_MOVE)//달리기
@@ -699,6 +734,8 @@ void player::attack()
 				_playerDirection = PLAYERDIRECTION_RIGHT_DASH_ATTACK;
 				_dashAttackImage->setFrameX(0);
 				_dashAttackImage->setFrameY(1);
+				SOUNDMANAGER->play("attack dash");
+				if (RND->getInt(2) == 0) SOUNDMANAGER->play("attack dash v", 0.7f);
 			}
 
 		}
@@ -710,6 +747,7 @@ void player::attack()
 				_playerDirection = PLAYERDIRECTION_LEFT_JUMP_ATTACK;
 				_jumpAttackImage->setFrameX(_jumpAttackImage->getMaxFrameX());
 				_jumpAttackImage->setFrameY(0);
+				
 			}
 
 			if (_playerDirection == PLAYERDIRECTION_RIGHT_JUMP)
@@ -732,6 +770,11 @@ void player::attack()
 				_playerDirection = PLAYERDIRECTION_RIGHT_STRONG_ATTACK;
 				_strongAttackImage->setFrameX(_strongAttackImage->getMaxFrameX());
 				_strongAttackImage->setFrameY(1);
+				SOUNDMANAGER->play("attack str");
+				
+				int r = RND->getInt(4);
+				if (r == 0) SOUNDMANAGER->play("attack str v1", 0.7f);
+				else if (r == 1) SOUNDMANAGER->play("attack str v2", 0.7f);
 			}
 
 			if (_playerDirection == PLAYERDIRECTION_LEFT_STOP || _playerDirection == PLAYERDIRECTION_LEFT_WALK)
@@ -740,6 +783,11 @@ void player::attack()
 				_playerDirection = PLAYERDIRECTION_LEFT_STRONG_ATTACK;
 				_strongAttackImage->setFrameX(0);
 				_strongAttackImage->setFrameY(0);
+				SOUNDMANAGER->play("attack str");
+
+				int r = RND->getInt(4);
+				if (r == 0) SOUNDMANAGER->play("attack str v1", 0.7f);
+				else if (r == 1) SOUNDMANAGER->play("attack str v2", 0.7f);
 			}
 		}
 	}
@@ -758,7 +806,8 @@ void player::attack()
 				{
 					_ultimateAfterImage[i]->setFrameX(i);
 					_ultimateAfterImage[i]->setFrameY(1);
-				}	
+				}
+				SOUNDMANAGER->play("dab");
 			}
 
 			if (_playerDirection == PLAYERDIRECTION_LEFT_STOP || _playerDirection == PLAYERDIRECTION_LEFT_WALK)
@@ -773,7 +822,9 @@ void player::attack()
 					_ultimateAfterImage[i]->setFrameX(i);
 					_ultimateAfterImage[i]->setFrameY(0);
 				}
+				SOUNDMANAGER->play("dab");
 			}
+			
 		}
 	}
 }
@@ -799,6 +850,7 @@ void player::jumpMove()
 				_jumpImage->setFrameX(0);
 				_jumpImage->setFrameY(1);
 			}
+			SOUNDMANAGER->play("jump");
 		}
 	}
 	_jump->update();//점프 업데이트
@@ -838,7 +890,6 @@ void player::leftMove()
 				_playerDirection = PLAYERDIRECTION_LEFT_MOVE;
 				_runImage->setFrameY(0);
 			}
-
 			if (!_jumping && !_attack && !_guard && keyRight())
 			{
 				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
