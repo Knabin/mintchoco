@@ -25,7 +25,10 @@ public:
 	void jumping(float* x, float* y, float jumpPower, float gravity);
 	void setStartYmin(float startY) { _startY -= startY; }
 	void setStartYpls(float startY) { _startY += startY; }
+	void setJumpPower(float jumpPower) { _jumpPower = jumpPower; }
+	void setGravity(float gravity) { _gravity = gravity; }
 	float getJumpPower() { return _jumpPower; }
+	float getGravity() { return _gravity; }
 	float getStartY() { return _startY; }
 };
 

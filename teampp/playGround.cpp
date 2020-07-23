@@ -41,6 +41,8 @@ HRESULT playGround::init()
 	_collisionManager->setItemManagerMemoryAddressLink(_itemManager);
 	_collisionManager->setUiManagerMemoryAddressLink(_uiManager);
 
+	_player->setStageManagerMemoryAddressLink(_stageManager);
+
 	_uiManager->setStageManagerMemoryAddressLink(_stageManager);
 
 
