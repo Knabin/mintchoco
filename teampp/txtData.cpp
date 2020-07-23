@@ -103,3 +103,26 @@ vector<string> txtData::charArraySeparation(char charArray[])
 
 	return vArray;
 }
+
+bool txtData::canLoadFile(const char * loadFileName)
+{
+	HANDLE file;
+	DWORD read;
+
+	char str[128];
+
+	file = CreateFile(loadFileName, GENERIC_READ, NULL, NULL,
+		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+
+	ReadFile(file, str, 128, &read, NULL);
+
+	CloseHandle(file);
+
+	char* ptr = strchr(str, ',');
+
+	if (ptr != NULL)
+	{
+		return true;
+	}
+	return false;
+}
