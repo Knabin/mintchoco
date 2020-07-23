@@ -203,22 +203,6 @@ void playGround::render()
 			IMAGEMANAGER->findImage("stage3 pillar")->alphaRender(getMemDC(), 498, 0, 170);
 		}
 
-		SetBkMode(getMemDC(), TRANSPARENT);
-		char str[1024];
-		HFONT font, oldFont;
-		RECT rcText = RectMake(WINSIZEX / 2, WINSIZEY / 2, 800, 800);
-		font = CreateFont(40, 0, 100, 0, 400, false, false, false,
-			DEFAULT_CHARSET,
-			OUT_STRING_PRECIS,
-			CLIP_DEFAULT_PRECIS,
-			PROOF_QUALITY,
-			DEFAULT_PITCH | FF_SWISS,
-			TEXT("굴림체"));
-
-		oldFont = (HFONT)SelectObject(getMemDC(), font);
-		DrawText(getMemDC(), TEXT("으아아아아"), strlen("으아아아아"), &rcText,
-			DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
-
 		//=============================================
 		_backBuffer->render(CAMERA->getMemDC(), 0, CAMERA->getBlackSize() * 0.5,
 			CAMERA->getLeft(), CAMERA->getTop() + CAMERA->getShakeNumber(),

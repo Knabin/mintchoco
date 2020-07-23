@@ -41,7 +41,12 @@ private:
 	image* _saveStageOff;
 
 	int _stageNum;
+	
+	string _mapName;
+	string _mapNoName;
+
 	string _stageName;
+	string _stageNoName;
 	// ====================
 
 

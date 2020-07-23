@@ -115,11 +115,21 @@ HRESULT scene::init()
 	IMAGEMANAGER->addImage("ui_stage_image3 off", "images/ui/stage_ui_03_off.bmp", 114, 136, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("ui_stage_image4 off", "images/ui/stage_ui_04_off.bmp", 114, 136, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("ui_stage_image5 off", "images/ui/stage_ui_05_off.bmp", 114, 136, true, RGB(255, 0, 255));
+
+	_mapNoName = "NEW GAME";
+	_stageNoName = "--";
+
+	AddFontResource("font/CookieRun Bold.otf");
+	AddFontResource("font/CookieRun Regular.otf");
+
 	return S_OK;
 }
 
 void scene::release()
 {
+	RemoveFontResource("font/CookieRun Bold.otf");
+	AddFontResource("font/CookieRun Regular.otf");
+
 	ReleaseDC(_hWnd, getHDC());
 }
 
@@ -249,41 +259,78 @@ void scene::SaveLoadingBackGroundDraw(HDC hdc)
 	case W1:
 	{
 		IMAGEMANAGER->findImage("SaveLoadOpen")->render(hdc, _SaveLoadWindow1._x - 244, _SaveLoadWindow1._y - 100);
-		_saveStage->render(hdc, _SaveLoadWindow1._x - 236, _SaveLoadWindow1._y - 54);
+		if(_saveStage != nullptr) _saveStage->render(hdc, _SaveLoadWindow1._x - 236, _SaveLoadWindow1._y - 54);
 	}
 	break;
 
 	case W2:
 	{
 		IMAGEMANAGER->findImage("SaveLoadOpen")->render(hdc, _SaveLoadWindow2._x - 244, _SaveLoadWindow2._y - 100);
-		_saveStageOff->render(hdc, _SaveLoadWindow1._x - 236, _SaveLoadWindow1._y - 54);
+		if (_saveStageOff != nullptr) _saveStageOff->render(hdc, _SaveLoadWindow1._x - 236, _SaveLoadWindow1._y - 54);
 	}
 	break;
 
 	case W3:
 	{
 		IMAGEMANAGER->findImage("SaveLoadOpen")->render(hdc, _SaveLoadWindow3._x - 244, _SaveLoadWindow3._y - 100);
-		_saveStageOff->render(hdc, _SaveLoadWindow1._x - 236, _SaveLoadWindow1._y - 54);
+		if (_saveStageOff != nullptr) _saveStageOff->render(hdc, _SaveLoadWindow1._x - 236, _SaveLoadWindow1._y - 54);
 	}
 	break;
 	}
 
 	SetBkMode(hdc, TRANSPARENT);
-	char str[1024];
-	HFONT font, oldFont;
-	RECT rcText = RectMake(_SaveLoadWindow1._x, _SaveLoadWindow1._y, 800, 800);
-	font = CreateFont(40, 0, 80, 0, 400, false, false, false,
+	SetTextColor(hdc, RGB(255, 255, 255));
+	HFONT font, font2, oldFont;
+	RECT rcText = RectMake(_SaveLoadWindow1._x - 80, _SaveLoadWindow1._y + 20, 300, 100);
+	RECT rcText2 = RectMake(_SaveLoadWindow2._x - 80, _SaveLoadWindow2._y + 20, 300, 100);
+	RECT rcText3 = RectMake(_SaveLoadWindow3._x - 80, _SaveLoadWindow3._y + 20, 300, 100);
+
+	RECT rcTextFile = RectMake(_SaveLoadWindow1._x - 80, _SaveLoadWindow1._y - 65, 300, 100);
+	RECT rcTextFile2 = RectMake(_SaveLoadWindow2._x - 80, _SaveLoadWindow2._y - 65, 300, 100);
+	RECT rcTextFile3 = RectMake(_SaveLoadWindow3._x - 80, _SaveLoadWindow3._y - 65, 300, 100);
+
+	font = CreateFont(30, 0, 70, 0, 400, false, false, false,
 		DEFAULT_CHARSET,
 		OUT_STRING_PRECIS,
 		CLIP_DEFAULT_PRECIS,
 		PROOF_QUALITY,
 		DEFAULT_PITCH | FF_SWISS,
-		TEXT("굴림체"));
+		TEXT("CookieRunOTF Regular"));
 
 	oldFont = (HFONT)SelectObject(getMemDC(), font);
 	DrawText(getMemDC(), _stageName.c_str(), _stageName.size(), &rcText,
 		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
+	DrawText(getMemDC(), _stageNoName.c_str(), _stageNoName.size(), &rcText2,
+		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
+	DrawText(getMemDC(), _stageNoName.c_str(), _stageNoName.size(), &rcText3,
+		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
+	DrawText(getMemDC(), "파일 A", strlen("파일 A"), &rcTextFile,
+		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
+	DrawText(getMemDC(), "파일 B", strlen("파일 B"), &rcTextFile2,
+		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
+	DrawText(getMemDC(), "파일 C", strlen("파일 C"), &rcTextFile3,
+		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
 
+	RECT rcTextMap = RectMake(_SaveLoadWindow1._x - 80, _SaveLoadWindow1._y - 30, 300, 100);
+	RECT rcTextMap2 = RectMake(_SaveLoadWindow2._x - 80, _SaveLoadWindow2._y - 30, 300, 100);
+	RECT rcTextMap3 = RectMake(_SaveLoadWindow3._x - 80, _SaveLoadWindow3._y - 30, 300, 100);
+	font2 = CreateFont(50, 0, 70, 0, 400, false, false, false,
+		DEFAULT_CHARSET,
+		OUT_STRING_PRECIS,
+		CLIP_DEFAULT_PRECIS,
+		PROOF_QUALITY,
+		DEFAULT_PITCH | FF_SWISS,
+		TEXT("CookieRunOTF Bold"));
+	oldFont = (HFONT)SelectObject(getMemDC(), font2);
+	DrawText(getMemDC(), _mapName.c_str(), _mapName.size(), &rcTextMap,
+		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
+	DrawText(getMemDC(), _mapNoName.c_str(), _mapNoName.size(), &rcTextMap2,
+		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
+	DrawText(getMemDC(), _mapNoName.c_str(), _mapNoName.size(), &rcTextMap3,
+		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
+
+	DeleteObject(font);
+	DeleteObject(font2);
 }
 
 void scene::LoadingBackGroundDraw(HDC hdc)
@@ -313,39 +360,45 @@ void scene::LoadingBackGroundDraw(HDC hdc)
 
 void scene::getPlayerSaveData()
 {
-	cout << TXTDATA->txtLoad("data/player.data")[0] << endl;
-	cout << TXTDATA->txtLoad("data/player.data")[1] << endl;
-	cout << TXTDATA->txtLoad("data/player.data")[2] << endl;
-	_stageNum = atoi(TXTDATA->txtLoad("data/player.data")[2].c_str());
-
-	switch (_stageNum)
+	if (TXTDATA->canLoadFile("data/player.data"))
 	{
-	case 0:
-		_saveStage = IMAGEMANAGER->findImage("ui_stage_image1");
-		_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image1 off");
-		_stageName = "반성실";
-		break;
-	case 1:
-		_saveStage = IMAGEMANAGER->findImage("ui_stage_image2");
-		_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image2 off");
-		_stageName = "1층 복도";
-		break;
-	case 2:
-		_saveStage = IMAGEMANAGER->findImage("ui_stage_image3");
-		_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image3 off");
-		_stageName = "2층 복도";
-		break;
-	case 3:
-		_saveStage = IMAGEMANAGER->findImage("ui_stage_image4");
-		_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image4 off");
-		_stageName = "화학실";
-		break;
-	case 4:
-		_saveStage = IMAGEMANAGER->findImage("ui_stage_image5");
-		_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image5 off");
-		_stageName = "학교 로비";
-		break;
-	default:
-		break;
+		_stageNum = atoi(TXTDATA->txtLoad("data/player.data")[2].c_str());
+		_mapName = "리버시티 고교";
+		switch (_stageNum)
+		{
+		case 0:
+			_saveStage = IMAGEMANAGER->findImage("ui_stage_image1");
+			_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image1 off");
+			_stageName = "반성실";
+			break;
+		case 1:
+			_saveStage = IMAGEMANAGER->findImage("ui_stage_image2");
+			_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image2 off");
+			_stageName = "1층 복도";
+			break;
+		case 2:
+			_saveStage = IMAGEMANAGER->findImage("ui_stage_image3");
+			_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image3 off");
+			_stageName = "2층 복도";
+			break;
+		case 3:
+			_saveStage = IMAGEMANAGER->findImage("ui_stage_image4");
+			_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image4 off");
+			_stageName = "화학실";
+			break;
+		case 4:
+			_saveStage = IMAGEMANAGER->findImage("ui_stage_image5");
+			_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image5 off");
+			_stageName = "학교 로비";
+			break;
+		default:
+			_stageName = _stageNoName;
+			break;
+		}
+	}
+	else
+	{
+		_stageName = _stageNoName;
+		_mapName = _mapNoName;
 	}
 }
