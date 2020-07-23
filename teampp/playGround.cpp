@@ -55,6 +55,17 @@ HRESULT playGround::init()
 		IMAGEMANAGER->addImage("stage3 pillar", "images/stage/stage03_pillar.bmp", 195, 843, true, RGB(255, 0, 255));
 	}
 
+	{
+		SOUNDMANAGER->addSound("bgm title", "sounds/bgm/RCG_Intro_Song.wav", true, true);
+		SOUNDMANAGER->addSound("bgm menu", "sounds/bgm/RCG_menu01.wav", true, true);
+		SOUNDMANAGER->addSound("bgm classroom", "sounds/bgm/RCG_Detention.wav", true, true);
+		SOUNDMANAGER->addSound("bgm hall", "sounds/bgm/RCG_Knock_Out.wav", true, true);
+		SOUNDMANAGER->addSound("bgm chemi", "sounds/bgm/RCG_Lunch_Money.wav", true, true);
+		SOUNDMANAGER->addSound("bgm boss", "sounds/bgm/RCG_boss_misuzu.wav", true, true);
+
+		SOUNDMANAGER->playBGM("bgm title");
+	}
+
 	// ==========================================
 	// ## 카메라 중점 초기화 ##
 	// ==========================================

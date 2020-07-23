@@ -174,6 +174,8 @@ void scene::PointerMove()
 		_Loading = false;
 		_SaveLoading = true;
 		getPlayerSaveData();
+		SOUNDMANAGER->play("bgm menu");
+		SOUNDMANAGER->stopAll("bgm menu");
 	}
 
 	switch (_Pointer._PointerState)		//포인터가 현재 어디를 가르키고 있나?
@@ -225,6 +227,7 @@ void scene::SaveLoadMove()
 		_Loading = true;
 		_SaveLoading = false;
 		_GameStart = false;
+		SOUNDMANAGER->stop("bgm menu");
 	}
 }
 
