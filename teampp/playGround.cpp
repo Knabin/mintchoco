@@ -52,8 +52,8 @@ HRESULT playGround::init()
 
 
 	{
-		IMAGEMANAGER->addImage("stage2 pillar", "images/stage/stage02_pillar.bmp", 195, 843, true, RGB(255, 0, 255));
-		IMAGEMANAGER->addImage("stage3 pillar", "images/stage/stage03_pillar.bmp", 195, 843, true, RGB(255, 0, 255));
+		IMAGEMANAGER->addImage("stage2 pillar", "images/stage/stage02_pillar.bmp", 195, 864, true, RGB(255, 0, 255));
+		IMAGEMANAGER->addImage("stage3 pillar", "images/stage/stage03_pillar.bmp", 195, 864, true, RGB(255, 0, 255));
 	}
 
 	{

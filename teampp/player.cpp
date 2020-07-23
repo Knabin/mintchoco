@@ -198,15 +198,24 @@ void player::update()
 		_comboAttackRc2.set(0, 0, 0, 0);
 	}
 
-	if (_stageManager->getNowstage1() == true)
+	switch (_stageManager->getNowStage())
 	{
-		pixelCollision("stage1_pixel");//플레이어 픽셀충돌
-	}
-	if (_stageManager->getNowstage4() == true)
-	{
+	case 0:
+		pixelCollision("stage1_pixel");
+		break;
+	case 1:
+		pixelCollision("stage2_pixel");
+		break;
+	case 2:
+		pixelCollision("stage3_pixel");
+		break;
+	case 3:
 		pixelCollision("stage4_pixel");
+		break;
+	case 4:
+		pixelCollision("boss_stage_pixel");
+		break;
 	}
-
 }
 
 void player::render()
