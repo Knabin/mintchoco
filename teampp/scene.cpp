@@ -12,6 +12,8 @@ scene::~scene()
 HRESULT scene::init()
 {
 
+
+	//-----------------------------------------------------------------------------------------------------------------------------/
 	//세이브로드 백그라운드 선언
 
 	IMAGEMANAGER->addImage("SaveLoadBackGround", "images/ui/save_load.bmp", 1280, 720, false, RGB(0, 0, 0));
@@ -91,10 +93,10 @@ HRESULT scene::init()
 	IMAGEMANAGER->addImage("로딩3", "images/ui/Loading03.bmp", 1280, 720, false, RGB(0, 0, 0));
 
 
-	//게임 시작이니? 로딩중이니? 아님 세이브 로딩중이니?
+	//게임 시작이니? 로딩중이니? 아님 세이브 로딩중이니? 그것도 아니면 베틀스타트씬이 재생중이니?
+	_SaveLoading = false;
 	_Loading = false;
 	_GameStart = false;
-	_SaveLoading = false;
 
 	_LoadingCount = 0;
 
@@ -147,9 +149,9 @@ void scene::PointerMove()
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _Pointer._PointerState == START)
 	{
-		_GameStart = false;
-		_Loading = false;
 		_SaveLoading = true;
+		_Loading = false;
+		_GameStart = false;
 		getPlayerSaveData();
 	}
 
@@ -199,11 +201,28 @@ void scene::SaveLoadMove()
 
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _SaveLoadWindowState == W1)
 	{
-		_Loading = true;
 		_SaveLoading = false;
+		_Loading = true;
 		_GameStart = false;
 	}
 }
+
+
+void scene::LoadingCountPlus()
+{
+	_LoadingCount++;
+}
+
+void scene::GameStart()
+{
+	if (_LoadingCount > 150)
+	{
+		_SaveLoading = false;
+		_Loading = false;
+		_GameStart = true;
+	}
+}
+
 
 void scene::TitleBackGroundDraw(HDC hdc)
 {
@@ -269,8 +288,6 @@ void scene::SaveLoadingBackGroundDraw(HDC hdc)
 
 void scene::LoadingBackGroundDraw(HDC hdc)
 {
-	
-	
 	if (_LoadingCount <= 30)
 	{
 		IMAGEMANAGER->findImage("로딩1")->render(hdc, 0, 0);
@@ -293,21 +310,6 @@ void scene::LoadingBackGroundDraw(HDC hdc)
 	}	
 }
 
-void scene::LoadingCountPlus()
-{
-	_LoadingCount++;
-}
-
-void scene::GameStart()
-{
-	if (_LoadingCount > 150)
-	{
-		_Loading = false;
-		_SaveLoading = false;
-		_GameStart = true;
-	}
-
-}
 
 void scene::getPlayerSaveData()
 {

@@ -78,7 +78,7 @@ void playGround::update()
 {
 	gameNode::update();
 
-	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == false )
+	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == false)
 	{
 		_scene->PointerMove();
 	}
@@ -92,8 +92,8 @@ void playGround::update()
 	{
 		_scene->LoadingCountPlus();
 		_scene->GameStart();
-		
 	}
+
 
 	if (_scene->getGameStart() == true && _scene->getSaveLoading() == false && _scene->getLoading() == false)
 	{
@@ -180,12 +180,9 @@ void playGround::render()
 	{
 		//==========================================================================================================================//
 
-
 		PatBlt(CAMERA->getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
 		PatBlt(getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
 		//=================================================
-
-
 
 		_stageManager->render();
 		_player->render();
@@ -228,5 +225,6 @@ void playGround::render()
 			CAMERA->getViewWidth(), CAMERA->getViewHeight());
 		_uiManager->render(CAMERA->getMemDC());
 		CAMERA->render(getHDC());
+
 	}
 }
