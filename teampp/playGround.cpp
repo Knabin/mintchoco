@@ -46,9 +46,10 @@ HRESULT playGround::init()
 	_collisionManager->setUiManagerMemoryAddressLink(_uiManager);
 
 	_enemyManager->setStageManagerMemoryAddressLink(_stageManager);
+	_player->setStageManagerMemoryAddressLink(_stageManager);
+
 	_uiManager->setStageManagerMemoryAddressLink(_stageManager);
 
-	//_enemyManager->setBossMove();
 
 	{
 		IMAGEMANAGER->addImage("stage2 pillar", "images/stage/stage02_pillar.bmp", 195, 843, true, RGB(255, 0, 255));
