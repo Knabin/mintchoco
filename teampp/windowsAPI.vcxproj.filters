@@ -219,6 +219,9 @@
     <ClInclude Include="bossStage.h">
       <Filter>playGround\heasyeong</Filter>
     </ClInclude>
+    <ClInclude Include="dataManager.h">
+      <Filter>2DGameFramework\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -352,6 +355,9 @@
     </ClCompile>
     <ClCompile Include="bossStage.cpp">
       <Filter>playGround\heasyeong</Filter>
+    </ClCompile>
+    <ClCompile Include="dataManager.cpp">
+      <Filter>2DGameFramework\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

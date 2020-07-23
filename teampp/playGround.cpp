@@ -93,6 +93,33 @@ void playGround::update()
 		_scene->LoadingCountPlus();
 		_scene->GameStart();
 		
+		if (_scene->getGameStart())
+		{
+			dataManager::getInstance()->setSlot(_scene->getSaveLoadWindowState());
+
+			vector<int> temp = dataManager::getInstance()->loadDataInteger();
+			if (temp.size() != 0)
+			{
+				switch (temp[2])
+				{
+				case 0:
+					_stageManager->Stage1Move();
+					break;
+				case 1:
+					_stageManager->Stage2Move();
+					break;
+				case 2:
+					_stageManager->Stage3Move();
+					break;
+				case 3:
+					_stageManager->Stage4Move();
+					break;
+				case 4:
+					_stageManager->BossStageMove();
+					break;
+				}
+			}
+		}
 	}
 
 	if (_scene->getGameStart() == true && _scene->getSaveLoading() == false && _scene->getLoading() == false)
@@ -121,11 +148,7 @@ void playGround::update()
 		}
 		if (KEYMANAGER->isOnceKeyDown('4'))
 		{
-			vector<string> temp;
-			temp.push_back(to_string(100));
-			temp.push_back(to_string(10));
-			temp.push_back(to_string(_stageManager->getNowStage()));
-			TXTDATA->txtSave("data/player.data", temp);
+			dataManager::getInstance()->saveData(100, 10, _stageManager->getNowStage());
 		}
 		if (KEYMANAGER->isOnceKeyDown(VK_F1))
 		{
@@ -161,10 +184,33 @@ void playGround::update()
 
 void playGround::render()
 {
+	// 조건문 형태를 바꾸면 어떨까 해서 적어 놓습니당
+	if (!_scene->getGameStart())
+	{
+		if (_scene->getSaveLoading())
+		{
+			
+		}
+		else if (_scene->getLoading())
+		{
+
+		}
+		else
+		{
+
+		}
+	}
+	else
+	{
+		//if(_stageManager->getNowbossStage() && )	영상 실행 안 했다면... 영상 실행
+		//else	일반 render
+	}
+
 	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == false)
 	{
 		_scene->TitleBackGroundDraw(getHDC());
 	}
+
 	if (_scene->getGameStart() == false && _scene->getSaveLoading() == true && _scene->getLoading() == false)
 	{
 		_scene->SaveLoadingBackGroundDraw(getMemDC());
@@ -173,14 +219,13 @@ void playGround::render()
 
 	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == true)
 	{
-		_scene->LoadingBackGroundDraw(getHDC());
+		_scene->LoadingBackGroundDraw(getMemDC());
+		_backBuffer->render(getHDC());
 	}
 
 	if (_scene->getGameStart() == true && _scene->getSaveLoading() == false && _scene->getLoading() == false)
 	{
 		//==========================================================================================================================//
-
-
 		PatBlt(CAMERA->getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
 		PatBlt(getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
 		//=================================================

@@ -29,6 +29,7 @@ using namespace std;
 #include "iniDataManager.h"
 #include "zOrder.h"
 #include "camera.h"
+#include "dataManager.h"
 
 using namespace TTYONE_UTIL;
 
