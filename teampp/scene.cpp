@@ -12,6 +12,8 @@ scene::~scene()
 HRESULT scene::init()
 {
 
+
+	//-----------------------------------------------------------------------------------------------------------------------------/
 	//세이브로드 백그라운드 선언
 
 	IMAGEMANAGER->addImage("SaveLoadBackGround", "images/ui/save_load.bmp", 1280, 720, false, RGB(0, 0, 0));
@@ -91,20 +93,43 @@ HRESULT scene::init()
 	IMAGEMANAGER->addImage("로딩3", "images/ui/Loading03.bmp", 1280, 720, false, RGB(0, 0, 0));
 
 
-	//게임 시작이니? 로딩중이니? 아님 세이브 로딩중이니?
+	//게임 시작이니? 로딩중이니? 아님 세이브 로딩중이니? 그것도 아니면 베틀스타트씬이 재생중이니?
+	_SaveLoading = false;
 	_Loading = false;
 	_GameStart = false;
-	_SaveLoading = false;
 
 	_LoadingCount = 0;
 
 	//-----------------------------------------------------------------------------------------------------------------------------//
+
+	// 나빈 추가) 로드 씬 스테이지 이미지 추가
+
+	IMAGEMANAGER->addImage("ui_stage_image1", "images/ui/stage_ui_01.bmp", 114, 136, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ui_stage_image2", "images/ui/stage_ui_02.bmp", 114, 136, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ui_stage_image3", "images/ui/stage_ui_03.bmp", 114, 136, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ui_stage_image4", "images/ui/stage_ui_04.bmp", 114, 136, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ui_stage_image5", "images/ui/stage_ui_05.bmp", 114, 136, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("ui_stage_image1 off", "images/ui/stage_ui_01_off.bmp", 114, 136, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ui_stage_image2 off", "images/ui/stage_ui_02_off.bmp", 114, 136, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ui_stage_image3 off", "images/ui/stage_ui_03_off.bmp", 114, 136, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ui_stage_image4 off", "images/ui/stage_ui_04_off.bmp", 114, 136, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ui_stage_image5 off", "images/ui/stage_ui_05_off.bmp", 114, 136, true, RGB(255, 0, 255));
+
+	_mapNoName = "NEW GAME";
+	_stageNoName = "--";
+
+	AddFontResource("font/CookieRun Bold.otf");
+	AddFontResource("font/CookieRun Regular.otf");
 
 	return S_OK;
 }
 
 void scene::release()
 {
+	RemoveFontResource("font/CookieRun Bold.otf");
+	AddFontResource("font/CookieRun Regular.otf");
+
 	ReleaseDC(_hWnd, getHDC());
 }
 
@@ -134,9 +159,10 @@ void scene::PointerMove()
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _Pointer._PointerState == START)
 	{
-		_GameStart = false;
-		_Loading = false;
 		_SaveLoading = true;
+		_Loading = false;
+		_GameStart = false;
+		getPlayerSaveData();
 	}
 
 	switch (_Pointer._PointerState)		//포인터가 현재 어디를 가르키고 있나?
@@ -185,11 +211,28 @@ void scene::SaveLoadMove()
 
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _SaveLoadWindowState == W1)
 	{
-		_Loading = true;
 		_SaveLoading = false;
+		_Loading = true;
 		_GameStart = false;
 	}
 }
+
+
+void scene::LoadingCountPlus()
+{
+	_LoadingCount++;
+}
+
+void scene::GameStart()
+{
+	if (_LoadingCount > 150)
+	{
+		_SaveLoading = false;
+		_Loading = false;
+		_GameStart = true;
+	}
+}
+
 
 void scene::TitleBackGroundDraw(HDC hdc)
 {
@@ -216,29 +259,82 @@ void scene::SaveLoadingBackGroundDraw(HDC hdc)
 	case W1:
 	{
 		IMAGEMANAGER->findImage("SaveLoadOpen")->render(hdc, _SaveLoadWindow1._x - 244, _SaveLoadWindow1._y - 100);
+		if(_saveStage != nullptr) _saveStage->render(hdc, _SaveLoadWindow1._x - 236, _SaveLoadWindow1._y - 54);
 	}
 	break;
 
 	case W2:
 	{
 		IMAGEMANAGER->findImage("SaveLoadOpen")->render(hdc, _SaveLoadWindow2._x - 244, _SaveLoadWindow2._y - 100);
+		if (_saveStageOff != nullptr) _saveStageOff->render(hdc, _SaveLoadWindow1._x - 236, _SaveLoadWindow1._y - 54);
 	}
 	break;
 
 	case W3:
 	{
 		IMAGEMANAGER->findImage("SaveLoadOpen")->render(hdc, _SaveLoadWindow3._x - 244, _SaveLoadWindow3._y - 100);
+		if (_saveStageOff != nullptr) _saveStageOff->render(hdc, _SaveLoadWindow1._x - 236, _SaveLoadWindow1._y - 54);
 	}
 	break;
 	}
 
+	SetBkMode(hdc, TRANSPARENT);
+	SetTextColor(hdc, RGB(255, 255, 255));
+	HFONT font, font2, oldFont;
+	RECT rcText = RectMake(_SaveLoadWindow1._x - 80, _SaveLoadWindow1._y + 20, 300, 100);
+	RECT rcText2 = RectMake(_SaveLoadWindow2._x - 80, _SaveLoadWindow2._y + 20, 300, 100);
+	RECT rcText3 = RectMake(_SaveLoadWindow3._x - 80, _SaveLoadWindow3._y + 20, 300, 100);
 
+	RECT rcTextFile = RectMake(_SaveLoadWindow1._x - 80, _SaveLoadWindow1._y - 65, 300, 100);
+	RECT rcTextFile2 = RectMake(_SaveLoadWindow2._x - 80, _SaveLoadWindow2._y - 65, 300, 100);
+	RECT rcTextFile3 = RectMake(_SaveLoadWindow3._x - 80, _SaveLoadWindow3._y - 65, 300, 100);
+
+	font = CreateFont(30, 0, 70, 0, 400, false, false, false,
+		DEFAULT_CHARSET,
+		OUT_STRING_PRECIS,
+		CLIP_DEFAULT_PRECIS,
+		PROOF_QUALITY,
+		DEFAULT_PITCH | FF_SWISS,
+		TEXT("CookieRunOTF Regular"));
+
+	oldFont = (HFONT)SelectObject(getMemDC(), font);
+	DrawText(getMemDC(), _stageName.c_str(), _stageName.size(), &rcText,
+		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
+	DrawText(getMemDC(), _stageNoName.c_str(), _stageNoName.size(), &rcText2,
+		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
+	DrawText(getMemDC(), _stageNoName.c_str(), _stageNoName.size(), &rcText3,
+		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
+	DrawText(getMemDC(), "파일 A", strlen("파일 A"), &rcTextFile,
+		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
+	DrawText(getMemDC(), "파일 B", strlen("파일 B"), &rcTextFile2,
+		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
+	DrawText(getMemDC(), "파일 C", strlen("파일 C"), &rcTextFile3,
+		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
+
+	RECT rcTextMap = RectMake(_SaveLoadWindow1._x - 80, _SaveLoadWindow1._y - 30, 300, 100);
+	RECT rcTextMap2 = RectMake(_SaveLoadWindow2._x - 80, _SaveLoadWindow2._y - 30, 300, 100);
+	RECT rcTextMap3 = RectMake(_SaveLoadWindow3._x - 80, _SaveLoadWindow3._y - 30, 300, 100);
+	font2 = CreateFont(50, 0, 70, 0, 400, false, false, false,
+		DEFAULT_CHARSET,
+		OUT_STRING_PRECIS,
+		CLIP_DEFAULT_PRECIS,
+		PROOF_QUALITY,
+		DEFAULT_PITCH | FF_SWISS,
+		TEXT("CookieRunOTF Bold"));
+	oldFont = (HFONT)SelectObject(getMemDC(), font2);
+	DrawText(getMemDC(), _mapName.c_str(), _mapName.size(), &rcTextMap,
+		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
+	DrawText(getMemDC(), _mapNoName.c_str(), _mapNoName.size(), &rcTextMap2,
+		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
+	DrawText(getMemDC(), _mapNoName.c_str(), _mapNoName.size(), &rcTextMap3,
+		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
+
+	DeleteObject(font);
+	DeleteObject(font2);
 }
 
 void scene::LoadingBackGroundDraw(HDC hdc)
 {
-	
-	
 	if (_LoadingCount <= 30)
 	{
 		IMAGEMANAGER->findImage("로딩1")->render(hdc, 0, 0);
@@ -261,18 +357,48 @@ void scene::LoadingBackGroundDraw(HDC hdc)
 	}	
 }
 
-void scene::LoadingCountPlus()
-{
-	_LoadingCount++;
-}
 
-void scene::GameStart()
+void scene::getPlayerSaveData()
 {
-	if (_LoadingCount > 150)
+	if (TXTDATA->canLoadFile("data/player.data"))
 	{
-		_Loading = false;
-		_SaveLoading = false;
-		_GameStart = true;
+		_stageNum = atoi(TXTDATA->txtLoad("data/player.data")[2].c_str());
+		_mapName = "리버시티 고교";
+		switch (_stageNum)
+		{
+		case 0:
+			_saveStage = IMAGEMANAGER->findImage("ui_stage_image1");
+			_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image1 off");
+			_stageName = "반성실";
+			break;
+		case 1:
+			_saveStage = IMAGEMANAGER->findImage("ui_stage_image2");
+			_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image2 off");
+			_stageName = "1층 복도";
+			break;
+		case 2:
+			_saveStage = IMAGEMANAGER->findImage("ui_stage_image3");
+			_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image3 off");
+			_stageName = "2층 복도";
+			break;
+		case 3:
+			_saveStage = IMAGEMANAGER->findImage("ui_stage_image4");
+			_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image4 off");
+			_stageName = "화학실";
+			break;
+		case 4:
+			_saveStage = IMAGEMANAGER->findImage("ui_stage_image5");
+			_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image5 off");
+			_stageName = "학교 로비";
+			break;
+		default:
+			_stageName = _stageNoName;
+			break;
+		}
 	}
-
+	else
+	{
+		_stageName = _stageNoName;
+		_mapName = _mapNoName;
+	}
 }

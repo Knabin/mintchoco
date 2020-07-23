@@ -34,6 +34,40 @@ HRESULT enemyManager::init()
 
 		MYPOINT p1(300, 600);
 		MYPOINT p2(400, 520);
+		MYPOINT p3(950, 400);
+		MYPOINT p4(1100, 400);
+
+		vP.push_back(p1);
+		vP.push_back(p2);
+		vP.push_back(p3);
+		vP.push_back(p4);
+
+		_mPoint.insert(make_pair(1, vP));
+	}
+
+	// 스테이지 3 spawn 포인트 초기화
+	{
+		vector<MYPOINT> vP;
+
+		MYPOINT p1(2100, 600);
+		MYPOINT p2(2000, 520);
+		MYPOINT p3(1250, 400);
+		MYPOINT p4(1400, 400);
+
+		vP.push_back(p1);
+		vP.push_back(p2);
+		vP.push_back(p3);
+		vP.push_back(p4);
+
+		_mPoint.insert(make_pair(2, vP));
+	}
+
+	// 스테이지 4 spawn 포인트 초기화
+	{
+		vector<MYPOINT> vP;
+
+		MYPOINT p1(300, 600);
+		MYPOINT p2(400, 520);
 		MYPOINT p3(1750, 500);
 		MYPOINT p4(1850, 600);
 
@@ -42,7 +76,7 @@ HRESULT enemyManager::init()
 		vP.push_back(p3);
 		vP.push_back(p4);
 
-		_mPoint.insert(make_pair(1, vP));
+		_mPoint.insert(make_pair(3, vP));
 	}
 
 	return S_OK;
@@ -54,85 +88,23 @@ void enemyManager::release()
 
 void enemyManager::update()
 {
-	for (int i = 0; i < _vCheerLeader.size(); i++)
-	{
-		_vCheerLeader[i]->update();
-	}
-	for (int i = 0; i < _vSchoolBoy.size(); i++)
-	{
-		_vSchoolBoy[i]->update();
-	}
-	for (int i = 0; i < _vSchoolGirl.size(); i++)
-	{
-		_vSchoolGirl[i]->update();
-	}
 	for (int i = 0; i < _vEnemies.size(); ++i)
 	{
 		_vEnemies[i]->update();
 	}
 	
-	_boss->update();  // 보스 업데이트
+	//_boss->update();  // 보스 업데이트
 }
 
 void enemyManager::render()
 {
 	_enemyRc.render(getMemDC());
-	for (int i = 0; i < _vCheerLeader.size(); i++)
-	{
-		_vCheerLeader[i]->render();
-	}
-	for (int i = 0; i < _vSchoolBoy.size(); i++)
-	{
-		_vSchoolBoy[i]->render();
-	}
-	for (int i = 0; i < _vSchoolGirl.size(); i++)
-	{
-		_vSchoolGirl[i]->render();
-	}
 	for (int i = 0; i < _vEnemies.size(); ++i)
 		_vEnemies[i]->render();
 
-	_boss->render();	// 보스 이미지 띄우기
+	//_boss->render();	// 보스 이미지 띄우기
 }
 
-void enemyManager::setEnemyCheerMove()
-{
-	float x[] = {800};
-	float y[] = {350};
-
-	for (int i = 0; i < 1; i++)
-	{
-		enemy* _tempCheer = new cheerleader;
-		_tempCheer->init("cheer_move", x[i], y[i], 2.3f);
-		_vEnemies.push_back(_tempCheer);
-	}
-}
-
-void enemyManager::setEnemySchoolBoyMove()
-{
-	float x[] = { 1300 };
-	float y[] = { 250 };
-
-	for (int i = 0; i < 1; i++)
-	{
-		enemy* _tempSchoolBoy = new schoolboy;
-		_tempSchoolBoy->init("schoolboy_move", x[i], y[i], 2.3f);
-		_vEnemies.push_back(_tempSchoolBoy);
-	}
-}
-
-void enemyManager::setEnemySchoolGirlMove()
-{
-	float x[] = { 200 };
-	float y[] = { 450 };
-
-	for (int i = 0; i < 1; i++)
-	{
-		enemy* _tempSchoolGirl = new schoolgirl;
-		_tempSchoolGirl->init("schoolgirl_move", x[i], y[i], 2.3f);
-		_vEnemies.push_back(_tempSchoolGirl);
-	}
-}
 
 void enemyManager::setBossMove()	//보스 무브 추가
 {
@@ -140,11 +112,9 @@ void enemyManager::setBossMove()	//보스 무브 추가
 	_boss->init("BOOSIDLE", WINSIZEX / 2, WINSIZEY / 2, 0.0f);
 }
 
-
-
 void enemyManager::setEnemiesVector(int stageNum)
 {
-	if (stageNum > 1) return;	// for test
+	//if (stageNum == 4) return;	// for test
 	if (_vEnemies.size() != 0)
 	{
 		for (int i = 0; i < _vEnemies.size(); ++i)
@@ -198,7 +168,21 @@ void enemyManager::setEnemiesVector(int stageNum)
 	}
 	break;
 	case 3:
+		// 스테이지 4
+	{
+		float x[] = { 800, 1300, 1050, 1750, 550 };
+		float y[] = { 400, 520, 710, 700, 650 };
+		for (int i = 0; i < 5; i++)
+		{
+			if (i < 2)		_vEnemies.push_back(createEnemy(1, x[i], y[i]));
+			else if (i > 4) _vEnemies.push_back(createEnemy(0, x[i], y[i]));
+			else			_vEnemies.push_back(createEnemy(2, x[i], y[i]));
+		}
+	}
+		break;
+	case 4:
 		// 보스 스테이지
+		_vEnemies.push_back(createEnemy(3, WINSIZEX / 2, WINSIZEY / 2));
 		break;
 	}
 
@@ -232,14 +216,19 @@ enemy* enemyManager::createEnemy(int enemyType, float x, float y)
 		return em;
 	}
 		break;
-	case 3:			// 보스?
+	case 3:			// 보스
+	{
+		enemy* em = new boss;
+		em->init("BOOSIDLE", WINSIZEX / 2, WINSIZEY / 2, 0.0f);
+		return em;
+	}
 		break;
 	}
 }
 
 void enemyManager::spawnEnemy(int stageNum)
 {
-	if (stageNum > 1) return;	// for test
+	if (stageNum > 3) return;
 	vPoint temp = _mPoint.at(stageNum);
 
 	// spawn될 포인트를 랜덤으로 결정함
@@ -254,22 +243,17 @@ void enemyManager::spawnEnemy(int stageNum)
 }
 
 
+void enemyManager::removeEnemy(int index)
+{
+	_vEnemies[index]->release();
+	SAFE_DELETE(_vEnemies[index]);
+	_vEnemies.erase(_vEnemies.begin() + index);
+}
+
 void enemyManager::setPlayerPos(float x, float y)
 {
-	for (int i = 0; i < _vCheerLeader.size(); i++)
-	{
-		_vCheerLeader[i]->setPlayerPos(x, y);
-	}
-	for (int i = 0; i < _vSchoolBoy.size(); i++)
-	{
-		_vSchoolBoy[i]->setPlayerPos(x, y);
-	}
-	for (int i = 0; i < _vSchoolGirl.size(); i++)
-	{
-		_vSchoolGirl[i]->setPlayerPos(x, y);
-	}
 	for (int i = 0; i < _vEnemies.size(); ++i)
 		_vEnemies[i]->setPlayerPos(x, y);
 
-	_boss->setPlayerPos(x, y);
+	//_boss->setPlayerPos(x, y);
 }

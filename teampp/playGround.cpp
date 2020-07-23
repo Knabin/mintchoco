@@ -48,12 +48,12 @@ HRESULT playGround::init()
 	_enemyManager->setStageManagerMemoryAddressLink(_stageManager);
 	_uiManager->setStageManagerMemoryAddressLink(_stageManager);
 
+	//_enemyManager->setBossMove();
 
-	//_enemyManager->setEnemyCheerMove();
-	//_enemyManager->setEnemySchoolBoyMove();
-	//_enemyManager->setEnemySchoolGirlMove();
-
-	_enemyManager->setBossMove();
+	{
+		IMAGEMANAGER->addImage("stage2 pillar", "images/stage/stage02_pillar.bmp", 195, 843, true, RGB(255, 0, 255));
+		IMAGEMANAGER->addImage("stage3 pillar", "images/stage/stage03_pillar.bmp", 195, 843, true, RGB(255, 0, 255));
+	}
 
 	// ==========================================
 	// ## 카메라 중점 초기화 ##
@@ -78,7 +78,7 @@ void playGround::update()
 {
 	gameNode::update();
 
-	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == false )
+	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == false)
 	{
 		_scene->PointerMove();
 	}
@@ -92,8 +92,8 @@ void playGround::update()
 	{
 		_scene->LoadingCountPlus();
 		_scene->GameStart();
-		
 	}
+
 
 	if (_scene->getGameStart() == true && _scene->getSaveLoading() == false && _scene->getLoading() == false)
 	{
@@ -127,12 +127,27 @@ void playGround::update()
 			temp.push_back(to_string(_stageManager->getNowStage()));
 			TXTDATA->txtSave("data/player.data", temp);
 		}
-		if (KEYMANAGER->isOnceKeyDown('5'))
+		if (KEYMANAGER->isOnceKeyDown(VK_F1))
 		{
-			cout << TXTDATA->txtLoad("data/player.data")[0] << endl;
-			cout << TXTDATA->txtLoad("data/player.data")[1] << endl;
-			cout << TXTDATA->txtLoad("data/player.data")[2] << endl;
+			_stageManager->Stage1Move();
 		}
+		if (KEYMANAGER->isOnceKeyDown(VK_F2))
+		{
+			_stageManager->Stage2Move();
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_F3))
+		{
+			_stageManager->Stage3Move();
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_F4))
+		{
+			_stageManager->Stage4Move();
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_F5))
+		{
+			_stageManager->BossStageMove();
+		}
+
 		// ==========================================
 		// ## 카메라 중점 초기화 ##
 		// ==========================================
@@ -152,7 +167,8 @@ void playGround::render()
 	}
 	if (_scene->getGameStart() == false && _scene->getSaveLoading() == true && _scene->getLoading() == false)
 	{
-		_scene->SaveLoadingBackGroundDraw(getHDC());
+		_scene->SaveLoadingBackGroundDraw(getMemDC());
+		_backBuffer->render(getHDC());
 	}
 
 	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == true)
@@ -164,12 +180,9 @@ void playGround::render()
 	{
 		//==========================================================================================================================//
 
-
 		PatBlt(CAMERA->getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
 		PatBlt(getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
 		//=================================================
-
-
 
 		_stageManager->render();
 
@@ -181,21 +194,15 @@ void playGround::render()
 
 		ZORDER->render();
 
-		SetBkMode(getMemDC(), TRANSPARENT);
-		char str[1024];
-		HFONT font, oldFont;
-		RECT rcText = RectMake(WINSIZEX / 2, WINSIZEY / 2, 800, 800);
-		font = CreateFont(40, 0, 100, 0, 400, false, false, false,
-			DEFAULT_CHARSET,
-			OUT_STRING_PRECIS,
-			CLIP_DEFAULT_PRECIS,
-			PROOF_QUALITY,
-			DEFAULT_PITCH | FF_SWISS,
-			TEXT("굴림체"));
-
-		oldFont = (HFONT)SelectObject(getMemDC(), font);
-		DrawText(getMemDC(), TEXT("으아아아아"), strlen("으아아아아"), &rcText,
-			DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
+		// 기둥 render
+		if (_stageManager->getNowStage() == 1)
+		{
+			IMAGEMANAGER->findImage("stage2 pillar")->alphaRender(getMemDC(), 1707, 0, 170);
+		}
+		else if (_stageManager->getNowStage() == 2)
+		{
+			IMAGEMANAGER->findImage("stage3 pillar")->alphaRender(getMemDC(), 498, 0, 170);
+		}
 
 		//=============================================
 		_backBuffer->render(CAMERA->getMemDC(), 0, CAMERA->getBlackSize() * 0.5,
@@ -203,5 +210,6 @@ void playGround::render()
 			CAMERA->getViewWidth(), CAMERA->getViewHeight());
 		_uiManager->render(CAMERA->getMemDC());
 		CAMERA->render(getHDC());
+
 	}
 }

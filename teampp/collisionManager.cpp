@@ -73,7 +73,6 @@ void collisionManager::stagedoor_collision() //스테이지 이동
 		//4스테이지 -> boss스테이지
 		if (isCollision(_stageManager->getVStage4()->getRect(), _player->getPlayerRect()) && _stageManager->getNowstage4() == true)
 		{
-
 			_stageManager->BossStageMove();
 			_player->playerPosition_4atBoss();
 		}
@@ -82,6 +81,12 @@ void collisionManager::stagedoor_collision() //스테이지 이동
 		{
 			_stageManager->Stage3Move();
 			_player->playerPosition_4at3();
+		}
+		//boss스테이지 -> 4스테이지
+		if (isCollision(_stageManager->getVBossStage()->getRect(), _player->getPlayerRect()) && _stageManager->getNowbossStage() == true)
+		{
+			_stageManager->Stage4Move();
+			_player->playerPosition_Bossat4();
 		}
 
 
@@ -124,6 +129,11 @@ void collisionManager::stagedoor_collision_image()	//스테이지 이동 이미지 변경
 	if (isCollision(_stageManager->getVStage4()->getRect2(), _player->getPlayerRect()) && _stageManager->getNowstage4() == true)
 	{
 		_stageManager->Stage4_Stage3_Ok();
+	}
+	//보스스테이지 -> 4스테이지
+	if (isCollision(_stageManager->getVBossStage()->getRect(), _player->getPlayerRect()) && _stageManager->getNowbossStage() == true)
+	{
+		_stageManager->BossStage_Stage4_Ok();
 	}
 
 }
@@ -170,5 +180,10 @@ void collisionManager::npcCollision()
 
 void collisionManager::player_collision()//플레이어랑 적 공격이랑 충돌시
 {
-	
+	vector<enemy*> ve = _enemyManager->getEnemiesVector();
+	//if (isCollision(_player->getPlayerRect(), _enemyManager->get))
+	//{
+	//
+	//}
 }
+

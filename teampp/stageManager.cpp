@@ -13,6 +13,21 @@ stageManager::~stageManager()
 
 HRESULT stageManager::init()
 {
+	//배틀스타트 백그라운드 선언
+
+	_BattleStart._BattleStartImage = IMAGEMANAGER->addFrameImage("BattleStartScene", "images/ui/fight_start.bmp", 20480, 333, 16, 1, true, RGB(255, 0, 255));
+
+	_BattleStart._currentFrameX = 0;
+	_BattleStart._currentFrameY = 0;
+	_BattleStart._FrameCount = 0;
+
+	_BattleStart._BattleStartImage->setFrameX(0);
+	_BattleStart._BattleStartImage->setFrameY(0);
+
+	_PlayBattleStart = true;
+
+	//-----------------------------------------------------------------------------------------------------------------------------//
+
 	_Stage1 = new stage01;
 	_Stage1->init();
 
@@ -62,7 +77,7 @@ void stageManager::release()
 }
 
 void stageManager::update()
-{
+{	
 	_spawnCount++;
 
 	// 너무 빠르거나 느리면 숫자 수정해 주세요
@@ -76,13 +91,26 @@ void stageManager::update()
 	for (int i = 0; i < _vNpcs.size(); ++i)
 		_vNpcs[i]->update();
 
+
+	if (_PlayBattleStart == true)
+	{
+		PlayBattleStartFrame();
+	}
+
 }
 
 void stageManager::render()
 {
 	NowStage();
+
 	for (int i = 0; i < _vNpcs.size(); ++i)
 		_vNpcs[i]->render();
+
+	if (_PlayBattleStart == true)
+	{
+		PlayBattleStartBackGroundDraw();
+	}
+
 }
 
 void stageManager::NowStage()
@@ -188,6 +216,9 @@ void stageManager::Stage4Move()
 	CAMERA->setBackHeight(_currentPixelCollision->getHeight());
 	
 	_vNpcs = _Stage4->getNPCs();
+	_em->setEnemiesVector(_NowStage);
+
+	_spawnCount = 0;
 }
 
 void stageManager::BossStageMove()
@@ -201,6 +232,8 @@ void stageManager::BossStageMove()
 	_currentPixelCollision = _BossStage->getPixel();
 	CAMERA->setBackWidth(_currentPixelCollision->getWidth());
 	CAMERA->setBackHeight(_currentPixelCollision->getHeight());
+
+	_em->setEnemiesVector(_NowStage);
 }
 
 void stageManager::Stage1_Stage2_Ok()
@@ -236,4 +269,32 @@ void stageManager::Stage4_BossStage_Ok()
 void stageManager::Stage4_Stage3_Ok()
 {
 	_Stage4->Stage4LeftDoorOpenDraw();
+}
+
+void stageManager::BossStage_Stage4_Ok()
+{
+	_BossStage->BossStageLeftDoorOpenDraw();
+}
+
+void stageManager::PlayBattleStartFrame()
+{
+	_BattleStart._FrameCount++;
+
+	IMAGEMANAGER->findImage("BattleStartScene")->setFrameY(0);
+
+	if (_BattleStart._FrameCount % 5 == 0)
+	{
+		IMAGEMANAGER->findImage("BattleStartScene")->setFrameX(_BattleStart._currentFrameX);
+		_BattleStart._currentFrameX++;
+		_BattleStart._FrameCount = 0;
+	}
+	if (_BattleStart._currentFrameX > IMAGEMANAGER->findImage("BattleStartScene")->getMaxFrameX())
+	{
+		_PlayBattleStart = false;
+	}
+}
+
+void stageManager::PlayBattleStartBackGroundDraw()
+{
+	IMAGEMANAGER->findImage("BattleStartScene")->frameRender(getMemDC(), 0, 0);
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "gameNode.h"
+#include "enemy.h"
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 using namespace std;
 
@@ -58,7 +59,7 @@ enum BOSSDIRECTION
 
 };
 
-class boss : public gameNode
+class boss : public enemy
 {
 private:
 
@@ -136,7 +137,7 @@ private:
 	int _count;			//프레임 카운트용
 	int _index;	
 
-	float _playerX, _playerY;	//플레이어 위치 값 변수
+	//float _playerX, _playerY;	//플레이어 위치 값 변수
 	float _angle;
 	float _distance;
 
@@ -152,8 +153,6 @@ public:
 	virtual void release();
 	virtual void update();
 	virtual void render();
-
-	void setPlayerPos(float x, float y);
 
 };
 

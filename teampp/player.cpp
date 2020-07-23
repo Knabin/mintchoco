@@ -1220,3 +1220,10 @@ void player::playerPosition_4at3()
 	_z = WINSIZEY / 2 + 300;
 	CAMERA->setPosition(_x, _z);
 }
+
+void player::playerPosition_Bossat4()
+{
+	_x = WINSIZEX + 500;
+	_z = WINSIZEY / 2 + 300;
+	CAMERA->setPosition(_x, _z);
+}
