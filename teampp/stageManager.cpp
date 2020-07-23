@@ -271,6 +271,11 @@ void stageManager::Stage4_Stage3_Ok()
 	_Stage4->Stage4LeftDoorOpenDraw();
 }
 
+void stageManager::BossStage_Stage4_Ok()
+{
+	_BossStage->BossStageLeftDoorOpenDraw();
+}
+
 void stageManager::PlayBattleStartFrame()
 {
 	_BattleStart._FrameCount++;

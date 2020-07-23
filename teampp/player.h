@@ -196,5 +196,6 @@ public:
 	void playerPosition_3at4();
 	void playerPosition_4atBoss();
 	void playerPosition_4at3();
+	void playerPosition_Bossat4();
 };
 

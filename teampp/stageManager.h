@@ -87,6 +87,7 @@ public:
 	void Stage3_Stage2_Ok();
 	void Stage4_BossStage_Ok();
 	void Stage4_Stage3_Ok();
+	void BossStage_Stage4_Ok();
 
 
 	//스테이지 상태 bool값 접근자
@@ -102,6 +103,7 @@ public:
 	stage02* getVStage2() { return _Stage2; }
 	stage03* getVStage3() { return _Stage3; }
 	stage04* getVStage4() { return _Stage4; }
+	bossStage* getVBossStage() { return _BossStage; }
 
 	image* getPixelImage() { return _currentPixelCollision; } //픽셀이미지 겟
 

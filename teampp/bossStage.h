@@ -3,7 +3,7 @@
 
 struct tagBossStage
 {
-	image* _STageImage;
+	image* _StageImage;
 	MYRECT _rc;
 	float _x, _y;
 
@@ -16,6 +16,8 @@ private:
 
 	tagBossStage _BossStagePixelBackGround;
 	tagBossStage _BossStageBackGround;
+	tagBossStage _BossStageLeftDoor;
+	tagBossStage _BossStageLeftDoorOpen;
 
 public:
 
@@ -27,7 +29,11 @@ public:
 	void update();
 	void render();
 
+	void BossStageLeftDoorOpenDraw();
+
 	image* getPixel() { return _BossStagePixelBackGround._pixelCollision; }
+
+	inline MYRECT getRect() { return _BossStageLeftDoor._rc; }
 
 };
 
