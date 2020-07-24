@@ -61,6 +61,11 @@ void zOrder::render()
 
 	for (int i = 0; i < _vObject.size(); ++i)
 	{
+		if (_vObject[i].type == 3)
+		{
+			_vObject[i].image->alphaRender(_vObject[i].hdc, _vObject[i].x - _vObject[i].image->getWidth() / 2, _vObject[i].z - _vObject[i].image->getHeight() - _vObject[i].jumpPower, 100);
+			continue;
+		}
 		if (_vObject[i].ani != nullptr)
 		{
 			// ¾Ö´Ï ·»´õ
@@ -181,6 +186,22 @@ void zOrder::pushObject(HDC hdc, const char * imageName, animation * ani, int ty
 
 	_vObject.push_back(obj);
 }
+
+void zOrder::pushShadowObject(HDC hdc, image * img, int type, float x, float jumpPower, float z)
+{
+	tagObject obj;
+	obj.image = img;
+	obj.hdc = hdc;
+	obj.type = type;
+	obj.x = x;
+	obj.jumpPower = jumpPower;
+	obj.z = z;
+
+	_vObject.push_back(obj);
+}
+
+
+
 
 void zOrder::sortVector(int start, int end)
 {

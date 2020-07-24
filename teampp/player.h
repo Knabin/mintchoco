@@ -104,7 +104,6 @@ private:
 	image* _playerImage;
 	float _yPlayerY;
 
-
 public:
 	player();
 	~player();

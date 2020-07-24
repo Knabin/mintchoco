@@ -226,7 +226,13 @@ void player::render()
 	_comboAttackRc1.render(getMemDC());//1단계 콤보공격 렉트
 	_comboAttackRc2.render(getMemDC());//2단계 콤보공격 렉트
 
-	_shadow->alphaRender(getMemDC(), _rc.left - 20, _z - 25, 100);//그림자
+	if (!_pixelCollision)
+		ZORDER->pushShadowObject(getMemDC(), _shadow, 3, _rc.getCenterX(), 0, _z + 15);
+	else if (_pixelCollision)
+	{
+		ZORDER->pushShadowObject(getMemDC(), _shadow, 3, _rc.getCenterX(), _z - _yPlayerY, _z + 15);
+	}
+	
 
 	if (_ultimate)
 	{
@@ -312,7 +318,7 @@ void player::render()
 	ZORDER->pushObject(getMemDC(), _playerImage, _playerImage->getFrameX(), _playerImage->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _z);
 	else
 	{
-		ZORDER->pushObject(getMemDC(), _playerImage, _playerImage->getFrameX(), _playerImage->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower(), _yPlayerY);
+		ZORDER->pushObject(getMemDC(), _playerImage, _playerImage->getFrameX(), _playerImage->getFrameY(), 0, _rc.getCenterX(), _jump->getJumpPower() + _z -_yPlayerY, _z);
 	}
 
 
@@ -371,8 +377,8 @@ void player::pixelCollision(string stageName)
 		_pixelCollision = false;
 	}
 
-
-	if (!_pixelCollision && !_jumping)
+	
+	if (!_pixelCollision)
 	{
 		for (int i = _rc.right - 100 + 3; i > _rc.right - 100 - 3; i--)
 		{
@@ -384,7 +390,7 @@ void player::pixelCollision(string stageName)
 
 			//cout << r << ", " << g << ", " << b << endl;
 
-			if ((r == 255 && g == 0 && b == 0))
+			if ((r == 255 && g == 0 && b == 0) || (!_jumping && (r == 0 && g == 255 && b == 0)))
 			{
 				_x = i + 103 - (_rc.getWidth() / 2);
 				break;
@@ -399,7 +405,7 @@ void player::pixelCollision(string stageName)
 			int g = GetGValue(color);
 			int b = GetBValue(color);
 
-			if ((r == 255 && g == 0 && b == 0))
+			if ((r == 255 && g == 0 && b == 0) || (!_jumping && (r == 0 && g == 255 && b == 0)))
 			{
 				_x = i - 103 + (_rc.getWidth() / 2);
 				break;
@@ -414,7 +420,7 @@ void player::pixelCollision(string stageName)
 			int g = GetGValue(color);
 			int b = GetBValue(color);
 
-			if ((r == 255 && g == 0 && b == 0))
+			if ((r == 255 && g == 0 && b == 0) || (!_jumping && (r == 0 && g == 255 && b == 0)))
 			{
 				_z = i + 30;
 				break;
@@ -436,7 +442,7 @@ void player::pixelCollision(string stageName)
 			}
 		}
 
-		for (int i = _z + 10 - 3; i < _z + 10 + 3; i++)
+		for (int i = _z -40 - 3; i < _z -40 + 3; i++)
 		{
 			COLORREF color = GetPixel(IMAGEMANAGER->findImage(stageName)->getMemDC(), _x, i);
 
@@ -444,14 +450,59 @@ void player::pixelCollision(string stageName)
 			int g = GetGValue(color);
 			int b = GetBValue(color);
 
-			if ((r == 255 && g == 255 && b == 0))
+			if ((r == 255 && g == 255 && b == 0) && !_jumping)
 			{
-				_z = i - 10;
+				_z = i +40;
 				break;
 			}
 		}
 
+		for (int i = _rc.right + 3; i > _rc.right - 3; i--)
+		{
+			COLORREF color = GetPixel(IMAGEMANAGER->findImage(stageName)->getMemDC(), i, _z-30);
 
+			int r = GetRValue(color);
+			int g = GetGValue(color);
+			int b = GetBValue(color);
+
+		
+
+			if ((r == 0 && g == 0 && b == 255) && !_jumping)
+			{
+				if (_playerDirection == PLAYERDIRECTION_RIGHT_WALK)
+				_x = i - 6- (_rc.getWidth() / 2);
+				else
+				{
+					_x = i - 9 - (_rc.getWidth() / 2);
+				}
+				break;
+			}
+		}
+
+		
+
+		for (int i = _rc.left  - 3; i < _rc.left  + 3; i++)
+		{
+			COLORREF color = GetPixel(IMAGEMANAGER->findImage(stageName)->getMemDC(), i, _z-30);
+
+			int r = GetRValue(color);
+			int g = GetGValue(color);
+			int b = GetBValue(color);
+
+			
+
+			if ((r == 0 && g == 0 && b == 255) && !_jumping)
+			{
+				
+				if (_playerDirection == PLAYERDIRECTION_LEFT_WALK)
+					_x = i + 6 + (_rc.getWidth() / 2);
+				else
+				{
+					_x = i + 9 + (_rc.getWidth() / 2);
+				}
+				break;
+			}
+		}
 	}
 
 	
@@ -472,9 +523,9 @@ void player::pixelCollision(string stageName)
 				_jumping = false;
 				_jump->setJumpPower(0);
 
-				_rc.setCenterPos(_x, i + 4);
+				_rc.setCenterPos(_x, i + 10);
 
-				_yPlayerY = i + 4;
+				_yPlayerY = i +10;
 				if (_playerDirection == PLAYERDIRECTION_LEFT_JUMP)
 				{
 					_playerDirection = PLAYERDIRECTION_LEFT_STOP;
@@ -504,7 +555,7 @@ void player::pixelCollision(string stageName)
 				int g = GetGValue(color);
 				int b = GetBValue(color);
 
-				if ((r == 255 && g == 0 && b == 255) || (r == 255 && g == 0 && b == 0))
+				if ((r == 255 && g == 0 && b == 255) || (r == 255 && g == 0 && b == 0) || (r == 0 && g == 255 && b == 0))
 				{
 					if (_playerDirection == PLAYERDIRECTION_LEFT_WALK || _playerDirection == PLAYERDIRECTION_LEFT_MOVE)
 					{
@@ -515,8 +566,11 @@ void player::pixelCollision(string stageName)
 						_playerDirection = PLAYERDIRECTION_RIGHT_JUMP;
 					}
 
+					
 					_jump->jumping(&_x, &_z, 180, 10);
 					_jumping = true;
+				
+					_z = _yPlayerY + 100;
 					_pixelCollision = false;
 
 					break;
@@ -558,7 +612,7 @@ void player::pixelCollision(string stageName)
 					int g = GetGValue(color);
 					int b = GetBValue(color);
 
-					if ((r == 255 && g == 0 && b == 0))
+					if ((r == 255 && g == 0 && b == 0) || (r == 0 && g == 255 && b == 0))
 					{
 						if (_playerDirection == PLAYERDIRECTION_LEFT_WALK || _playerDirection == PLAYERDIRECTION_LEFT_MOVE)
 						{
@@ -579,6 +633,8 @@ void player::pixelCollision(string stageName)
 						break;
 					}
 				}
+
+
 			}
 
 
@@ -596,7 +652,7 @@ void player::pixelCollision(string stageName)
 					int g = GetGValue(color);
 					int b = GetBValue(color);
 
-					if ((r == 255 && g == 0 && b == 0))
+					if ((r == 255 && g == 0 && b == 0) || (r == 0 && g == 255 && b == 0))
 					{
 						if (_playerDirection == PLAYERDIRECTION_LEFT_WALK || _playerDirection == PLAYERDIRECTION_LEFT_MOVE)
 						{
@@ -644,7 +700,7 @@ void player::pixelCollision(string stageName)
 				int g = GetGValue(color);
 				int b = GetBValue(color);
 
-				if ((r == 255 && g == 0 && b == 0))
+				if ((r == 0 && g == 255 && b == 0))
 				{
 					_yPlayerY = i + 18;
 					break;
@@ -674,6 +730,29 @@ void player::pixelCollision(string stageName)
 	if (_pixelCollision)
 	{
 		_rc.setCenterPos(_x, _yPlayerY - _rc.getHeight() / 2 - _jump->getJumpPower());
+	}
+
+	if (_pixelCollision && !_jumping)
+	{
+
+		for (int i = _z - 3; i < _z + 3; i++)
+		{
+			COLORREF color = GetPixel(IMAGEMANAGER->findImage(stageName)->getMemDC(), _x, i);
+
+			int r = GetRValue(color);
+			int g = GetGValue(color);
+			int b = GetBValue(color);
+
+
+
+			if (!(r == 255 && g == 0 && b == 255))
+			{
+				//cout << r << ", " << g << ", " << b << endl;
+				_z = i + 5;
+				break;
+			}
+		}
+
 	}
 	
 	

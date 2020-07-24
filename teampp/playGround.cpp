@@ -250,6 +250,9 @@ void playGround::render()
 
 
 		_stageManager->render();
+		
+		//IMAGEMANAGER->findImage("stage1_pixel")->render(getMemDC());
+
 		_player->render();
 		_collisionManager->render();
 		_enemyManager->render();
@@ -257,6 +260,7 @@ void playGround::render()
 		_scene->render();
 
 		ZORDER->render();
+
 
 		// 기둥 render
 		if (_stageManager->getNowStage() == 1)
