@@ -435,6 +435,23 @@ void player::pixelCollision(string stageName)
 				break;
 			}
 		}
+
+		for (int i = _z + 10 - 3; i < _z + 10 + 3; i++)
+		{
+			COLORREF color = GetPixel(IMAGEMANAGER->findImage(stageName)->getMemDC(), _x, i);
+
+			int r = GetRValue(color);
+			int g = GetGValue(color);
+			int b = GetBValue(color);
+
+			if ((r == 255 && g == 255 && b == 0))
+			{
+				_z = i - 10;
+				break;
+			}
+		}
+
+
 	}
 
 	
