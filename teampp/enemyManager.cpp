@@ -111,7 +111,7 @@ void enemyManager::render()
 void enemyManager::setBossMove()	//보스 무브 추가
 {
 	_boss = new boss;
-	_boss->init("BOOSIDLE", WINSIZEX / 2, WINSIZEY / 2, 0.0f);
+	_boss->init("BOOSIDLE", WINSIZEX, WINSIZEY, 0.0f);
 }
 
 void enemyManager::setEnemiesVector(int stageNum)
@@ -184,7 +184,7 @@ void enemyManager::setEnemiesVector(int stageNum)
 		break;
 	case 4:
 		// 보스 스테이지
-		_vEnemies.push_back(createEnemy(3, WINSIZEX / 2, WINSIZEY / 2));
+		_vEnemies.push_back(createEnemy(3, WINSIZEX, WINSIZEY));
 		break;
 	}
 
@@ -221,7 +221,7 @@ enemy* enemyManager::createEnemy(int enemyType, float x, float y)
 	case 3:			// 보스
 	{
 		enemy* em = new boss;
-		em->init("BOOSIDLE", WINSIZEX / 2, WINSIZEY / 2, 0.0f);
+		em->init("BOSSIDLE", WINSIZEX / 2, WINSIZEY / 2, 0.0f);
 		return em;
 	}
 		break;

@@ -8,7 +8,7 @@ enum BOSSDIRECTION
 {
 	BOSS_RIGHT_IDLE,
 	BOSS_LEFT_IDLE,
-	
+
 	BOSS_RIGHT_WALK,
 	BOSS_LEFT_WALK,
 
@@ -55,8 +55,10 @@ enum BOSSDIRECTION
 	BOSS_LEFT_METEOR_J,
 
 	BOSS_RIGHT_METEOR_A,
-	BOSS_LEFT_METEOR_A
+	BOSS_LEFT_METEOR_A,
 
+	BOSS_RIGHT_WUPUNCH,
+	BOSS_LEFT_WUPUNCH
 };
 
 class boss : public enemy
@@ -81,6 +83,7 @@ private:
 	image* _bossMeteor_m;
 	image* _bossMeteor_j;
 	image* _bossMeteor_a;
+	image* _bossWupunch;
 
 	BOSSDIRECTION _bossDirection;
 
@@ -119,29 +122,38 @@ private:
 	animation* _boss_L_METEOR_J;
 	animation* _boss_R_METEOR_A;
 	animation* _boss_L_METEOR_A;
+	animation* _boss_R_WUPUNCH;
+	animation* _boss_L_WUPUNCH;
 
 
 
 	MYRECT _rc; //보스용 렉트
 	MYRECT _rcA; //공격 범위용 렉트
 
-	float _x, _y; //보스 좌표용
+	float _x, _y, _z; //보스 좌표용
 	float _speed; //보스 이동속도
 
 	string _imageName; // 보스이미지받기
 
-	
+	int _end;
 	bool _isAttack;		//공격실행했는지 체크
 	int _attackCount;	//공격카운트
 	int _attackTime;	//공격시간
 	int _count;			//프레임 카운트용
-	int _index;	
+	int _index;
+	int _loopCount;		//공격 루프 카운트
 
-	//float _playerX, _playerY;	//플레이어 위치 값 변수
 	float _angle;
 	float _distance;
 
-	int _random;
+	float _jumpPower;
+	float _gravity;
+	bool _isJumping;
+
+	int _random;	//근거리용
+	int _random1;	//원거리용
+
+	float _ys;		//보스 점프시 위치 저장용
 
 public:
 
@@ -149,7 +161,7 @@ public:
 	~boss();
 
 
-	virtual HRESULT init(string imageName, float x, float y, float speed);
+	virtual HRESULT init(string imageName, float x, float z, float speed);
 	virtual void release();
 	virtual void update();
 	virtual void render();
