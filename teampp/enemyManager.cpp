@@ -91,8 +91,8 @@ void enemyManager::update()
 		_vEnemies[i]->update();
 		if (_vEnemies[i]->getHP() <= 0 && _vEnemies[i]->getEnemyDead())
 		{
-			_vEnemies.erase(_vEnemies.begin() + i);
 			_vEnemies[i]->setEnemyDead(false);
+			_vEnemies.erase(_vEnemies.begin() + i);
 		}
 	}
 	
@@ -102,8 +102,11 @@ void enemyManager::update()
 void enemyManager::render()
 {
 	for (int i = 0; i < _vEnemies.size(); ++i)
+	{
 		_vEnemies[i]->render();
-
+		//_vEnemies[i]->getEnemyRect().render(getMemDC());
+		RectangleMakeCenter(getMemDC(), _vEnemies[i]->getEnemyRect().getCenterX(), _vEnemies[i]->getEnemyRect().bottom, 10, 10);
+	}
 	//_boss->render();	// 보스 이미지 띄우기
 }
 

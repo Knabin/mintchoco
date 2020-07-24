@@ -128,6 +128,7 @@ HRESULT player::init()
 
 	_yPlayerY = 0;
 	_playerImage = _idleImage;
+	_hp = 26;
 
 	{
 		SOUNDMANAGER->addSound("attack1", "sounds/effect/player_punch_01.wav", false, false);
@@ -174,7 +175,7 @@ void player::update()
 
 	frameDraw();//프레임 관리
 
-	//cout << _z << endl;
+	cout << _hp << endl;
 
 	if (_jumping && !_pixelCollision)
 	{
@@ -1484,14 +1485,14 @@ void player::frameDraw()
 		if (_count % 5 == 0)
 		{
 			_comboAttackImage3->setFrameX(_comboAttackImage3->getFrameX() - 1);
-			_attackRc.set(0, 0, 100, 50);
-			_attackRc.setCenterPos(_rc.left, _rc.getCenterY());
+			_comboAttackRc3.set(0, 0, 100, 50);
+			_comboAttackRc3.setCenterPos(_rc.left, _rc.getCenterY());
 			if (_comboAttackImage3->getFrameX() <= 0)
 			{
 				_comboAttackImage3->setFrameX(_comboAttackImage3->getMaxFrameX());
 				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
 				_attack = false;
-				_attackRc.set(0, 0, 0, 0);
+				_comboAttackRc3.set(0, 0, 0, 0);
 				_comboAttack = false;//2단콤보 실행조건 펄스
 				_comboAttack2 = false;//3단콤보 실행조건 펄스
 			}
@@ -1506,14 +1507,14 @@ void player::frameDraw()
 		if (_count % 5 == 0)
 		{
 			_comboAttackImage3->setFrameX(_comboAttackImage3->getFrameX() + 1);
-			_attackRc.set(0, 0, 100, 50);
-			_attackRc.setCenterPos(_rc.right, _rc.getCenterY());
+			_comboAttackRc3.set(0, 0, 100, 50);
+			_comboAttackRc3.setCenterPos(_rc.right, _rc.getCenterY());
 			if (_comboAttackImage3->getFrameX() >= _comboAttackImage3->getMaxFrameX())
 			{
 				_comboAttackImage3->setFrameX(0);
 				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
 				_attack = false;
-				_attackRc.set(0, 0, 0, 0);
+				_comboAttackRc3.set(0, 0, 0, 0);
 				_comboAttack = false;//2단콤보 실행조건 펄스
 				_comboAttack2 = false;//3단콤보 실행조건 펄스
 			}

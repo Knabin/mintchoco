@@ -77,6 +77,7 @@ private:
 	MYRECT _attackRc;//공격용으로 사용할 렉트
 	MYRECT _comboAttackRc1;//1단계 콤보공격 렉트
 	MYRECT _comboAttackRc2;//2단계 콤보공격 렉트
+	MYRECT _comboAttackRc3;//2단계 콤보공격 렉트
 
 	float _x, _z;//플레이어 중점좌표
 	float _walkSpeed;//걷는 스피드
@@ -177,8 +178,9 @@ public:
 	void setHitPlayerHP(int hp) { _hp -= hp; }
 	void setPlusPlayerHP(int hp) { _hp += hp; }
 	void setPlayerAttackRectRemove(int a, int b, int c, int d) { _attackRc.set(0, 0, 0, 0); }
-	void setPlayerAttackRectRemove2(int a, int b, int c, int d) { _comboAttackRc1.set(0, 0, 0, 0); }
-	void setPlayerAttackRectRemove3(int a, int b, int c, int d) { _comboAttackRc2.set(0, 0, 0, 0); }
+	void setPlayerAttackRectRemove1(int a, int b, int c, int d) { _comboAttackRc1.set(0, 0, 0, 0); }
+	void setPlayerAttackRectRemove2(int a, int b, int c, int d) { _comboAttackRc2.set(0, 0, 0, 0); }
+	void setPlayerAttackRectRemove3(int a, int b, int c, int d) { _comboAttackRc3.set(0, 0, 0, 0); }
 	void setCoin(int coin) { _coin += coin; }//돈
 	PLAYERDIRECTION getPlayerdirection() { return _playerDirection; }
 	float getPlayerX() { return _x; }
@@ -188,6 +190,7 @@ public:
 	MYRECT getAttackRc() { return _attackRc; }
 	MYRECT getComboAttackRc1() { return _comboAttackRc1; }
 	MYRECT getComboAttackRc2() { return _comboAttackRc2; }
+	MYRECT getComboAttackRc3() { return _comboAttackRc3; }
 	bool getIsAttacking() { 
 		switch (_playerDirection)
 		{
