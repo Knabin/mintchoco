@@ -38,7 +38,7 @@ HRESULT playGround::init()
 	_scene = new scene;
 	_scene->init();
 
-
+	_stageManager->setPlayerMemoryAddressLink(_player);
 	_collisionManager->setPlayerMemoryAddressLink(_player);
 	_collisionManager->setEnemyManagerMemoryAddressLink(_enemyManager);
 	_collisionManager->setStageManagerMemoryAddressLink(_stageManager);
