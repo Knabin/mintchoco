@@ -32,8 +32,6 @@ private:
 
 	image* _enemyImg;
 
-	MYRECT _enemyRc;	//플레이어 공격이랑 충돌할 에너미 렉트
-
 	// === 운천 추가 === 
 	boss* _boss;
 	//=================
@@ -59,12 +57,12 @@ public:
 	void spawnEnemy(int stageNum);
 	// enemy를 만들어서 반환하는 함수 (enemyType(0: 치어리더, 1: 남학생, 2: 여학생), 중점 좌표X, 중점 좌표Y)
 	enemy* createEnemy(int enemyType, float x, float y);
+	// enemy를 만들어서 반환하는 함수 (enemyType(0: 치어리더, 1: 남학생, 2: 여학생), 중점 좌표X, 중점 좌표Y, 스테이지 번호)
+	enemy* createEnemy(int enemyType, float x, float y, int stageNum);
 
 	// 현재 스테이지에 있는 enemy들을 반환해 주는 함수
 	vector<enemy*>& getEnemiesVector() { return _vEnemies; }
 	void removeEnemy(int index);
-
-	MYRECT& getEnemyRc() { return _enemyRc; } //플레이어 공격이랑 충돌할 에너미 렉트
 
 	void setPlayerPos(float x, float y);
 

@@ -12,8 +12,6 @@ enemyManager::~enemyManager()
 
 HRESULT enemyManager::init()
 {
-	_enemyRc.set(0, 0, 100, 200);
-	_enemyRc.setCenterPos(WINSIZEX / 2, WINSIZEY / 2);
 
 	// 스테이지 1 spawn 포인트 초기화
 	{
@@ -91,6 +89,11 @@ void enemyManager::update()
 	for (int i = 0; i < _vEnemies.size(); ++i)
 	{
 		_vEnemies[i]->update();
+		if (_vEnemies[i]->getHP() <= 0 && _vEnemies[i]->getEnemyDead())
+		{
+			_vEnemies.erase(_vEnemies.begin() + i);
+			_vEnemies[i]->setEnemyDead(false);
+		}
 	}
 	
 	//_boss->update();  // 보스 업데이트
@@ -98,7 +101,6 @@ void enemyManager::update()
 
 void enemyManager::render()
 {
-	_enemyRc.render(getMemDC());
 	for (int i = 0; i < _vEnemies.size(); ++i)
 		_vEnemies[i]->render();
 
@@ -130,7 +132,7 @@ void enemyManager::setEnemiesVector(int stageNum)
 	case 0:
 		// 스테이지 1
 	{
-		float x[] = { 192, 1010, 1500, 1750 };
+		float x[] = { 800, 1010, 1500, 1750 };
 		float y[] = { 500, 300, 350, 500 };
 		for (int i = 0; i < 4; i++)
 		{
@@ -226,6 +228,46 @@ enemy* enemyManager::createEnemy(int enemyType, float x, float y)
 	}
 }
 
+enemy * enemyManager::createEnemy(int enemyType, float x, float y, int stageNum)
+{
+	switch (enemyType)
+	{
+	case 0:			// cheerleader
+	{
+		enemy* em = new cheerleader;
+		em->init("cheer_move", x, y, 2.3f);
+		em->setStageNum(stageNum);
+		return em;
+	}
+	break;
+	case 1:
+	default:		// school boy
+	{
+		enemy* em = new schoolboy;
+		em->init("schoolboy_move", x, y, 2.3f);
+		em->setStageNum(stageNum);
+		return em;
+	}
+	break;
+	case 2: 		// school girl
+	{
+		enemy* em = new schoolgirl;
+		em->init("schoolgirl_move", x, y, 2.3f);
+		em->setStageNum(stageNum);
+		return em;
+	}
+	break;
+	case 3:			// 보스
+	{
+		enemy* em = new boss;
+		em->init("BOOSIDLE", WINSIZEX / 2, WINSIZEY / 2, 0.0f);
+		em->setStageNum(stageNum);
+		return em;
+	}
+	break;
+	}
+}
+
 void enemyManager::spawnEnemy(int stageNum)
 {
 	if (stageNum > 3) return;
@@ -239,7 +281,7 @@ void enemyManager::spawnEnemy(int stageNum)
 	// 치어리더는 스테이지 1에서 등장하지 않는다고 하여 조건문 걸었음! 자유롭게 수정해 주세요
 	if (stageNum == 0) r2 = RND->getFromIntTo(1, 3);
 
-	_vEnemies.push_back(createEnemy(r2, temp[r].x, temp[r].y));
+	_vEnemies.push_back(createEnemy(r2, temp[r].x, temp[r].y, stageNum));
 }
 
 

@@ -16,6 +16,9 @@ private:
 	UiManager* _uiManager;
 
 	int _count;
+	int _enemyCollisionCount;
+	int _enemyCollisionCount2;
+	int _enemyCollisionCount3;
 
 public:
 	collisionManager() {}
