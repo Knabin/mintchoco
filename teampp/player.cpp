@@ -175,7 +175,7 @@ void player::update()
 
 	frameDraw();//프레임 관리
 
-	cout << _hp << endl;
+	//cout << _hp << endl;
 
 	if (_jumping && !_pixelCollision)
 	{
