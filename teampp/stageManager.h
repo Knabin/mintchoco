@@ -53,6 +53,10 @@ private:
 
 	// 스테이지에 일정 시간마다 enemy를 spawn하기 위한 int 값
 	int _spawnCount;
+	float _bossIntroX;
+
+	// 보스 스테이지에서 동영상 재생을 위한 bool값
+	bool _canPlayVideo;
 
 	class enemyManager* _em;
 
@@ -114,5 +118,19 @@ public:
 	void PlayBattleStartFrame();		     //배틀 스타트 프레임을 재생시켜라
 	void PlayBattleStartBackGroundDraw();    //배틀 스타트를 그려라
 
+	bool getCanPlayVideo() { return _canPlayVideo; }
+	void setCanPlayVideo(bool b) { _canPlayVideo = b; if (!b) _BossStage->setIsBroken(b); }
+
+	bool checkBossStageX (float x) 
+	{
+		if (_canPlayVideo == true) return false;
+		if (_NowBossStage && x >= _bossIntroX) 
+		{
+			setCanPlayVideo(true);
+			_BossStage->setIsBroken(true);
+			return true;
+		}
+		return false;
+	}
 };
 

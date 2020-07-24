@@ -204,6 +204,7 @@ void UiManager::MiniMapMove()
 		_MiniMap._MiniMapState = CLOSESTOP;
 	}
 
+	//cout << _saveRc.left << ", " << _ptMouse.x << "    " << _saveRc.top << ", " << _ptMouse.y << endl;
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_saveRc, _ptMouse))
 	{
 		dataManager::getInstance()->saveData(26, 10, _stageManager->getNowStage());

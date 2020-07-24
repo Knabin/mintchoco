@@ -68,6 +68,10 @@ HRESULT playGround::init()
 		SOUNDMANAGER->playBGM("bgm title");
 	}
 
+	LogoVideo = MCIWndCreate(_hWnd, _hInstance, MCIWNDF_NOTIFYANSI | MCIWNDF_NOMENU | MCIWNDF_NOTIFYALL | MCIWNDF_NOPLAYBAR, movie);
+
+	_playVideo = 0;
+
 	// ==========================================
 	// ## 카메라 중점 초기화 ##
 	// ==========================================
@@ -94,119 +98,141 @@ void playGround::update()
 {
 	gameNode::update();
 
-	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == false )
-	{
-		_scene->PointerMove();
-	}
+	cout << _ptMouse.x << ", " << _ptMouse.y << endl;
 
-	if (_scene->getGameStart() == false && _scene->getSaveLoading() == true && _scene->getLoading() == false)
+	if(_playVideo)
 	{
-		_scene->SaveLoadMove();
-	}
-
-	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == true)
-	{
-		_scene->LoadingCountPlus();
-		_scene->GameStart();
-		
-		if (_scene->getGameStart())
+		if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
 		{
-			dataManager::getInstance()->setSlot(_scene->getSaveLoadWindowState());
+			MCIWndClose(LogoVideo);
+			//MoveWindow(_hWnd, 0, 0, WINSIZEX, WINSIZEY, NULL);
+			_playVideo = false;
+		}
+	}
+	else
+	{
+		if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == false)
+		{
+			_scene->PointerMove();
+		}
 
-			vector<int> temp = dataManager::getInstance()->loadDataInteger();
-			if (temp.size() != 0)
+		if (_scene->getGameStart() == false && _scene->getSaveLoading() == true && _scene->getLoading() == false)
+		{
+			_scene->SaveLoadMove();
+		}
+
+		if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == true)
+		{
+			_scene->LoadingCountPlus();
+			_scene->GameStart();
+
+			if (_scene->getGameStart())
 			{
-				switch (temp[2])
+				dataManager::getInstance()->setSlot(_scene->getSaveLoadWindowState());
+
+				vector<int> temp = dataManager::getInstance()->loadDataInteger();
+				if (temp.size() != 0)
 				{
-				case 0:
-					_stageManager->Stage1Move();
-					_player->playerPosition_1();
-					break;
-				case 1:
-					_stageManager->Stage2Move();
-					_player->playerPosition_2at1();
-					break;
-				case 2:
-					_stageManager->Stage3Move();
-					_player->playerPosition_3at2();
-					break;
-				case 3:
-					_stageManager->Stage4Move();
-					_player->playerPosition_4at3();
-					break;
-				case 4:
-					_stageManager->BossStageMove();
-					_player->playerPosition_Bossat4();
-					break;
+					switch (temp[2])
+					{
+					case 0:
+						_stageManager->Stage1Move();
+						_player->playerPosition_1();
+						break;
+					case 1:
+						_stageManager->Stage2Move();
+						_player->playerPosition_2at1();
+						break;
+					case 2:
+						_stageManager->Stage3Move();
+						_player->playerPosition_3at2();
+						break;
+					case 3:
+						_stageManager->Stage4Move();
+						_player->playerPosition_4at3();
+						break;
+					case 4:
+						_stageManager->BossStageMove();
+						_player->playerPosition_Bossat4();
+						break;
+					}
 				}
 			}
 		}
-	}
 
-	if (_scene->getGameStart() == true && _scene->getSaveLoading() == false && _scene->getLoading() == false)
-	{
-		//==========================================================================================================================//
-		if (!_uiManager->isMiniMapOpen())
+		if (_scene->getGameStart() == true && _scene->getSaveLoading() == false && _scene->getLoading() == false)
 		{
-			_enemyManager->update();
-			_player->update();
-			_collisionManager->update();
-			_stageManager->update();
-		}
-		_uiManager->update();
-		if (_uiManager->getRestart())
-		{
-			this->release();
-			this->init();
-		}
+			//==========================================================================================================================//
+			if (!_uiManager->isMiniMapOpen())
+			{
+				_enemyManager->update();
+				_player->update();
+				_collisionManager->update();
+				_stageManager->update();
+				if (_stageManager->checkBossStageX(_player->getPlayerX()))
+				{
+					_playVideo = true;
+					MCIWndPlay(LogoVideo);
+					//MoveWindow(LogoVideo, 0, 0, WINSIZEX, WINSIZEY, NULL);
+				}
+			}
 
-		_enemyManager->setPlayerPos(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+			_uiManager->update();
 
-		if (KEYMANAGER->isOnceKeyDown('1'))
-		{
-			CAMERA->cameraFixed();
-		}
-		if (KEYMANAGER->isOnceKeyDown('2'))
-		{
-			CAMERA->cameraFixed(200, 200);
-		}
-		if (KEYMANAGER->isOnceKeyDown('3'))
-		{
-			CAMERA->setIsFixed(false);
-		}
-		if (KEYMANAGER->isOnceKeyDown('4'))
-		{
-			dataManager::getInstance()->saveData(100, 10, _stageManager->getNowStage());
-		}
-		if (KEYMANAGER->isOnceKeyDown(VK_F1))
-		{
-			_stageManager->Stage1Move();
-		}
-		if (KEYMANAGER->isOnceKeyDown(VK_F2))
-		{
-			_stageManager->Stage2Move();
-		}
-		if (KEYMANAGER->isOnceKeyDown(VK_F3))
-		{
-			_stageManager->Stage3Move();
-		}
-		if (KEYMANAGER->isOnceKeyDown(VK_F4))
-		{
-			_stageManager->Stage4Move();
-		}
-		if (KEYMANAGER->isOnceKeyDown(VK_F5))
-		{
-			_stageManager->BossStageMove();
-		}
+			if (_uiManager->getRestart())
+			{
+				this->release();
+				this->init();
+			}
 
-		// ==========================================
-		// ## 카메라 중점 초기화 ##
-		// ==========================================
-		CAMERA->shakeStart();
-		// 플레이어 센터나 테스트용 렉트(MYRECT) 만들어서 사용하세요
-		//CAMERA->setPosition(WINSIZEX/2, WINSIZEY/2);
-		// 따라오는 카메라
-		CAMERA->changePosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+			_enemyManager->setPlayerPos(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+
+			if (KEYMANAGER->isOnceKeyDown('1'))
+			{
+				CAMERA->cameraFixed();
+			}
+			if (KEYMANAGER->isOnceKeyDown('2'))
+			{
+				CAMERA->cameraFixed(200, 200);
+			}
+			if (KEYMANAGER->isOnceKeyDown('3'))
+			{
+				CAMERA->setIsFixed(false);
+			}
+			if (KEYMANAGER->isOnceKeyDown('4'))
+			{
+				dataManager::getInstance()->saveData(100, 10, _stageManager->getNowStage());
+			}
+			if (KEYMANAGER->isOnceKeyDown(VK_F1))
+			{
+				_stageManager->Stage1Move();
+			}
+			if (KEYMANAGER->isOnceKeyDown(VK_F2))
+			{
+				_stageManager->Stage2Move();
+			}
+			if (KEYMANAGER->isOnceKeyDown(VK_F3))
+			{
+				_stageManager->Stage3Move();
+			}
+			if (KEYMANAGER->isOnceKeyDown(VK_F4))
+			{
+				_stageManager->Stage4Move();
+			}
+			if (KEYMANAGER->isOnceKeyDown(VK_F5))
+			{
+				_stageManager->BossStageMove();
+			}
+
+			// ==========================================
+			// ## 카메라 중점 초기화 ##
+			// ==========================================
+			CAMERA->shakeStart();
+			// 플레이어 센터나 테스트용 렉트(MYRECT) 만들어서 사용하세요
+			//CAMERA->setPosition(WINSIZEX/2, WINSIZEY/2);
+			// 따라오는 카메라
+			CAMERA->changePosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+		}
 	}
 }
 
@@ -234,58 +260,72 @@ void playGround::render()
 		//else	일반 render
 	}
 
-	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == false)
+	if (_playVideo)
 	{
-		_scene->TitleBackGroundDraw(getHDC());
-	}
-
-	if (_scene->getGameStart() == false && _scene->getSaveLoading() == true && _scene->getLoading() == false)
-	{
-		_scene->SaveLoadingBackGroundDraw(getMemDC());
-		_backBuffer->render(getHDC());
-	}
-
-	if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == true)
-	{
-		_scene->LoadingBackGroundDraw(getMemDC());
-		_backBuffer->render(getHDC());
-	}
-
-	if (_scene->getGameStart() == true && _scene->getSaveLoading() == false && _scene->getLoading() == false)
-	{
-		//==========================================================================================================================//
-		PatBlt(CAMERA->getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
-		PatBlt(getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
-		//=================================================
-
-
-		_stageManager->render();
-		_player->render();
-		_collisionManager->render();
-		_enemyManager->render();
-		_itemManager->render();
-		_scene->render();
-
-		ZORDER->render();
-
-		// 기둥 render
-		if (_stageManager->getNowStage() == 1)
+		char lp[10];
+		long mode;
+		mode = MCIWndGetMode(LogoVideo, lp, sizeof(lp));
+		if (mode == 525)
 		{
-			IMAGEMANAGER->findImage("stage2 pillar")->alphaRender(getMemDC(), 1707, 0, 170);
+			MCIWndClose(LogoVideo);
+			//MoveWindow(_hWnd, 0, 0, WINSIZEX, WINSIZEY, NULL);
+			_playVideo = false;
 		}
-		else if (_stageManager->getNowStage() == 2)
+	}
+	else {
+		if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == false)
 		{
-			IMAGEMANAGER->findImage("stage3 pillar")->alphaRender(getMemDC(), 498, 0, 170);
+			_scene->TitleBackGroundDraw(getHDC());
 		}
 
-		if (_uiManager->isMiniMapOpen())
-			IMAGEMANAGER->findImage("ui back")->alphaRender(getMemDC(), CAMERA->getLeft(), CAMERA->getTop(), 150);
+		if (_scene->getGameStart() == false && _scene->getSaveLoading() == true && _scene->getLoading() == false)
+		{
+			_scene->SaveLoadingBackGroundDraw(getMemDC());
+			_backBuffer->render(getHDC());
+		}
 
-		//=============================================
-		_backBuffer->render(CAMERA->getMemDC(), 0, CAMERA->getBlackSize() * 0.5,
-			CAMERA->getLeft(), CAMERA->getTop() + CAMERA->getShakeNumber(),
-			CAMERA->getViewWidth(), CAMERA->getViewHeight());
-		_uiManager->render(CAMERA->getMemDC());
-		CAMERA->render(getHDC());
+		if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == true)
+		{
+			_scene->LoadingBackGroundDraw(getMemDC());
+			_backBuffer->render(getHDC());
+		}
+
+		if (_scene->getGameStart() == true && _scene->getSaveLoading() == false && _scene->getLoading() == false)
+		{
+			//==========================================================================================================================//
+			PatBlt(CAMERA->getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
+			PatBlt(getMemDC(), 0, 0, getMemDCWidth(), getMemDCHeight(), BLACKNESS);
+			//=================================================
+
+
+			_stageManager->render();
+			_player->render();
+			_collisionManager->render();
+			_enemyManager->render();
+			_itemManager->render();
+			_scene->render();
+
+			ZORDER->render();
+
+			// 기둥 render
+			if (_stageManager->getNowStage() == 1)
+			{
+				IMAGEMANAGER->findImage("stage2 pillar")->alphaRender(getMemDC(), 1707, 0, 170);
+			}
+			else if (_stageManager->getNowStage() == 2)
+			{
+				IMAGEMANAGER->findImage("stage3 pillar")->alphaRender(getMemDC(), 498, 0, 170);
+			}
+
+			if (_uiManager->isMiniMapOpen())
+				IMAGEMANAGER->findImage("ui back")->alphaRender(getMemDC(), CAMERA->getLeft(), CAMERA->getTop(), 150);
+
+			//=============================================
+			_backBuffer->render(CAMERA->getMemDC(), 0, CAMERA->getBlackSize() * 0.5,
+				CAMERA->getLeft(), CAMERA->getTop() + CAMERA->getShakeNumber(),
+				CAMERA->getViewWidth(), CAMERA->getViewHeight());
+			_uiManager->render(CAMERA->getMemDC());
+			CAMERA->render(getHDC());
+		}
 	}
 }

@@ -55,6 +55,7 @@ HRESULT stageManager::init()
 	_em->setEnemiesVector(_NowStage);
 
 	_spawnCount = 0;
+	_bossIntroX = 1900;
 
 	return S_OK;
 }
@@ -110,7 +111,6 @@ void stageManager::render()
 	{
 		PlayBattleStartBackGroundDraw();
 	}
-
 }
 
 void stageManager::NowStage()
