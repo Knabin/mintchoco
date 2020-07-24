@@ -114,34 +114,40 @@ HRESULT schoolgirl::init(string imageName, float x, float y, float speed)
 	// ============================	여학우 히트1 ============================ //
 	_enemyMotion_L_hit_1 = new animation;
 	_enemyMotion_L_hit_1->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
-	_enemyMotion_L_hit_1->setPlayFrame(0, 2, false, false);
+	_enemyMotion_L_hit_1->setPlayFrame(17, 15, false, false);
 	_enemyMotion_L_hit_1->setFPS(1);
+	//_enemyMotion_L_hit_1->start();
 	_enemyMotion_R_hit_1 = new animation;
 	_enemyMotion_R_hit_1->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
-	_enemyMotion_R_hit_1->setPlayFrame(17, 15, false, false);
+	_enemyMotion_R_hit_1->setPlayFrame(0, 2, false, false);
 	_enemyMotion_R_hit_1->setFPS(1);
+	//_enemyMotion_R_hit_1->start();
 	// ============================	여학우 히트1 ============================ //
 
 	// ============================	여학우 히트2 ============================ //
 	_enemyMotion_L_hit_2 = new animation;
 	_enemyMotion_L_hit_2->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
-	_enemyMotion_L_hit_2->setPlayFrame(3, 5, false, false);
+	_enemyMotion_L_hit_2->setPlayFrame(14, 12, false, false);
 	_enemyMotion_L_hit_2->setFPS(1);
+	//_enemyMotion_L_hit_2->start();
 	_enemyMotion_R_hit_2 = new animation;
 	_enemyMotion_R_hit_2->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
-	_enemyMotion_R_hit_2->setPlayFrame(14, 12, false, false);
+	_enemyMotion_R_hit_2->setPlayFrame(3, 5, false, false);
 	_enemyMotion_R_hit_2->setFPS(1);
+	//_enemyMotion_R_hit_2->start();
 	// ============================	여학우 히트2 ============================ //
 
 	// ============================	여학우 히트3 ============================ //
 	_enemyMotion_L_hit_3 = new animation;
 	_enemyMotion_L_hit_3->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
-	_enemyMotion_L_hit_3->setPlayFrame(6, 8, false, false);
+	_enemyMotion_L_hit_3->setPlayFrame(11, 9, false, false);
 	_enemyMotion_L_hit_3->setFPS(1);
+	//_enemyMotion_L_hit_3->start();
 	_enemyMotion_R_hit_3 = new animation;
 	_enemyMotion_R_hit_3->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
-	_enemyMotion_R_hit_3->setPlayFrame(11, 9, false, false);
+	_enemyMotion_R_hit_3->setPlayFrame(6, 8, false, false);
 	_enemyMotion_R_hit_3->setFPS(1);
+	//_enemyMotion_R_hit_3->start();
 	// ============================	여학우 히트3 ============================ //
 
 	// ============================	여학우 스턴 ============================ //
@@ -272,21 +278,27 @@ void schoolgirl::render()
 		_attackRC.setCenterPos(_rc.right, _rc.getCenterY());
 		break;
 	case ENEMY_LEFT_GETHIT_1:
+		_enemyMotion_L_hit_1->start();
 		_enemyImg = _gethit;
 		break;
 	case ENEMY_RIGHT_GETHIT_1:
+		_enemyMotion_R_hit_1->start();
 		_enemyImg = _gethit;
 		break;
 	case ENEMY_LEFT_GETHIT_2:
+		_enemyMotion_L_hit_2->start();
 		_enemyImg = _gethit;
 		break;
 	case ENEMY_RIGHT_GETHIT_2:
+		_enemyMotion_R_hit_2->start();
 		_enemyImg = _gethit;
 		break;
 	case ENEMY_LEFT_GETHIT_3:
+		_enemyMotion_L_hit_3->start();
 		_enemyImg = _gethit;
 		break;
 	case ENEMY_RIGHT_GETHIT_3:
+		_enemyMotion_R_hit_3->start();
 		_enemyImg = _gethit;
 		break;
 	case ENEMY_LEFT_STUN:

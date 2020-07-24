@@ -10,7 +10,7 @@
 HRESULT collisionManager::init()
 {
 	_count = 0;
-	_enemyCollisionCount = _enemyCollisionCount2 = _enemyCollisionCount3 = 0;
+	_enemyCollisionCount = _enemyCollisionCount1  =  _enemyCollisionCount2 = _enemyCollisionCount3 = 0;
 	return S_OK;
 }
 
@@ -155,39 +155,23 @@ void collisionManager::enemy_collision()//적이랑 플레이어 공격이랑 충돌시
 
 	for (int i = 0; i < temp.size(); i++)
 	{
-		/*
-		if (isCollision(temp[i]->getEnemyRect(), _player->getAttackRc()))
+
+		if (isCollision(temp[i]->getEnemyRect(), _player->getAttackRc()) &&
+			_player->getPlayerZ() - 50 <= temp[i]->getEnemyRect().bottom &&
+			_player->getPlayerZ() + 50 >= temp[i]->getEnemyRect().bottom)
 		{
-			cout << temp[i]->getEnemyDirection() << endl;
-			_uiManager->PlayerHpMinus();
 			_player->setPlayerAttackRectRemove(0, 0, 0, 0);
 			_enemyCollisionCount++;
 			if (_enemyCollisionCount % 5 == 0)
 			{
-				if (temp[i]->getEnemyDirection() == ENEMY_LEFT_IDLE || temp[i]->getEnemyDirection() == ENEMY_LEFT_MOVE ||
-					temp[i]->getEnemyDirection() == ENEMY_LEFT_BACK_MOVE || temp[i]->getEnemyDirection() == ENEMY_LEFT_ATTACK ||
-					temp[i]->getEnemyDirection() == ENEMY_LEFT_COMBO1 || temp[i]->getEnemyDirection() == ENEMY_LEFT_COMBO2 ||
-					temp[i]->getEnemyDirection() == ENEMY_LEFT_SUBMOTION || temp[i]->getEnemyDirection() == ENEMY_LEFT_STUN ||
-					temp[i]->getEnemyDirection() == ENEMY_LEFT_RUN)
-				{
-					temp[i]->setEnemyDirection(ENEMY_LEFT_GETHIT_1);
-					temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_L_hit_1());
-				}
-				else if (temp[i]->getEnemyDirection() == ENEMY_RIGHT_IDLE || temp[i]->getEnemyDirection() == ENEMY_RIGHT_MOVE ||
-					temp[i]->getEnemyDirection() == ENEMY_RIGHT_BACK_MOVE || temp[i]->getEnemyDirection() == ENEMY_RIGHT_ATTACK ||
-					temp[i]->getEnemyDirection() == ENEMY_RIGHT_COMBO1 || temp[i]->getEnemyDirection() == ENEMY_RIGHT_COMBO2 ||
-					temp[i]->getEnemyDirection() == ENEMY_RIGHT_SUBMOTION || temp[i]->getEnemyDirection() == ENEMY_RIGHT_STUN ||
-					temp[i]->getEnemyDirection() == ENEMY_RIGHT_RUN)
-				{
-					temp[i]->setEnemyDirection(ENEMY_RIGHT_GETHIT_1);
-					temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_R_hit_1());
-				}
 				temp[i]->setHitEnemyHP(1);
 				_enemyCollisionCount = 0;
 			}
 		}
-		*/
-		if (isCollision(temp[i]->getEnemyRect(), _player->getComboAttackRc1()))
+		
+		if (isCollision(temp[i]->getEnemyRect(), _player->getComboAttackRc1()) &&
+			_player->getPlayerZ() - 50 <= temp[i]->getEnemyRect().bottom &&
+			_player->getPlayerZ() + 50 >= temp[i]->getEnemyRect().bottom)
 		{
 			if (temp[i]->getEnemyDirection() == ENEMY_LEFT_IDLE || temp[i]->getEnemyDirection() == ENEMY_LEFT_MOVE ||
 				temp[i]->getEnemyDirection() == ENEMY_LEFT_BACK_MOVE || temp[i]->getEnemyDirection() == ENEMY_LEFT_ATTACK ||
@@ -208,63 +192,62 @@ void collisionManager::enemy_collision()//적이랑 플레이어 공격이랑 충돌시
 				temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_R_hit_1());
 			}
 			_player->setComboAttack(true);//2단콤보변수 트루
-			_uiManager->PlayerHpMinus();
+			_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
+			_enemyCollisionCount1++;
+			if (_enemyCollisionCount1 % 1 == 0)
+			{
+				temp[i]->setHitEnemyHP(1);
+				_enemyCollisionCount1 = 0;
+			}
+		}
+
+		if (isCollision(temp[i]->getEnemyRect(), _player->getComboAttackRc2()) &&
+			_player->getPlayerZ() - 50 <= temp[i]->getEnemyRect().bottom &&
+			_player->getPlayerZ() + 50 >= temp[i]->getEnemyRect().bottom)
+		{
+			_player->setComboAttack2(true);//3단콤보공격 트루
 			_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
 			_enemyCollisionCount2++;
 			if (_enemyCollisionCount2 % 1 == 0)
 			{
+				if (temp[i]->getEnemyDirection() == ENEMY_LEFT_GETHIT_1)
+				{
+					temp[i]->setEnemyDirection(ENEMY_LEFT_GETHIT_2);
+					temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_L_hit_2());
+				}
+				else if (temp[i]->getEnemyDirection() == ENEMY_RIGHT_GETHIT_2)
+				{
+					temp[i]->setEnemyDirection(ENEMY_RIGHT_GETHIT_2);
+					temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_R_hit_2());
+				}
 				temp[i]->setHitEnemyHP(1);
 				_enemyCollisionCount2 = 0;
 			}
 		}
 
-		if (isCollision(temp[i]->getEnemyRect(), _player->getComboAttackRc2()))
+		if (isCollision(temp[i]->getEnemyRect(), _player->getComboAttackRc3()) &&
+			_player->getPlayerZ() - 10 <= temp[i]->getEnemyRect().bottom &&
+			_player->getPlayerZ() + 10 >= temp[i]->getEnemyRect().bottom)
 		{
-			
-			_player->setComboAttack2(true);//3단콤보공격 트루
-			_uiManager->PlayerHpMinus();
 			_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
 			_enemyCollisionCount3++;
-			if (_enemyCollisionCount3 % 5 == 0)
+			if (_enemyCollisionCount3 % 1 == 0)
 			{
-				if (temp[i]->getEnemyDirection() == ENEMY_LEFT_IDLE || temp[i]->getEnemyDirection() == ENEMY_LEFT_MOVE ||
-					temp[i]->getEnemyDirection() == ENEMY_LEFT_BACK_MOVE || temp[i]->getEnemyDirection() == ENEMY_LEFT_ATTACK ||
-					temp[i]->getEnemyDirection() == ENEMY_LEFT_COMBO1 || temp[i]->getEnemyDirection() == ENEMY_LEFT_COMBO2 ||
-					temp[i]->getEnemyDirection() == ENEMY_LEFT_SUBMOTION || temp[i]->getEnemyDirection() == ENEMY_LEFT_STUN ||
-					temp[i]->getEnemyDirection() == ENEMY_LEFT_RUN)
+				if (temp[i]->getEnemyDirection() == ENEMY_LEFT_GETHIT_2)
 				{
 					temp[i]->setEnemyDirection(ENEMY_LEFT_GETHIT_3);
 					temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_L_hit_3());
 				}
-				else if (temp[i]->getEnemyDirection() == ENEMY_RIGHT_IDLE || temp[i]->getEnemyDirection() == ENEMY_RIGHT_MOVE ||
-					temp[i]->getEnemyDirection() == ENEMY_RIGHT_BACK_MOVE || temp[i]->getEnemyDirection() == ENEMY_RIGHT_ATTACK ||
-					temp[i]->getEnemyDirection() == ENEMY_RIGHT_COMBO1 || temp[i]->getEnemyDirection() == ENEMY_RIGHT_COMBO2 ||
-					temp[i]->getEnemyDirection() == ENEMY_RIGHT_SUBMOTION || temp[i]->getEnemyDirection() == ENEMY_RIGHT_STUN ||
-					temp[i]->getEnemyDirection() == ENEMY_RIGHT_RUN)
+				else if (temp[i]->getEnemyDirection() == ENEMY_RIGHT_GETHIT_3)
 				{
-					temp[i]->setEnemyDirection(ENEMY_RIGHT_GETHIT_3);
+					temp[i]->setEnemyDirection(ENEMY_RIGHT_GETHIT_2);
 					temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_R_hit_3());
 				}
 				temp[i]->setHitEnemyHP(1);
 				_enemyCollisionCount3 = 0;
 			}
 		}
-		
 	}
-
-	/*
-	if (isCollision(_enemyManager->getEnemyRc(), _player->getComboAttackRc1()) && _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_COMBO_ATTACK1
-		|| isCollision(_enemyManager->getEnemyRc(), _player->getComboAttackRc1()) && _player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_COMBO_ATTACK1)//적이랑 플레이어 공격이 충돌시
-	{
-		_player->setComboAttack(true);//2단콤보변수 트루
-	}
-
-	if (isCollision(_enemyManager->getEnemyRc(), _player->getComboAttackRc2()) && _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_COMBO_ATTACK2
-		|| isCollision(_enemyManager->getEnemyRc(), _player->getComboAttackRc2()) && _player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_COMBO_ATTACK2)//적이랑 플레이어의 2단콤보 공격 렉트랑 충돌시
-	{
-		_player->setComboAttack2(true);//3단콤보공격 트루
-	}
-	*/
 }
 
 void collisionManager::npcCollision()
@@ -289,9 +272,11 @@ void collisionManager::player_collision()
 	
 	for (int i = 0; i < temp.size(); ++i)
 	{
-		if (isCollision(_player->getPlayerRect(), temp[i]->getEnemyAttackRect()))
+		if (isCollision(_player->getPlayerRect(), temp[i]->getEnemyAttackRect()) &&
+			temp[i]->getEnemyRect().bottom - 50 <= _player->getPlayerZ() &&
+			temp[i]->getEnemyRect().bottom + 50 >= _player->getPlayerZ())
 		{
-			_uiManager->PlayerHpMinus();
+
 			temp[i]->setEnemyAttackRect(0, 0, 0, 0);
 			_count++;
 			if (_count % 20 == 0)

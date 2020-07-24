@@ -127,12 +127,12 @@ HRESULT cheerleader::init(string imageName, float x, float y, float speed)
 	// ============================	치어리더 히트2 ============================ //
 	_enemyMotion_L_hit_2 = new animation;
 	_enemyMotion_L_hit_2->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
-	_enemyMotion_L_hit_2->setPlayFrame(3, 5, false, false);
+	_enemyMotion_L_hit_2->setPlayFrame(14, 12, false, false);
 	_enemyMotion_L_hit_2->setFPS(1);
 	//_enemyMotion_L_hit_2->start();
 	_enemyMotion_R_hit_2 = new animation;
 	_enemyMotion_R_hit_2->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
-	_enemyMotion_R_hit_2->setPlayFrame(14, 12, false, false);
+	_enemyMotion_R_hit_2->setPlayFrame(3, 5, false, false);
 	_enemyMotion_R_hit_2->setFPS(1);
 	//_enemyMotion_R_hit_2->start();
 	// ============================	치어리더 히트2 ============================ //
@@ -140,12 +140,12 @@ HRESULT cheerleader::init(string imageName, float x, float y, float speed)
 	// ============================	치어리더 히트3 ============================ //
 	_enemyMotion_L_hit_3 = new animation;
 	_enemyMotion_L_hit_3->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
-	_enemyMotion_L_hit_3->setPlayFrame(6, 8, false, false);
+	_enemyMotion_L_hit_3->setPlayFrame(11, 9, false, false);
 	_enemyMotion_L_hit_3->setFPS(1);
 	//_enemyMotion_L_hit_3->start();
 	_enemyMotion_R_hit_3 = new animation;
 	_enemyMotion_R_hit_3->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
-	_enemyMotion_R_hit_3->setPlayFrame(11, 9, false, false);
+	_enemyMotion_R_hit_3->setPlayFrame(6, 8, false, false);
 	_enemyMotion_R_hit_3->setFPS(1);
 	//_enemyMotion_R_hit_3->start();
 	// ============================	치어리더 히트3 ============================ //
