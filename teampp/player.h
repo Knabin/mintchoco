@@ -70,8 +70,6 @@ private:
 	image* _dashAttackImage;//대쉬 공격 이미지
 	image* _guardImage;//플레이어 방어 이미지
 	image* _downImage;//플레이어가 피격 당했을때 다운 이미지
-	image* _stage01Pixel;//스테이지1의 배경픽셀 이미지
-	image* _stage02Pixel;//스테이지1의 배경픽셀 이미지
 
 	MYRECT _rc;//플레이어 렉트
 	MYRECT _attackRc;//공격용으로 사용할 렉트
