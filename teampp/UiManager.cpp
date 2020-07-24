@@ -113,6 +113,8 @@ HRESULT UiManager::init()
 	IMAGEMANAGER->addImage("misuzu1", "images/ui/misuzu_1.bmp", 386, 460, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("misuzu2", "images/ui/misuzu_2.bmp", 386, 460, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("misuzu3", "images/ui/misuzu_3.bmp", 386, 460, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("script k", "images/ui/script_kyoko.bmp", 200, 76, false, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("script m", "images/ui/script_misuzu.bmp", 200, 76, false, RGB(0, 0, 0));
 
 	_saveRc = RectMakeCenter(WINSIZEX / 2, WINSIZEY / 2 + 150, 220, 70);
 	_scriptIndex = _txtIndex = 0;
@@ -174,8 +176,45 @@ void UiManager::render(HDC hdc)
 	}
 	else
 	{
-		if (_isKyoko) IMAGEMANAGER->findImage("kyoko3")->render(hdc, 0, 180);
-		else IMAGEMANAGER->findImage("misuzu3")->render(hdc, WINSIZEX - IMAGEMANAGER->findImage("misuzu1")->getWidth() - 80, 180);
+		if (_isKyoko)
+		{
+			IMAGEMANAGER->findImage("script k")->render(hdc, 0, WINSIZEY - 76);
+			switch (_scriptIndex)
+			{
+			case 1:
+			case 3:
+			case 11:
+				IMAGEMANAGER->findImage("kyoko1")->render(hdc, 0, 180);
+				break;
+			case 7:
+			case 19:
+			case 21:
+				IMAGEMANAGER->findImage("kyoko3")->render(hdc, 0, 180);
+				break;
+			case 15:
+				IMAGEMANAGER->findImage("kyoko2")->render(hdc, 0, 180);
+				break;
+			}
+			
+		}
+		else
+		{
+			IMAGEMANAGER->findImage("script m")->render(hdc, 0, WINSIZEY - 76);
+			switch (_scriptIndex)
+			{
+			case 5:
+			case 17:
+				IMAGEMANAGER->findImage("misuzu3")->render(hdc, WINSIZEX - IMAGEMANAGER->findImage("misuzu1")->getWidth() - 80, 180);
+				break;
+			case 9:
+				IMAGEMANAGER->findImage("misuzu1")->render(hdc, WINSIZEX - IMAGEMANAGER->findImage("misuzu1")->getWidth() - 80, 180);
+				break;
+			case 13:
+			case 23:
+				IMAGEMANAGER->findImage("misuzu2")->render(hdc, WINSIZEX - IMAGEMANAGER->findImage("misuzu1")->getWidth() - 80, 180);
+				break;
+			}
+		}
 
 		SetBkMode(hdc, TRANSPARENT);
 		SetTextColor(hdc, RGB(255, 255, 255));
