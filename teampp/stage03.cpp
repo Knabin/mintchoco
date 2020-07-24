@@ -13,18 +13,30 @@ stage03::~stage03()
 HRESULT stage03::init()
 {
 
-	// 스테이지 3 왼쪽 door 이미지 변경 선언
+	// 스테이지 3 Rightdoor 잠긴 이미지 변경 선언
+
+	_Stage3RightDoorLock._StageImage = IMAGEMANAGER->addImage("Door3_Stage3", "images/stage/UI_Locked_Door.bmp", 52, 76, true, RGB(255, 0, 255));
+
+	//==================================================================================================================================================//
+
+	// 스테이지 3 Leftdoor 잠긴 이미지 변경 선언
+
+	_Stage3LeftDoorLock._StageImage = IMAGEMANAGER->addImage("Door3_Stage3", "images/stage/UI_Locked_Door.bmp", 52, 76, true, RGB(255, 0, 255));
+
+	//==================================================================================================================================================//
+
+	// 스테이지 3 Leftdoor 이미지 변경 선언
 
 	_Stage3LeftDoorOpen._StageImage = IMAGEMANAGER->addImage("Door_Stage3", "images/stage/UI_UnLocked_Door11.bmp", 52, 76, true, RGB(255, 0, 255));
 
 	_Stage3LeftDoorOpen._x = WINSIZEX;
-	_Stage3LeftDoorOpen._y = WINSIZEY / 2 - 35;
+	_Stage3LeftDoorOpen._y = WINSIZEY / 2 - 10;
 
 	_Stage3LeftDoorOpen._rc.setCenterPos(_Stage3LeftDoorOpen._x, _Stage3LeftDoorOpen._y);
 
 	//==================================================================================================================================================//
 
-	// 스테이지 3 오른쪽  door 이미지 변경 선언
+	// 스테이지 3 Rightdoor 이미지 변경 선언
 
 	_Stage3RightDoorOpen._StageImage = IMAGEMANAGER->addImage("Door_Stage3", "images/stage/UI_UnLocked_Door11.bmp", 52, 76, true, RGB(255, 0, 255));
 
@@ -55,11 +67,13 @@ HRESULT stage03::init()
 	
 
 	_Stage3LeftDoor._x = WINSIZEX;
-	_Stage3LeftDoor._y = WINSIZEY / 2 - 35;
+	_Stage3LeftDoor._y = WINSIZEY / 2 - 10;
 
 	_Stage3LeftDoor._rc.setCenterPos(_Stage3LeftDoor._x, _Stage3LeftDoor._y);
 
 	//==================================================================================================================================================//
+
+	//스테이지 3 RightDoor 선언
 
 	_Stage3RightDoor._StageImage = IMAGEMANAGER->addImage("Door2_Stage3", "images/stage/UI_UnLocked_Door22.bmp", 52, 76, true, RGB(255, 0, 255));
 
@@ -86,17 +100,27 @@ void stage03::render()
 {
 	IMAGEMANAGER->findImage("Test_Stage3")->render(getMemDC(), 0, 0);
 
-	IMAGEMANAGER->findImage("Door2_Stage3")->render(getMemDC(), _Stage3LeftDoor._x, _Stage3LeftDoor._y - 138);
+	IMAGEMANAGER->findImage("Door2_Stage3")->render(getMemDC(), _Stage3LeftDoor._x, _Stage3LeftDoor._y - 163);
 
 	IMAGEMANAGER->findImage("Door2_Stage3")->render(getMemDC(), _Stage3RightDoor._x + 11, _Stage3RightDoor._y - 113);
 }
 
 void stage03::Stage3LeftDoorOpenDraw()
 {
-	IMAGEMANAGER->findImage("Door_Stage3")->render(getMemDC(), _Stage3LeftDoor._x, _Stage3LeftDoor._y - 138);
+	IMAGEMANAGER->findImage("Door_Stage3")->render(getMemDC(), _Stage3LeftDoor._x, _Stage3LeftDoor._y - 163);
 }
 
 void stage03::Stage3RightDoorOpenDraw()
 {
 	IMAGEMANAGER->findImage("Door_Stage3")->render(getMemDC(), _Stage3RightDoor._x + 11, _Stage3RightDoor._y - 113);
+}
+
+void stage03::Stage3LeftDoorLockDraw()
+{
+	IMAGEMANAGER->findImage("Door3_Stage3")->render(getMemDC(), _Stage3LeftDoor._x, _Stage3LeftDoor._y - 163);
+}
+
+void stage03::Stage3RightDoorLockDraw()
+{
+	IMAGEMANAGER->findImage("Door3_Stage3")->render(getMemDC(), _Stage3RightDoor._x + 11, _Stage3RightDoor._y - 113);
 }

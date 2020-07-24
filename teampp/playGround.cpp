@@ -45,6 +45,8 @@ HRESULT playGround::init()
 	_collisionManager->setItemManagerMemoryAddressLink(_itemManager);
 	_collisionManager->setUiManagerMemoryAddressLink(_uiManager);
 
+	_stageManager->setPlayerMemoryAddressLink(_player);
+
 	_enemyManager->setStageManagerMemoryAddressLink(_stageManager);
 	_uiManager->setStageManagerMemoryAddressLink(_stageManager);
 
@@ -101,8 +103,8 @@ void playGround::update()
 
 		_enemyManager->update();
 		_player->update();
-		_collisionManager->update();
 		_stageManager->update();
+		_collisionManager->update();
 		_uiManager->update();
 
 		_enemyManager->setPlayerPos(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
@@ -188,7 +190,7 @@ void playGround::render()
 		_player->render();
 		_collisionManager->render();
 		_enemyManager->render();
-		_itemManager->render();
+		//_itemManager->render();
 		_scene->render();
 
 		ZORDER->render();

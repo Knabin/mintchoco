@@ -311,6 +311,6 @@ namespace TTYONE_UTIL
 
 		return false;
 	}
-	
+
 }
 

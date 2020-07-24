@@ -22,8 +22,6 @@ void collisionManager::update()
 {
 	stagedoor_collision();
 
-	playerHpMinus();
-
 	enemy_collision();//적이랑 플레이어 공격이랑 충돌시
 
 	npcCollision();
@@ -139,15 +137,6 @@ void collisionManager::stagedoor_collision_image()	//스테이지 이동 이미지 변경
 }
 
 
-//충돌시 Hp 감소
-void collisionManager::playerHpMinus()
-{
-	if (isCollision(_itemManager->getVItem()->getRect(), _player->getPlayerRect()))
-	{
-		_uiManager->PlayerHpMinus();
-	}
-
-}
 void collisionManager::enemy_collision()//적이랑 플레이어 공격이랑 충돌시
 {
 	if (isCollision(_enemyManager->getEnemyRc(), _player->getComboAttackRc1()) && _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_COMBO_ATTACK1
@@ -186,4 +175,3 @@ void collisionManager::player_collision()//플레이어랑 적 공격이랑 충돌시
 	//
 	//}
 }
-

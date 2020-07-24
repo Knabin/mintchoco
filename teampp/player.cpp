@@ -468,7 +468,7 @@ void player::leftMove()
 {
 	if (!_dash)//걷기
 	{
-		if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+		if (KEYMANAGER->isStayKeyDown(VK_LEFT) )
 		{
 			if (!_jumping && !_attack && !_guard && !keyRight())
 			{
@@ -483,6 +483,7 @@ void player::leftMove()
 
 			if (!_attack && !keyRight() && !_guard)//점프중에 움직이는거 허용
 			{
+				if ( CAMERA->getLeft() < _rc.left )
 				_x -= _walkSpeed;
 			}
 
@@ -506,6 +507,7 @@ void player::leftMove()
 
 			if (!_attack && !keyRight() && !_guard)//점프중에 움직이는거 허용
 			{
+				if (CAMERA->getLeft() < _rc.left)
 				_x -= _runSpeed;
 			}
 
@@ -556,6 +558,7 @@ void player::rightMove()
 
 			if (!_attack && !keyLeft() && !_guard)//점프중에 움직이는거 허용
 			{
+				if (CAMERA->getLeft() + CAMERA->getWidth() > _rc.right)
 				_x += _walkSpeed;
 			}
 		}
@@ -578,6 +581,7 @@ void player::rightMove()
 
 			if (!_attack && !keyLeft() && !_guard)//점프중에 움직이는거 허용
 			{
+				if (CAMERA->getLeft() + CAMERA->getWidth() > _rc.right)
 				_x += _runSpeed;
 			}
 		}
@@ -648,6 +652,7 @@ void player::upMove()
 				_jump->setStartYmin(_walkSpeed);
 			}
 			
+			if (CAMERA->getTop() < _rc.top)
 			_z -= _walkSpeed;
 		}
 	}
@@ -711,7 +716,7 @@ void player::downMove()
 			{
 				_jump->setStartYpls(_walkSpeed);
 			}
-
+			if (CAMERA->getTop() + CAMERA->getHeight() - 200 > _rc.bottom)
 			_z += _walkSpeed;
 		}
 	}
@@ -1182,7 +1187,7 @@ void player::playerPosition_1at2()
 void player::playerPosition_2at3()
 {
 	_x = WINSIZEX / 2 + 625;
-	_z = WINSIZEY / 2 + 165;
+	_z = WINSIZEY / 2 + 190;
 	CAMERA->setPosition(_x, _z);
 }
 

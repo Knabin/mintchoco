@@ -20,6 +20,8 @@ private:
 	tagStage4 _Stage4LeftDoor;
 	tagStage4 _Stage4RightDoorOpen;
 	tagStage4 _Stage4LeftDoorOpen;
+	tagStage4 _Stage4RightDoorLock;
+	tagStage4 _Stage4LeftDoorLock;
 
 	vector<class npc*> _vNpcs;
 	
@@ -37,11 +39,15 @@ public:
 	void Stage4RightDoorOpenDraw();
 	void Stage4LeftDoorOpenDraw();
 
+	void Stage4RightDoorLockDraw();
+	void Stage4LeftDoorLockDraw();		
+
+
 	image* getPixel() { return _Stage4PixelBackGround._pixelCollision; }
 	vector<class npc*>& getNPCs() { return _vNpcs; }	// 스테이지4 npc 벡터 접근자
 
-	inline MYRECT getRect() { return _Stage4RightDoor._rc; }
-	inline MYRECT getRect2() { return _Stage4LeftDoor._rc; }
+	inline MYRECT& getRect() { return _Stage4RightDoor._rc; }
+	inline MYRECT& getRect2() { return _Stage4LeftDoor._rc; }
 
 
 
