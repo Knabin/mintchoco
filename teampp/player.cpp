@@ -122,6 +122,7 @@ HRESULT player::init()
 	_comboAttack2 = false;//콤보공격 3단계 실행여부를 확인하기 위한 변수
 	_probeX = _x + _walkImage->getFrameWidth() / 2;//x좌표 픽셀충돌
 	_probeY = _z + _walkImage->getFrameHeight() / 2;//y좌표 픽셀충돌
+	_hp = 26;
 
 	return S_OK;
 }
@@ -148,7 +149,7 @@ void player::update()
 
 	frameDraw();//프레임 관리
 
-	//cout << _playerDirection << endl;
+	//cout << "플레이어 체력 : "<< _hp << endl;
 
 	if (!_jumping)
 	{

@@ -12,8 +12,6 @@ enemyManager::~enemyManager()
 
 HRESULT enemyManager::init()
 {
-	_enemyRc.set(0, 0, 100, 200);
-	_enemyRc.setCenterPos(WINSIZEX / 2, WINSIZEY / 2);
 
 	// 스테이지 1 spawn 포인트 초기화
 	{
@@ -91,6 +89,11 @@ void enemyManager::update()
 	for (int i = 0; i < _vEnemies.size(); ++i)
 	{
 		_vEnemies[i]->update();
+		if (_vEnemies[i]->getHP() <= 0 && _vEnemies[i]->getEnemyDead())
+		{
+			_vEnemies.erase(_vEnemies.begin() + i);
+			_vEnemies[i]->setEnemyDead(false);
+		}
 	}
 	
 	//_boss->update();  // 보스 업데이트
@@ -98,7 +101,6 @@ void enemyManager::update()
 
 void enemyManager::render()
 {
-	_enemyRc.render(getMemDC());
 	for (int i = 0; i < _vEnemies.size(); ++i)
 		_vEnemies[i]->render();
 
@@ -130,7 +132,7 @@ void enemyManager::setEnemiesVector(int stageNum)
 	case 0:
 		// 스테이지 1
 	{
-		float x[] = { 192, 1010, 1500, 1750 };
+		float x[] = { 800, 1010, 1500, 1750 };
 		float y[] = { 500, 300, 350, 500 };
 		for (int i = 0; i < 4; i++)
 		{

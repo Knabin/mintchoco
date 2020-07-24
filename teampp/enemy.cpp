@@ -10,7 +10,7 @@ enemy::~enemy()
 }
 
 HRESULT enemy::init(string imageName, float x, float y, float speed)
-{
+{ 
 	_point = IMAGEMANAGER->addFrameImage("point", "images/enemys/enemy_point.bmp", 560, 70, 8, 1, true, RGB(255, 0, 255));
 	_stunImg = IMAGEMANAGER->addFrameImage("stunImg", "images/enemys/enemy_stun.bmp", 420, 54, 6, 1, true, RGB(255, 0, 255));
 	// ============================	느낌표 ============================ //
@@ -26,11 +26,12 @@ HRESULT enemy::init(string imageName, float x, float y, float speed)
 	_ani_stunImg->setPlayFrame(0, 3, false, false);
 	_ani_stunImg->setFPS(0.5);
 	// ============================	느낌표 ============================ //
-	_hp = 70;
+	_hp = 10;
 
 	_isStart = false;
 	_isPoint = false;
 	_isStun = false;
+	_enemyDead = false;
 
 	return S_OK;
 }
@@ -86,7 +87,7 @@ void enemy::update()
 		}
 			
 		_isAttackCount++;
-		if (distance > 165 && (_direction == ENEMY_RIGHT_IDLE || _direction == ENEMY_LEFT_IDLE))
+		if (distance > 165 && (_direction == ENEMY_RIGHT_IDLE || _direction == ENEMY_LEFT_IDLE || _direction == ENEMY_RIGHT_MOVE || _direction == ENEMY_LEFT_MOVE))
 		{
 			if (_playerX > _x)
 			{
@@ -98,6 +99,28 @@ void enemy::update()
 				_enemyMotion = _enemyMotion_L;
 				_direction = ENEMY_LEFT_MOVE;
 			}
+
+			if (_enemyMotion->isPlay() == false)
+			{
+				_enemyMotion->start();
+			}
+		}
+
+		if (distance > 300 && (_direction == ENEMY_RIGHT_IDLE || _direction == ENEMY_LEFT_IDLE 
+			|| _direction == ENEMY_RIGHT_MOVE || _direction == ENEMY_LEFT_MOVE
+			|| _direction == ENEMY_RIGHT_RUN || _direction == ENEMY_LEFT_RUN))
+		{
+			if (_playerX > _x)
+			{
+				_enemyMotion = _enemyMotion_R_run;
+				_direction = ENEMY_RIGHT_RUN;
+			}
+			else
+			{
+				_enemyMotion = _enemyMotion_L_run;
+				_direction = ENEMY_LEFT_RUN;
+			}
+
 			if (_enemyMotion->isPlay() == false)
 			{
 				_enemyMotion->start();
@@ -109,9 +132,6 @@ void enemy::update()
 			_x += cosf(angle) * _speed;
 			_y -= sinf(angle) * _speed;
 		}
-
-
-		
 
 		// ==============================		에너미 움직임 및 공격      ==============================//
 		if (_direction != ENEMY_LEFT_SUBMOTION && _direction != ENEMY_RIGHT_SUBMOTION)
@@ -277,7 +297,7 @@ void enemy::update()
 			if (_enemyMotion->isPlay() == false)
 			{
 				_enemyMotion->start();
-				_random = RND->getInt(5);
+				_random = RND->getInt(6);
 				_isAttackCount = 0;
 
 				if (_direction == ENEMY_LEFT_SUBMOTION)
@@ -294,7 +314,17 @@ void enemy::update()
 		}
 	}
 
-	if (0 < _hp &&  _hp <= 30 && _isStunCount <= 120)				//에너미 스턴
+	if (_direction == ENEMY_LEFT_GETHIT_1 || _direction == ENEMY_RIGHT_GETHIT_1 ||
+		_direction == ENEMY_LEFT_GETHIT_2 || _direction == ENEMY_RIGHT_GETHIT_2 ||
+		_direction == ENEMY_LEFT_GETHIT_3 || _direction == ENEMY_RIGHT_GETHIT_3)
+	{
+		if (!_enemyMotion->isPlay())
+		{
+			_enemyMotion->start();
+		}
+	}
+
+	if (0 < _hp &&  _hp <= 4 && _isStunCount <= 120)				//에너미 스턴
 	{
 		_isStun = true;
 		_isStunCount++;
@@ -338,21 +368,28 @@ void enemy::update()
 		_ani_stunImg->frameUpdate(TIMEMANAGER->getElapsedTime() * 10);
 	}
 
-	if (_hp == 0)
+	if (_hp < 0)
 	{
 		if (_x < _playerX)
 		{
 			_enemyMotion = _enemyMotion_L_dead;
 			_direction = ENEMY_LEFT_DEAD;
+			if (_enemyMotion->isPlay() == false)
+			{
+				_enemyDead = true;
+			}		
 		}
 		else
 		{
 			_enemyMotion = _enemyMotion_R_dead;
 			_direction = ENEMY_RIGHT_DEAD;
+			if (_enemyMotion->isPlay() == false)
+			{
+				_enemyDead = true;
+			}
 		}
-		
 	}
-	
+	//hit();
 	// ==============================		에너미 움직임 및 공격      ==============================//
 	
 	switch (_stageNum)
@@ -373,7 +410,8 @@ void enemy::update()
 		pixel("boss_stage_pixel");
 		break;
 	}
-	cout << _stageNum << endl;
+	//cout << _stageNum << endl;
+	//cout << _hp << endl;
 	_rc.setCenterPos(_x, _y);
 }
 
@@ -384,7 +422,6 @@ void enemy::render()
 
 void enemy::pixel(string stageName)
 {
-	// ====================에너미 스테이지1 픽셀충돌==================== //
 
 	for (int i = _rc.bottom + 3; i > _rc.bottom - 3; --i)
 	{
@@ -410,7 +447,7 @@ void enemy::pixel(string stageName)
 		int g = GetGValue(color);
 		int b = GetBValue(color);
 
-		if (r == 255 && g == 0 && b == 0)
+		if (r == 255 && g == 0 && b == 0 || (r == 0 && g == 255 && b == 0))
 		{
 			_y = i - _rc.getHeight() / 2 + 4;
 			break;
@@ -424,7 +461,7 @@ void enemy::pixel(string stageName)
 		int g = GetGValue(color);
 		int b = GetBValue(color);
 
-		if ((r == 0 && g == 0 && b == 255) || (r == 255 && g == 0 && b == 0))
+		if ((r == 0 && g == 0 && b == 255) || (r == 255 && g == 0 && b == 0) || (r == 0 && g == 255 && b == 0))
 		{
 			_x = i + _rc.getWidth() / 2 + 4;
 			break;
@@ -439,7 +476,7 @@ void enemy::pixel(string stageName)
 		int g = GetGValue(color);
 		int b = GetBValue(color);
 
-		if ((r == 0 && g == 0 && b == 255) || (r == 255 && g == 0 && b == 0))
+		if ((r == 0 && g == 0 && b == 255) || (r == 255 && g == 0 && b == 0) || (r == 0 && g == 255 && b == 0))
 		{
 			_x = i - _rc.getWidth() / 2 - 4;
 			break;
@@ -447,6 +484,29 @@ void enemy::pixel(string stageName)
 	}
 
 }
+
+//void enemy::hit()
+//{
+//	if (_x < _playerX)
+//	{
+//		_direction = ENEMY_LEFT_GETHIT_1;
+//		_enemyMotion = _enemyMotion_L_hit_1;
+//		if (_enemyMotion->isPlay() == false)
+//		{
+//			_enemyMotion->start();
+//		}
+//	}
+//	else
+//	{
+//		_direction = ENEMY_RIGHT_GETHIT_1;
+//		_enemyMotion = _enemyMotion_R_hit_1;
+//		if (_enemyMotion->isPlay() == false)
+//		{
+//			_enemyMotion->start();
+//		}
+//	}
+//}
+
 
 void enemy::setPlayerPos(float x, float y)
 {

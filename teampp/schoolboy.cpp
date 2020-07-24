@@ -22,6 +22,7 @@ HRESULT schoolboy::init(string imageName, float x, float y, float speed)
 	_stun = IMAGEMANAGER->addFrameImage("schoolboy_stun", "images/enemys/SchoolBoy_Stun.bmp", 633, 408, 4, 2, true, RGB(255, 0, 255));
 	_dead = IMAGEMANAGER->addFrameImage("schoolboy_dead", "images/enemys/SchoolBoy_weapon_swing.bmp", 5415, 438, 19, 2, true, RGB(255, 0, 255));
 	_block = IMAGEMANAGER->addFrameImage("schoolboy_block", "images/enemys/SchoolBoy_block.bmp", 459, 438, 3, 2, true, RGB(255, 0, 255));
+	_run = IMAGEMANAGER->addFrameImage("schoolboy_run", "images/enemys/SchoolBoy_run.bmp", 1920, 390, 10, 2, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addImage("schoolboy_shadow", "images/enemys/SchoolBoy_Shadow.bmp", 180, 53, true, RGB(255, 0, 255));
 
@@ -110,25 +111,47 @@ HRESULT schoolboy::init(string imageName, float x, float y, float speed)
 	_enemyMotion_R_submotion->setFPS(1.5);
 	// ============================	½ºÄðº¸ÀÌ ¾îÆÛÄÆ ============================ //
 
-	// ============================	½ºÄðº¸ÀÌ È÷Æ® ============================ //
-	_enemyMotion_L_hit = new animation;
-	_enemyMotion_L_hit->init(_combo2->getWidth(), _combo2->getHeight(), _combo2->getFrameWidth(), _combo2->getFrameHeight());
-	_enemyMotion_L_hit->setPlayFrame(0, 8, false, false);
-	_enemyMotion_L_hit->setFPS(1);
-	_enemyMotion_R_hit = new animation;
-	_enemyMotion_R_hit->init(_combo2->getWidth(), _combo2->getHeight(), _combo2->getFrameWidth(), _combo2->getFrameHeight());
-	_enemyMotion_R_hit->setPlayFrame(17, 9, false, false);
-	_enemyMotion_R_hit->setFPS(1);
-	// ============================	½ºÄðº¸ÀÌ È÷Æ® ============================ //
+	// ============================	½ºÄðº¸ÀÌ È÷Æ®1 ============================ //
+	_enemyMotion_L_hit_1 = new animation;
+	_enemyMotion_L_hit_1->init(_combo2->getWidth(), _combo2->getHeight(), _combo2->getFrameWidth(), _combo2->getFrameHeight());
+	_enemyMotion_L_hit_1->setPlayFrame(0, 2, false, false);
+	_enemyMotion_L_hit_1->setFPS(1);
+	_enemyMotion_R_hit_1 = new animation;
+	_enemyMotion_R_hit_1->init(_combo2->getWidth(), _combo2->getHeight(), _combo2->getFrameWidth(), _combo2->getFrameHeight());
+	_enemyMotion_R_hit_1->setPlayFrame(17, 9, false, false);
+	_enemyMotion_R_hit_1->setFPS(1);
+	// ============================	½ºÄðº¸ÀÌ È÷Æ®1 ============================ //
+
+	// ============================	½ºÄðº¸ÀÌ È÷Æ®2 ============================ //
+	_enemyMotion_L_hit_2 = new animation;
+	_enemyMotion_L_hit_2->init(_combo2->getWidth(), _combo2->getHeight(), _combo2->getFrameWidth(), _combo2->getFrameHeight());
+	_enemyMotion_L_hit_2->setPlayFrame(3, 5, false, false);
+	_enemyMotion_L_hit_2->setFPS(1);
+	_enemyMotion_R_hit_2 = new animation;
+	_enemyMotion_R_hit_2->init(_combo2->getWidth(), _combo2->getHeight(), _combo2->getFrameWidth(), _combo2->getFrameHeight());
+	_enemyMotion_R_hit_2->setPlayFrame(14, 12, false, false);
+	_enemyMotion_R_hit_2->setFPS(1);
+	// ============================	½ºÄðº¸ÀÌ È÷Æ®2 ============================ //
+
+	// ============================	½ºÄðº¸ÀÌ È÷Æ®3 ============================ //
+	_enemyMotion_L_hit_3 = new animation;
+	_enemyMotion_L_hit_3->init(_combo2->getWidth(), _combo2->getHeight(), _combo2->getFrameWidth(), _combo2->getFrameHeight());
+	_enemyMotion_L_hit_3->setPlayFrame(6, 8, false, false);
+	_enemyMotion_L_hit_3->setFPS(1);
+	_enemyMotion_R_hit_3 = new animation;
+	_enemyMotion_R_hit_3->init(_combo2->getWidth(), _combo2->getHeight(), _combo2->getFrameWidth(), _combo2->getFrameHeight());
+	_enemyMotion_R_hit_3->setPlayFrame(11, 9, false, false);
+	_enemyMotion_R_hit_3->setFPS(1);
+	// ============================	½ºÄðº¸ÀÌ È÷Æ®3 ============================ //
 
 	// ============================	½ºÄðº¸ÀÌ ½ºÅÏ ============================ //
 	_enemyMotion_L_stun = new animation;
 	_enemyMotion_L_stun->init(_stun->getWidth(), _stun->getHeight(), _stun->getFrameWidth(), _stun->getFrameHeight());
-	_enemyMotion_L_stun->setPlayFrame(0, 3, false, true);
+	_enemyMotion_L_stun->setPlayFrame(0, 3, false, false);
 	_enemyMotion_L_stun->setFPS(0.7);
 	_enemyMotion_R_stun = new animation;
 	_enemyMotion_R_stun->init(_stun->getWidth(), _stun->getHeight(), _stun->getFrameWidth(), _stun->getFrameHeight());
-	_enemyMotion_R_stun->setPlayFrame(7, 4, false, true);
+	_enemyMotion_R_stun->setPlayFrame(7, 4, false, false);
 	_enemyMotion_R_stun->setFPS(0.7);
 	// ============================	½ºÄðº¸ÀÌ ½ºÅÏ ============================ //
 
@@ -137,10 +160,12 @@ HRESULT schoolboy::init(string imageName, float x, float y, float speed)
 	_enemyMotion_L_dead->init(_dead->getWidth(), _dead->getHeight(), _dead->getFrameWidth(), _dead->getFrameHeight());
 	_enemyMotion_L_dead->setPlayFrame(0, 18, false, false);
 	_enemyMotion_L_dead->setFPS(1);
+	_enemyMotion_L_dead->start();
 	_enemyMotion_R_dead = new animation;
 	_enemyMotion_R_dead->init(_dead->getWidth(), _dead->getHeight(), _dead->getFrameWidth(), _dead->getFrameHeight());
 	_enemyMotion_R_dead->setPlayFrame(37, 19, false, false);
 	_enemyMotion_R_dead->setFPS(1);
+	_enemyMotion_R_dead->start();
 	// ============================	½ºÄðº¸ÀÌ Á×À½ ============================ //
 
 	// ============================	½ºÄðº¸ÀÌ ¸·±â ============================ //
@@ -154,11 +179,22 @@ HRESULT schoolboy::init(string imageName, float x, float y, float speed)
 	_enemyMotion_R_block->setFPS(0.5);
 	// ============================	½ºÄðº¸ÀÌ ¸·±â ============================ //
 
+	// ============================	½ºÄðº¸ÀÌ ·± ============================ //
+	_enemyMotion_L_run = new animation;
+	_enemyMotion_L_run->init(_run->getWidth(), _run->getHeight(), _run->getFrameWidth(), _run->getFrameHeight());
+	_enemyMotion_L_run->setPlayFrame(19, 10, false, false);
+	_enemyMotion_L_run->setFPS(1.5);
+	_enemyMotion_R_run = new animation;
+	_enemyMotion_R_run->init(_run->getWidth(), _run->getHeight(), _run->getFrameWidth(), _run->getFrameHeight());
+	_enemyMotion_R_run->setPlayFrame(0, 9, false, false);
+	_enemyMotion_R_run->setFPS(1.5);
+	// ============================	½ºÄðº¸ÀÌ ·± ============================ //
+
 	_rc.set(0, 0, _enemyImg->getFrameWidth(), _enemyImg->getFrameHeight());
 	_rc.setCenterPos(_x, _y);
 
 	_attackRC.set(0, 0, 0, 0);
-	_rc.setCenterPos(0, 0);
+	_attackRC.setCenterPos(0, 0);
 
 	_enemyMotion = _enemyMotion_R;
 	_direction = ENEMY_RIGHT_MOVE;
@@ -236,10 +272,22 @@ void schoolboy::render()
 		_attackRC.set(0, 0, 200, 100);
 		_attackRC.setCenterPos(_rc.right, _rc.getCenterY());
 		break;
-	case ENEMY_LEFT_GETHIT:
+	case ENEMY_LEFT_GETHIT_1:
 		_enemyImg = _gethit;
 		break;
-	case ENEMY_RIGHT_GETHIT:
+	case ENEMY_RIGHT_GETHIT_1:
+		_enemyImg = _gethit;
+		break;
+	case ENEMY_LEFT_GETHIT_2:
+		_enemyImg = _gethit;
+		break;
+	case ENEMY_RIGHT_GETHIT_2:
+		_enemyImg = _gethit;
+		break;
+	case ENEMY_LEFT_GETHIT_3:
+		_enemyImg = _gethit;
+		break;
+	case ENEMY_RIGHT_GETHIT_3:
 		_enemyImg = _gethit;
 		break;
 	case ENEMY_LEFT_STUN:
@@ -259,6 +307,14 @@ void schoolboy::render()
 		break;
 	case ENEMY_RIGHT_BLOCK:
 		_enemyImg = _block;
+		break;
+	case ENEMY_LEFT_RUN:
+		_x -= 4.5f;
+		_enemyImg = _run;
+		break;
+	case ENEMY_RIGHT_RUN:
+		_x += 4.5f;
+		_enemyImg = _run;
 		break;
 	}
 	//_rc.render(getMemDC());

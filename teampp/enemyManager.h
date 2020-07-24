@@ -32,8 +32,6 @@ private:
 
 	image* _enemyImg;
 
-	MYRECT _enemyRc;	//플레이어 공격이랑 충돌할 에너미 렉트
-
 	// === 운천 추가 === 
 	boss* _boss;
 	//=================
@@ -63,8 +61,6 @@ public:
 	// 현재 스테이지에 있는 enemy들을 반환해 주는 함수
 	vector<enemy*>& getEnemiesVector() { return _vEnemies; }
 	void removeEnemy(int index);
-
-	MYRECT& getEnemyRc() { return _enemyRc; } //플레이어 공격이랑 충돌할 에너미 렉트
 
 	void setPlayerPos(float x, float y);
 

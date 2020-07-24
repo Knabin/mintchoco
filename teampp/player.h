@@ -159,6 +159,11 @@ public:
 
 	void setComboAttack(bool comboAttack) {  _comboAttack = comboAttack; }
 	void setComboAttack2(bool comboAttack2) { _comboAttack2 = comboAttack2; }
+	void setHitPlayerHP(int hp) { _hp -= hp; }
+	void setPlusPlayerHP(int hp) { _hp += hp; }
+	void setPlayerAttackRectRemove(int a, int b, int c, int d) { _attackRc.set(0, 0, 0, 0); }
+	void setPlayerAttackRectRemove2(int a, int b, int c, int d) { _comboAttackRc1.set(0, 0, 0, 0); }
+	void setPlayerAttackRectRemove3(int a, int b, int c, int d) { _comboAttackRc2.set(0, 0, 0, 0); }
 	PLAYERDIRECTION getPlayerdirection() { return _playerDirection; }
 	float getPlayerX() { return _x; }
 	float getPlayerZ() { return _z; }
