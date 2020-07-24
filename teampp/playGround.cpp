@@ -68,7 +68,7 @@ HRESULT playGround::init()
 		SOUNDMANAGER->playBGM("bgm title");
 	}
 
-	LogoVideo = MCIWndCreate(_hWnd, _hInstance, MCIWNDF_NOTIFYANSI | MCIWNDF_NOMENU | MCIWNDF_NOTIFYALL | MCIWNDF_NOPLAYBAR, movie);
+	
 
 	_playVideo = 0;
 
@@ -98,14 +98,18 @@ void playGround::update()
 {
 	gameNode::update();
 
-	cout << _ptMouse.x << ", " << _ptMouse.y << endl;
+
+
 
 	if(_playVideo)
 	{
-		if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
+		if (KEYMANAGER->isOnceKeyDown(VK_RETURN)) //강제로 스킵
 		{
+			RECT _temp;
+			GetWindowRect(_hWnd, &_temp);
+
 			MCIWndClose(LogoVideo);
-			//MoveWindow(_hWnd, 0, 0, WINSIZEX, WINSIZEY, NULL);
+			MoveWindow(_hWnd, _temp.left, _temp.top, WINSIZEX, WINSIZEY, NULL);
 			_playVideo = false;
 		}
 	}
@@ -171,9 +175,10 @@ void playGround::update()
 				_stageManager->update();
 				if (_stageManager->checkBossStageX(_player->getPlayerX()))
 				{
+					LogoVideo = MCIWndCreate(_hWnd, _hInstance, MCIWNDF_NOTIFYANSI | MCIWNDF_NOMENU | MCIWNDF_NOTIFYALL | MCIWNDF_NOPLAYBAR, movie); // 초기화
 					_playVideo = true;
 					MCIWndPlay(LogoVideo);
-					//MoveWindow(LogoVideo, 0, 0, WINSIZEX, WINSIZEY, NULL);
+					MoveWindow(LogoVideo, 0, 0, WINSIZEX, WINSIZEY, NULL);
 				}
 			}
 
@@ -265,10 +270,13 @@ void playGround::render()
 		char lp[10];
 		long mode;
 		mode = MCIWndGetMode(LogoVideo, lp, sizeof(lp));
-		if (mode == 525)
+		if (mode == 525) //영상 멈춤
 		{
+			RECT _temp;
+			GetWindowRect(_hWnd, &_temp);
+
 			MCIWndClose(LogoVideo);
-			//MoveWindow(_hWnd, 0, 0, WINSIZEX, WINSIZEY, NULL);
+			MoveWindow(_hWnd, _temp.left, _temp.top, WINSIZEX, WINSIZEY, NULL);
 			_playVideo = false;
 		}
 	}
