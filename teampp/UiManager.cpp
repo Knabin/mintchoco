@@ -107,7 +107,19 @@ HRESULT UiManager::init()
 
 	//=============================================================================================================================//
 
+	IMAGEMANAGER->addImage("kyoko1", "images/ui/ui_kyoko1.bmp", 684, 816, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("kyoko2", "images/ui/ui_kyoko2.bmp", 684, 816, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("kyoko3", "images/ui/ui_kyoko3.bmp", 684, 816, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("misuzu1", "images/ui/ui_misuzu1.bmp", 684, 816, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("misuzu2", "images/ui/ui_misuzu2.bmp", 684, 816, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("misuzu3", "images/ui/ui_misuzu3.bmp", 684, 816, true, RGB(255, 0, 255));
+
 	_saveRc = RectMakeCenter(WINSIZEX / 2, WINSIZEY / 2 + 150, 220, 70);
+
+	if (TXTDATA->canLoadFile("data/script.data", ';'))
+	{
+		_vScript = TXTDATA->txtLoad("data/script.data", ";");
+	}
 
 	return S_OK;
 }
@@ -125,35 +137,40 @@ void UiManager::render(HDC hdc)
 {
 												//Player//
 	//=============================================================================================================================//
-
-	IMAGEMANAGER->findImage("HPbar")->render(hdc, _PlayerHpBar._x - 165, _PlayerHpBar._y - 45);
-
-	IMAGEMANAGER->findImage("PlayerImage")->render(hdc, _PlayerImage._x - 60, _PlayerImage._y - 78);
-
-	for (int i = 0; i < 26; i++)
+	if (!_scriptStart)
 	{
-		IMAGEMANAGER->findImage("HPpoint")->render(hdc, _PlayerHpPoint[i]._x - 11 * i, _PlayerHpPoint[i]._y);
+		IMAGEMANAGER->findImage("HPbar")->render(hdc, _PlayerHpBar._x - 165, _PlayerHpBar._y - 45);
+
+		IMAGEMANAGER->findImage("PlayerImage")->render(hdc, _PlayerImage._x - 60, _PlayerImage._y - 78);
+
+		for (int i = 0; i < 26; i++)
+		{
+			IMAGEMANAGER->findImage("HPpoint")->render(hdc, _PlayerHpPoint[i]._x - 11 * i, _PlayerHpPoint[i]._y);
+		}
+
+		//=============================================================================================================================//
+
+
+
+													 //Boss//
+		//=============================================================================================================================//
+
+		//IMAGEMANAGER->findImage("BossHPbar")->render(getMemDC(), _BossHpbar._x - 280, _BossHpbar._y - 42);
+
+		//IMAGEMANAGER->findImage("BossHPpoint")->render(getMemDC(), _BossHpPoint._x - 218, _BossHpPoint._y - 17);
+
+		//IMAGEMANAGER->findImage("BossName")->render(getMemDC(), _BossName._x, _BossName._y);
+
+		//=============================================================================================================================//
+
+
+
+		IMAGEMANAGER->findImage("UICoin")->render(hdc, _UiCoin._x - 18, _UiCoin._y - 18);
 	}
-
-	//=============================================================================================================================//
-
-
-
-												 //Boss//
-	//=============================================================================================================================//
-
-	//IMAGEMANAGER->findImage("BossHPbar")->render(getMemDC(), _BossHpbar._x - 280, _BossHpbar._y - 42);
-
-	//IMAGEMANAGER->findImage("BossHPpoint")->render(getMemDC(), _BossHpPoint._x - 218, _BossHpPoint._y - 17);
-
-	//IMAGEMANAGER->findImage("BossName")->render(getMemDC(), _BossName._x, _BossName._y);
-
-	//=============================================================================================================================//
-
-
-
-	IMAGEMANAGER->findImage("UICoin")->render(hdc, _UiCoin._x - 18, _UiCoin._y - 18);
-	
+	else
+	{
+		IMAGEMANAGER->findImage("kyoko1")->render(hdc, 0, 0);
+	}
 
 
 	// 스테이지 이동 시 미니맵 렌더링 변경

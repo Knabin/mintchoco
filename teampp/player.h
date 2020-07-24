@@ -218,5 +218,6 @@ public:
 	void playerPosition_4atBoss();
 	void playerPosition_4at3();
 	void playerPosition_Bossat4();
+	void playerPosition_BossStart();
 };
 

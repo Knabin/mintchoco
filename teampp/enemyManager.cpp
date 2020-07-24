@@ -184,7 +184,7 @@ void enemyManager::setEnemiesVector(int stageNum)
 		break;
 	case 4:
 		// 보스 스테이지
-		_vEnemies.push_back(createEnemy(3, WINSIZEX / 2, WINSIZEY / 2));
+		_vEnemies.push_back(createEnemy(3, WINSIZEX + 300, WINSIZEY - 120));
 		break;
 	}
 
@@ -221,7 +221,7 @@ enemy* enemyManager::createEnemy(int enemyType, float x, float y)
 	case 3:			// 보스
 	{
 		enemy* em = new boss;
-		em->init("BOOSIDLE", WINSIZEX / 2, WINSIZEY / 2, 0.0f);
+		em->init("BOOSIDLE", x, y, 0.0f);
 		return em;
 	}
 		break;
@@ -290,6 +290,16 @@ void enemyManager::removeEnemy(int index)
 	_vEnemies[index]->release();
 	SAFE_DELETE(_vEnemies[index]);
 	_vEnemies.erase(_vEnemies.begin() + index);
+}
+
+void enemyManager::removeEnemies()
+{
+	for (int i = 0; i < _vEnemies.size(); ++i)
+	{
+		_vEnemies[i]->release();
+		SAFE_DELETE(_vEnemies[i]);
+	}
+	_vEnemies.clear();
 }
 
 void enemyManager::setPlayerPos(float x, float y)

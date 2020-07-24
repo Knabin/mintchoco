@@ -63,6 +63,7 @@ public:
 	// 현재 스테이지에 있는 enemy들을 반환해 주는 함수
 	vector<enemy*>& getEnemiesVector() { return _vEnemies; }
 	void removeEnemy(int index);
+	void removeEnemies();
 
 	void setPlayerPos(float x, float y);
 

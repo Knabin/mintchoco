@@ -246,7 +246,8 @@ void stageManager::BossStageMove()
 	CAMERA->setBackHeight(_currentPixelCollision->getHeight());
 
 	_vNpcs.clear();
-	_em->setEnemiesVector(_NowStage);
+	_em->removeEnemies();
+	//_em->setEnemiesVector(_NowStage);
 
 	if (!SOUNDMANAGER->isPlaySound("bgm boss")) SOUNDMANAGER->playBGM("bgm boss");
 	SOUNDMANAGER->stopAll("bgm boss");

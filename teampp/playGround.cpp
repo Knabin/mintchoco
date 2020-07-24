@@ -68,7 +68,10 @@ HRESULT playGround::init()
 		SOUNDMANAGER->playBGM("bgm title");
 	}
 
-	
+	RECT _temp;
+	GetWindowRect(_hWnd, &_temp);
+
+	cout << _temp.right - _temp.left << ", " << _temp.bottom - _temp.top << endl;
 
 	_playVideo = 0;
 
@@ -98,19 +101,21 @@ void playGround::update()
 {
 	gameNode::update();
 
-
-
-
 	if(_playVideo)
 	{
 		if (KEYMANAGER->isOnceKeyDown(VK_RETURN)) //강제로 스킵
 		{
+			_player->playerPosition_BossStart();
+
 			RECT _temp;
 			GetWindowRect(_hWnd, &_temp);
 
 			MCIWndClose(LogoVideo);
-			MoveWindow(_hWnd, _temp.left, _temp.top, WINSIZEX, WINSIZEY, NULL);
+			MoveWindow(_hWnd, _temp.left, _temp.top, _temp.right - _temp.left, _temp.bottom - _temp.top, true);
+
 			_playVideo = false;
+			_uiManager->setScriptStart(true);
+			_enemyManager->setEnemiesVector(4);
 		}
 	}
 	else
@@ -181,7 +186,7 @@ void playGround::update()
 					MoveWindow(LogoVideo, 0, 0, WINSIZEX, WINSIZEY, NULL);
 				}
 			}
-
+			
 			_uiManager->update();
 
 			if (_uiManager->getRestart())
@@ -236,7 +241,8 @@ void playGround::update()
 			// 플레이어 센터나 테스트용 렉트(MYRECT) 만들어서 사용하세요
 			//CAMERA->setPosition(WINSIZEX/2, WINSIZEY/2);
 			// 따라오는 카메라
-			CAMERA->changePosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+			if (!_uiManager->isMiniMapOpen())
+				CAMERA->changePosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
 		}
 	}
 }
@@ -276,14 +282,15 @@ void playGround::render()
 			GetWindowRect(_hWnd, &_temp);
 
 			MCIWndClose(LogoVideo);
-			MoveWindow(_hWnd, _temp.left, _temp.top, WINSIZEX, WINSIZEY, NULL);
+			MoveWindow(_hWnd, _temp.left, _temp.top, _temp.right - _temp.left, _temp.bottom - _temp.top, true);
 			_playVideo = false;
 		}
 	}
 	else {
 		if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == false)
 		{
-			_scene->TitleBackGroundDraw(getHDC());
+			_scene->TitleBackGroundDraw(getMemDC());
+			_backBuffer->render(getHDC());
 		}
 
 		if (_scene->getGameStart() == false && _scene->getSaveLoading() == true && _scene->getLoading() == false)

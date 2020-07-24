@@ -22,7 +22,7 @@ HRESULT camera::init(int width, int height, int backWidth, int backHeight)
 	_cameraInfo->hMemDC = CreateCompatibleDC(hdc);
 	_cameraInfo->hBit = (HBITMAP)CreateCompatibleBitmap(hdc, backWidth, backHeight);
 	_cameraInfo->hOBit = (HBITMAP)SelectObject(_cameraInfo->hMemDC, _cameraInfo->hBit);
-	_cameraInfo->blackSize = 200;
+	_cameraInfo->blackSize = 160;
 	_cameraInfo->width = width;
 	_cameraInfo->height = height;
 	_cameraInfo->backWidth = backWidth;

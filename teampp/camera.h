@@ -133,10 +133,11 @@ public:
 	inline void setIsFixed(bool isFixed) { _isFixed = isFixed; }
 	inline bool getIsFixed() { return _isFixed; }
 
+	// TODO: 수정 필요합니다 사용하지 마세요 ㅠㅠ
 	// 카메라 전체 사이즈 기준으로 생성된 RECT 반환
 	inline RECT getRect() { return RectMakeCenter(_cameraInfo->x, _cameraInfo->y, _cameraInfo->width, _cameraInfo->height); }
 	// 검은 부분 제외한 카메라 실제 View 영역 기준으로 생성된 RECT 반환
-	inline RECT getViewRect() { return RectMakeCenter(_cameraInfo->x, _cameraInfo->y, _cameraInfo->viewWidth, _cameraInfo->viewHeight); }
+	inline RECT getViewRect() { return RectMake(getLeft(), getTop(), _cameraInfo->viewWidth, _cameraInfo->viewHeight); }
 
 	// =======================================================
 };

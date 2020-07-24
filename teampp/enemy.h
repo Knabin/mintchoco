@@ -150,6 +150,7 @@ public:
 	void setEnemyDead(bool enemyDead) { _enemyDead = enemyDead; }
 	void setEnemyDirection(ENEMYDIRECTION enemyDirection) { _direction = enemyDirection; }
 	void setEnemyMotion(animation* enemyMotion) { _enemyMotion = enemyMotion; }
+	void setEnemyPosition(float x, float y) { _x = x; _y = y; }
 
 	MYRECT& getEnemyRect() { return _rc; }
 	void setEnemyRect(MYRECT rc) { _rc = rc; }

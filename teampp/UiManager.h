@@ -39,6 +39,10 @@ private:
 	// ======= 나빈 추가 =======
 	RECT _saveRc;							// 세이브 버튼 RECT
 	bool _restart;							// 저장 후 재시작
+
+	vector<string> _vScript;
+	bool _scriptStart;
+	int _scriptIndex;
 	// ========================
 
 public:
@@ -57,7 +61,7 @@ public:
 	void setStageManagerMemoryAddressLink(stageManager* stageManager) { _stageManager = stageManager; }
 
 	bool isMiniMapOpen() {
-		if (_MiniMap._MiniMapState == OPENSTOP || _MiniMap._MiniMapState == OPEN)
+		if (_MiniMap._MiniMapState == OPENSTOP || _MiniMap._MiniMapState == OPEN || _scriptStart)
 		{
 			return true;
 		}
@@ -65,5 +69,8 @@ public:
 	}
 	bool getRestart() { return _restart; }
 	void setRestart(bool res) { _restart = res; }
+
+	bool getScriptStart() { return _scriptStart; }
+	void setScriptStart(bool b) { _scriptStart = b; }
 
 };

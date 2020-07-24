@@ -1836,3 +1836,14 @@ void player::playerPosition_Bossat4()
 	_z = WINSIZEY / 2 + 300;
 	CAMERA->setPosition(_x, _z);
 }
+
+void player::playerPosition_BossStart()
+{
+	_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
+	_idleImage->setFrameY(1);
+	_x = WINSIZEX - 100;
+	_z = WINSIZEY / 2 + 400;
+	_rc.setCenterPos(_x, _z - _rc.getHeight() / 2);
+
+	CAMERA->setPosition(_x + 200, _z - 130);
+}

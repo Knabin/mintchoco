@@ -64,6 +64,7 @@ vector<string> txtData::txtLoad(const char * loadFileName)
 	DWORD read;
 
 	char str[128];
+	ZeroMemory(str, sizeof(str));
 	
 	file = CreateFile(loadFileName, GENERIC_READ, NULL, NULL,
 		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -77,6 +78,26 @@ vector<string> txtData::txtLoad(const char * loadFileName)
 	return charArraySeparation(str);
 }
 
+vector<string> txtData::txtLoad(const char * loadFileName, const char * c)
+{
+	HANDLE file;
+	DWORD read;
+
+	char str[700];
+	ZeroMemory(str, sizeof(str));
+	
+	file = CreateFile(loadFileName, GENERIC_READ, NULL, NULL,
+		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+
+	ReadFile(file, str, 700, &read, NULL);
+
+	CloseHandle(file);
+
+	
+
+	return charArraySeparationWith(str, c);
+}
+
 vector<string> txtData::charArraySeparation(char charArray[])
 {
 	vector<string> vArray;
@@ -84,12 +105,6 @@ vector<string> txtData::charArraySeparation(char charArray[])
 	char* temp;
 	const char* separator = ",";
 	char* token;
-
-	//우주선 X좌표 20
-	//우주선 Y좌표 40
-	//우주선 체력 100
-	//벡터 사이즈 3
-	//20,40,100
 
 	token = strtok_s(charArray, separator, &temp);
 
@@ -100,6 +115,26 @@ vector<string> txtData::charArraySeparation(char charArray[])
 		vArray.push_back(token);
 	}
 
+
+	return vArray;
+}
+
+vector<string> txtData::charArraySeparationWith(char charArray[], const char* c)
+{
+	vector<string> vArray;
+
+	char* temp;
+	const char* separator = c;
+	char* token;
+
+	token = strtok_s(charArray, separator, &temp);
+
+	vArray.push_back(token);
+
+	while (NULL != (token = strtok_s(NULL, separator, &temp)))
+	{
+		vArray.push_back(token);
+	}
 
 	return vArray;
 }
@@ -119,6 +154,29 @@ bool txtData::canLoadFile(const char * loadFileName)
 	CloseHandle(file);
 
 	char* ptr = strchr(str, ',');
+
+	if (ptr != NULL)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool txtData::canLoadFile(const char * loadFileName, char c)
+{
+	HANDLE file;
+	DWORD read;
+
+	char str[700];
+
+	file = CreateFile(loadFileName, GENERIC_READ, NULL, NULL,
+		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+
+	ReadFile(file, str, 700, &read, NULL);
+
+	CloseHandle(file);
+
+	char* ptr = strchr(str, c);
 
 	if (ptr != NULL)
 	{
