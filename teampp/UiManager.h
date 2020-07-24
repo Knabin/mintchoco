@@ -36,6 +36,10 @@ private:
 
 	stageManager* _stageManager;			//stageManager 전방선언
 
+	// ======= 나빈 추가 =======
+	RECT _saveRc;							// 세이브 버튼 RECT
+	bool _restart;							// 저장 후 재시작
+	// ========================
 
 public:
 
@@ -51,5 +55,15 @@ public:
 	void PlayerHpMinus();					//PlayerHpPoint 감소 함수
 
 	void setStageManagerMemoryAddressLink(stageManager* stageManager) { _stageManager = stageManager; }
+
+	bool isMiniMapOpen() {
+		if (_MiniMap._MiniMapState == OPENSTOP || _MiniMap._MiniMapState == OPEN)
+		{
+			return true;
+		}
+		return false;
+	}
+	bool getRestart() { return _restart; }
+	void setRestart(bool res) { _restart = res; }
 
 };

@@ -54,6 +54,7 @@ HRESULT playGround::init()
 	{
 		IMAGEMANAGER->addImage("stage2 pillar", "images/stage/stage02_pillar.bmp", 195, 864, true, RGB(255, 0, 255));
 		IMAGEMANAGER->addImage("stage3 pillar", "images/stage/stage03_pillar.bmp", 195, 864, true, RGB(255, 0, 255));
+		IMAGEMANAGER->addImage("ui back", "images/ui/black.bmp", WINSIZEX, WINSIZEY, false, RGB(0, 0, 0));
 	}
 
 	{
@@ -84,6 +85,9 @@ void playGround::release()
 	_player->release();
 	_enemyManager->release();
 	_scene->release();
+	_collisionManager->release();
+	_uiManager->release();
+	_itemManager->release();
 }
 
 void playGround::update()
@@ -142,12 +146,19 @@ void playGround::update()
 	if (_scene->getGameStart() == true && _scene->getSaveLoading() == false && _scene->getLoading() == false)
 	{
 		//==========================================================================================================================//
-
-		_enemyManager->update();
-		_player->update();
-		_collisionManager->update();
-		_stageManager->update();
+		if (!_uiManager->isMiniMapOpen())
+		{
+			_enemyManager->update();
+			_player->update();
+			_collisionManager->update();
+			_stageManager->update();
+		}
 		_uiManager->update();
+		if (_uiManager->getRestart())
+		{
+			this->release();
+			this->init();
+		}
 
 		_enemyManager->setPlayerPos(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
 
@@ -248,7 +259,6 @@ void playGround::render()
 		//=================================================
 
 
-
 		_stageManager->render();
 		
 		//IMAGEMANAGER->findImage("stage1_pixel")->render(getMemDC());
@@ -271,6 +281,9 @@ void playGround::render()
 		{
 			IMAGEMANAGER->findImage("stage3 pillar")->alphaRender(getMemDC(), 498, 0, 170);
 		}
+
+		if (_uiManager->isMiniMapOpen())
+			IMAGEMANAGER->findImage("ui back")->alphaRender(getMemDC(), CAMERA->getLeft(), CAMERA->getTop(), 150);
 
 		//=============================================
 		_backBuffer->render(CAMERA->getMemDC(), 0, CAMERA->getBlackSize() * 0.5,
