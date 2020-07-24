@@ -16,6 +16,10 @@ private:
 	UiManager* _uiManager;
 
 	int _count;
+	int _enemyCollisionCount;
+	int _enemyCollisionCount1;
+	int _enemyCollisionCount2;
+	int _enemyCollisionCount3;
 
 public:
 	collisionManager() {}
@@ -28,7 +32,9 @@ public:
 
 	void stagedoor_collision(); //스테이지 이동
 	void stagedoor_collision_image(); //스테이지 이동 이미지 변경
-	void enemy_collision();//적이랑 플레이어 공격이랑 충돌시
+	void enemy_collisionNoBlock();//적이랑 플레이어 공격이랑 충돌시
+	void enemy_collisionLeftBlock();
+	void enemy_collisionRightBlock();
 	void npcCollision();
 	void player_collision();//플레이어랑 적 공격이랑 충돌시
 

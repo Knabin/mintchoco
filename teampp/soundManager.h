@@ -7,8 +7,8 @@
 
 using namespace FMOD;
 
-#define SOUNDBUFFER 10
-#define EXTRACHANNELBUFFER 5
+#define SOUNDBUFFER 40
+#define EXTRACHANNELBUFFER 10
 
 #define TOTALSOUNDBUFFER SOUNDBUFFER + EXTRACHANNELBUFFER
 
@@ -39,8 +39,15 @@ public:
 
 	void addSound(string keyName, string soundName, bool bgm, bool loop);
 
+	// 일반 이펙트 재생 함수
 	void play(string keyName, float volume = 1.0f);
+	// 배경음악 재생 함수
+	void playBGM(string keyName, float volume = 1.0f);
+
 	void stop(string keyName);
+	// 해당 사운드 제외하고 전부 다 stop 처리하는 함수
+	void stopAll(string keyName);
+
 	void pause(string keyName);
 	void resume(string keyName);
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "gameNode.h"
 #include "jump.h"
+#include "stageManager.h"
 #include <iostream>
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 using namespace std;
@@ -32,6 +33,9 @@ enum PLAYERDIRECTION
 
 	PLAYERDIRECTION_RIGHT_GUARD,
 	PLAYERDIRECTION_LEFT_GUARD,
+
+	PLAYERDIRECTION_RIGHT_DOWN,
+	PLAYERDIRECTION_LEFT_DOWN,
 
 	PLAYERDIRECTION_RIGHT_ULTIMATE,
 	PLAYERDIRECTION_LEFT_ULTIMATE,
@@ -65,11 +69,13 @@ private:
 	image* _jumpAttackImage;//플레이어 점프 공격 이미지
 	image* _dashAttackImage;//대쉬 공격 이미지
 	image* _guardImage;//플레이어 방어 이미지
+	image* _downImage;//플레이어가 피격 당했을때 다운 이미지
 
 	MYRECT _rc;//플레이어 렉트
 	MYRECT _attackRc;//공격용으로 사용할 렉트
 	MYRECT _comboAttackRc1;//1단계 콤보공격 렉트
 	MYRECT _comboAttackRc2;//2단계 콤보공격 렉트
+	MYRECT _comboAttackRc3;//2단계 콤보공격 렉트
 
 	float _x, _z;//플레이어 중점좌표
 	float _walkSpeed;//걷는 스피드
@@ -79,10 +85,10 @@ private:
 	int _count, _ultimateAfterCount, _index;//프레임에 사용할 카운트, 인덱스
 	int _time, _clickTime;//달리기 조건문 시간체크
 	int _hp;//플레이어 hp
-	int _r, _g, _b;//픽셀충돌용 rgb
-	int _probeX, _probeY;//픽셀충돌용
+	int _coin;//돈
 
 	jump* _jump;//점프 상속할당
+	stageManager* _stageManager;//스테이지 매니저 상속할당
 
 	bool _dash;//플레이어가 달리기에 사용할 값
 	bool _jumping;//점프함수를 실행한 이후 렉트값을 계속 변경시켜주기 위한 값
@@ -91,6 +97,11 @@ private:
 	bool _ultimate;//궁극기
 	bool _comboAttack;//콤보공격 프레임에 사용할 변수
 	bool _comboAttack2;//콤보공격 3단계 실행여부를 확인하기 위한 변수
+	bool _pixelCollision;//장애물 픽셀충돌 조건
+	bool _pixelCollisionDown;//픽셀충돌이 트루면 플레이어 위치 아래로 조정
+
+	image* _playerImage;
+	float _yPlayerY;
 
 public:
 	player();
@@ -100,6 +111,8 @@ public:
 	void render();
 	void update();
 	void release();
+
+	void setStageManagerMemoryAddressLink(stageManager* stageManager) { _stageManager = stageManager; }
 
 	void attack();
 
@@ -111,6 +124,7 @@ public:
 	void downMove();
 	void runTime();//키보드 따닥 시간
 	void guard();//플레이어 방어
+	void pixelCollision(string stageName);//플레이어 픽셀충돌
 
 	void frameDraw();//프레임 재생
 	void hitDamage(int hitDamage) { _hp -= hitDamage; }//플레이어가 받을 데미지
@@ -159,13 +173,22 @@ public:
 
 	void setComboAttack(bool comboAttack) {  _comboAttack = comboAttack; }
 	void setComboAttack2(bool comboAttack2) { _comboAttack2 = comboAttack2; }
+	void setHitPlayerHP(int hp) { _hp -= hp; }
+	void setPlusPlayerHP(int hp) { _hp += hp; }
+	void setPlayerAttackRectRemove(int a, int b, int c, int d) { _attackRc.set(0, 0, 0, 0); }
+	void setPlayerAttackRectRemove1(int a, int b, int c, int d) { _comboAttackRc1.set(0, 0, 0, 0); }
+	void setPlayerAttackRectRemove2(int a, int b, int c, int d) { _comboAttackRc2.set(0, 0, 0, 0); }
+	void setPlayerAttackRectRemove3(int a, int b, int c, int d) { _comboAttackRc3.set(0, 0, 0, 0); }
+	void setCoin(int coin) { _coin += coin; }//돈
 	PLAYERDIRECTION getPlayerdirection() { return _playerDirection; }
 	float getPlayerX() { return _x; }
 	float getPlayerZ() { return _z; }
+	int getCoin() { return _coin; }//돈
 	MYRECT getPlayerRect() { return _rc; }
 	MYRECT getAttackRc() { return _attackRc; }
 	MYRECT getComboAttackRc1() { return _comboAttackRc1; }
 	MYRECT getComboAttackRc2() { return _comboAttackRc2; }
+	MYRECT getComboAttackRc3() { return _comboAttackRc3; }
 	bool getIsAttacking() { 
 		switch (_playerDirection)
 		{
@@ -189,6 +212,7 @@ public:
 		}
 	}
 
+	void playerPosition_1();
 	void playerPosition_1at2();
 	void playerPosition_2at3();
 	void playerPosition_2at1();

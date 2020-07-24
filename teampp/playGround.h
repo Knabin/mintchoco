@@ -21,6 +21,11 @@ private:
 	itemManager* _itemManager;
 	scene* _scene;
 
+	// 비디오 관련 변수들
+	HWND LogoVideo;
+	char movie[20] = "videos/boss.mp4";
+	bool _playVideo;
+
 
 public:
 	playGround();

@@ -39,6 +39,8 @@ HRESULT stage01::init()
 	//스테이지 1 배경 선언
 
 	IMAGEMANAGER->addImage("Test_Stage1", "images/stage/stage01.bmp", 2016, 672, false, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("desk", "images/stage/desk.bmp", 939, 162, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("desk2", "images/stage/desk2.bmp", 936, 138, true, RGB(255, 0, 255));
 
 	//==================================================================================================================================================//
 
@@ -71,6 +73,9 @@ void stage01::render()
 	IMAGEMANAGER->findImage("Test_Stage1")->render(getMemDC(), 0, 0);
 
 	IMAGEMANAGER->findImage("Door2_Stage1")->render(getMemDC(), _Stage1RightDoor._x - 26, _Stage1RightDoor._y - 93);
+
+	ZORDER->pushObject(getMemDC(), "desk", 2, 822, 0, 535);
+	ZORDER->pushObject(getMemDC(), "desk2", 2, 663, 0, 672);
 }
 
 void stage01::Stage1RightDoorOpenDraw()	// 스테이지 1 오른쪽 door 접근 시 이미지 변경

@@ -83,6 +83,19 @@ HRESULT stage04::init()
 
 	//==================================================================================================================================================//
 
+	// npc Ãß°¡
+	npc* n1 = new npc;
+	n1->init(1480, 370, 0, false);
+	_vNpcs.push_back(n1);
+
+	npc* n2 = new npc;
+	n2->init(1530, 415, 1, true);
+	_vNpcs.push_back(n2);
+
+	npc* n3 = new npc;
+	n3->init(2000, 650, 2, true);
+	_vNpcs.push_back(n3);
+
 
 
 	return S_OK;

@@ -36,6 +36,7 @@ void jump::update()
 	{
 		_jumpPower = 0;
 		_isJumping = false;
+		//SOUNDMANAGER->play("land");
 	}
 
 
