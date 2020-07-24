@@ -113,35 +113,39 @@ HRESULT schoolboy::init(string imageName, float x, float y, float speed)
 
 	// ============================	스쿨보이 히트1 ============================ //
 	_enemyMotion_L_hit_1 = new animation;
-	_enemyMotion_L_hit_1->init(_combo2->getWidth(), _combo2->getHeight(), _combo2->getFrameWidth(), _combo2->getFrameHeight());
-	_enemyMotion_L_hit_1->setPlayFrame(0, 2, false, false);
+	_enemyMotion_L_hit_1->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
+	_enemyMotion_L_hit_1->setPlayFrame(17, 15, false, false);
 	_enemyMotion_L_hit_1->setFPS(1);
+	//_enemyMotion_L_hit_1->start();
 	_enemyMotion_R_hit_1 = new animation;
-	_enemyMotion_R_hit_1->init(_combo2->getWidth(), _combo2->getHeight(), _combo2->getFrameWidth(), _combo2->getFrameHeight());
-	_enemyMotion_R_hit_1->setPlayFrame(17, 9, false, false);
+	_enemyMotion_R_hit_1->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
+	_enemyMotion_R_hit_1->setPlayFrame(0, 2, false, false);
 	_enemyMotion_R_hit_1->setFPS(1);
+	//_enemyMotion_R_hit_1->start();
 	// ============================	스쿨보이 히트1 ============================ //
 
 	// ============================	스쿨보이 히트2 ============================ //
 	_enemyMotion_L_hit_2 = new animation;
-	_enemyMotion_L_hit_2->init(_combo2->getWidth(), _combo2->getHeight(), _combo2->getFrameWidth(), _combo2->getFrameHeight());
-	_enemyMotion_L_hit_2->setPlayFrame(3, 5, false, false);
+	_enemyMotion_L_hit_2->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
+	_enemyMotion_L_hit_2->setPlayFrame(14, 12, false, false);
 	_enemyMotion_L_hit_2->setFPS(1);
 	_enemyMotion_R_hit_2 = new animation;
-	_enemyMotion_R_hit_2->init(_combo2->getWidth(), _combo2->getHeight(), _combo2->getFrameWidth(), _combo2->getFrameHeight());
-	_enemyMotion_R_hit_2->setPlayFrame(14, 12, false, false);
+	_enemyMotion_R_hit_2->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
+	_enemyMotion_R_hit_2->setPlayFrame(3, 5, false, false);
 	_enemyMotion_R_hit_2->setFPS(1);
 	// ============================	스쿨보이 히트2 ============================ //
 
 	// ============================	스쿨보이 히트3 ============================ //
 	_enemyMotion_L_hit_3 = new animation;
-	_enemyMotion_L_hit_3->init(_combo2->getWidth(), _combo2->getHeight(), _combo2->getFrameWidth(), _combo2->getFrameHeight());
-	_enemyMotion_L_hit_3->setPlayFrame(6, 8, false, false);
+	_enemyMotion_L_hit_3->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
+	_enemyMotion_L_hit_3->setPlayFrame(11, 9, false, false);
 	_enemyMotion_L_hit_3->setFPS(1);
+	//_enemyMotion_L_hit_3->start();
 	_enemyMotion_R_hit_3 = new animation;
-	_enemyMotion_R_hit_3->init(_combo2->getWidth(), _combo2->getHeight(), _combo2->getFrameWidth(), _combo2->getFrameHeight());
-	_enemyMotion_R_hit_3->setPlayFrame(11, 9, false, false);
+	_enemyMotion_R_hit_3->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
+	_enemyMotion_R_hit_3->setPlayFrame(6, 8, false, false);
 	_enemyMotion_R_hit_3->setFPS(1);
+	//_enemyMotion_R_hit_3->start();
 	// ============================	스쿨보이 히트3 ============================ //
 
 	// ============================	스쿨보이 스턴 ============================ //
@@ -273,21 +277,27 @@ void schoolboy::render()
 		_attackRC.setCenterPos(_rc.right, _rc.getCenterY());
 		break;
 	case ENEMY_LEFT_GETHIT_1:
+		_enemyMotion_L_hit_1->start();
 		_enemyImg = _gethit;
 		break;
 	case ENEMY_RIGHT_GETHIT_1:
+		_enemyMotion_R_hit_1->start();
 		_enemyImg = _gethit;
 		break;
 	case ENEMY_LEFT_GETHIT_2:
+		_enemyMotion_L_hit_2->start();
 		_enemyImg = _gethit;
 		break;
 	case ENEMY_RIGHT_GETHIT_2:
+		_enemyMotion_R_hit_2->start();
 		_enemyImg = _gethit;
 		break;
 	case ENEMY_LEFT_GETHIT_3:
+		_enemyMotion_L_hit_3->start();
 		_enemyImg = _gethit;
 		break;
 	case ENEMY_RIGHT_GETHIT_3:
+		_enemyMotion_R_hit_3->start();
 		_enemyImg = _gethit;
 		break;
 	case ENEMY_LEFT_STUN:

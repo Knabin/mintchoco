@@ -12,8 +12,14 @@ stage01::~stage01()
 
 HRESULT stage01::init()
 {
+	
+	// 스테이지 1 Rightdoor 잠긴 이미지 변경 선언
 
-	// 스테이지 1 door 이미지 변경 선언
+	_Stage1RightDoorLock._StageImage = IMAGEMANAGER->addImage("Door3_Stage1", "images/stage/UI_Locked_Door.bmp", 52, 76, true, RGB(255, 0, 255));
+
+	//==================================================================================================================================================//
+
+	// 스테이지 1 Rightdoor 이미지 변경 선언
 
 	_Stage1RightDoorOpen._StageImage = IMAGEMANAGER->addImage("Door_Stage1", "images/stage/UI_UnLocked_Door11.bmp", 52, 76, true, RGB(255, 0, 255));
 
@@ -47,6 +53,8 @@ HRESULT stage01::init()
 
 	_Stage1RightDoor._rc.setCenterPos(_Stage1RightDoor._x, _Stage1RightDoor._y);
 
+
+
 	return S_OK;
 }
 
@@ -75,4 +83,8 @@ void stage01::Stage1RightDoorOpenDraw()	// 스테이지 1 오른쪽 door 접근 시 이미지
 	IMAGEMANAGER->findImage("Door_Stage1")->render(getMemDC(), _Stage1RightDoor._x - 26, _Stage1RightDoor._y - 93);
 }
 
+void stage01::Stage1RightDoorLockDraw()	// 스테이지 1 오른쪽 door 잠긴 이미지 변경 
+{
+	IMAGEMANAGER->findImage("Door3_Stage1")->render(getMemDC(), _Stage1RightDoor._x - 26, _Stage1RightDoor._y - 93);
+}
 

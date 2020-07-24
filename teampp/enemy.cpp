@@ -26,7 +26,7 @@ HRESULT enemy::init(string imageName, float x, float y, float speed)
 	_ani_stunImg->setPlayFrame(0, 3, false, false);
 	_ani_stunImg->setFPS(0.5);
 	// ============================	느낌표 ============================ //
-	_hp = 10;
+	_hp = 15;
 
 	_isStart = false;
 	_isPoint = false;
@@ -324,7 +324,7 @@ void enemy::update()
 		}
 	}
 
-	if (0 < _hp &&  _hp <= 4 && _isStunCount <= 120)				//에너미 스턴
+	if (0 < _hp &&  _hp < 7 && _isStunCount <= 120)				//에너미 스턴
 	{
 		_isStun = true;
 		_isStunCount++;
@@ -411,7 +411,7 @@ void enemy::update()
 		break;
 	}
 	//cout << _stageNum << endl;
-	//cout << _hp << endl;
+	cout << _hp << endl;
 	_rc.setCenterPos(_x, _y);
 }
 

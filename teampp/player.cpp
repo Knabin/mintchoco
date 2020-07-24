@@ -128,6 +128,7 @@ HRESULT player::init()
 
 	_yPlayerY = 0;
 	_playerImage = _idleImage;
+	_hp = 26;
 
 	{
 		SOUNDMANAGER->addSound("attack1", "sounds/effect/player_punch_01.wav", false, false);
@@ -174,7 +175,7 @@ void player::update()
 
 	frameDraw();//프레임 관리
 
-	//cout << _z << endl;
+	//cout << _hp << endl;
 
 	if (_jumping && !_pixelCollision)
 	{
@@ -962,7 +963,7 @@ void player::leftMove()
 {
 	if (!_dash)//걷기
 	{
-		if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+		if (KEYMANAGER->isStayKeyDown(VK_LEFT) )
 		{
 			if (!_jumping && !_attack && !_guard && !keyRight())
 			{
@@ -977,6 +978,7 @@ void player::leftMove()
 
 			if (!_attack && !keyRight() && !_guard)//점프중에 움직이는거 허용
 			{
+				if ( CAMERA->getLeft() < _rc.left )
 				_x -= _walkSpeed;
 			}
 
@@ -999,6 +1001,7 @@ void player::leftMove()
 
 			if (!_attack && !keyRight() && !_guard)//점프중에 움직이는거 허용
 			{
+				if (CAMERA->getLeft() < _rc.left)
 				_x -= _runSpeed;
 			}
 
@@ -1049,6 +1052,7 @@ void player::rightMove()
 
 			if (!_attack && !keyLeft() && !_guard)//점프중에 움직이는거 허용
 			{
+				if (CAMERA->getLeft() + CAMERA->getWidth() > _rc.right)
 				_x += _walkSpeed;
 			}
 		}
@@ -1071,6 +1075,7 @@ void player::rightMove()
 
 			if (!_attack && !keyLeft() && !_guard)//점프중에 움직이는거 허용
 			{
+				if (CAMERA->getLeft() + CAMERA->getWidth() > _rc.right)
 				_x += _runSpeed;
 			}
 		}
@@ -1140,9 +1145,8 @@ void player::upMove()
 			{
 				_jump->setStartYmin(_walkSpeed);
 			}
-			
 			if (!_pixelCollision)
-			_z -= _walkSpeed;
+				_z -= _walkSpeed;
 			else if (_pixelCollision)
 			{
 				_yPlayerY -= _walkSpeed;
@@ -1209,12 +1213,8 @@ void player::downMove()
 			{
 				_jump->setStartYpls(_walkSpeed);
 			}
-			if (!_pixelCollision)
-				_z += _walkSpeed;
-			else if (_pixelCollision)
-			{
-				_yPlayerY += _walkSpeed;
-			}
+
+			_z += _walkSpeed;
 		}
 	}
 
@@ -1484,14 +1484,14 @@ void player::frameDraw()
 		if (_count % 5 == 0)
 		{
 			_comboAttackImage3->setFrameX(_comboAttackImage3->getFrameX() - 1);
-			_attackRc.set(0, 0, 100, 50);
-			_attackRc.setCenterPos(_rc.left, _rc.getCenterY());
+			_comboAttackRc3.set(0, 0, 100, 50);
+			_comboAttackRc3.setCenterPos(_rc.left, _rc.getCenterY());
 			if (_comboAttackImage3->getFrameX() <= 0)
 			{
 				_comboAttackImage3->setFrameX(_comboAttackImage3->getMaxFrameX());
 				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
 				_attack = false;
-				_attackRc.set(0, 0, 0, 0);
+				_comboAttackRc3.set(0, 0, 0, 0);
 				_comboAttack = false;//2단콤보 실행조건 펄스
 				_comboAttack2 = false;//3단콤보 실행조건 펄스
 			}
@@ -1506,14 +1506,14 @@ void player::frameDraw()
 		if (_count % 5 == 0)
 		{
 			_comboAttackImage3->setFrameX(_comboAttackImage3->getFrameX() + 1);
-			_attackRc.set(0, 0, 100, 50);
-			_attackRc.setCenterPos(_rc.right, _rc.getCenterY());
+			_comboAttackRc3.set(0, 0, 100, 50);
+			_comboAttackRc3.setCenterPos(_rc.right, _rc.getCenterY());
 			if (_comboAttackImage3->getFrameX() >= _comboAttackImage3->getMaxFrameX())
 			{
 				_comboAttackImage3->setFrameX(0);
 				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
 				_attack = false;
-				_attackRc.set(0, 0, 0, 0);
+				_comboAttackRc3.set(0, 0, 0, 0);
 				_comboAttack = false;//2단콤보 실행조건 펄스
 				_comboAttack2 = false;//3단콤보 실행조건 펄스
 			}
@@ -1791,7 +1791,7 @@ void player::playerPosition_1at2()
 void player::playerPosition_2at3()
 {
 	_x = WINSIZEX / 2 + 625;
-	_z = WINSIZEY / 2 + 165;
+	_z = WINSIZEY / 2 + 190;
 	CAMERA->setPosition(_x, _z);
 }
 

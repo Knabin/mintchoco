@@ -38,7 +38,7 @@ HRESULT playGround::init()
 	_scene = new scene;
 	_scene->init();
 
-
+	_stageManager->setPlayerMemoryAddressLink(_player);
 	_collisionManager->setPlayerMemoryAddressLink(_player);
 	_collisionManager->setEnemyManagerMemoryAddressLink(_enemyManager);
 	_collisionManager->setStageManagerMemoryAddressLink(_stageManager);
@@ -317,7 +317,7 @@ void playGround::render()
 			_player->render();
 			_collisionManager->render();
 			_enemyManager->render();
-			_itemManager->render();
+			//_itemManager->render();
 			_scene->render();
 
 			ZORDER->render();
@@ -341,6 +341,12 @@ void playGround::render()
 				CAMERA->getViewWidth(), CAMERA->getViewHeight());
 			_uiManager->render(CAMERA->getMemDC());
 			CAMERA->render(getHDC());
+
+			if (_stageManager->getPlayBattleStart() == true)
+			{
+				_stageManager->PlayBattleStartBackGroundDraw(getHDC());
+
+			}
 		}
 	}
 }

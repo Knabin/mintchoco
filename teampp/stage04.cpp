@@ -12,6 +12,19 @@ stage04::~stage04()
 
 HRESULT stage04::init()
 {
+
+	// 스테이지 4 Rightdoor 잠긴 이미지 변경 선언
+
+	_Stage4RightDoorLock._StageImage = IMAGEMANAGER->addImage("Door3_Stage4", "images/stage/UI_Locked_Door.bmp", 52, 76, true, RGB(255, 0, 255));
+
+	//==================================================================================================================================================//
+
+	// 스테이지 4 Leftdoor 잠긴 이미지 변경 선언
+
+	_Stage4LeftDoorLock._StageImage = IMAGEMANAGER->addImage("Door3_Stage4", "images/stage/UI_Locked_Door.bmp", 52, 76, true, RGB(255, 0, 255));
+
+	//==================================================================================================================================================//
+
 	//스테이지 4 오른쪽 door 이미지 변경 선언
 
 	_Stage4RightDoorOpen._StageImage = IMAGEMANAGER->addImage("Door_Stage4", "images/stage/UI_UnLocked_Door11.bmp", 52, 76, true, RGB(255, 0, 255));
@@ -113,4 +126,14 @@ void stage04::Stage4RightDoorOpenDraw()
 void stage04::Stage4LeftDoorOpenDraw()
 {
 	IMAGEMANAGER->findImage("Door_Stage4")->render(getMemDC(), _Stage4LeftDoor._x - 37, _Stage4LeftDoor._y - 173);
+}
+
+void stage04::Stage4RightDoorLockDraw()
+{
+	IMAGEMANAGER->findImage("Door3_Stage4")->render(getMemDC(), _Stage4RightDoor._x + 7, _Stage4RightDoor._y - 173);
+}
+
+void stage04::Stage4LeftDoorLockDraw()
+{
+	IMAGEMANAGER->findImage("Door3_Stage4")->render(getMemDC(), _Stage4LeftDoor._x - 37, _Stage4LeftDoor._y - 173);
 }

@@ -12,7 +12,19 @@ stage02::~stage02()
 
 HRESULT stage02::init()
 {
-	// 스테이지 2 오른쪽 door 이미지 변경 선언
+	// 스테이지 2 Rightdoor 잠긴 이미지 변경 선언
+
+	_Stage2RightDoorLock._StageImage = IMAGEMANAGER->addImage("Door3_Stage2", "images/stage/UI_Locked_Door.bmp", 52, 76, true, RGB(255, 0, 255));
+
+	//==================================================================================================================================================//
+
+	// 스테이지 2 Rightdoor 잠긴 이미지 변경 선언
+
+	_Stage2LeftDoorLock._StageImage = IMAGEMANAGER->addImage("Door3_Stage2", "images/stage/UI_Locked_Door.bmp", 52, 76, true, RGB(255, 0, 255));
+
+	//==================================================================================================================================================//
+
+	// 스테이지 2 Rightdoor 이미지 변경 선언
 
 	_Stage2RightDoorOpen._StageImage = IMAGEMANAGER->addImage("Door_Stage2", "images/stage/UI_UnLocked_Door11.bmp", 52, 76, true, RGB(255, 0, 255));
 
@@ -23,7 +35,7 @@ HRESULT stage02::init()
 
 	//==================================================================================================================================================//
 
-	// 스테이지 2 왼쪽 door 이미지 변경 선언
+	// 스테이지 2 Leftdoor 이미지 변경 선언
 
 	_Stage2LeftDoorOpen._StageImage = IMAGEMANAGER->addImage("Door_Stage2", "images/stage/UI_UnLocked_Door11.bmp", 52, 76, true, RGB(255, 0, 255));
 
@@ -104,4 +116,14 @@ void stage02::Stage2RightDoorOpenDraw()   // 스테이지 2 오른쪽 door 접근 시 이미
 void stage02::Stage2LeftDoorOpenDraw()   // 스테이지 2 왼쪽 door 접근 시 이미지 변경
 {
 	IMAGEMANAGER->findImage("Door_Stage2")->render(getMemDC(), _Stage2LeftDoor._x - 37, _Stage2LeftDoor._y - 173);
+}
+
+void stage02::Stage2RightDoorLockDraw() //스테이지 2 오른쪽 door 잠긴 이미지 변경
+{
+	IMAGEMANAGER->findImage("Door3_Stage2")->render(getMemDC(), _Stage2RightDoor._x, _Stage2RightDoor._y - 143);
+}
+
+void stage02::Stage2LeftDoorLockDraw() //스테이지 2 왼쪽 door 잠긴 이미지 변경
+{
+	IMAGEMANAGER->findImage("Door3_Stage2")->render(getMemDC(), _Stage2LeftDoor._x - 37, _Stage2LeftDoor._y - 173);
 }
