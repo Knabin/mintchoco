@@ -226,6 +226,46 @@ enemy* enemyManager::createEnemy(int enemyType, float x, float y)
 	}
 }
 
+enemy * enemyManager::createEnemy(int enemyType, float x, float y, int stageNum)
+{
+	switch (enemyType)
+	{
+	case 0:			// cheerleader
+	{
+		enemy* em = new cheerleader;
+		em->init("cheer_move", x, y, 2.3f);
+		em->setStageNum(stageNum);
+		return em;
+	}
+	break;
+	case 1:
+	default:		// school boy
+	{
+		enemy* em = new schoolboy;
+		em->init("schoolboy_move", x, y, 2.3f);
+		em->setStageNum(stageNum);
+		return em;
+	}
+	break;
+	case 2: 		// school girl
+	{
+		enemy* em = new schoolgirl;
+		em->init("schoolgirl_move", x, y, 2.3f);
+		em->setStageNum(stageNum);
+		return em;
+	}
+	break;
+	case 3:			// 보스
+	{
+		enemy* em = new boss;
+		em->init("BOOSIDLE", WINSIZEX / 2, WINSIZEY / 2, 0.0f);
+		em->setStageNum(stageNum);
+		return em;
+	}
+	break;
+	}
+}
+
 void enemyManager::spawnEnemy(int stageNum)
 {
 	if (stageNum > 3) return;
@@ -239,7 +279,7 @@ void enemyManager::spawnEnemy(int stageNum)
 	// 치어리더는 스테이지 1에서 등장하지 않는다고 하여 조건문 걸었음! 자유롭게 수정해 주세요
 	if (stageNum == 0) r2 = RND->getFromIntTo(1, 3);
 
-	_vEnemies.push_back(createEnemy(r2, temp[r].x, temp[r].y));
+	_vEnemies.push_back(createEnemy(r2, temp[r].x, temp[r].y, stageNum));
 }
 
 
