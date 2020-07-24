@@ -169,7 +169,9 @@ public:
 
 	//배틀 스타트 프레임을 재생시키고 그립니다.
 	void PlayBattleStartFrame();		    
-	void PlayBattleStartBackGroundDraw();    
+	void PlayBattleStartBackGroundDraw(HDC hdc);    
+
+	bool getPlayBattleStart() { return _PlayBattleStart; }
 
 	//스테이지 상태 bool값 접근자
 	bool getNowstage1() { return _NowStage1; }

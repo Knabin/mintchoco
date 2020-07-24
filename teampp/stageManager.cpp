@@ -216,10 +216,6 @@ void stageManager::render()
 	for (int i = 0; i < _vNpcs.size(); ++i)
 		_vNpcs[i]->render();
 
-	if (_PlayBattleStart == true)
-	{
-		PlayBattleStartBackGroundDraw();
-	}
 
 	//Stage4DoorLockDraw();
 	
@@ -843,7 +839,7 @@ void stageManager::PlayBattleStartFrame()
 	}
 }
 
-void stageManager::PlayBattleStartBackGroundDraw()
+void stageManager::PlayBattleStartBackGroundDraw(HDC hdc)
 {
-	IMAGEMANAGER->findImage("BattleStartScene")->frameRender(getMemDC(), CAMERA->getLeft(), CAMERA->getTop());
+	IMAGEMANAGER->findImage("BattleStartScene")->frameRender(hdc, 50, 100);
 }

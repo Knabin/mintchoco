@@ -334,6 +334,12 @@ void playGround::render()
 				CAMERA->getViewWidth(), CAMERA->getViewHeight());
 			_uiManager->render(CAMERA->getMemDC());
 			CAMERA->render(getHDC());
+
+			if (_stageManager->getPlayBattleStart() == true)
+			{
+				_stageManager->PlayBattleStartBackGroundDraw(getHDC());
+
+			}
 		}
 	}
 }
