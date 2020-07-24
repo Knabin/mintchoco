@@ -181,7 +181,7 @@ void UiManager::render(HDC hdc)
 		SetTextColor(hdc, RGB(255, 255, 255));
 		char str[1024];
 		HFONT font, oldFont;
-		RECT rcText = RectMake(200, WINSIZEY - 76, WINSIZEX - 350, 76);
+		RECT rcText = RectMake(200, WINSIZEY - 56, WINSIZEX - 350, 76);
 		font = CreateFont(35, 0, 0, 0, 400, false, false, false,
 			DEFAULT_CHARSET,
 			OUT_STRING_PRECIS,
@@ -189,6 +189,11 @@ void UiManager::render(HDC hdc)
 			PROOF_QUALITY,
 			DEFAULT_PITCH | FF_SWISS,
 			TEXT("CookieRunOTF Bold"));
+
+		if (_txtIndex > 90)
+		{
+			rcText = RectMake(200, WINSIZEY - 76, WINSIZEX - 350, 76);
+		}
 
 		oldFont = (HFONT)SelectObject(hdc, font);
 		DrawText(hdc, TEXT(_txt.c_str()), _txtIndex, &rcText,
