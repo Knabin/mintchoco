@@ -7,6 +7,7 @@ enum OBJECTTYPE
 	PLAYER,
 	ENEMY,
 	OBJECT,
+	SHADOW
 };
 
 struct tagObject
@@ -52,6 +53,8 @@ public:
 	void pushObject(HDC hdc, image* img, animation* ani, int type, float x, float jumpPower, float z);
 	// z-order할 오브젝트 추가(이미지 이름, 애니메이션, 타입(0: 플레이어, 1: 적, 2: 오브젝트), 중점 x좌표, y좌표, z좌표(bottom))
 	void pushObject(HDC hdc, const char* imageName, animation* ani, int type, float x, float jumpPower, float z);
+
+	void pushShadowObject(HDC hdc, image* img, int type, float x, float jumpPower, float z);
 
 	void sortVector(int start, int end);
 };
