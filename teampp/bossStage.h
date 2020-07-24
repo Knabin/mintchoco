@@ -19,6 +19,8 @@ private:
 	tagBossStage _BossStageLeftDoor;
 	tagBossStage _BossStageLeftDoorOpen;
 
+	bool _isBroken;
+
 public:
 
 	bossStage();
@@ -34,6 +36,7 @@ public:
 	image* getPixel() { return _BossStagePixelBackGround._pixelCollision; }
 
 	inline MYRECT getRect() { return _BossStageLeftDoor._rc; }
+	inline void setIsBroken(bool br) { _isBroken = br; }
 
 };
 

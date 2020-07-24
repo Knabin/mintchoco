@@ -12,8 +12,6 @@ scene::~scene()
 HRESULT scene::init()
 {
 
-
-	//-----------------------------------------------------------------------------------------------------------------------------/
 	//세이브로드 백그라운드 선언
 
 	IMAGEMANAGER->addImage("SaveLoadBackGround", "images/ui/save_load.bmp", 1280, 720, false, RGB(0, 0, 0));
@@ -93,10 +91,10 @@ HRESULT scene::init()
 	IMAGEMANAGER->addImage("로딩3", "images/ui/Loading03.bmp", 1280, 720, false, RGB(0, 0, 0));
 
 
-	//게임 시작이니? 로딩중이니? 아님 세이브 로딩중이니? 그것도 아니면 베틀스타트씬이 재생중이니?
-	_SaveLoading = false;
+	//게임 시작이니? 로딩중이니? 아님 세이브 로딩중이니?
 	_Loading = false;
 	_GameStart = false;
+	_SaveLoading = false;
 
 	_LoadingCount = 0;
 
@@ -121,6 +119,19 @@ HRESULT scene::init()
 
 	AddFontResource("font/CookieRun Bold.otf");
 	AddFontResource("font/CookieRun Regular.otf");
+
+	saveData s1;
+	saveData s2;
+	saveData s3;
+
+	_vData.push_back(s1);
+	_vData.push_back(s2);
+	_vData.push_back(s3);
+
+	getPlayerSaveData(W1);
+	getPlayerSaveData(W2);
+	getPlayerSaveData(W3);
+
 
 	return S_OK;
 }
@@ -159,10 +170,12 @@ void scene::PointerMove()
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _Pointer._PointerState == START)
 	{
-		_SaveLoading = true;
-		_Loading = false;
 		_GameStart = false;
+		_Loading = false;
+		_SaveLoading = true;
 		getPlayerSaveData();
+		SOUNDMANAGER->play("bgm menu");
+		SOUNDMANAGER->stopAll("bgm menu");
 	}
 
 	switch (_Pointer._PointerState)		//포인터가 현재 어디를 가르키고 있나?
@@ -209,30 +222,14 @@ void scene::SaveLoadMove()
 		}
 	}
 
-	if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _SaveLoadWindowState == W1)
+	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
-		_SaveLoading = false;
 		_Loading = true;
-		_GameStart = false;
-	}
-}
-
-
-void scene::LoadingCountPlus()
-{
-	_LoadingCount++;
-}
-
-void scene::GameStart()
-{
-	if (_LoadingCount > 150)
-	{
 		_SaveLoading = false;
-		_Loading = false;
-		_GameStart = true;
+		_GameStart = false;
+		SOUNDMANAGER->stop("bgm menu");
 	}
 }
-
 
 void scene::TitleBackGroundDraw(HDC hdc)
 {
@@ -259,21 +256,27 @@ void scene::SaveLoadingBackGroundDraw(HDC hdc)
 	case W1:
 	{
 		IMAGEMANAGER->findImage("SaveLoadOpen")->render(hdc, _SaveLoadWindow1._x - 244, _SaveLoadWindow1._y - 100);
-		if(_saveStage != nullptr) _saveStage->render(hdc, _SaveLoadWindow1._x - 236, _SaveLoadWindow1._y - 54);
+		if (_vData[0].saveStage != nullptr) _vData[0].saveStage->render(hdc, _SaveLoadWindow1._x - 236, _SaveLoadWindow1._y - 54);
+		if (_vData[1].saveStageOff != nullptr) _vData[1].saveStageOff->render(hdc, _SaveLoadWindow2._x - 236, _SaveLoadWindow2._y - 54);
+		if (_vData[2].saveStageOff != nullptr) _vData[2].saveStageOff->render(hdc, _SaveLoadWindow3._x - 236, _SaveLoadWindow3._y - 54);
 	}
 	break;
 
 	case W2:
 	{
 		IMAGEMANAGER->findImage("SaveLoadOpen")->render(hdc, _SaveLoadWindow2._x - 244, _SaveLoadWindow2._y - 100);
-		if (_saveStageOff != nullptr) _saveStageOff->render(hdc, _SaveLoadWindow1._x - 236, _SaveLoadWindow1._y - 54);
+		if (_vData[0].saveStageOff != nullptr) _vData[0].saveStageOff->render(hdc, _SaveLoadWindow1._x - 236, _SaveLoadWindow1._y - 54);
+		if (_vData[1].saveStage != nullptr) _vData[1].saveStage->render(hdc, _SaveLoadWindow2._x - 236, _SaveLoadWindow2._y - 54);
+		if (_vData[2].saveStageOff != nullptr) _vData[2].saveStageOff->render(hdc, _SaveLoadWindow3._x - 236, _SaveLoadWindow3._y - 54);
 	}
 	break;
 
 	case W3:
 	{
 		IMAGEMANAGER->findImage("SaveLoadOpen")->render(hdc, _SaveLoadWindow3._x - 244, _SaveLoadWindow3._y - 100);
-		if (_saveStageOff != nullptr) _saveStageOff->render(hdc, _SaveLoadWindow1._x - 236, _SaveLoadWindow1._y - 54);
+		if (_vData[0].saveStageOff != nullptr) _vData[0].saveStageOff->render(hdc, _SaveLoadWindow1._x - 236, _SaveLoadWindow1._y - 54);
+		if (_vData[1].saveStageOff != nullptr) _vData[1].saveStageOff->render(hdc, _SaveLoadWindow2._x - 236, _SaveLoadWindow2._y - 54);
+		if (_vData[2].saveStage != nullptr) _vData[2].saveStage->render(hdc, _SaveLoadWindow3._x - 236, _SaveLoadWindow3._y - 54);
 	}
 	break;
 	}
@@ -298,11 +301,11 @@ void scene::SaveLoadingBackGroundDraw(HDC hdc)
 		TEXT("CookieRunOTF Regular"));
 
 	oldFont = (HFONT)SelectObject(getMemDC(), font);
-	DrawText(getMemDC(), _stageName.c_str(), _stageName.size(), &rcText,
+	DrawText(getMemDC(), _vData[0].stageName.c_str(), _vData[0].stageName.size(), &rcText,
 		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
-	DrawText(getMemDC(), _stageNoName.c_str(), _stageNoName.size(), &rcText2,
+	DrawText(getMemDC(), _vData[1].stageName.c_str(), _vData[1].stageName.size(), &rcText2,
 		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
-	DrawText(getMemDC(), _stageNoName.c_str(), _stageNoName.size(), &rcText3,
+	DrawText(getMemDC(), _vData[2].stageName.c_str(), _vData[2].stageName.size(), &rcText3,
 		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
 	DrawText(getMemDC(), "파일 A", strlen("파일 A"), &rcTextFile,
 		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
@@ -322,11 +325,11 @@ void scene::SaveLoadingBackGroundDraw(HDC hdc)
 		DEFAULT_PITCH | FF_SWISS,
 		TEXT("CookieRunOTF Bold"));
 	oldFont = (HFONT)SelectObject(getMemDC(), font2);
-	DrawText(getMemDC(), _mapName.c_str(), _mapName.size(), &rcTextMap,
+	DrawText(getMemDC(), _vData[0].mapName.c_str(), _vData[0].mapName.size(), &rcTextMap,
 		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
-	DrawText(getMemDC(), _mapNoName.c_str(), _mapNoName.size(), &rcTextMap2,
+	DrawText(getMemDC(), _vData[1].mapName.c_str(), _vData[1].mapName.size(), &rcTextMap2,
 		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
-	DrawText(getMemDC(), _mapNoName.c_str(), _mapNoName.size(), &rcTextMap3,
+	DrawText(getMemDC(), _vData[2].mapName.c_str(), _vData[2].mapName.size(), &rcTextMap3,
 		DT_LEFT | DT_NOCLIP | DT_WORDBREAK);
 
 	DeleteObject(font);
@@ -335,6 +338,8 @@ void scene::SaveLoadingBackGroundDraw(HDC hdc)
 
 void scene::LoadingBackGroundDraw(HDC hdc)
 {
+	
+	
 	if (_LoadingCount <= 30)
 	{
 		IMAGEMANAGER->findImage("로딩1")->render(hdc, 0, 0);
@@ -357,48 +362,85 @@ void scene::LoadingBackGroundDraw(HDC hdc)
 	}	
 }
 
+void scene::LoadingCountPlus()
+{
+	_LoadingCount++;
+}
+
+void scene::GameStart()
+{
+	if (_LoadingCount > 150)
+	{
+		_Loading = false;
+		_SaveLoading = false;
+		_GameStart = true;
+	}
+}
 
 void scene::getPlayerSaveData()
 {
-	if (TXTDATA->canLoadFile("data/player.data"))
+
+	
+
+	
+}
+
+void scene::getPlayerSaveData(int slot)
+{
+	string fileName;
+	switch (slot)
 	{
-		_stageNum = atoi(TXTDATA->txtLoad("data/player.data")[2].c_str());
-		_mapName = "리버시티 고교";
-		switch (_stageNum)
+	case W1:
+		fileName = "data/save1.data";
+		break;
+	case W2:
+		fileName = "data/save2.data";
+		break;
+	case W3:
+		fileName = "data/save3.data";
+		break;
+	}
+
+	if (TXTDATA->canLoadFile(fileName.c_str()))
+	{
+		_vData[slot].stageNum = atoi(TXTDATA->txtLoad(fileName.c_str())[2].c_str());
+		_vData[slot].mapName = "리버시티 고교";
+		switch (_vData[slot].stageNum)
 		{
 		case 0:
-			_saveStage = IMAGEMANAGER->findImage("ui_stage_image1");
-			_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image1 off");
-			_stageName = "반성실";
+			_vData[slot].saveStage = IMAGEMANAGER->findImage("ui_stage_image1");
+			_vData[slot].saveStageOff = IMAGEMANAGER->findImage("ui_stage_image1 off");
+			_vData[slot].stageName = "반성실";
 			break;
 		case 1:
-			_saveStage = IMAGEMANAGER->findImage("ui_stage_image2");
-			_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image2 off");
-			_stageName = "1층 복도";
+			_vData[slot].saveStage = IMAGEMANAGER->findImage("ui_stage_image2");
+			_vData[slot].saveStageOff = IMAGEMANAGER->findImage("ui_stage_image2 off");
+			_vData[slot].stageName = "1층 복도";
 			break;
 		case 2:
-			_saveStage = IMAGEMANAGER->findImage("ui_stage_image3");
-			_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image3 off");
-			_stageName = "2층 복도";
+			_vData[slot].saveStage = IMAGEMANAGER->findImage("ui_stage_image3");
+			_vData[slot].saveStageOff = IMAGEMANAGER->findImage("ui_stage_image3 off");
+			_vData[slot].stageName = "2층 복도";
 			break;
 		case 3:
-			_saveStage = IMAGEMANAGER->findImage("ui_stage_image4");
-			_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image4 off");
-			_stageName = "화학실";
+			_vData[slot].saveStage = IMAGEMANAGER->findImage("ui_stage_image4");
+			_vData[slot].saveStageOff = IMAGEMANAGER->findImage("ui_stage_image4 off");
+			_vData[slot].stageName = "화학실";
 			break;
 		case 4:
-			_saveStage = IMAGEMANAGER->findImage("ui_stage_image5");
-			_saveStageOff = IMAGEMANAGER->findImage("ui_stage_image5 off");
-			_stageName = "학교 로비";
+			_vData[slot].saveStage = IMAGEMANAGER->findImage("ui_stage_image5");
+			_vData[slot].saveStageOff = IMAGEMANAGER->findImage("ui_stage_image5 off");
+			_vData[slot].stageName = "학교 로비";
 			break;
 		default:
-			_stageName = _stageNoName;
+			_vData[slot].stageNum = -1;
+			_vData[slot].stageName = _stageNoName;
 			break;
 		}
 	}
 	else
 	{
-		_stageName = _stageNoName;
-		_mapName = _mapNoName;
+		_vData[slot].stageName = _stageNoName;
+		_vData[slot].mapName = _mapNoName;
 	}
 }

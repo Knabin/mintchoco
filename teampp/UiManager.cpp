@@ -107,6 +107,8 @@ HRESULT UiManager::init()
 
 	//=============================================================================================================================//
 
+	_saveRc = RectMakeCenter(WINSIZEX / 2, WINSIZEY / 2 + 150, 220, 70);
+
 	return S_OK;
 }
 
@@ -202,6 +204,12 @@ void UiManager::MiniMapMove()
 		_MiniMap._MiniMapState = CLOSESTOP;
 	}
 
+	//cout << _saveRc.left << ", " << _ptMouse.x << "    " << _saveRc.top << ", " << _ptMouse.y << endl;
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_saveRc, _ptMouse))
+	{
+		dataManager::getInstance()->saveData(26, 10, _stageManager->getNowStage());
+		_restart = true;
+	}
 
 	//미니맵 현재 상태
 	switch (_MiniMap._MiniMapState)

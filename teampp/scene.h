@@ -22,6 +22,24 @@ struct tagScene
 	PointerState _PointerState;			 //포인터 렉트 현위치
 
 };
+typedef struct tagSaveData
+{
+	image* saveStage;
+	image* saveStageOff;
+	int stageNum;
+	string mapName;
+	string stageName;
+	
+	tagSaveData()
+	{
+		saveStage = nullptr;
+		saveStageOff = nullptr;
+		stageNum = -1;
+		mapName = "";
+		stageName = "";
+	}
+} saveData;
+
 class scene : public gameNode
 {
 
@@ -32,20 +50,15 @@ private:
 	tagScene _Pointer;			//타이틀 포인터
 	tagScene _SaveLoadWindow1;  //세이브로드 첫번쨰창
 	tagScene _SaveLoadWindow2;  //세이브로드 두번째창
+
 	tagScene _SaveLoadWindow3;  //세이브로드 세번째창
 
 	SaveLoadWindowState _SaveLoadWindowState;
 
 	// ===== 나빈 추가 =====
-	image* _saveStage;
-	image* _saveStageOff;
+	vector<saveData> _vData;
 
-	int _stageNum;
-	
-	string _mapName;
 	string _mapNoName;
-
-	string _stageName;
 	string _stageNoName;
 	// ====================
 
@@ -84,7 +97,10 @@ public:
 
 
 	// ===== 나빈 추가 =====
+	int getSaveLoadWindowState() { return _SaveLoadWindowState; }
+
 	void getPlayerSaveData();
+	void getPlayerSaveData(int slot);
 	// ====================
 
 };

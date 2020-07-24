@@ -55,6 +55,7 @@ HRESULT stageManager::init()
 	_em->setEnemiesVector(_NowStage);
 
 	_spawnCount = 0;
+	_bossIntroX = 1900;
 
 	return S_OK;
 }
@@ -110,7 +111,6 @@ void stageManager::render()
 	{
 		PlayBattleStartBackGroundDraw();
 	}
-
 }
 
 void stageManager::NowStage()
@@ -165,6 +165,9 @@ void stageManager::Stage1Move()
 	_em->setEnemiesVector(_NowStage);
 
 	_spawnCount = 0;
+
+	if(!SOUNDMANAGER->isPlaySound("bgm classroom")) SOUNDMANAGER->playBGM("bgm classroom");
+	SOUNDMANAGER->stopAll("bgm classroom");
 }
 
 void stageManager::Stage2Move()
@@ -183,6 +186,9 @@ void stageManager::Stage2Move()
 	_em->setEnemiesVector(_NowStage);
 
 	_spawnCount = 0;
+
+	if (!SOUNDMANAGER->isPlaySound("bgm hall")) SOUNDMANAGER->playBGM("bgm hall");
+	SOUNDMANAGER->stopAll("bgm hall");
 }
 
 void stageManager::Stage3Move()
@@ -201,6 +207,9 @@ void stageManager::Stage3Move()
 	_em->setEnemiesVector(_NowStage);
 
 	_spawnCount = 0;
+
+	if (!SOUNDMANAGER->isPlaySound("bgm hall")) SOUNDMANAGER->playBGM("bgm hall");
+	SOUNDMANAGER->stopAll("bgm hall");
 }
 
 void stageManager::Stage4Move()
@@ -219,6 +228,9 @@ void stageManager::Stage4Move()
 	_em->setEnemiesVector(_NowStage);
 
 	_spawnCount = 0;
+
+	if (!SOUNDMANAGER->isPlaySound("bgm chemi")) SOUNDMANAGER->playBGM("bgm chemi");
+	SOUNDMANAGER->stopAll("bgm chemi");
 }
 
 void stageManager::BossStageMove()
@@ -234,6 +246,9 @@ void stageManager::BossStageMove()
 	CAMERA->setBackHeight(_currentPixelCollision->getHeight());
 
 	_em->setEnemiesVector(_NowStage);
+
+	if (!SOUNDMANAGER->isPlaySound("bgm boss")) SOUNDMANAGER->playBGM("bgm boss");
+	SOUNDMANAGER->stopAll("bgm boss");
 }
 
 void stageManager::Stage1_Stage2_Ok()
