@@ -26,6 +26,11 @@ private:
 	char movie[20] = "videos/boss.mp4";
 	bool _playVideo;
 
+	HWND IntroVideo;
+	char intro[20] = "videos/intro.mp4";
+	bool _playIntroVideo;
+	bool _endIntroVideo;
+
 
 public:
 	playGround();
@@ -35,5 +40,8 @@ public:
 	virtual void release();
 	virtual void update();
 	virtual void render();
+
+	void stopVideo();
+	void stopIntro();
 };
 

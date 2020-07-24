@@ -42,8 +42,10 @@ private:
 
 	vector<string> _vScript;
 	bool _scriptStart;
+	bool _scriptEnd;
 	int _scriptIndex;
 	int _txtIndex;
+	int _endCount;
 	string _txt;
 
 	bool _isKyoko;

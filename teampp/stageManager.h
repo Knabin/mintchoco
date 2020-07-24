@@ -172,6 +172,7 @@ public:
 	void PlayBattleStartBackGroundDraw(HDC hdc);    
 
 	bool getPlayBattleStart() { return _PlayBattleStart; }
+	void setPlayBattleStart(bool playBattleStart) { _PlayBattleStart = playBattleStart; }
 
 	//스테이지 상태 bool값 접근자
 	bool getNowstage1() { return _NowStage1; }

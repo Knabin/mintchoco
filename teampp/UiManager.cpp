@@ -115,9 +115,10 @@ HRESULT UiManager::init()
 	IMAGEMANAGER->addImage("misuzu3", "images/ui/misuzu_3.bmp", 386, 460, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("script k", "images/ui/script_kyoko.bmp", 200, 76, false, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("script m", "images/ui/script_misuzu.bmp", 200, 76, false, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("misuzu vs", "images/ui/battle_misuzu.bmp", 1280, 720, true, RGB(255, 0, 255));
 
 	_saveRc = RectMakeCenter(WINSIZEX / 2, WINSIZEY / 2 + 150, 220, 70);
-	_scriptIndex = _txtIndex = 0;
+	_scriptIndex = _txtIndex = _endCount = 0;
 
 	if (TXTDATA->canLoadFile("data/script.data", ';'))
 	{
@@ -137,7 +138,16 @@ void UiManager::release()
 void UiManager::update()
 {
 	MiniMapMove(); //미니맵 이동,상태 함수
-	if (_scriptStart) printScript();
+	if (_scriptStart && !_scriptEnd) printScript();
+	else if (_scriptStart && _scriptEnd)
+	{
+		_endCount++;
+		if (_endCount % 200 == 0)
+		{
+			_endCount = 0;
+			_scriptStart = false;
+		}
+	}
 }
 
 void UiManager::render(HDC hdc)
@@ -176,70 +186,79 @@ void UiManager::render(HDC hdc)
 	}
 	else
 	{
-		if (_isKyoko)
+		if (_scriptEnd)
 		{
-			IMAGEMANAGER->findImage("script k")->render(hdc, 0, WINSIZEY - 76);
-			switch (_scriptIndex)
-			{
-			case 1:
-			case 3:
-			case 11:
-				IMAGEMANAGER->findImage("kyoko1")->render(hdc, 0, 180);
-				break;
-			case 7:
-			case 19:
-			case 21:
-				IMAGEMANAGER->findImage("kyoko3")->render(hdc, 0, 180);
-				break;
-			case 15:
-				IMAGEMANAGER->findImage("kyoko2")->render(hdc, 0, 180);
-				break;
-			}
-			
+			IMAGEMANAGER->findImage("misuzu vs")->render(hdc);
 		}
 		else
 		{
-			IMAGEMANAGER->findImage("script m")->render(hdc, 0, WINSIZEY - 76);
-			switch (_scriptIndex)
+			if (_isKyoko)
 			{
-			case 5:
-			case 17:
-				IMAGEMANAGER->findImage("misuzu3")->render(hdc, WINSIZEX - IMAGEMANAGER->findImage("misuzu1")->getWidth() - 80, 180);
-				break;
-			case 9:
-				IMAGEMANAGER->findImage("misuzu1")->render(hdc, WINSIZEX - IMAGEMANAGER->findImage("misuzu1")->getWidth() - 80, 180);
-				break;
-			case 13:
-			case 23:
-				IMAGEMANAGER->findImage("misuzu2")->render(hdc, WINSIZEX - IMAGEMANAGER->findImage("misuzu1")->getWidth() - 80, 180);
-				break;
+				IMAGEMANAGER->findImage("script k")->render(hdc, 0, WINSIZEY - 76);
+				switch (_scriptIndex)
+				{
+				case 1:
+				case 3:
+				case 11:
+					IMAGEMANAGER->findImage("kyoko1")->render(hdc, 0, 180);
+					break;
+				case 7:
+				case 19:
+				case 21:
+					IMAGEMANAGER->findImage("kyoko3")->render(hdc, 0, 180);
+					break;
+				case 15:
+					IMAGEMANAGER->findImage("kyoko2")->render(hdc, 0, 180);
+					break;
+				}
+
 			}
+			else
+			{
+				IMAGEMANAGER->findImage("script m")->render(hdc, 0, WINSIZEY - 76);
+				switch (_scriptIndex)
+				{
+				case 5:
+				case 17:
+					IMAGEMANAGER->findImage("misuzu3")->render(hdc, WINSIZEX - IMAGEMANAGER->findImage("misuzu1")->getWidth() - 80, 180);
+					break;
+				case 9:
+					IMAGEMANAGER->findImage("misuzu1")->render(hdc, WINSIZEX - IMAGEMANAGER->findImage("misuzu1")->getWidth() - 80, 180);
+					break;
+				case 13:
+				case 23:
+					IMAGEMANAGER->findImage("misuzu2")->render(hdc, WINSIZEX - IMAGEMANAGER->findImage("misuzu1")->getWidth() - 80, 180);
+					break;
+				}
+			}
+
+			SetBkMode(hdc, TRANSPARENT);
+			SetTextColor(hdc, RGB(255, 255, 255));
+			char str[1024];
+			HFONT font, oldFont;
+			RECT rcText = RectMake(200, WINSIZEY - 56, WINSIZEX - 350, 76);
+			font = CreateFont(35, 0, 0, 0, 400, false, false, false,
+				DEFAULT_CHARSET,
+				OUT_STRING_PRECIS,
+				CLIP_DEFAULT_PRECIS,
+				PROOF_QUALITY,
+				DEFAULT_PITCH | FF_SWISS,
+				TEXT("CookieRunOTF Bold"));
+
+			if (_txtIndex > 90)
+			{
+				rcText = RectMake(200, WINSIZEY - 76, WINSIZEX - 350, 76);
+			}
+
+			oldFont = (HFONT)SelectObject(hdc, font);
+			DrawText(hdc, TEXT(_txt.c_str()), _txtIndex, &rcText,
+				DT_LEFT | DT_WORDBREAK | DT_VCENTER);
+
+			DeleteObject(font);
 		}
-
-		SetBkMode(hdc, TRANSPARENT);
-		SetTextColor(hdc, RGB(255, 255, 255));
-		char str[1024];
-		HFONT font, oldFont;
-		RECT rcText = RectMake(200, WINSIZEY - 56, WINSIZEX - 350, 76);
-		font = CreateFont(35, 0, 0, 0, 400, false, false, false,
-			DEFAULT_CHARSET,
-			OUT_STRING_PRECIS,
-			CLIP_DEFAULT_PRECIS,
-			PROOF_QUALITY,
-			DEFAULT_PITCH | FF_SWISS,
-			TEXT("CookieRunOTF Bold"));
-
-		if (_txtIndex > 90)
-		{
-			rcText = RectMake(200, WINSIZEY - 76, WINSIZEX - 350, 76);
-		}
-
-		oldFont = (HFONT)SelectObject(hdc, font);
-		DrawText(hdc, TEXT(_txt.c_str()), _txtIndex, &rcText,
-			DT_LEFT | DT_WORDBREAK | DT_VCENTER);
-
-		DeleteObject(font);
 	}
+
+
 
 
 	// 스테이지 이동 시 미니맵 렌더링 변경
@@ -365,5 +384,10 @@ void UiManager::printScript()
 	if (_txtIndex < _txt.length() && KEYMANAGER->isOnceKeyDown(VK_SPACE))
 		_txtIndex = _txt.length();
 
-	if (_scriptIndex >= _vScript.size()) _scriptStart = false;
+	if (_scriptIndex >= _vScript.size())
+	{
+		if (!SOUNDMANAGER->isPlaySound("bgm boss")) SOUNDMANAGER->play("bgm boss");
+		SOUNDMANAGER->stopAll("bgm boss");
+		_scriptEnd = true;
+	}
 }

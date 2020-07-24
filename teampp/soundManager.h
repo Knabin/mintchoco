@@ -40,9 +40,9 @@ public:
 	void addSound(string keyName, string soundName, bool bgm, bool loop);
 
 	// 일반 이펙트 재생 함수
-	void play(string keyName, float volume = 1.0f);
+	void play(string keyName, float volume = 0.7f);
 	// 배경음악 재생 함수
-	void playBGM(string keyName, float volume = 1.0f);
+	void playBGM(string keyName, float volume = 0.7f);
 
 	void stop(string keyName);
 	// 해당 사운드 제외하고 전부 다 stop 처리하는 함수
