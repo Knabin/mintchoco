@@ -310,7 +310,7 @@ void playGround::render()
 			_player->render();
 			_collisionManager->render();
 			_enemyManager->render();
-			_itemManager->render();
+			//_itemManager->render();
 			_scene->render();
 
 			ZORDER->render();

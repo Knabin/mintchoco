@@ -61,7 +61,6 @@ private:
 	tagLockChain _ChainRight;         //¿À¸¥ÂÊ ¼è»ç½½
 	tagLockChain _ChainTop;           //À­ÂÊ   ¼è»ç½½
 	tagLockChain _ChainBottom;        //¾Æ·§ÂÊ ¼è»ç½½
-	tagLockChain _TotalChainSize;
 
 	tagLockChain _Lock;				  //ÀÚ¹°¼è
 

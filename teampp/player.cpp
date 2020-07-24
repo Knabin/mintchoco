@@ -1145,8 +1145,8 @@ void player::upMove()
 			{
 				_jump->setStartYmin(_walkSpeed);
 			}
-			
-			_z -= _walkSpeed;
+			if (!_pixelCollision)
+				_z -= _walkSpeed;
 			else if (_pixelCollision)
 			{
 				_yPlayerY -= _walkSpeed;

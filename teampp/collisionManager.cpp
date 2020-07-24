@@ -23,8 +23,6 @@ void collisionManager::update()
 {
 	stagedoor_collision();
 
-	playerHpMinus();
-
 	enemy_collisionNoBlock();
 	enemy_collisionLeftBlock();
 	enemy_collisionRightBlock();
@@ -493,17 +491,6 @@ void collisionManager::enemy_collisionRightBlock()
 	}
 }
 
-
-
-//충돌시 Hp 감소
-void collisionManager::playerHpMinus()
-{
-	if (isCollision(_itemManager->getVItem()->getRect(), _player->getPlayerRect()))
-	{
-		_uiManager->PlayerHpMinus();
-	}
-
-}
 
 void collisionManager::npcCollision()
 {
