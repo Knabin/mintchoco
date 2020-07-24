@@ -43,6 +43,10 @@ private:
 	vector<string> _vScript;
 	bool _scriptStart;
 	int _scriptIndex;
+	int _txtIndex;
+	string _txt;
+
+	bool _isKyoko;
 	// ========================
 
 public:
@@ -57,6 +61,7 @@ public:
 
 	void MiniMapMove();						//미니맵 이동 함수
 	void PlayerHpMinus();					//PlayerHpPoint 감소 함수
+	void printScript();
 
 	void setStageManagerMemoryAddressLink(stageManager* stageManager) { _stageManager = stageManager; }
 

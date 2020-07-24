@@ -107,30 +107,35 @@ HRESULT UiManager::init()
 
 	//=============================================================================================================================//
 
-	IMAGEMANAGER->addImage("kyoko1", "images/ui/ui_kyoko1.bmp", 684, 816, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("kyoko2", "images/ui/ui_kyoko2.bmp", 684, 816, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("kyoko3", "images/ui/ui_kyoko3.bmp", 684, 816, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("misuzu1", "images/ui/ui_misuzu1.bmp", 684, 816, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("misuzu2", "images/ui/ui_misuzu2.bmp", 684, 816, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("misuzu3", "images/ui/ui_misuzu3.bmp", 684, 816, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("kyoko1", "images/ui/kyoko_1.bmp", 386, 460, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("kyoko2", "images/ui/kyoko_2.bmp", 386, 460, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("kyoko3", "images/ui/kyoko_3.bmp", 386, 460, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("misuzu1", "images/ui/misuzu_1.bmp", 386, 460, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("misuzu2", "images/ui/misuzu_2.bmp", 386, 460, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("misuzu3", "images/ui/misuzu_3.bmp", 386, 460, true, RGB(255, 0, 255));
 
 	_saveRc = RectMakeCenter(WINSIZEX / 2, WINSIZEY / 2 + 150, 220, 70);
+	_scriptIndex = _txtIndex = 0;
 
 	if (TXTDATA->canLoadFile("data/script.data", ';'))
 	{
 		_vScript = TXTDATA->txtLoad("data/script.data", ";");
 	}
 
+	AddFontResource("CookieRun Bold.otf");
+
 	return S_OK;
 }
 
 void UiManager::release()
 {
+	RemoveFontResource("CookieRun Bold.otf");
 }
 
 void UiManager::update()
 {
 	MiniMapMove(); //미니맵 이동,상태 함수
+	if (_scriptStart) printScript();
 }
 
 void UiManager::render(HDC hdc)
@@ -169,7 +174,27 @@ void UiManager::render(HDC hdc)
 	}
 	else
 	{
-		IMAGEMANAGER->findImage("kyoko1")->render(hdc, 0, 0);
+		if (_isKyoko) IMAGEMANAGER->findImage("kyoko3")->render(hdc, 0, 180);
+		else IMAGEMANAGER->findImage("misuzu3")->render(hdc, WINSIZEX - IMAGEMANAGER->findImage("misuzu1")->getWidth() - 80, 180);
+
+		SetBkMode(hdc, TRANSPARENT);
+		SetTextColor(hdc, RGB(255, 255, 255));
+		char str[1024];
+		HFONT font, oldFont;
+		RECT rcText = RectMake(200, WINSIZEY - 76, WINSIZEX - 350, 76);
+		font = CreateFont(35, 0, 0, 0, 400, false, false, false,
+			DEFAULT_CHARSET,
+			OUT_STRING_PRECIS,
+			CLIP_DEFAULT_PRECIS,
+			PROOF_QUALITY,
+			DEFAULT_PITCH | FF_SWISS,
+			TEXT("CookieRunOTF Bold"));
+
+		oldFont = (HFONT)SelectObject(hdc, font);
+		DrawText(hdc, TEXT(_txt.c_str()), _txtIndex, &rcText,
+			DT_LEFT | DT_WORDBREAK | DT_VCENTER);
+
+		DeleteObject(font);
 	}
 
 
@@ -269,4 +294,32 @@ void UiManager::PlayerHpMinus()
 			break;
 		}
 	}
+}
+
+void UiManager::printScript()
+{
+	_txt = _vScript[_scriptIndex];
+
+	if (_scriptIndex % 2 == 0)
+	{
+		if (_txt == "K")
+			_isKyoko = true;
+		else _isKyoko = false;
+		_txt = _vScript[++_scriptIndex];
+	}
+
+	if (_txtIndex <= _txt.length())
+	{
+		_txtIndex++;
+	}
+	else if (_txtIndex >= _txt.length() && KEYMANAGER->isOnceKeyDown(VK_SPACE))
+	{
+		_scriptIndex++;
+		_txtIndex = 0;
+	}
+
+	if (_txtIndex < _txt.length() && KEYMANAGER->isOnceKeyDown(VK_SPACE))
+		_txtIndex = _txt.length();
+
+	if (_scriptIndex >= _vScript.size()) _scriptStart = false;
 }
