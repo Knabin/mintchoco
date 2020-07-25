@@ -109,6 +109,8 @@ private:
 	bool _comboAttack2;//콤보공격 3단계 실행여부를 확인하기 위한 변수
 	bool _pixelCollision;//장애물 픽셀충돌 조건
 	bool _oneFramePlay;//히트, 다운 프레임의 set상태를 한번씩만 초기화가 되게 하기위해 사용할 변수
+	bool _deadOneFramePlay;//플레이어가 죽었을때 프레임의 초기화를 한번만 하기위해 필요한 변수
+	bool _jumpingHit;//점프중에 맞으면 플레이어의 렉트위치를 점프파워만큼 위로 올려주기 위해 필요한 변수
 
 	image* _playerImage;
 	float _yPlayerY;

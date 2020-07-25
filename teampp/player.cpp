@@ -26,7 +26,7 @@ HRESULT player::init()
 	_ultimateImage = IMAGEMANAGER->addFrameImage("playerUltimate", "images/player/Kyoko_Ultimate.bmp", 3675, 384, 25, 2, true, RGB(255, 0, 255));//플레이어 궁극기 이미지
 	_guardImage = IMAGEMANAGER->addFrameImage("playerGuard", "images/player/Kyoko_Guard.bmp", 351, 378, 3, 2, true, RGB(255, 0, 255));//플레이어 방어 이미지
 	_downImage = IMAGEMANAGER->addFrameImage("playerDown", "images/player/Kyoko_Down.bmp", 4896, 366, 24, 2, true, RGB(255, 0, 255));//플레이어 피격당했을때 다운 이미지
-	_deadImage = IMAGEMANAGER->addFrameImage("playerDead", "images/player/Kyoko_Stunned.bmp", 384, 384, 3, 2, true, RGB(255, 0, 255));//플레이어 사망 이미지
+	_deadImage = IMAGEMANAGER->addFrameImage("playerDead", "images/player/Kyoko_GameOver.bmp", 6240, 282, 26, 2, true, RGB(255, 0, 255));//플레이어 사망 이미지
 	_hitImage = IMAGEMANAGER->addFrameImage("playerHit", "images/player/Kyoko_Hit.bmp", 236, 348, 2, 2, true, RGB(255, 0, 255));//플레이어 피격 당할때 이미지
 	_runEffect = IMAGEMANAGER->addFrameImage("playerRunEffect", "images/player/Kyoko_Run_Effect.bmp", 2544, 246, 12, 2, true, RGB(255, 0, 255));//플레이어가 달릴때 생기는 먼지 이펙트 이미지
 
@@ -138,6 +138,8 @@ HRESULT player::init()
 	_guard = false;//플레이어 방어
 	_pixelCollision = false;//장애물 픽셀 충돌 조건 확인용
 	_oneFramePlay = false;//히트, 다운 프레임의 set상태를 한번씩만 초기화가 되게 하기위해 사용할 변수
+	_jumpingHit = false;//점프중에 맞으면 플레이어의 렉트위치를 점프파워만큼 위로 올려주기 위해 필요한 변수
+	_deadOneFramePlay = false;//점프중에 맞으면 플레이어의 렉트위치를 점프파워만큼 위로 올려주기 위해 필요한 변수
 
 	_yPlayerY = 0;
 	_playerImage = _idleImage;
@@ -168,22 +170,24 @@ HRESULT player::init()
 
 void player::update()
 {
+	if (_hp >= 1)
+	{
+		attack();//플레이어 공격
 
-	attack();//플레이어 공격
+		leftMove();//왼쪽이동
 
-	leftMove();//왼쪽이동
+		rightMove();//오른쪽 이동
 
-	rightMove();//오른쪽 이동
+		runTime();//따닥 감지
 
-	runTime();//따닥 감지
+		upMove();//위쪽 이동
 
-	upMove();//위쪽 이동
+		downMove();//아래쪽 이동
 
-	downMove();//아래쪽 이동
+		jumpMove();//점프
 
-	jumpMove();//점프
-
-	guard();//플레이어 방어
+		guard();//플레이어 방어
+	}
 
 	frameDraw();//프레임 관리
 
@@ -192,13 +196,17 @@ void player::update()
 	//cout << "comboAttack2 : " << _comboAttack2 << endl;
 	cout << "hp" << _hp << endl;
 
-	if (_jumping && !_pixelCollision)
+	if (_jumping && !_pixelCollision && !_jumpingHit)
 	{
 		_rc.setCenterPos(_x, _z - _jump->getJumpPower() - _rc.getHeight() / 2);
 	}
-	else if (!_jumping && !_pixelCollision)
+	else if (!_jumping && !_pixelCollision && !_jumpingHit)
 	{
 		_rc.setCenterPos(_x, _z - _rc.getHeight() / 2);
+	}
+	else if (_jumpingHit)
+	{
+		_rc.setCenterPos(_x, _z - _jump->getJumpPower() - _rc.getHeight() / 2);
 	}
 
 	if (_comboAttack)
@@ -208,6 +216,31 @@ void player::update()
 	if (_comboAttack2)
 	{
 		_comboAttackRc2.set(0, 0, 0, 0);
+	}
+
+	if (_z <= _z - _jump->getJumpPower())
+	{
+		_jumpingHit = false;
+	}
+
+	if (_hp <= 0)
+	{
+		if (_playerDirection == PLAYERDIRECTION_LEFT_COMBO_ATTACK1 || _playerDirection == PLAYERDIRECTION_LEFT_COMBO_ATTACK2 || _playerDirection == PLAYERDIRECTION_LEFT_COMBO_ATTACK3 ||
+			_playerDirection == PLAYERDIRECTION_LEFT_DASH_ATTACK || _playerDirection == PLAYERDIRECTION_LEFT_GUARD || _playerDirection == PLAYERDIRECTION_LEFT_HIT ||
+			_playerDirection == PLAYERDIRECTION_LEFT_JUMP || _playerDirection == PLAYERDIRECTION_LEFT_JUMP_ATTACK || _playerDirection == PLAYERDIRECTION_LEFT_MOVE ||
+			_playerDirection == PLAYERDIRECTION_LEFT_STOP || _playerDirection == PLAYERDIRECTION_LEFT_STRONG_ATTACK || _playerDirection == PLAYERDIRECTION_LEFT_ULTIMATE ||
+			_playerDirection == PLAYERDIRECTION_LEFT_WALK)
+		{
+			_playerDirection = PLAYERDIRECTION_LEFT_DEAD;
+		}
+		else if (_playerDirection == PLAYERDIRECTION_RIGHT_COMBO_ATTACK1 || _playerDirection == PLAYERDIRECTION_RIGHT_COMBO_ATTACK2 || _playerDirection == PLAYERDIRECTION_RIGHT_COMBO_ATTACK3 ||
+			_playerDirection == PLAYERDIRECTION_RIGHT_DASH_ATTACK || _playerDirection == PLAYERDIRECTION_RIGHT_GUARD || _playerDirection == PLAYERDIRECTION_RIGHT_HIT ||
+			_playerDirection == PLAYERDIRECTION_RIGHT_JUMP || _playerDirection == PLAYERDIRECTION_RIGHT_JUMP_ATTACK || _playerDirection == PLAYERDIRECTION_RIGHT_MOVE ||
+			_playerDirection == PLAYERDIRECTION_RIGHT_STOP || _playerDirection == PLAYERDIRECTION_RIGHT_STRONG_ATTACK || _playerDirection == PLAYERDIRECTION_RIGHT_ULTIMATE ||
+			_playerDirection == PLAYERDIRECTION_RIGHT_WALK)
+		{
+			_playerDirection = PLAYERDIRECTION_RIGHT_DEAD;
+		}
 	}
 
 	switch (_stageManager->getNowStage())
@@ -270,6 +303,8 @@ void player::render()
 
 	switch (_playerDirection)//플레이어의 프레임 상태값에 따른 렌더
 	{
+		if (_hp >= 1)
+		{
 	case PLAYERDIRECTION_RIGHT_STOP:
 	case PLAYERDIRECTION_LEFT_STOP:
 		_playerImage = _idleImage;
@@ -326,13 +361,14 @@ void player::render()
 	case PLAYERDIRECTION_LEFT_DOWN:
 		_playerImage = _downImage;
 		break;
-	case PLAYERDIRECTION_RIGHT_DEAD:
-	case PLAYERDIRECTION_LEFT_DEAD:
-		_playerImage = _deadImage;
-		break;
 	case PLAYERDIRECTION_RIGHT_HIT:
 	case PLAYERDIRECTION_LEFT_HIT:
 		_playerImage = _hitImage;
+		break;
+		}
+	case PLAYERDIRECTION_RIGHT_DEAD:
+	case PLAYERDIRECTION_LEFT_DEAD:
+		_playerImage = _deadImage;
 		break;
 	}
 
@@ -1852,6 +1888,10 @@ void player::frameDraw()
 
 	case PLAYERDIRECTION_LEFT_HIT:
 		_attack = false;
+		if (_jumping)
+		{
+			_jumpingHit = true;
+		}
 		_jumping = false;
 		_comboAttack = false;
 		_comboAttack2 = false;
@@ -1868,7 +1908,14 @@ void player::frameDraw()
 			if (_hitImage->getFrameX() <= 0)
 			{
 				_hitImage->setFrameX(_hitImage->getMaxFrameX());
-				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
+				if (_jumpingHit)//점프중에 맞았으면 점프프레임
+				{
+					_playerDirection = PLAYERDIRECTION_LEFT_JUMP;
+				}
+				else
+				{
+					_playerDirection = PLAYERDIRECTION_LEFT_STOP;
+				}
 				_comboAttack = false;
 				_comboAttack2 = false;
 				_attack = false;
@@ -1881,6 +1928,10 @@ void player::frameDraw()
 
 	case PLAYERDIRECTION_RIGHT_HIT:
 		_attack = false;
+		if (_jumping)
+		{
+			_jumpingHit = true;
+		}
 		_jumping = false;
 		_comboAttack = false;
 		_comboAttack2 = false;
@@ -1897,7 +1948,14 @@ void player::frameDraw()
 			if (_hitImage->getFrameX() >= _hitImage->getMaxFrameX())
 			{
 				_hitImage->setFrameX(0);
-				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
+				if (_jumpingHit)//점프중에 맞았으면 점프프레임
+				{
+					_playerDirection = PLAYERDIRECTION_RIGHT_JUMP;
+				}
+				else
+				{
+					_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
+				}
 				_comboAttack = false;
 				_comboAttack2 = false;
 				_attack = false;
@@ -1909,26 +1967,36 @@ void player::frameDraw()
 		break;
 
 	case PLAYERDIRECTION_LEFT_DEAD:
-		_count++;
-		if (_count % 5 == 0)
+		if (!_deadOneFramePlay)
 		{
-			_deadImage->setFrameX(_deadImage->getFrameX() - 1);
-			if (_deadImage->getFrameX() <= 0)
+			_deadImage->setFrameX(_deadImage->getMaxFrameX());
+			_deadImage->setFrameY(0);
+			_deadOneFramePlay = true;
+		}
+		_count++;
+		if (_count % 10 == 0)
+		{
+			if (_deadImage->getFrameX() > 0 && _deadImage->getFrameX() != 0)
 			{
-				_deadImage->setFrameX(_deadImage->getMaxFrameX());
+				_deadImage->setFrameX(_deadImage->getFrameX() - 1);
 			}
 			_count = 0;
 		}
 		break;
 
 	case PLAYERDIRECTION_RIGHT_DEAD:
-		_count++;
-		if (_count % 5 == 0)
+		if (!_deadOneFramePlay)
 		{
-			_deadImage->setFrameX(_deadImage->getFrameX() + 1);
-			if (_deadImage->getFrameX() >= _deadImage->getMaxFrameX())
+			_deadImage->setFrameX(0);
+			_deadImage->setFrameY(1);
+			_deadOneFramePlay = true;
+		}
+		_count++;
+		if (_count % 10 == 0)
+		{
+			if (_deadImage->getFrameX() < _deadImage->getMaxFrameX() && _deadImage->getFrameX() != _deadImage->getMaxFrameX())
 			{
-				_deadImage->setFrameX(0);
+				_deadImage->setFrameX(_deadImage->getFrameX() + 1);
 			}
 			_count = 0;
 		}
