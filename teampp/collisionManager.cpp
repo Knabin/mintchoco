@@ -529,7 +529,6 @@ void collisionManager::player_collision()
 				{
 					_player->setHitPlayerHP(1);
 					_uiManager->PlayerHpMinus();
-					_uiManager->PlayerDeath();
 					_count = 0;
 				}
 			}
@@ -547,7 +546,6 @@ void collisionManager::player_collision()
 				{
 					_player->setHitPlayerHP(1);
 					_uiManager->PlayerHpMinus();
-					_uiManager->PlayerDeath();
 					_count = 0;
 				}
 			}
@@ -565,7 +563,6 @@ void collisionManager::player_collision()
 				{
 					_player->setHitPlayerHP(1);
 					_uiManager->PlayerHpMinus();
-					_uiManager->PlayerDeath();
 					_count = 0;
 				}
 			}

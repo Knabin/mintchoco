@@ -170,7 +170,6 @@ void UiManager::render(HDC hdc)
 														//Boss//
 	//=============================================================================================================================//
 
-
 	if (_stageManager->getNowbossStage() == true)		
 	{
 		IMAGEMANAGER->findImage("BossHPpoint")->render(hdc, _BossHpPoint._x - 218, _BossHpPoint._y - 17);
@@ -184,9 +183,6 @@ void UiManager::render(HDC hdc)
 		IMAGEMANAGER->findImage("UiHide")->render(hdc, -975, 640);
 	}
 
-
-		IMAGEMANAGER->findImage("UICoin")->render(hdc, _UiCoin._x - 18, _UiCoin._y - 18);
-	}
 	else
 	{
 		IMAGEMANAGER->findImage("kyoko1")->render(hdc, 0, 0);

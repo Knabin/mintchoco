@@ -71,6 +71,16 @@ public:
 
 
 	void PlayerHpMinus();					//PlayerHpPoint 감소 함수
+	void PlayerDeath();
+
+	//boss hp 관련 함수
+
+
+	void BossHpMinus();
+	void BossDeath();
+
+
+	void printScript();
 
 	void setStageManagerMemoryAddressLink(stageManager* stageManager) { _stageManager = stageManager; }
 
