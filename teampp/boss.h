@@ -213,12 +213,13 @@ public:
 	BOSSDIRECTION getBossDirection() { return _bossDirection; }
 	void setBossDirection(BOSSDIRECTION bossDirection) { _bossDirection = bossDirection; }
 
+	void setBossMotion(animation* bossMotion) { _bossMotion = bossMotion; }
+
 	MYRECT& getBossRect() { return _rc; }
 	void setBossRect(MYRECT rc) { _rc = rc; }
 
 	MYRECT& getBossAttackRect() { return _rcA; }
 	void setBossAttackRect(int a, int b, int c, int d) { _rcA.set(a, b, c, d); }
-
 
 
 	// ==========GET 쳐 맞는 모션 (충돌처리용)=============
@@ -229,6 +230,8 @@ public:
 	animation* getBossMotion_L_HIT2() { return _boss_L_HIT2; }
 	animation* getBossMotion_R_HIT3() { return _boss_R_HIT3; }
 	animation* getBossMotion_L_HIT3() { return _boss_L_HIT3; }
+	animation* getBossMotion_R_HIT_A() { return _boss_R_HIT_A; }
+	animation* getBossMotion_L_HIT_A() { return _boss_L_HIT_A; }
 
 	animation* getBossMotion_R_G_HIT1() { return _boss_R_G_HIT1; }
 	animation* getBossMotion_L_G_HIT1() { return _boss_L_G_HIT1; }

@@ -253,11 +253,11 @@ HRESULT boss::init(string imageName, float x, float z, float speed)
 	_boss_L_HIT_A = new animation;
 	_boss_L_HIT_A->init(_bossHit_a->getWidth(), _bossHit_a->getHeight(), _bossHit_a->getFrameWidth(), _bossHit_a->getFrameHeight());
 	_boss_L_HIT_A->setPlayFrame(43, 22, false, false);
-	_boss_L_HIT_A->setFPS(1);
+	_boss_L_HIT_A->setFPS(0.5);
 	_boss_R_HIT_A = new animation;
 	_boss_R_HIT_A->init(_bossHit_a->getWidth(), _bossHit_a->getHeight(), _bossHit_a->getFrameWidth(), _bossHit_a->getFrameHeight());
 	_boss_R_HIT_A->setPlayFrame(0, 21, false, false);
-	_boss_R_HIT_A->setFPS(1);
+	_boss_R_HIT_A->setFPS(0.5);
 
 	_boss_L_DIZZY = new animation;
 	_boss_L_DIZZY->init(_bossDizzy->getWidth(), _bossDizzy->getHeight(), _bossDizzy->getFrameWidth(), _bossDizzy->getFrameHeight());
@@ -398,6 +398,20 @@ void boss::update()
 
 		if (_bossMotion->isPlay() == false)	_bossMotion->start();
 	}
+
+	//if (_bossDirection == BOSS_LEFT_HIT1 || _bossDirection == BOSS_RIGHT_HIT1 ||
+	//	_bossDirection == BOSS_LEFT_HIT2 || _bossDirection == BOSS_RIGHT_HIT2 ||
+	//	_bossDirection == BOSS_LEFT_HIT3 || _bossDirection == BOSS_RIGHT_HIT3 ||
+	//	_bossDirection == BOSS_LEFT_HIT_A || _bossDirection == BOSS_RIGHT_HIT_A)
+	//{
+	//	if (!_bossMotion->isPlay())
+	//	{
+	//		_bossMotion->start();
+	//	}
+	//}
+
+
+
 	// 공격 패턴
 	switch (_bossPhase == PHASE1)
 	{
@@ -711,6 +725,47 @@ void boss::render()
 		_bossImg = _bossWupunch;
 		_speed = 1.0f;
 		break;
+	case BOSS_RIGHT_HIT1:
+		_bossImg = _bossHit;
+		//_boss_R_HIT1->start();
+		break;
+	case BOSS_RIGHT_HIT2:
+		_bossImg = _bossHit;
+		//_boss_R_HIT2->start();
+		break;
+	case BOSS_RIGHT_HIT3:
+		_bossImg = _bossHit;
+		//_boss_R_HIT3->start();
+		break;
+	case BOSS_LEFT_HIT1:
+		_bossImg = _bossHit;
+		//_boss_L_HIT1->start();
+		break;
+	case BOSS_LEFT_HIT2:
+		_bossImg = _bossHit;
+		//_boss_L_HIT2->start();
+		break;
+	case BOSS_LEFT_HIT3:
+		_bossImg = _bossHit;
+		//_boss_L_HIT3->start();
+		break;
+	case BOSS_RIGHT_HIT_A:
+		_bossImg = _bossHit_a;
+		//_boss_R_HIT_A->start();
+		_rc.move(-50, 0);
+		break;
+	case BOSS_LEFT_HIT_A:
+		_bossImg = _bossHit_a;
+		//_boss_L_HIT_A->start();
+		_rc.move(50, 0);
+		break;
+	case BOSS_RIGHT_G_HIT:
+		_bossImg = _bossG_hit;
+		break;
+	case BOSS_LEFT_G_HIT:
+		_bossImg = _bossG_hit;
+		break;
+
 
 	}
 

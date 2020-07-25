@@ -5,6 +5,7 @@ class enemyManager;
 class stageManager;
 class itemManager;
 class UiManager;
+class boss;
 
 
 class collisionManager : public gameNode
@@ -15,6 +16,7 @@ private:
 	stageManager* _stageManager;
 	itemManager* _itemManager;
 	UiManager* _uiManager;
+	boss* _boss;
 
 	image* _attackEffect;//플레이어가 적을 공격할때 적과 충돌시 이펙트 이미지
 
@@ -45,6 +47,13 @@ public:
 	void npcCollision();
 	void player_collision();//플레이어랑 적 공격이랑 충돌시
 	void playerAttackHitEffect();//플레이어가 에너미를 공격해서 충돌시 나올 이펙트 이미지
+
+	// == 운천 추가 ==   보스랑 플레이어 충돌시
+	void boss_collisionNoBlock();
+	void boss_collisionLeftBlock();
+	void boss_collisionRightBlock();
+
+	void player_bossCollision();
 
 	// ===== 나빈 추가 =====
 	void playPlayerGetHitSound();
