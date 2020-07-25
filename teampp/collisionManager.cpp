@@ -193,12 +193,14 @@ void collisionManager::enemy_collisionNoBlock()
 					else if (_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_STRONG_ATTACK || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_STRONG_ATTACK)
 					{
 						temp[i]->setHitEnemyHP(4);
-						SOUNDMANAGER->play("gethit big", 1.0f);
+						SOUNDMANAGER->play("gethit big", 0.85f);
+						CAMERA->cameraShake();
 					}
 					else if (_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_ULTIMATE || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_ULTIMATE)
 					{
 						temp[i]->setHitEnemyHP(15);
-						SOUNDMANAGER->play("gethit big", 1.0f);
+						SOUNDMANAGER->play("gethit big", 0.85f);
+						CAMERA->cameraShake();
 					}
 					_enemyCollisionCount = 0;
 				}
@@ -236,6 +238,7 @@ void collisionManager::enemy_collisionNoBlock()
 				{
 					temp[i]->setHitEnemyHP(1);
 					_enemyCollisionCount1 = 0;
+					playGetHitSound();
 				}
 			}
 
@@ -263,6 +266,7 @@ void collisionManager::enemy_collisionNoBlock()
 					}
 					temp[i]->setHitEnemyHP(1);
 					_enemyCollisionCount2 = 0;
+					playGetHitSound();
 				}
 			}
 
@@ -289,6 +293,7 @@ void collisionManager::enemy_collisionNoBlock()
 					}
 					temp[i]->setHitEnemyHP(1);
 					_enemyCollisionCount3 = 0;
+					CAMERA->cameraShake();
 				}
 			}
 		}
@@ -326,14 +331,19 @@ void collisionManager::enemy_collisionLeftBlock()
 						_player->getPlayerdirection() != PLAYERDIRECTION_RIGHT_ULTIMATE && _player->getPlayerdirection() != PLAYERDIRECTION_LEFT_ULTIMATE)
 					{
 						temp[i]->setHitEnemyHP(1);
+						playGetHitSound();
 					}
 					else if (_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_STRONG_ATTACK || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_STRONG_ATTACK)
 					{
 						temp[i]->setHitEnemyHP(4);
+						SOUNDMANAGER->play("gethit big", 0.85f);
+						CAMERA->cameraShake();
 					}
 					else if (_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_ULTIMATE || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_ULTIMATE)
 					{
 						temp[i]->setHitEnemyHP(15);
+						SOUNDMANAGER->play("gethit big", 0.85f);
+						CAMERA->cameraShake();
 					}
 					_enemyCollisionCount = 0;
 				}
@@ -371,6 +381,7 @@ void collisionManager::enemy_collisionLeftBlock()
 				{
 					temp[i]->setHitEnemyHP(1);
 					_enemyCollisionCount1 = 0;
+					playGetHitSound();
 				}
 			}
 
@@ -398,6 +409,7 @@ void collisionManager::enemy_collisionLeftBlock()
 					}
 					temp[i]->setHitEnemyHP(1);
 					_enemyCollisionCount2 = 0;
+					playGetHitSound();
 				}
 			}
 
@@ -424,6 +436,8 @@ void collisionManager::enemy_collisionLeftBlock()
 					}
 					temp[i]->setHitEnemyHP(1);
 					_enemyCollisionCount3 = 0;
+					SOUNDMANAGER->play("gethit big", 0.85f);
+					CAMERA->cameraShake();
 				}
 			}
 		}
@@ -460,14 +474,19 @@ void collisionManager::enemy_collisionRightBlock()
 						_player->getPlayerdirection() != PLAYERDIRECTION_RIGHT_ULTIMATE && _player->getPlayerdirection() != PLAYERDIRECTION_LEFT_ULTIMATE)
 					{
 						temp[i]->setHitEnemyHP(1);
+						playGetHitSound();
 					}
 					else if (_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_STRONG_ATTACK || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_STRONG_ATTACK)
 					{
 						temp[i]->setHitEnemyHP(4);
+						SOUNDMANAGER->play("gethit big", 0.85f);
+						CAMERA->cameraShake();
 					}
 					else if (_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_ULTIMATE || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_ULTIMATE)
 					{
 						temp[i]->setHitEnemyHP(15);
+						SOUNDMANAGER->play("gethit big", 0.85f);
+						CAMERA->cameraShake();
 					}
 					_enemyCollisionCount = 0;
 				}
@@ -504,6 +523,7 @@ void collisionManager::enemy_collisionRightBlock()
 				{
 					temp[i]->setHitEnemyHP(1);
 					_enemyCollisionCount1 = 0;
+					playGetHitSound();
 				}
 			}
 
@@ -531,6 +551,7 @@ void collisionManager::enemy_collisionRightBlock()
 					}
 					temp[i]->setHitEnemyHP(1);
 					_enemyCollisionCount2 = 0;
+					playGetHitSound();
 				}
 			}
 
@@ -557,6 +578,8 @@ void collisionManager::enemy_collisionRightBlock()
 					}
 					temp[i]->setHitEnemyHP(1);
 					_enemyCollisionCount3 = 0;
+					SOUNDMANAGER->play("gethit big", 0.85f);
+					CAMERA->cameraShake();
 				}
 			}
 		}
@@ -687,16 +710,16 @@ void collisionManager::playPlayerGetHitSound()
 {
 	playGetHitSound();
 	int n = RND->getInt(2);
-	if (n == 0) SOUNDMANAGER->play("player gethit light1");
-	else SOUNDMANAGER->play("player gethit light2");
+	if (n == 0) SOUNDMANAGER->play("player gethit light1", 0.9f);
+	else SOUNDMANAGER->play("player gethit light2", 0.9f);
 }
 
 void collisionManager::playGetHitSound()
 {
 	int n = RND->getInt(3);
-	if (n == 0) SOUNDMANAGER->play("gethit1", 1.0f);
-	else if (n == 1) SOUNDMANAGER->play("gethit2", 1.0f);
-	else SOUNDMANAGER->play("gethit3", 1.0f);
+	if (n == 0) SOUNDMANAGER->play("gethit1", 0.7f);
+	else if (n == 1) SOUNDMANAGER->play("gethit2", 0.7f);
+	else SOUNDMANAGER->play("gethit3", 0.7f);
 }
 
 
