@@ -121,7 +121,7 @@ HRESULT stageManager::init()
 	_BattleStart._BattleStartImage->setFrameX(0);
 	_BattleStart._BattleStartImage->setFrameY(0);
 
-	_PlayBattleStart = true;
+	_PlayBattleStart = false;
 
 	//-----------------------------------------------------------------------------------------------------------------------------//
 
@@ -363,10 +363,9 @@ void stageManager::BossStageMove()
 
 	_vNpcs.clear();
 	_em->removeEnemies();
-	//_em->setEnemiesVector(_NowStage);
 
-	if (!SOUNDMANAGER->isPlaySound("bgm boss")) SOUNDMANAGER->playBGM("bgm boss");
-	SOUNDMANAGER->stopAll("bgm boss");
+	if (!SOUNDMANAGER->isPlaySound("bgm chemi")) SOUNDMANAGER->playBGM("bgm chemi");
+	SOUNDMANAGER->stopAll("bgm chemi");
 }
 
 void stageManager::Stage1_Stage2_Ok()

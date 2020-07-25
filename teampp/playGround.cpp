@@ -64,16 +64,9 @@ HRESULT playGround::init()
 		SOUNDMANAGER->addSound("bgm hall", "sounds/bgm/RCG_Knock_Out.wav", true, true);
 		SOUNDMANAGER->addSound("bgm chemi", "sounds/bgm/RCG_Lunch_Money.wav", true, true);
 		SOUNDMANAGER->addSound("bgm boss", "sounds/bgm/RCG_boss_misuzu.wav", true, true);
-
-		SOUNDMANAGER->playBGM("bgm title");
 	}
 
-	RECT _temp;
-	GetWindowRect(_hWnd, &_temp);
-
-	cout << _temp.right - _temp.left << ", " << _temp.bottom - _temp.top << endl;
-
-	_playVideo = 0;
+	_playVideo = _playIntroVideo = _endIntroVideo = 0;
 
 	// ==========================================
 	// ## 카메라 중점 초기화 ##
@@ -101,21 +94,27 @@ void playGround::update()
 {
 	gameNode::update();
 
-	if(_playVideo)
+	if (!_playIntroVideo && !_endIntroVideo)
+	{
+		IntroVideo = MCIWndCreate(_hWnd, _hInstance, MCIWNDF_NOTIFYANSI | MCIWNDF_NOMENU | MCIWNDF_NOTIFYALL | MCIWNDF_NOPLAYBAR, intro); // 초기화
+		MoveWindow(IntroVideo, 0, 0, WINSIZEX, WINSIZEY, NULL);
+		MCIWndPlay(IntroVideo);
+		_playIntroVideo = true;
+		SOUNDMANAGER->playBGM("bgm title");
+	}
+	
+	if (_playIntroVideo && !_endIntroVideo)
 	{
 		if (KEYMANAGER->isOnceKeyDown(VK_RETURN)) //강제로 스킵
 		{
-			_player->playerPosition_BossStart();
-
-			RECT _temp;
-			GetWindowRect(_hWnd, &_temp);
-
-			MCIWndClose(LogoVideo);
-			MoveWindow(_hWnd, _temp.left, _temp.top, _temp.right - _temp.left, _temp.bottom - _temp.top, true);
-
-			_playVideo = false;
-			_uiManager->setScriptStart(true);
-			_enemyManager->setEnemiesVector(4);
+			stopIntro();
+		}
+	}
+	else if(_playVideo)
+	{
+		if (KEYMANAGER->isOnceKeyDown(VK_RETURN)) //강제로 스킵
+		{
+			stopVideo();
 		}
 	}
 	else
@@ -165,6 +164,8 @@ void playGround::update()
 						_player->playerPosition_Bossat4();
 						break;
 					}
+
+					_stageManager->setPlayBattleStart(true);
 				}
 			}
 		}
@@ -180,10 +181,11 @@ void playGround::update()
 				_stageManager->update();
 				if (_stageManager->checkBossStageX(_player->getPlayerX()))
 				{
+					SOUNDMANAGER->stopAll("");
 					LogoVideo = MCIWndCreate(_hWnd, _hInstance, MCIWNDF_NOTIFYANSI | MCIWNDF_NOMENU | MCIWNDF_NOTIFYALL | MCIWNDF_NOPLAYBAR, movie); // 초기화
-					_playVideo = true;
-					MCIWndPlay(LogoVideo);
 					MoveWindow(LogoVideo, 0, 0, WINSIZEX, WINSIZEY, NULL);
+					MCIWndPlay(LogoVideo);
+					_playVideo = true;
 				}
 			}
 			
@@ -249,44 +251,26 @@ void playGround::update()
 
 void playGround::render()
 {
-	// 조건문 형태를 바꾸면 어떨까 해서 적어 놓습니당
-	if (!_scene->getGameStart())
+	if (_playIntroVideo && !_endIntroVideo)
 	{
-		if (_scene->getSaveLoading())
+		char lp[10];
+		long mode;
+		mode = MCIWndGetMode(IntroVideo, lp, sizeof(lp));
+		if (mode == 525) //영상 멈춤
 		{
-			
-		}
-		else if (_scene->getLoading())
-		{
-
-		}
-		else
-		{
-
+			stopIntro();
 		}
 	}
-	else
+	else if (_playVideo)
 	{
-		//if(_stageManager->getNowbossStage() && )	영상 실행 안 했다면... 영상 실행
-		//else	일반 render
-	}
-
-	if (_playVideo)
-	{	
 		char lp[10];
 		long mode;
 		mode = MCIWndGetMode(LogoVideo, lp, sizeof(lp));
 		if (mode == 525) //영상 멈춤
 		{
-			RECT _temp;
-			GetWindowRect(_hWnd, &_temp);
-
-			MCIWndClose(LogoVideo);
-			MoveWindow(_hWnd, _temp.left, _temp.top, _temp.right - _temp.left, _temp.bottom - _temp.top, true);
-			_playVideo = false;
+			stopVideo();
 		}
 	}
-
 	else {
 		if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == false)
 		{
@@ -340,14 +324,40 @@ void playGround::render()
 			_backBuffer->render(CAMERA->getMemDC(), 0, CAMERA->getBlackSize() * 0.5,
 				CAMERA->getLeft(), CAMERA->getTop() + CAMERA->getShakeNumber(),
 				CAMERA->getViewWidth(), CAMERA->getViewHeight());
+
 			_uiManager->render(CAMERA->getMemDC());
+			if (_stageManager->getPlayBattleStart() == true) _stageManager->PlayBattleStartBackGroundDraw(CAMERA->getMemDC());
+
 			CAMERA->render(getHDC());
-
-			if (_stageManager->getPlayBattleStart() == true)
-			{
-				_stageManager->PlayBattleStartBackGroundDraw(getHDC());
-
-			}
 		}
 	}
+}
+
+void playGround::stopVideo()
+{
+	if (!SOUNDMANAGER->isPlaySound("bgm chemi")) SOUNDMANAGER->playBGM("bgm chemi");
+	SOUNDMANAGER->stopAll("bgm chemi");
+
+	_player->playerPosition_BossStart();
+
+	RECT _temp;
+	GetWindowRect(_hWnd, &_temp);
+
+	MCIWndClose(LogoVideo);
+	MoveWindow(_hWnd, _temp.left, _temp.top, _temp.right - _temp.left, _temp.bottom - _temp.top, true);
+
+	_playVideo = false;
+	_uiManager->setScriptStart(true);
+	_enemyManager->setEnemiesVector(4);
+}
+
+void playGround::stopIntro()
+{
+	RECT _temp;
+	GetWindowRect(_hWnd, &_temp);
+
+	MCIWndClose(IntroVideo);
+	MoveWindow(_hWnd, _temp.left, _temp.top, _temp.right - _temp.left, _temp.bottom - _temp.top, true);
+
+	_endIntroVideo = true;
 }

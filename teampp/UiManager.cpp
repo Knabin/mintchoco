@@ -113,9 +113,6 @@ HRESULT UiManager::init()
 		_BossHpPointHide._UIimage->getWidth(),
 		_BossHpPointHide._UIimage->getHeight());
 
-
-	IMAGEMANAGER->addImage("UiHide", "images/ui/UI_footer.bmp", 1341, 96, true, RGB(255, 0, 255));
-
 	IMAGEMANAGER->addImage("kyoko1", "images/ui/ui_kyoko1.bmp", 684, 816, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("kyoko2", "images/ui/ui_kyoko2.bmp", 684, 816, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("kyoko3", "images/ui/ui_kyoko3.bmp", 684, 816, true, RGB(255, 0, 255));
@@ -124,23 +121,26 @@ HRESULT UiManager::init()
 	IMAGEMANAGER->addImage("misuzu3", "images/ui/ui_misuzu3.bmp", 684, 816, true, RGB(255, 0, 255));
 
 	_saveRc = RectMakeCenter(WINSIZEX / 2, WINSIZEY / 2 + 150, 220, 70);
+	_scriptIndex = _txtIndex = _endCount = 0;
 
 	if (TXTDATA->canLoadFile("data/script.data", ';'))
 	{
 		_vScript = TXTDATA->txtLoad("data/script.data", ";");
 	}
 
+	AddFontResource("CookieRun Bold.otf");
+
 	return S_OK;
 }
 
 void UiManager::release()
 {
+	RemoveFontResource("CookieRun Bold.otf");
 }
 
 void UiManager::update()
 {
 	MiniMapMove(); //미니맵 이동,상태 함수
-	BossDeath();
 }
 
 void UiManager::render(HDC hdc)
@@ -182,6 +182,14 @@ void UiManager::render(HDC hdc)
 		IMAGEMANAGER->findImage("BossName")->render(hdc, _BossName._x - 75, _BossName._y - 17);
 
 		IMAGEMANAGER->findImage("UiHide")->render(hdc, -975, 640);
+	}
+
+
+		IMAGEMANAGER->findImage("UICoin")->render(hdc, _UiCoin._x - 18, _UiCoin._y - 18);
+	}
+	else
+	{
+		IMAGEMANAGER->findImage("kyoko1")->render(hdc, 0, 0);
 	}
 
 
@@ -302,5 +310,38 @@ void UiManager::BossDeath()
 	{
 		_BossHpPoint._x = WINSIZEX / 2 - 46;
 		_BossHpPoint._y = WINSIZEY / 2 + 306;
+	}
+}
+
+void UiManager::printScript()
+{
+	_txt = _vScript[_scriptIndex];
+
+	if (_scriptIndex % 2 == 0)
+	{
+		if (_txt == "K")
+			_isKyoko = true;
+		else _isKyoko = false;
+		_txt = _vScript[++_scriptIndex];
+	}
+
+	if (_txtIndex <= _txt.length())
+	{
+		_txtIndex++;
+	}
+	else if (_txtIndex >= _txt.length() && KEYMANAGER->isOnceKeyDown(VK_SPACE))
+	{
+		_scriptIndex++;
+		_txtIndex = 0;
+	}
+
+	if (_txtIndex < _txt.length() && KEYMANAGER->isOnceKeyDown(VK_SPACE))
+		_txtIndex = _txt.length();
+
+	if (_scriptIndex >= _vScript.size())
+	{
+		if (!SOUNDMANAGER->isPlaySound("bgm boss")) SOUNDMANAGER->play("bgm boss");
+		SOUNDMANAGER->stopAll("bgm boss");
+		_scriptEnd = true;
 	}
 }

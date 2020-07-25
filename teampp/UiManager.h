@@ -44,7 +44,13 @@ private:
 
 	vector<string> _vScript;
 	bool _scriptStart;
+	bool _scriptEnd;
 	int _scriptIndex;
+	int _txtIndex;
+	int _endCount;
+	string _txt;
+
+	bool _isKyoko;
 	// ========================
 
 public:
@@ -65,20 +71,6 @@ public:
 
 
 	void PlayerHpMinus();					//PlayerHpPoint 감소 함수
-	void PlayerDeath();						//player hp가 완전 사라지면
-
-
-	// ========================
-
-	//boss hp 관련 함수
-
-	void BossHpMinus();						//보스 hp 마이너스가 된다    (collisionmanager에 boss rect로 변경 전)
-	void BossDeath();						//보스 hp바가 완전히 사라지면 ~~~
-
-	// ========================
-
-
-
 
 	void setStageManagerMemoryAddressLink(stageManager* stageManager) { _stageManager = stageManager; }
 
