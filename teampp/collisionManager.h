@@ -46,6 +46,10 @@ public:
 	void player_collision();//플레이어랑 적 공격이랑 충돌시
 	void playerAttackHitEffect();//플레이어가 에너미를 공격해서 충돌시 나올 이펙트 이미지
 
+	// ===== 나빈 추가 =====
+	void playPlayerGetHitSound();
+	void playGetHitSound();
+
 	void setPlayerMemoryAddressLink(player* player) { _player = player; }
 	void setEnemyManagerMemoryAddressLink(enemyManager* enemyManager) { _enemyManager = enemyManager; }
 	void setStageManagerMemoryAddressLink(stageManager* stageManager) { _stageManager = stageManager; }
