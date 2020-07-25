@@ -1,6 +1,8 @@
 #pragma once
 #include "gameNode.h"
 #include "cheerleader.h"
+#include "schoolboy.h"
+#include "schoolgirl.h"
 #include <vector>
 
 class enemyManager:public gameNode
@@ -12,6 +14,12 @@ private:
 
 	vEnemy	_vCheerLeader;
 	viEnemy _viCheerLeader;
+
+	vEnemy _vSchoolBoy;
+	viEnemy _viSchoolBoy;
+
+	vEnemy _vSchoolGirl;
+	viEnemy _viSchoolGirl;
 
 	image* _enemyImg;
 
@@ -26,9 +34,18 @@ public:
 	void render();
 
 	void setEnemyCheerMove();
+	void setEnemySchoolBoyMove();
+	void setEnemySchoolGirlMove();
+
 
 	vector<enemy*> getVCheerLeader() { return _vCheerLeader; }
 	vector<enemy*>::iterator getVICheerleader() { return _viCheerLeader; }
+
+	vector<enemy*> getVSchoolBoy() { return _vSchoolBoy; }
+	vector<enemy*>::iterator getVISchoolBoy() { return _viSchoolBoy; }
+
+	vector<enemy*> getVSchoolGirl() { return _vSchoolGirl; }
+	vector<enemy*>::iterator getVISchoolGirl() { return _viSchoolGirl; }
 
 	void setPlayerPos(float x, float y);
 };

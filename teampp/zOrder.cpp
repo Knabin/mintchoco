@@ -64,17 +64,17 @@ void zOrder::render()
 		if (_vObject[i].ani != nullptr)
 		{
 			// 애니 렌더
-			_vObject[i].image->aniRender(_vObject[i].hdc, _vObject[i].x, _vObject[i].z - _vObject[i].jumpPower, _vObject[i].ani);
+			_vObject[i].image->aniRender(_vObject[i].hdc, _vObject[i].x -_vObject[i].image->getFrameWidth()/2, _vObject[i].z -_vObject[i].image->getFrameHeight() - _vObject[i].jumpPower, _vObject[i].ani);
 		}
 		else if (_vObject[i].frameX > -1 && _vObject[i].frameY > -1)
 		{
 			// 프레임 렌더
-			_vObject[i].image->frameRender(_vObject[i].hdc, _vObject[i].x, _vObject[i].z - _vObject[i].jumpPower, _vObject[i].frameX, _vObject[i].frameY);
+			_vObject[i].image->frameRender(_vObject[i].hdc, _vObject[i].x - _vObject[i].image->getFrameWidth() / 2, _vObject[i].z - _vObject[i].image->getFrameHeight() - _vObject[i].jumpPower, _vObject[i].frameX, _vObject[i].frameY);
 		}
 		else
 		{
 			// 일반 렌더
-			_vObject[i].image->render(_vObject[i].hdc, _vObject[i].x, _vObject[i].z - _vObject[i].jumpPower);
+			_vObject[i].image->render(_vObject[i].hdc, _vObject[i].x - _vObject[i].image->getWidth() / 2, _vObject[i].z - _vObject[i].image->getHeight() - _vObject[i].jumpPower);
 		}
 	}
 
@@ -184,9 +184,9 @@ void zOrder::pushObject(HDC hdc, const char * imageName, animation * ani, int ty
 
 void zOrder::sortVector(int start, int end)
 {
-	cout << start << ", " << end << endl;
+	//cout << start << ", " << end << endl;
 	if (start >= end) return;
-	int pivot = _vObject[(start+end) / 2].z;
+	float pivot = _vObject[(start+end) / 2].z;
 	int left = start;
 	int right = end;
 
@@ -195,7 +195,10 @@ void zOrder::sortVector(int start, int end)
 		// left랑 pivot 비교해서 left가 작으면 ++
 		while (_vObject[left].z < pivot) ++left;
 		// right랑 pivot 비교해서 right가 크면 --
-		while (_vObject[right].z > pivot) --right;
+		while (_vObject[right].z > pivot)
+		{
+			--right;
+		}
 
 		// 두 개 스왑
 		if (left <= right)

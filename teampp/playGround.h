@@ -2,18 +2,24 @@
 #include "gameNode.h"
 #include <Vfw.h>
 #pragma comment(lib, "vfw32.lib")
-#include "stageManager.h"
+#include "stageManager2.h"
 #include "collisionManager.h"
 #include "player.h"
 #include "enemyManager.h"
+#include "UiManager.h"
+#include "itemManager.h"
 
 class playGround : public gameNode
 {
 private:
-	stageManager* _stageManger;
+	stageManager2* _stageManager2;
 	player* _player;
-	enemyManager* _enemyManger;
+	enemyManager* _enemyManager;
 	collisionManager* _collisionManager;
+	UiManager* _uiManager;
+	itemManager* _itemManager;
+
+	image* _test;
 	
 public:
 	playGround();
