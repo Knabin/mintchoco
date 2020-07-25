@@ -27,7 +27,7 @@ void collisionManager::render()
 
 	if (_attackEffectFrame)//플레이어가 공격할때 적과 충돌시 화면에 뿌릴 이펙트
 	{
-		_attackEffect->frameRender(getMemDC(), _enemyEffectPosX - 100, _enemyEffectPosY - 100, _attackEffect->getFrameX(), _attackEffect->getFrameY());
+		ZORDER->pushObject(getMemDC(), _attackEffect, _attackEffect->getFrameX(), _attackEffect->getFrameY(), 2, _enemyEffectPosX , 50, _enemyEffectPosY);
 	}
 }
 
@@ -167,7 +167,7 @@ void collisionManager::enemy_collisionNoBlock()
 			{
 				_attackEffectFrame = true;
 				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
-				_enemyEffectPosY = temp[i]->getEnemyRect().getCenterY();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
 				//_player->setPlayerAttackRectRemove(0, 0, 0, 0);
 				_enemyCollisionCount++;
 				if (_enemyCollisionCount % 7 == 0)
@@ -213,7 +213,7 @@ void collisionManager::enemy_collisionNoBlock()
 				}
 				_attackEffectFrame = true;
 				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
-				_enemyEffectPosY = temp[i]->getEnemyRect().getCenterY();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
 				_player->setComboAttack(true);//2단콤보변수 트루
 				//_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
 				_enemyCollisionCount1++;
@@ -230,7 +230,7 @@ void collisionManager::enemy_collisionNoBlock()
 			{
 				_attackEffectFrame = true;
 				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
-				_enemyEffectPosY = temp[i]->getEnemyRect().getCenterY();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
 				_player->setComboAttack2(true);//3단콤보공격 트루
 				//_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
 				_enemyCollisionCount2++;
@@ -257,7 +257,7 @@ void collisionManager::enemy_collisionNoBlock()
 			{
 				_attackEffectFrame = true;
 				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
-				_enemyEffectPosY = temp[i]->getEnemyRect().getCenterY();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
 				//_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
 				_enemyCollisionCount3++;
 				if (_enemyCollisionCount3 % 1 == 0)
@@ -302,7 +302,7 @@ void collisionManager::enemy_collisionLeftBlock()
 			{
 				_attackEffectFrame = true;
 				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
-				_enemyEffectPosY = temp[i]->getEnemyRect().getCenterY();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
 				//_player->setPlayerAttackRectRemove(0, 0, 0, 0);
 				_enemyCollisionCount++;
 				if (_enemyCollisionCount % 7 == 0)
@@ -348,7 +348,7 @@ void collisionManager::enemy_collisionLeftBlock()
 				}
 				_attackEffectFrame = true;
 				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
-				_enemyEffectPosY = temp[i]->getEnemyRect().getCenterY();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
 				_player->setComboAttack(true);//2단콤보변수 트루
 				//_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
 				_enemyCollisionCount1++;
@@ -365,7 +365,7 @@ void collisionManager::enemy_collisionLeftBlock()
 			{
 				_attackEffectFrame = true;
 				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
-				_enemyEffectPosY = temp[i]->getEnemyRect().getCenterY();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
 				_player->setComboAttack2(true);//3단콤보공격 트루
 				//_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
 				_enemyCollisionCount2++;
@@ -392,7 +392,7 @@ void collisionManager::enemy_collisionLeftBlock()
 			{
 				_attackEffectFrame = true;
 				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
-				_enemyEffectPosY = temp[i]->getEnemyRect().getCenterY();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
 				//_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
 				_enemyCollisionCount3++;
 				if (_enemyCollisionCount3 % 1 == 0)
@@ -436,7 +436,7 @@ void collisionManager::enemy_collisionRightBlock()
 			{
 				_attackEffectFrame = true;
 				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
-				_enemyEffectPosY = temp[i]->getEnemyRect().getCenterY();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
 				//_player->setPlayerAttackRectRemove(0, 0, 0, 0);
 				_enemyCollisionCount++;
 				if (_enemyCollisionCount % 7 == 0)
@@ -481,7 +481,7 @@ void collisionManager::enemy_collisionRightBlock()
 				}
 				_attackEffectFrame = true;
 				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
-				_enemyEffectPosY = temp[i]->getEnemyRect().getCenterY();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
 				_player->setComboAttack(true);//2단콤보변수 트루
 				//_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
 				_enemyCollisionCount1++;
@@ -498,7 +498,7 @@ void collisionManager::enemy_collisionRightBlock()
 			{
 				_attackEffectFrame = true;
 				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
-				_enemyEffectPosY = temp[i]->getEnemyRect().getCenterY();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
 				_player->setComboAttack2(true);//3단콤보공격 트루
 				//_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
 				_enemyCollisionCount2++;
@@ -525,7 +525,7 @@ void collisionManager::enemy_collisionRightBlock()
 			{
 				_attackEffectFrame = true;
 				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
-				_enemyEffectPosY = temp[i]->getEnemyRect().getCenterY();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
 				//_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
 				_enemyCollisionCount3++;
 				if (_enemyCollisionCount3 % 1 == 0)
