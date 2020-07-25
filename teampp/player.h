@@ -226,6 +226,12 @@ public:
 			return false;
 		}
 	}
+	bool getIsDead() 
+	{
+		if (_deadOneFramePlay && (_playerDirection == PLAYERDIRECTION_LEFT_DEAD && _deadImage->getFrameX() == 0 || _playerDirection == PLAYERDIRECTION_RIGHT_DEAD && _deadImage->getFrameX() == _deadImage->getMaxFrameX()))
+			return true;
+		return false;
+	}
 
 	void playerPosition_1();
 	void playerPosition_1at2();

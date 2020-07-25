@@ -1,6 +1,7 @@
 //#include "..\..\..\..\..\Desktop\teampp (1)\enemyManager.h"
 #include "stdafx.h"
 #include "enemyManager.h"
+#include "stageManager.h"
 
 enemyManager::enemyManager()
 {
@@ -91,6 +92,7 @@ void enemyManager::update()
 		_vEnemies[i]->update();
 		if (_vEnemies[i]->getHP() <= 0 && _vEnemies[i]->getEnemyDead())
 		{
+			_sm->plusEnemyCount();
 			_vEnemies[i]->setEnemyDead(false);
 			_vEnemies.erase(_vEnemies.begin() + i);
 		}
@@ -258,7 +260,7 @@ enemy * enemyManager::createEnemy(int enemyType, float x, float y, int stageNum)
 	case 3:			// º¸½º
 	{
 		enemy* em = new boss;
-		em->init("BOOSIDLE", WINSIZEX / 2, WINSIZEY / 2, 0.0f);
+		em->init("BOSSIDLE", WINSIZEX / 2, WINSIZEY / 2, 0.0f);
 		em->setStageNum(stageNum);
 		return em;
 	}
