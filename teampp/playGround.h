@@ -23,11 +23,11 @@ private:
 
 	// 비디오 관련 변수들
 	HWND LogoVideo;
-	char movie[20] = "videos/boss.mp4";
+	char movie[20] = "videos/boss.wmv";
 	bool _playVideo;
 
 	HWND IntroVideo;
-	char intro[20] = "videos/intro.mp4";
+	char intro[20] = "videos/intro.wmv";
 	bool _playIntroVideo;
 	bool _endIntroVideo;
 

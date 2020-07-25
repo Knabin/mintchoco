@@ -359,7 +359,7 @@ void playGround::stopIntro()
 	RECT _temp;
 	GetWindowRect(_hWnd, &_temp);
 
-	MCIWndClose(IntroVideo);
+	MCIWndDestroy(IntroVideo);
 	MoveWindow(_hWnd, _temp.left, _temp.top, _temp.right - _temp.left, _temp.bottom - _temp.top, true);
 
 	_endIntroVideo = true;

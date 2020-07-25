@@ -11,12 +11,24 @@ HRESULT collisionManager::init()
 {
 	_count = 0;
 	_enemyCollisionCount = _enemyCollisionCount1  =  _enemyCollisionCount2 = _enemyCollisionCount3 = 0;
+
+	_attackEffect = IMAGEMANAGER->addFrameImage("playerAttackEffect", "images/player/Kyoko_Attack_Effect.bmp", 612, 196, 3, 1, true, RGB(255, 0, 255));//플레이어가 적을 공격할때 적과 충돌시 이펙트 이미지
+
+	_attackEffectFrame = false;//플레이어가 적을 공격했을때 생기는 이펙트
+
+	_attackEffect->setFrameX(0);
+	_attackEffect->setFrameY(0);
 	return S_OK;
 }
 
 void collisionManager::render()
 {
 	stagedoor_collision_image();
+
+	if (_attackEffectFrame)//플레이어가 공격할때 적과 충돌시 화면에 뿌릴 이펙트
+	{
+		ZORDER->pushObject(getMemDC(), _attackEffect, _attackEffect->getFrameX(), _attackEffect->getFrameY(), 2, _enemyEffectPosX , 50, _enemyEffectPosY);
+	}
 }
 
 void collisionManager::update()
@@ -31,6 +43,7 @@ void collisionManager::update()
 
 	player_collision();
 
+	playerAttackHitEffect();//플레이어가 적을 공격했을때 충돌시 생길 이펙트의 프레임을 변경하는 함수
 }
 
 void collisionManager::release()
@@ -145,7 +158,6 @@ void collisionManager::enemy_collisionNoBlock()
 
 	for (int i = 0; i < temp.size(); i++)
 	{
-
 		// ============================================ 에너미가 가드 상태가 아닐 시 ============================================ //
 		if (temp[i]->getEnemyDirection() != ENEMY_LEFT_BLOCK && temp[i]->getEnemyDirection() != ENEMY_RIGHT_BLOCK)
 		{
@@ -153,7 +165,10 @@ void collisionManager::enemy_collisionNoBlock()
 				_player->getPlayerZ() - 50 <= temp[i]->getEnemyRect().bottom &&
 				_player->getPlayerZ() + 50 >= temp[i]->getEnemyRect().bottom)
 			{
-				_player->setPlayerAttackRectRemove(0, 0, 0, 0);
+				_attackEffectFrame = true;
+				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
+				//_player->setPlayerAttackRectRemove(0, 0, 0, 0);
 				_enemyCollisionCount++;
 				if (_enemyCollisionCount % 7 == 0)
 				{
@@ -196,8 +211,11 @@ void collisionManager::enemy_collisionNoBlock()
 					temp[i]->setEnemyDirection(ENEMY_RIGHT_GETHIT_1);
 					temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_R_hit_1());
 				}
+				_attackEffectFrame = true;
+				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
 				_player->setComboAttack(true);//2단콤보변수 트루
-				_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
+				//_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
 				_enemyCollisionCount1++;
 				if (_enemyCollisionCount1 % 1 == 0)
 				{
@@ -210,8 +228,11 @@ void collisionManager::enemy_collisionNoBlock()
 				_player->getPlayerZ() - 50 <= temp[i]->getEnemyRect().bottom &&
 				_player->getPlayerZ() + 50 >= temp[i]->getEnemyRect().bottom)
 			{
+				_attackEffectFrame = true;
+				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
 				_player->setComboAttack2(true);//3단콤보공격 트루
-				_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
+				//_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
 				_enemyCollisionCount2++;
 				if (_enemyCollisionCount2 % 1 == 0)
 				{
@@ -231,10 +252,13 @@ void collisionManager::enemy_collisionNoBlock()
 			}
 
 			if (isCollision(temp[i]->getEnemyRect(), _player->getComboAttackRc3()) &&
-				_player->getPlayerZ() - 10 <= temp[i]->getEnemyRect().bottom &&
-				_player->getPlayerZ() + 10 >= temp[i]->getEnemyRect().bottom)
+				_player->getPlayerZ() - 50 <= temp[i]->getEnemyRect().bottom &&
+				_player->getPlayerZ() + 50 >= temp[i]->getEnemyRect().bottom)
 			{
-				_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
+				_attackEffectFrame = true;
+				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
+				//_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
 				_enemyCollisionCount3++;
 				if (_enemyCollisionCount3 % 1 == 0)
 				{
@@ -255,6 +279,11 @@ void collisionManager::enemy_collisionNoBlock()
 		}
 
 	}
+	//_player->setPlayerAttackRectRemove(0, 0, 0, 0);
+	//_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
+	//_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
+	//_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
+
 }
 
 void collisionManager::enemy_collisionLeftBlock()
@@ -271,7 +300,10 @@ void collisionManager::enemy_collisionLeftBlock()
 				_player->getPlayerZ() - 50 <= temp[i]->getEnemyRect().bottom &&
 				_player->getPlayerZ() + 50 >= temp[i]->getEnemyRect().bottom)
 			{
-				_player->setPlayerAttackRectRemove(0, 0, 0, 0);
+				_attackEffectFrame = true;
+				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
+				//_player->setPlayerAttackRectRemove(0, 0, 0, 0);
 				_enemyCollisionCount++;
 				if (_enemyCollisionCount % 7 == 0)
 				{
@@ -314,8 +346,11 @@ void collisionManager::enemy_collisionLeftBlock()
 					temp[i]->setEnemyDirection(ENEMY_RIGHT_GETHIT_1);
 					temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_R_hit_1());
 				}
+				_attackEffectFrame = true;
+				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
 				_player->setComboAttack(true);//2단콤보변수 트루
-				_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
+				//_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
 				_enemyCollisionCount1++;
 				if (_enemyCollisionCount1 % 1 == 0)
 				{
@@ -328,8 +363,11 @@ void collisionManager::enemy_collisionLeftBlock()
 				_player->getPlayerZ() - 50 <= temp[i]->getEnemyRect().bottom &&
 				_player->getPlayerZ() + 50 >= temp[i]->getEnemyRect().bottom)
 			{
+				_attackEffectFrame = true;
+				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
 				_player->setComboAttack2(true);//3단콤보공격 트루
-				_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
+				//_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
 				_enemyCollisionCount2++;
 				if (_enemyCollisionCount2 % 1 == 0)
 				{
@@ -349,10 +387,13 @@ void collisionManager::enemy_collisionLeftBlock()
 			}
 
 			if (isCollision(temp[i]->getEnemyRect(), _player->getComboAttackRc3()) &&
-				_player->getPlayerZ() - 10 <= temp[i]->getEnemyRect().bottom &&
-				_player->getPlayerZ() + 10 >= temp[i]->getEnemyRect().bottom)
+				_player->getPlayerZ() - 50 <= temp[i]->getEnemyRect().bottom &&
+				_player->getPlayerZ() + 50 >= temp[i]->getEnemyRect().bottom)
 			{
-				_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
+				_attackEffectFrame = true;
+				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
+				//_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
 				_enemyCollisionCount3++;
 				if (_enemyCollisionCount3 % 1 == 0)
 				{
@@ -372,6 +413,10 @@ void collisionManager::enemy_collisionLeftBlock()
 			}
 		}
 	}
+	//_player->setPlayerAttackRectRemove(0, 0, 0, 0);
+	//_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
+	//_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
+	//_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
 }
 
 
@@ -389,7 +434,10 @@ void collisionManager::enemy_collisionRightBlock()
 				_player->getPlayerZ() - 50 <= temp[i]->getEnemyRect().bottom &&
 				_player->getPlayerZ() + 50 >= temp[i]->getEnemyRect().bottom)
 			{
-				_player->setPlayerAttackRectRemove(0, 0, 0, 0);
+				_attackEffectFrame = true;
+				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
+				//_player->setPlayerAttackRectRemove(0, 0, 0, 0);
 				_enemyCollisionCount++;
 				if (_enemyCollisionCount % 7 == 0)
 				{
@@ -431,8 +479,11 @@ void collisionManager::enemy_collisionRightBlock()
 					temp[i]->setEnemyDirection(ENEMY_RIGHT_GETHIT_1);
 					temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_R_hit_1());
 				}
+				_attackEffectFrame = true;
+				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
 				_player->setComboAttack(true);//2단콤보변수 트루
-				_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
+				//_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
 				_enemyCollisionCount1++;
 				if (_enemyCollisionCount1 % 1 == 0)
 				{
@@ -445,8 +496,11 @@ void collisionManager::enemy_collisionRightBlock()
 				_player->getPlayerZ() - 50 <= temp[i]->getEnemyRect().bottom &&
 				_player->getPlayerZ() + 50 >= temp[i]->getEnemyRect().bottom)
 			{
+				_attackEffectFrame = true;
+				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
 				_player->setComboAttack2(true);//3단콤보공격 트루
-				_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
+				//_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
 				_enemyCollisionCount2++;
 				if (_enemyCollisionCount2 % 1 == 0)
 				{
@@ -466,10 +520,13 @@ void collisionManager::enemy_collisionRightBlock()
 			}
 
 			if (isCollision(temp[i]->getEnemyRect(), _player->getComboAttackRc3()) &&
-				_player->getPlayerZ() - 10 <= temp[i]->getEnemyRect().bottom &&
-				_player->getPlayerZ() + 10 >= temp[i]->getEnemyRect().bottom)
+				_player->getPlayerZ() - 50 <= temp[i]->getEnemyRect().bottom &&
+				_player->getPlayerZ() + 50 >= temp[i]->getEnemyRect().bottom)
 			{
-				_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
+				_attackEffectFrame = true;
+				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
+				_enemyEffectPosY = temp[i]->getEnemyRect().bottom;
+				//_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
 				_enemyCollisionCount3++;
 				if (_enemyCollisionCount3 % 1 == 0)
 				{
@@ -489,6 +546,10 @@ void collisionManager::enemy_collisionRightBlock()
 			}
 		}
 	}
+	//_player->setPlayerAttackRectRemove(0, 0, 0, 0);
+	//_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
+	//_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
+	//_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
 }
 
 
@@ -524,6 +585,23 @@ void collisionManager::player_collision()
 				_count++;
 				if (_count % 20 == 0)
 				{
+					if (_player->getPlayerdirection() == PLAYERDIRECTION_LEFT_COMBO_ATTACK1 || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_COMBO_ATTACK2 ||
+						_player->getPlayerdirection() == PLAYERDIRECTION_LEFT_COMBO_ATTACK3 || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_DASH_ATTACK ||
+						_player->getPlayerdirection() == PLAYERDIRECTION_LEFT_JUMP || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_JUMP_ATTACK ||
+						_player->getPlayerdirection() == PLAYERDIRECTION_LEFT_MOVE || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_STOP ||
+						_player->getPlayerdirection() == PLAYERDIRECTION_LEFT_STRONG_ATTACK || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_WALK)
+					{
+						_player->setPlayerDirection(PLAYERDIRECTION_LEFT_HIT);
+					}
+					else if (_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_COMBO_ATTACK1 || _player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_COMBO_ATTACK2 ||
+						_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_COMBO_ATTACK3 || _player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_DASH_ATTACK ||
+						_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_JUMP || _player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_JUMP_ATTACK ||
+						_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_MOVE || _player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_STOP ||
+						_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_STRONG_ATTACK || _player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_WALK)
+					{
+						_player->setPlayerDirection(PLAYERDIRECTION_RIGHT_HIT);
+					}
+
 					_player->setHitPlayerHP(1);
 					_uiManager->PlayerHpMinus();
 					_count = 0;
@@ -541,6 +619,8 @@ void collisionManager::player_collision()
 				_count++;
 				if (_count % 20 == 0)
 				{
+					_player->setPlayerDirection(PLAYERDIRECTION_RIGHT_HIT);
+
 					_player->setHitPlayerHP(1);
 					_uiManager->PlayerHpMinus();
 					_count = 0;
@@ -558,6 +638,8 @@ void collisionManager::player_collision()
 				_count++;
 				if (_count % 20 == 0)
 				{
+					_player->setPlayerDirection(PLAYERDIRECTION_LEFT_HIT);
+
 					_player->setHitPlayerHP(1);
 					_uiManager->PlayerHpMinus();
 					_count = 0;
@@ -566,6 +648,24 @@ void collisionManager::player_collision()
 		}
 	}
 
+}
+
+void collisionManager::playerAttackHitEffect()
+{
+	if (_attackEffectFrame)
+	{
+		_count++;
+		if (_count % 5 == 0)
+		{
+			_attackEffect->setFrameX(_attackEffect->getFrameX() + 1);
+			if (_attackEffect->getFrameX() >= _attackEffect->getMaxFrameX())
+			{
+				_attackEffect->setFrameX(0);
+				_attackEffectFrame = false;
+			}
+			_count = 0;
+		}
+	}
 }
 
 
