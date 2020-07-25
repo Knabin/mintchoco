@@ -58,7 +58,7 @@ HRESULT stageManager::init()
 
 	_ChainBottom._ChainLockImage = IMAGEMANAGER->addFrameImage("ChainBottom", "images/ui/chain_bottom.bmp", 1440, 1080, 1, 20, true, RGB(127, 127, 127));
 	_ChainBottom._x = CAMERA->getLeft() - 5;
-	_ChainBottom._y = CAMERA->getTop() + 475;
+	_ChainBottom._y = CAMERA->getTop() + 520;
 	_ChainBottom._Mrc.setCenterPos(_ChainBottom._x, _ChainBottom._y);
 
 	_ChainBottom._ChainLockImage->setFrameX(0);
@@ -463,7 +463,7 @@ void stageManager::ChainLockMove()
 				_ChainTop._Mrc.setLeftTopPos(_ChainTop._x, _ChainTop._y);
 
 				_ChainBottom._x = CAMERA->getLeft() - 5;
-				_ChainBottom._y = CAMERA->getTop() + 475;
+				_ChainBottom._y = CAMERA->getTop() + 520;
 				_ChainBottom._Mrc.setCenterPos(_ChainBottom._x, _ChainBottom._y);
 
 				_Lock._x = CAMERA->getLeft() + 585;

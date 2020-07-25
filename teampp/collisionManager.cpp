@@ -525,6 +525,7 @@ void collisionManager::player_collision()
 				if (_count % 20 == 0)
 				{
 					_player->setHitPlayerHP(1);
+					_uiManager->PlayerHpMinus();
 					_count = 0;
 				}
 			}
@@ -541,6 +542,7 @@ void collisionManager::player_collision()
 				if (_count % 20 == 0)
 				{
 					_player->setHitPlayerHP(1);
+					_uiManager->PlayerHpMinus();
 					_count = 0;
 				}
 			}
@@ -557,6 +559,7 @@ void collisionManager::player_collision()
 				if (_count % 20 == 0)
 				{
 					_player->setHitPlayerHP(1);
+					_uiManager->PlayerHpMinus();
 					_count = 0;
 				}
 			}
@@ -564,4 +567,5 @@ void collisionManager::player_collision()
 	}
 
 }
+
 

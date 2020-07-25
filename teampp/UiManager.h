@@ -16,6 +16,7 @@ struct tagUIbar	  //UI 구조체
 {
 	image* _UIimage;
 	RECT _rc;
+	MYRECT _Mrc;
 	float _x, _y;
 
 	MiniMapState _MiniMapState; //미니맵 상태 
@@ -30,6 +31,7 @@ private:
 	tagUIbar _BossHpPoint;					  //보스Hp포인트
 	tagUIbar _BossHpbar;					  //보스 Hp바
 	tagUIbar _BossName;						  //보스 Name
+	tagUIbar _BossHpbarHide;				  
 	tagUIbar _UiCoin;						  //ui창 돈
 
 	tagUIbar _MiniMap;						  //미니맵
@@ -62,7 +64,11 @@ public:
 	void render(HDC hdc);
 
 	void MiniMapMove();						//미니맵 이동 함수
+	
 	void PlayerHpMinus();					//PlayerHpPoint 감소 함수
+	void BossHpMinus();						//boss hp 감소 함수
+	void BossDeath();						//boss hp가 완전히 감소하면?
+
 	void printScript();
 
 	void setStageManagerMemoryAddressLink(stageManager* stageManager) { _stageManager = stageManager; }
