@@ -18,6 +18,18 @@ HRESULT collisionManager::init()
 
 	_attackEffect->setFrameX(0);
 	_attackEffect->setFrameY(0);
+
+	{
+		SOUNDMANAGER->addSound("gethit1", "sounds/effect/gethit_knockdown_01.wav", false, false);
+		SOUNDMANAGER->addSound("gethit2", "sounds/effect/gethit_knockdown_02.wav", false, false);
+		SOUNDMANAGER->addSound("gethit3", "sounds/effect/gethit_knockdown_03.wav", false, false);
+		SOUNDMANAGER->addSound("gethit big", "sounds/effect/gethit_big.wav", false, false);
+		SOUNDMANAGER->addSound("player gethit1", "sounds/effect/vo_kyoko_gethit_05.wav", false, false);
+		SOUNDMANAGER->addSound("player gethit2", "sounds/effect/vo_kyoko_gethit_10.wav", false, false);
+		SOUNDMANAGER->addSound("player gethit light1", "sounds/effect/vo_kyoko_gethit_light_02.wav", false, false);
+		SOUNDMANAGER->addSound("player gethit light2", "sounds/effect/vo_kyoko_gethit_light_04.wav", false, false);
+	}
+
 	return S_OK;
 }
 
@@ -176,14 +188,17 @@ void collisionManager::enemy_collisionNoBlock()
 						_player->getPlayerdirection() != PLAYERDIRECTION_RIGHT_ULTIMATE && _player->getPlayerdirection() != PLAYERDIRECTION_LEFT_ULTIMATE)
 					{
 						temp[i]->setHitEnemyHP(1);
+						playGetHitSound();
 					}
 					else if (_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_STRONG_ATTACK || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_STRONG_ATTACK)
 					{
 						temp[i]->setHitEnemyHP(4);
+						SOUNDMANAGER->play("gethit big", 1.0f);
 					}
 					else if (_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_ULTIMATE || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_ULTIMATE)
 					{
 						temp[i]->setHitEnemyHP(15);
+						SOUNDMANAGER->play("gethit big", 1.0f);
 					}
 					_enemyCollisionCount = 0;
 				}
@@ -601,7 +616,7 @@ void collisionManager::player_collision()
 					{
 						_player->setPlayerDirection(PLAYERDIRECTION_RIGHT_HIT);
 					}
-
+					playPlayerGetHitSound();
 					_player->setHitPlayerHP(1);
 					_uiManager->PlayerHpMinus();
 					_count = 0;
@@ -620,7 +635,7 @@ void collisionManager::player_collision()
 				if (_count % 20 == 0)
 				{
 					_player->setPlayerDirection(PLAYERDIRECTION_RIGHT_HIT);
-
+					playPlayerGetHitSound();
 					_player->setHitPlayerHP(1);
 					_uiManager->PlayerHpMinus();
 					_count = 0;
@@ -639,10 +654,10 @@ void collisionManager::player_collision()
 				if (_count % 20 == 0)
 				{
 					_player->setPlayerDirection(PLAYERDIRECTION_LEFT_HIT);
-
+					playPlayerGetHitSound();
 					_player->setHitPlayerHP(1);
 					_uiManager->PlayerHpMinus();
-					_count = 0;
+					_count = 0; 
 				}
 			}
 		}
@@ -666,6 +681,22 @@ void collisionManager::playerAttackHitEffect()
 			_count = 0;
 		}
 	}
+}
+
+void collisionManager::playPlayerGetHitSound()
+{
+	playGetHitSound();
+	int n = RND->getInt(2);
+	if (n == 0) SOUNDMANAGER->play("player gethit light1");
+	else SOUNDMANAGER->play("player gethit light2");
+}
+
+void collisionManager::playGetHitSound()
+{
+	int n = RND->getInt(3);
+	if (n == 0) SOUNDMANAGER->play("gethit1", 1.0f);
+	else if (n == 1) SOUNDMANAGER->play("gethit2", 1.0f);
+	else SOUNDMANAGER->play("gethit3", 1.0f);
 }
 
 
