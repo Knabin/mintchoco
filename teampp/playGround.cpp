@@ -195,6 +195,9 @@ void playGround::update()
 			{
 				this->release();
 				this->init();
+				_playIntroVideo = true;
+				_endIntroVideo = true;
+				SOUNDMANAGER->playBGM("bgm title");
 			}
 
 			_enemyManager->setPlayerPos(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
