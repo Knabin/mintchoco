@@ -272,7 +272,7 @@ void playGround::render()
 	}
 
 	if (_playVideo)
-	{
+	{	
 		char lp[10];
 		long mode;
 		mode = MCIWndGetMode(LogoVideo, lp, sizeof(lp));
@@ -286,6 +286,7 @@ void playGround::render()
 			_playVideo = false;
 		}
 	}
+
 	else {
 		if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == false)
 		{

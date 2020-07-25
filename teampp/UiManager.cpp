@@ -76,9 +76,9 @@ HRESULT UiManager::init()
 
 	//Boss_HpbarPoint 선언
 
-	_BossHpPoint._UIimage = IMAGEMANAGER->addImage("BossHPpoint", "images/ui/Boss_HP_Bar.bmp", 436, 33, true, RGB(255, 0, 255));
+	_BossHpPoint._UIimage = IMAGEMANAGER->addImage("BossHPpoint", "images/ui/Boss_HP_Bar.bmp", 437, 35, true, RGB(255, 0, 255));
 	_BossHpPoint._x = WINSIZEX / 2 - 46;
-	_BossHpPoint._y = WINSIZEY / 2 + 307;
+	_BossHpPoint._y = WINSIZEY / 2 + 306;
 	_BossHpPoint._rc = RectMakeCenter(_BossHpPoint._x, _BossHpPoint._y,
 		_BossHpPoint._UIimage->getWidth(),
 		_BossHpPoint._UIimage->getHeight());
@@ -87,7 +87,7 @@ HRESULT UiManager::init()
 
 	//Boss_Hpbar 선언
 
-	_BossHpbar._UIimage = IMAGEMANAGER->addImage("BossHPbar", "images/ui/boss_hp.bmp", 560, 84, true, RGB(255, 0, 255));
+	_BossHpbar._UIimage = IMAGEMANAGER->addImage("BossHPbar", "images/ui/Boss_Hp2.bmp", 560, 84, true, RGB(255, 0, 255));
 	_BossHpbar._x = WINSIZEX / 2;
 	_BossHpbar._y = WINSIZEY / 2 + 300;
 	_BossHpbar._rc = RectMakeCenter(_BossHpbar._x, _BossHpbar._y,
@@ -98,14 +98,23 @@ HRESULT UiManager::init()
 
 	//Boss_Name 선언
 
-	_BossName._UIimage = IMAGEMANAGER->addImage("BossName", "images/ui/Boss_Name.bmp", 188, 50, true, RGB(255, 0, 255));
-	_BossName._x = WINSIZEX / 2 - 100;
-	_BossName._y = WINSIZEY / 2 - 100;
+	_BossName._UIimage = IMAGEMANAGER->addImage("BossName", "images/ui/Boss_Name2.bmp", 130, 35, true, RGB(255, 0, 255));
+	_BossName._x = WINSIZEX / 2 - 28;
+	_BossName._y = WINSIZEY / 2 + 290;
 	_BossName._rc = RectMakeCenter(_BossName._x, _BossName._y,
 		_BossName._UIimage->getWidth(),
 		_BossName._UIimage->getHeight());
 
 	//=============================================================================================================================//
+	_BossHpPointHide._UIimage = IMAGEMANAGER->addImage("BossHpBarHide", "images/ui/Boss_Hpbar_Hide.bmp", 437, 35, true, RGB(255, 0, 255));
+	_BossHpPointHide._x = WINSIZEX / 2 - 46;
+	_BossHpPointHide._y = WINSIZEY / 2 + 306;
+	_BossHpPointHide._rc = RectMakeCenter(_BossHpPointHide._x, _BossHpPointHide._y,
+		_BossHpPointHide._UIimage->getWidth(),
+		_BossHpPointHide._UIimage->getHeight());
+
+
+	IMAGEMANAGER->addImage("UiHide", "images/ui/UI_footer.bmp", 1341, 96, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addImage("kyoko1", "images/ui/ui_kyoko1.bmp", 684, 816, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("kyoko2", "images/ui/ui_kyoko2.bmp", 684, 816, true, RGB(255, 0, 255));
@@ -131,11 +140,12 @@ void UiManager::release()
 void UiManager::update()
 {
 	MiniMapMove(); //미니맵 이동,상태 함수
+	BossDeath();
 }
 
 void UiManager::render(HDC hdc)
 {
-												//Player//
+											     	 //Player//
 	//=============================================================================================================================//
 	if (!_scriptStart)
 	{
@@ -150,27 +160,31 @@ void UiManager::render(HDC hdc)
 
 		//=============================================================================================================================//
 
-
-
-													 //Boss//
-		//=============================================================================================================================//
-
-		//IMAGEMANAGER->findImage("BossHPbar")->render(getMemDC(), _BossHpbar._x - 280, _BossHpbar._y - 42);
-
-		//IMAGEMANAGER->findImage("BossHPpoint")->render(getMemDC(), _BossHpPoint._x - 218, _BossHpPoint._y - 17);
-
-		//IMAGEMANAGER->findImage("BossName")->render(getMemDC(), _BossName._x, _BossName._y);
-
-		//=============================================================================================================================//
-
-
-
 		IMAGEMANAGER->findImage("UICoin")->render(hdc, _UiCoin._x - 18, _UiCoin._y - 18);
 	}
 	else
 	{
 		IMAGEMANAGER->findImage("kyoko1")->render(hdc, 0, 0);
 	}
+
+														//Boss//
+	//=============================================================================================================================//
+
+
+	if (_stageManager->getNowbossStage() == true)		
+	{
+		IMAGEMANAGER->findImage("BossHPpoint")->render(hdc, _BossHpPoint._x - 218, _BossHpPoint._y - 17);
+
+		IMAGEMANAGER->findImage("BossHpBarHide")->render(hdc, _BossHpPointHide._x - 648, _BossHpPointHide._y - 6);
+
+		IMAGEMANAGER->findImage("BossHPbar")->render(hdc, _BossHpbar._x - 280, _BossHpbar._y - 42);
+
+		IMAGEMANAGER->findImage("BossName")->render(hdc, _BossName._x - 75, _BossName._y - 17);
+
+		IMAGEMANAGER->findImage("UiHide")->render(hdc, -975, 640);
+	}
+
+
 
 
 	// 스테이지 이동 시 미니맵 렌더링 변경
@@ -263,10 +277,30 @@ void UiManager::PlayerHpMinus()
 {
 	for (int i = 0; i < 26; i++)
 	{
-		if (_PlayerHpPoint[i]._y < -400) continue;  // if문의 정수 변경시 감소 속도 조절
+		if (_PlayerHpPoint[i]._y < CAMERA->getTop() - 200) continue;  // if문의 정수 변경시 감소 속도 조절
 		{
-			_PlayerHpPoint[i]._y -= 60;
+			_PlayerHpPoint[i]._y -= 500;
 			break;
 		}
+	}
+}
+
+void UiManager::PlayerDeath()
+{
+
+}
+
+void UiManager::BossHpMinus()
+{
+	_BossHpPoint._x -= 0.70f;
+	_BossHpPoint._y += 0.02f;
+}
+
+void UiManager::BossDeath()
+{
+	if (_BossHpPoint._x < 163)
+	{
+		_BossHpPoint._x = WINSIZEX / 2 - 46;
+		_BossHpPoint._y = WINSIZEY / 2 + 306;
 	}
 }

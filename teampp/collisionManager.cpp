@@ -31,6 +31,9 @@ void collisionManager::update()
 
 	player_collision();
 
+	//boss_collision();
+	
+
 }
 
 void collisionManager::release()
@@ -525,6 +528,8 @@ void collisionManager::player_collision()
 				if (_count % 20 == 0)
 				{
 					_player->setHitPlayerHP(1);
+					_uiManager->PlayerHpMinus();
+					_uiManager->PlayerDeath();
 					_count = 0;
 				}
 			}
@@ -541,6 +546,8 @@ void collisionManager::player_collision()
 				if (_count % 20 == 0)
 				{
 					_player->setHitPlayerHP(1);
+					_uiManager->PlayerHpMinus();
+					_uiManager->PlayerDeath();
 					_count = 0;
 				}
 			}
@@ -557,11 +564,21 @@ void collisionManager::player_collision()
 				if (_count % 20 == 0)
 				{
 					_player->setHitPlayerHP(1);
+					_uiManager->PlayerHpMinus();
+					_uiManager->PlayerDeath();
 					_count = 0;
 				}
 			}
 		}
 	}
 
+}
+
+void collisionManager::boss_collision()
+{
+	if (isCollision(_itemManager->getVItem()->getRect(), _player->getPlayerRect()))
+	{
+		_uiManager->BossHpMinus();
+	}
 }
 

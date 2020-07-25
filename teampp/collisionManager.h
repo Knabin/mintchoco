@@ -38,6 +38,8 @@ public:
 	void npcCollision();
 	void player_collision();//플레이어랑 적 공격이랑 충돌시
 
+	void boss_collision();
+
 	void setPlayerMemoryAddressLink(player* player) { _player = player; }
 	void setEnemyManagerMemoryAddressLink(enemyManager* enemyManager) { _enemyManager = enemyManager; }
 	void setStageManagerMemoryAddressLink(stageManager* stageManager) { _stageManager = stageManager; }
