@@ -195,6 +195,9 @@ void playGround::update()
 			{
 				this->release();
 				this->init();
+				_playIntroVideo = true;
+				_endIntroVideo = true;
+				SOUNDMANAGER->playBGM("bgm title");
 			}
 
 			_enemyManager->setPlayerPos(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
@@ -356,7 +359,7 @@ void playGround::stopIntro()
 	RECT _temp;
 	GetWindowRect(_hWnd, &_temp);
 
-	MCIWndClose(IntroVideo);
+	MCIWndDestroy(IntroVideo);
 	MoveWindow(_hWnd, _temp.left, _temp.top, _temp.right - _temp.left, _temp.bottom - _temp.top, true);
 
 	_endIntroVideo = true;

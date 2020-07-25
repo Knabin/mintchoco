@@ -116,6 +116,11 @@ HRESULT UiManager::init()
 
 	//=============================================================================================================================//
 
+	SOUNDMANAGER->addSound("menu cursor", "sounds/menu/menu_cursor.wav", false, false);
+	SOUNDMANAGER->addSound("menu confirm", "sounds/menu/menu_confirm.wav", false, false);
+	SOUNDMANAGER->addSound("menu phone", "sounds/menu/menu_phone_slider_tick.wav", false, false);
+	SOUNDMANAGER->addSound("menu select", "sounds/menu/menu_player_select_last.wav", false, false);
+
 	IMAGEMANAGER->addImage("kyoko1", "images/ui/kyoko_1.bmp", 386, 460, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("kyoko2", "images/ui/kyoko_2.bmp", 386, 460, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("kyoko3", "images/ui/kyoko_3.bmp", 386, 460, true, RGB(255, 0, 255));
@@ -302,6 +307,7 @@ void UiManager::MiniMapMove()
 	//키 입력시 미니맵 이동 (키 중복 주의)
 	if (KEYMANAGER->isOnceKeyDown('M'))
 	{
+		SOUNDMANAGER->play("menu phone");
 		if (_MiniMap._MiniMapState == CLOSESTOP)
 			_MiniMap._MiniMapState = OPEN;
 		else if (_MiniMap._MiniMapState == OPENSTOP)
@@ -317,9 +323,10 @@ void UiManager::MiniMapMove()
 		_MiniMap._MiniMapState = CLOSESTOP;
 	}
 
-	//cout << _saveRc.left << ", " << _ptMouse.x << "    " << _saveRc.top << ", " << _ptMouse.y << endl;
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_saveRc, _ptMouse))
 	{
+		SOUNDMANAGER->stopAll("");
+		SOUNDMANAGER->play("menu confirm");
 		dataManager::getInstance()->saveData(26, 10, _stageManager->getNowStage());
 		_restart = true;
 	}
@@ -336,18 +343,6 @@ void UiManager::MiniMapMove()
 	case CLOSE:
 	{
 		_MiniMap._y += 20;
-	}
-	break;
-
-	case OPENSTOP:
-	{
-
-	}
-	break;
-
-	case CLOSESTOP:
-	{
-
 	}
 	break;
 	}

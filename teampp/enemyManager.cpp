@@ -116,7 +116,6 @@ void enemyManager::setBossMove()	//보스 무브 추가
 
 void enemyManager::setEnemiesVector(int stageNum)
 {
-	//if (stageNum == 4) return;	// for test
 	if (_vEnemies.size() != 0)
 	{
 		for (int i = 0; i < _vEnemies.size(); ++i)
@@ -136,8 +135,7 @@ void enemyManager::setEnemiesVector(int stageNum)
 		float y[] = { 500, 300, 350, 500 };
 		for (int i = 0; i < 4; i++)
 		{
-			if (i < 1)	_vEnemies.push_back(createEnemy(0, x[i], y[i]));
-			else if(i == 3) _vEnemies.push_back(createEnemy(1, x[i], y[i]));
+			if (i < 2) _vEnemies.push_back(createEnemy(1, x[i], y[i]));
 			else		_vEnemies.push_back(createEnemy(2, x[i], y[i]));
 		}
 	}
@@ -158,10 +156,10 @@ void enemyManager::setEnemiesVector(int stageNum)
 	case 2:
 		// 스테이지 3
 	{
-		float x[] = { 1000 };
-		float y[] = { 450 };
+		float x[] = { 1800, 1400, 550, 1700 };
+		float y[] = { 450, 700, 650, 800 };
 
-		for (int i = 0; i < 1; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			enemy* _tempSchoolGirl = new schoolgirl;
 			_tempSchoolGirl->init("schoolgirl_move", x[i], y[i], 2.3f);
