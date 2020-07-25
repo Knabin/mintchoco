@@ -252,8 +252,8 @@ void collisionManager::enemy_collisionNoBlock()
 			}
 
 			if (isCollision(temp[i]->getEnemyRect(), _player->getComboAttackRc3()) &&
-				_player->getPlayerZ() - 10 <= temp[i]->getEnemyRect().bottom &&
-				_player->getPlayerZ() + 10 >= temp[i]->getEnemyRect().bottom)
+				_player->getPlayerZ() - 50 <= temp[i]->getEnemyRect().bottom &&
+				_player->getPlayerZ() + 50 >= temp[i]->getEnemyRect().bottom)
 			{
 				_attackEffectFrame = true;
 				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
@@ -279,10 +279,10 @@ void collisionManager::enemy_collisionNoBlock()
 		}
 
 	}
-	_player->setPlayerAttackRectRemove(0, 0, 0, 0);
-	_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
-	_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
-	_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
+	//_player->setPlayerAttackRectRemove(0, 0, 0, 0);
+	//_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
+	//_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
+	//_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
 
 }
 
@@ -387,8 +387,8 @@ void collisionManager::enemy_collisionLeftBlock()
 			}
 
 			if (isCollision(temp[i]->getEnemyRect(), _player->getComboAttackRc3()) &&
-				_player->getPlayerZ() - 10 <= temp[i]->getEnemyRect().bottom &&
-				_player->getPlayerZ() + 10 >= temp[i]->getEnemyRect().bottom)
+				_player->getPlayerZ() - 50 <= temp[i]->getEnemyRect().bottom &&
+				_player->getPlayerZ() + 50 >= temp[i]->getEnemyRect().bottom)
 			{
 				_attackEffectFrame = true;
 				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
@@ -413,10 +413,10 @@ void collisionManager::enemy_collisionLeftBlock()
 			}
 		}
 	}
-	_player->setPlayerAttackRectRemove(0, 0, 0, 0);
-	_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
-	_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
-	_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
+	//_player->setPlayerAttackRectRemove(0, 0, 0, 0);
+	//_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
+	//_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
+	//_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
 }
 
 
@@ -520,8 +520,8 @@ void collisionManager::enemy_collisionRightBlock()
 			}
 
 			if (isCollision(temp[i]->getEnemyRect(), _player->getComboAttackRc3()) &&
-				_player->getPlayerZ() - 10 <= temp[i]->getEnemyRect().bottom &&
-				_player->getPlayerZ() + 10 >= temp[i]->getEnemyRect().bottom)
+				_player->getPlayerZ() - 50 <= temp[i]->getEnemyRect().bottom &&
+				_player->getPlayerZ() + 50 >= temp[i]->getEnemyRect().bottom)
 			{
 				_attackEffectFrame = true;
 				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
@@ -546,10 +546,10 @@ void collisionManager::enemy_collisionRightBlock()
 			}
 		}
 	}
-	_player->setPlayerAttackRectRemove(0, 0, 0, 0);
-	_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
-	_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
-	_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
+	//_player->setPlayerAttackRectRemove(0, 0, 0, 0);
+	//_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
+	//_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
+	//_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
 }
 
 

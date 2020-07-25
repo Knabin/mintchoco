@@ -184,10 +184,12 @@ void player::update()
 
 		downMove();//아래쪽 이동
 
-		jumpMove();//점프
-
 		guard();//플레이어 방어
 	}
+		jumpMove();//점프
+
+		
+	
 
 	frameDraw();//프레임 관리
 
@@ -1516,7 +1518,7 @@ void player::frameDraw()
 		if (_count % 5 == 0)
 		{
 			_comboAttackImage1->setFrameX(_comboAttackImage1->getFrameX() - 1);
-			_comboAttackRc1.set(0, 0, 100, 50);
+			_comboAttackRc1.set(0, 0, 150, 50);
 			_comboAttackRc1.setCenterPos(_rc.left, _rc.getCenterY() - 10);
 			if (_comboAttackImage1->getFrameX() <= 0)
 			{
@@ -1537,7 +1539,7 @@ void player::frameDraw()
 		if (_count % 5 == 0)
 		{
 			_comboAttackImage1->setFrameX(_comboAttackImage1->getFrameX() + 1);
-			_comboAttackRc1.set(0, 0, 100, 50);
+			_comboAttackRc1.set(0, 0, 150, 50);
 			_comboAttackRc1.setCenterPos(_rc.right, _rc.getCenterY() - 10);
 			if (_comboAttackImage1->getFrameX() >= _comboAttackImage1->getMaxFrameX())
 			{
@@ -1558,7 +1560,7 @@ void player::frameDraw()
 		if (_count % 5 == 0)
 		{
 			_comboAttackImage2->setFrameX(_comboAttackImage2->getFrameX() - 1);
-			_comboAttackRc2.set(0, 0, 100, 50);
+			_comboAttackRc2.set(0, 0, 180, 100);
 			_comboAttackRc2.setCenterPos(_rc.left, _rc.getCenterY());
 			if (_comboAttackImage2->getFrameX() <= 0)
 			{
@@ -1580,7 +1582,7 @@ void player::frameDraw()
 		if (_count % 5 == 0)
 		{
 			_comboAttackImage2->setFrameX(_comboAttackImage2->getFrameX() + 1);
-			_comboAttackRc2.set(0, 0, 100, 50);
+			_comboAttackRc2.set(0, 0, 180, 100);
 			_comboAttackRc2.setCenterPos(_rc.right, _rc.getCenterY());
 			if (_comboAttackImage2->getFrameX() >= _comboAttackImage2->getMaxFrameX())
 			{
@@ -1602,7 +1604,7 @@ void player::frameDraw()
 		if (_count % 5 == 0)
 		{
 			_comboAttackImage3->setFrameX(_comboAttackImage3->getFrameX() - 1);
-			_comboAttackRc3.set(0, 0, 100, 50);
+			_comboAttackRc3.set(0, 0, 200, 200);
 			_comboAttackRc3.setCenterPos(_rc.left, _rc.getCenterY());
 			if (_comboAttackImage3->getFrameX() <= 0)
 			{
@@ -1624,7 +1626,7 @@ void player::frameDraw()
 		if (_count % 5 == 0)
 		{
 			_comboAttackImage3->setFrameX(_comboAttackImage3->getFrameX() + 1);
-			_comboAttackRc3.set(0, 0, 100, 50);
+			_comboAttackRc3.set(0, 0, 200, 200);
 			_comboAttackRc3.setCenterPos(_rc.right, _rc.getCenterY());
 			if (_comboAttackImage3->getFrameX() >= _comboAttackImage3->getMaxFrameX())
 			{
@@ -1647,7 +1649,7 @@ void player::frameDraw()
 		if (_count % 4 == 0)
 		{
 			_strongAttackImage->setFrameX(_strongAttackImage->getFrameX() + 1);
-			_attackRc.set(0, 0, 100, 200);
+			_attackRc.set(0, 0, 200, 200);
 			_attackRc.setCenterPos(_rc.left, _rc.getCenterY() - _jump->getJumpPower());
 			if (_strongAttackImage->getFrameX() >= _strongAttackImage->getMaxFrameX())
 			{
@@ -1668,7 +1670,7 @@ void player::frameDraw()
 		if (_count % 4 == 0)
 		{
 			_strongAttackImage->setFrameX(_strongAttackImage->getFrameX() - 1);
-			_attackRc.set(0, 0, 100, 200);
+			_attackRc.set(0, 0, 200, 200);
 			_attackRc.setCenterPos(_rc.right, _rc.getCenterY() - _jump->getJumpPower());
 			if (_strongAttackImage->getFrameX() <= 0)
 			{
@@ -1744,8 +1746,8 @@ void player::frameDraw()
 		if (_count % 5 == 0)
 		{
 			_dashAttackImage->setFrameX(_dashAttackImage->getFrameX() - 1);
-			_attackRc.set(0, 0, 100, 50);
-			_attackRc.setCenterPos(_rc.left, _rc.getCenterY() - 30);
+			_attackRc.set(0, 0, 120, 100);
+			_attackRc.setCenterPos(_rc.left - 50, _rc.getCenterY() - 30);
 			if (_dashAttackImage->getFrameX() <= 0)
 			{
 				_dashAttackImage->setFrameX(_dashAttackImage->getMaxFrameX());
@@ -1766,8 +1768,8 @@ void player::frameDraw()
 		if (_count % 5 == 0)
 		{
 			_dashAttackImage->setFrameX(_dashAttackImage->getFrameX() + 1);
-			_attackRc.set(0, 0, 100, 50);
-			_attackRc.setCenterPos(_rc.right, _rc.getCenterY() - 30);
+			_attackRc.set(0, 0, 120, 100);
+			_attackRc.setCenterPos(_rc.right + 50, _rc.getCenterY() - 30);
 			if (_dashAttackImage->getFrameX() >= _dashAttackImage->getMaxFrameX())
 			{
 				_dashAttackImage->setFrameX(0);
