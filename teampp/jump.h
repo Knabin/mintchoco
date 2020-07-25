@@ -7,9 +7,9 @@ private:
 	float _gravity;
 
 	float* _x;
-	float* _y;
+	float* _z;
 
-	float _startX, _startY;
+	float _startX, _startZ;
 
 	bool _isJumping;
 
@@ -22,13 +22,13 @@ public:
 	void update();
 	void release();
 
-	void jumping(float* x, float* y, float jumpPower, float gravity);
-	void setStartYmin(float startY) { _startY -= startY; }
-	void setStartYpls(float startY) { _startY += startY; }
+	void jumping(float* x, float* z, float jumpPower, float gravity);
+	void setStartZmin(float startY) { _startZ -= startY; }
+	void setStartZpls(float startY) { _startZ += startY; }
 	void setJumpPower(float jumpPower) { _jumpPower = jumpPower; }
 	void setGravity(float gravity) { _gravity = gravity; }
 	float getJumpPower() { return _jumpPower; }
 	float getGravity() { return _gravity; }
-	float getStartY() { return _startY; }
+	float getStartZ() { return _startZ; }
 };
 

@@ -51,17 +51,17 @@ void jump::release()
 {
 }
 
-void jump::jumping(float * x, float * y, float jumpPower, float gravity)
+void jump::jumping(float * x, float * z, float jumpPower, float gravity)
 {
 	if (_isJumping) return;
 
 	_isJumping = true;
 
 	_x = x;
-	_y = y;
+	_z = z;
 
 	_startX = *x;
-	_startY = *y;
+	_startZ = *z;
 	_gravity = gravity;
 	_jumpPower = jumpPower;
 }
