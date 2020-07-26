@@ -629,6 +629,7 @@ void stageManager::ChainLockMove()
 					_LockDamage1 = false;
 					_LockDamage2 = false;
 					_LockClear = false;
+					CAMERA->setIsReturn(true);
 				}
 			}
 			break;
@@ -730,7 +731,6 @@ void stageManager::Stage1ChainLock()
 		if (_enemyCount >= 4)
 		{
 			_PlayerStage1ChainLockAlready = true;
-
 			_Stage1->getRect().setCenterPos(WINSIZEX + 155 , WINSIZEY / 2 - 125);
 		}
 	}

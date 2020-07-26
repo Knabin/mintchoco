@@ -93,7 +93,7 @@ void enemyManager::update()
 		if (_vEnemies[i]->getHP() <= 0 && _vEnemies[i]->getEnemyDead())
 		{
 			_sm->plusEnemyCount();
-			//_vEnemies[i]->setEnemyDead(false);
+			_vEnemies[i]->setEnemyDead(false);
 			_vEnemies.erase(_vEnemies.begin() + i);
 		}
 	}
