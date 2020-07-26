@@ -39,6 +39,8 @@ HRESULT boss::init(string imageName, float x, float z, float speed)
 	_bossGetup_c = IMAGEMANAGER->addFrameImage("BOSSGETUP_C", "images/boss/boss_getup_C.bmp", 2187, 576, 9, 2, true, RGB(255, 0, 255));
 	_bossDefeat = IMAGEMANAGER->addFrameImage("BOSSDEFEAT", "images/boss/boss_defeat.bmp", 4576, 576, 13, 2, true, RGB(255, 0, 255));
 
+	IMAGEMANAGER->addImage("boss_shadow", "images/boss/boss_Shadow.bmp", 200, 59, true, RGB(255, 0, 255));
+
 
 	_bossImg = IMAGEMANAGER->findImage(imageName);
 	_imageName = imageName;
@@ -253,11 +255,11 @@ HRESULT boss::init(string imageName, float x, float z, float speed)
 	_boss_L_HIT_A = new animation;
 	_boss_L_HIT_A->init(_bossHit_a->getWidth(), _bossHit_a->getHeight(), _bossHit_a->getFrameWidth(), _bossHit_a->getFrameHeight());
 	_boss_L_HIT_A->setPlayFrame(43, 22, false, false);
-	_boss_L_HIT_A->setFPS(0.5);
+	_boss_L_HIT_A->setFPS(1);
 	_boss_R_HIT_A = new animation;
 	_boss_R_HIT_A->init(_bossHit_a->getWidth(), _bossHit_a->getHeight(), _bossHit_a->getFrameWidth(), _bossHit_a->getFrameHeight());
 	_boss_R_HIT_A->setPlayFrame(0, 21, false, false);
-	_boss_R_HIT_A->setFPS(0.5);
+	_boss_R_HIT_A->setFPS(1);
 
 	_boss_L_DIZZY = new animation;
 	_boss_L_DIZZY->init(_bossDizzy->getWidth(), _bossDizzy->getHeight(), _bossDizzy->getFrameWidth(), _bossDizzy->getFrameHeight());
@@ -309,7 +311,17 @@ void boss::release()
 
 void boss::update()
 {
-	_attackCount++;
+
+	if (_bossMotion->isPlay() == false || (_bossDirection == BOSS_RIGHT_IDLE || _bossDirection == BOSS_LEFT_IDLE || _bossDirection == BOSS_RIGHT_WALK || _bossDirection == BOSS_LEFT_WALK))
+	{
+		_attackCount++;
+	}
+
+	//cout << "보스 HP" << _hp << endl;
+	//cout << "어택카운트" << _attackCount << endl;
+	cout << "랜덤1" << _random1 << endl;
+
+
 	if (_bossDirection == BOSS_LEFT_BLOCK || _bossDirection == BOSS_RIGHT_BLOCK)	 //애니메이션 재생속도오?
 		_bossMotion->frameUpdate(TIMEMANAGER->getElapsedTime() * 10);
 	else if (_bossDirection == BOSS_LEFT_WUPUNCH || _bossDirection == BOSS_RIGHT_WUPUNCH)
@@ -320,7 +332,7 @@ void boss::update()
 
 	_bossPhase = PHASE1;
 
-	if (_hp < 45 || _hp > 23)	// HP가 45보다 작고 23보단 크면 페이즈 변화
+	if (_hp < 45 && _hp > 23)	// HP가 45보다 작고 23보단 크면 페이즈 변화
 	{
 		_bossPhase = PHASE2;
 	}
@@ -334,6 +346,7 @@ void boss::update()
 	if (_isJumping)
 	{
 		_jumpPower += _gravity;
+		_rc.setCenterPos(_x, _z-_jumpPower);
 
 	}
 
@@ -343,7 +356,7 @@ void boss::update()
 	_angle = getAngle(_x, _z, _playerX, _playerY);
 
 
-	if (_distance > 165 && (_bossDirection == BOSS_RIGHT_IDLE || _bossDirection == BOSS_LEFT_IDLE))
+	if (_distance > 165 && (_bossDirection == BOSS_RIGHT_IDLE || _bossDirection == BOSS_LEFT_IDLE || _bossDirection == BOSS_RIGHT_WALK || _bossDirection == BOSS_LEFT_WALK))
 	{
 		if (_x < _playerX)
 		{
@@ -586,7 +599,10 @@ void boss::update()
 			}
 		}
 	}
-	_rc.setCenterPos(_x, _z);
+	if (_isJumping == false)
+	{
+		_rc.setCenterPos(_x, _z);
+	}
 }
 
 
@@ -632,9 +648,11 @@ void boss::render()
 		break;
 	case BOSS_RIGHT_BLOCK:
 		_bossImg = _bossBlock;
+		_rc.move(30, 0);
 		break;
 	case BOSS_LEFT_BLOCK:
 		_bossImg = _bossBlock;
+		_rc.move(30, 0);
 		break;
 	case BOSS_RIGHT_ROAR:
 		_bossImg = _bossRoar;
@@ -760,8 +778,10 @@ void boss::render()
 
 	}
 
+	IMAGEMANAGER->findImage("boss_shadow")->alphaRender(getMemDC(), _rc.left + 35, _rc.bottom - 45, 100);
 	ZORDER->pushObject(getMemDC(), _bossImg, _bossMotion, 1, _rc.getCenterX(), _jumpPower, _rc.bottom);
 	_rcA.render(getMemDC());
+	_rc.render(getMemDC());
 }
 
 void boss::attackSlap()
@@ -770,6 +790,8 @@ void boss::attackSlap()
 	{
 		_bossDirection = BOSS_RIGHT_SLAP;
 		_bossMotion = _boss_R_SLAP;
+		//_bossMotion->start();
+		//_attackCount = 0;
 		if (_bossMotion->isPlay() == false)
 		{
 			_attackCount = 0;

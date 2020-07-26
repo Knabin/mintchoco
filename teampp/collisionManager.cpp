@@ -984,7 +984,7 @@ void collisionManager::boss_collisionNoBlock()
 					btemp->setBossMotion(btemp->getBossMotion_L_G_HIT1());
 					btemp->getBossMotion_L_G_HIT1()->start();
 				}
-				btemp->setHitEnemyHP(1);
+				btemp->setHitBossHP(1);
 				_enemyCollisionCount2 = 0;
 			}
 		}
@@ -1023,11 +1023,15 @@ void collisionManager::boss_collisionNoBlock()
 					btemp->setBossMotion(btemp->getBossMotion_L_G_HIT1());
 					btemp->getBossMotion_L_G_HIT1()->start();
 				}
-				btemp->setHitEnemyHP(1);
+				btemp->setHitBossHP(1);
 				_enemyCollisionCount3 = 0;
 			}
 		}
 	}
+	//_player->setPlayerAttackRectRemove(0, 0, 0, 0);
+	_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
+	_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
+	_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
 }
 
 void collisionManager::boss_collisionLeftBlock()
@@ -1137,7 +1141,7 @@ void collisionManager::boss_collisionLeftBlock()
 			_bossCollisionCount1++;
 			if (_bossCollisionCount1 % 1 == 0)
 			{
-				btemp->setHitEnemyHP(1);
+				btemp->setHitBossHP(1);
 				_enemyCollisionCount1 = 0;
 			}
 		}
@@ -1177,7 +1181,7 @@ void collisionManager::boss_collisionLeftBlock()
 					btemp->setBossMotion(btemp->getBossMotion_L_G_HIT1());
 					btemp->getBossMotion_L_G_HIT1()->start();
 				}
-				btemp->setHitEnemyHP(1);
+				btemp->setHitBossHP(1);
 				_enemyCollisionCount2 = 0;
 			}
 		}
@@ -1216,11 +1220,15 @@ void collisionManager::boss_collisionLeftBlock()
 					btemp->setBossMotion(btemp->getBossMotion_L_G_HIT1());
 					btemp->getBossMotion_L_G_HIT1()->start();
 				}
-				btemp->setHitEnemyHP(1);
+				btemp->setHitBossHP(1);
 				_enemyCollisionCount3 = 0;
 			}
 		}
 	}
+	//_player->setPlayerAttackRectRemove(0, 0, 0, 0);
+	_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
+	_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
+	_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
 }
 
 void collisionManager::boss_collisionRightBlock()
@@ -1330,7 +1338,7 @@ void collisionManager::boss_collisionRightBlock()
 			_bossCollisionCount1++;
 			if (_bossCollisionCount1 % 1 == 0)
 			{
-				btemp->setHitEnemyHP(1);
+				btemp->setHitBossHP(1);
 				_enemyCollisionCount1 = 0;
 			}
 		}
@@ -1370,7 +1378,7 @@ void collisionManager::boss_collisionRightBlock()
 					btemp->setBossMotion(btemp->getBossMotion_L_G_HIT1());
 					btemp->getBossMotion_L_G_HIT1()->start();
 				}
-				btemp->setHitEnemyHP(1);
+				btemp->setHitBossHP(1);
 				_enemyCollisionCount2 = 0;
 			}
 		}
@@ -1409,11 +1417,15 @@ void collisionManager::boss_collisionRightBlock()
 					btemp->setBossMotion(btemp->getBossMotion_L_G_HIT1());
 					btemp->getBossMotion_L_G_HIT1()->start();
 				}
-				btemp->setHitEnemyHP(1);
+				btemp->setHitBossHP(1);
 				_enemyCollisionCount3 = 0;
 			}
 		}
 	}
+	//_player->setPlayerAttackRectRemove(0, 0, 0, 0);
+	_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
+	_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
+	_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
 }
 
 void collisionManager::player_bossCollision()

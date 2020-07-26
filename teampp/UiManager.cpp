@@ -35,8 +35,6 @@ HRESULT UiManager::init()
 	}
 
 
-
-
 	//ui 돈 선언
 
 	_UiCoin._UIimage = IMAGEMANAGER->addImage("UICoin", "images/ui/coin.bmp", 32, 32, true, RGB(255, 0, 255));
@@ -78,7 +76,7 @@ HRESULT UiManager::init()
 	for (int i = 0; i < 26; i++)
 	{
 		_PlayerHpPoint[i]._UIimage = IMAGEMANAGER->addImage("HPpoint", "images/ui/HP_Point.bmp", 20, 18, true, RGB(255, 0, 255));
-		_PlayerHpPoint[i]._x = WINSIZEX / 2 - 127;
+		_PlayerHpPoint[i]._x = 238;
 		_PlayerHpPoint[i]._y = WINSIZEY / 2 - 320;
 		_PlayerHpPoint[i]._rc = RectMakeCenter(_PlayerHpPoint[i]._x - 11 * i, _PlayerHpPoint[i]._y,
 			_PlayerHpPoint[i]._UIimage->getWidth(),
@@ -161,6 +159,8 @@ HRESULT UiManager::init()
 	_saveRc = RectMakeCenter(WINSIZEX / 2, WINSIZEY / 2 + 150, 220, 70);
 	_scriptIndex = _txtIndex = _endCount = _isGameOver = _restartDirect = 0;
 
+	_playerHP = 26;
+
 	if (TXTDATA->canLoadFile("data/script.data", ';'))
 	{
 		_vScript = TXTDATA->txtLoad("data/script.data", ";");
@@ -213,13 +213,31 @@ void UiManager::render(HDC hdc)
 	}
 	else if (!_scriptStart)
 	{
+		if (_scriptEnd)
+		{
+			if (_stageManager->getNowbossStage() == true)
+			{
+
+				IMAGEMANAGER->findImage("BossHPpoint")->render(hdc, _BossHpPoint._x - 218, _BossHpPoint._y - 17);
+
+				IMAGEMANAGER->findImage("BossHpbarHide")->render(hdc, _BossHpbarHide._x - 648, _BossHpbarHide._y - 7);
+
+				IMAGEMANAGER->findImage("UiFooter")->render(hdc, -975, 650);
+
+				IMAGEMANAGER->findImage("BossHPbar")->render(hdc, _BossHpbar._x - 280, _BossHpbar._y - 42);
+
+				IMAGEMANAGER->findImage("BossName")->render(hdc, _BossName._x - 75, _BossName._y - 17);
+
+			}
+		}
+
 		IMAGEMANAGER->findImage("HPbar")->render(hdc, _PlayerHpBar._x - 165, _PlayerHpBar._y - 45);
 
 		IMAGEMANAGER->findImage("PlayerImage")->render(hdc, _PlayerImage._x - 60, _PlayerImage._y - 78);
 
-		for (int i = 0; i < 26; i++)
+		for (int i = 0; i < _playerHP; i++)
 		{
-			IMAGEMANAGER->findImage("HPpoint")->render(hdc, _PlayerHpPoint[i]._x - 11 * i, _PlayerHpPoint[i]._y);
+			IMAGEMANAGER->findImage("HPpoint")->render(hdc, _PlayerHpPoint[i]._x + 11 * i, _PlayerHpPoint[i]._y);
 		}
 
 		IMAGEMANAGER->findImage("UICoin")->render(hdc, _UiCoin._x - 18, _UiCoin._y - 18);
@@ -370,25 +388,7 @@ void UiManager::render(HDC hdc)
 				}
 			}
 
-		}
-
-
-
-		
-		if (_stageManager->getNowbossStage() == true)
-		{
-
-			IMAGEMANAGER->findImage("BossHPpoint")->render(hdc, _BossHpPoint._x - 218, _BossHpPoint._y - 17);
-
-			IMAGEMANAGER->findImage("BossHpbarHide")->render(hdc, _BossHpbarHide._x - 648, _BossHpbarHide._y - 7);
-
-			IMAGEMANAGER->findImage("UiFooter")->render(hdc, -975, 650);
-
-			IMAGEMANAGER->findImage("BossHPbar")->render(hdc, _BossHpbar._x - 280, _BossHpbar._y - 42);
-
-			IMAGEMANAGER->findImage("BossName")->render(hdc, _BossName._x - 75, _BossName._y - 17);
-
-		}							
+		}					
 	}
 	else
 	{
@@ -465,8 +465,6 @@ void UiManager::render(HDC hdc)
 	}
 
 
-
-
 	// 스테이지 이동 시 미니맵 렌더링 변경
 	if (_stageManager->getNowstage1() == true)
 	{
@@ -516,11 +514,11 @@ void UiManager::MiniMapMove()
 		_MiniMap._MiniMapState = CLOSESTOP;
 	}
 
-	if (_MiniMap._MiniMapState == OPEN && KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_saveRc, _ptMouse))
+	if (_MiniMap._MiniMapState == OPENSTOP && KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_saveRc, _ptMouse))
 	{
 		SOUNDMANAGER->stopAll("");
 		SOUNDMANAGER->play("menu confirm");
-		dataManager::getInstance()->saveData(26, 10, _stageManager->getNowStage());
+		dataManager::getInstance()->saveData(_player->getPlayerHP(), _player->getCoin(), _stageManager->getNowStage());
 		_restart = true;
 	}
 
@@ -545,27 +543,12 @@ void UiManager::MiniMapMove()
 //player Hp 감소
 void UiManager::PlayerHpMinus()
 {
-	for (int i = 0; i < 26; i++)
-	{
-		if (_PlayerHpPoint[i]._y < CAMERA->getTop() - 300) continue;  // if문의 정수 변경시 감소 속도 조절
-		{
-			_PlayerHpPoint[i]._y -= 500;
-			break;
-		}
-	}
+	_playerHP -= 1;
 }
 
 void UiManager::PlayerHpPlus()
 {
-	for (int i = 26; i > -1; i--)
-	{
-		if (_PlayerHpPoint[i]._y > CAMERA->getTop() - 300) continue;  // if문의 정수 변경시 감소 속도 조절
-		{
-			_PlayerHpPoint[i]._y += 500;
-			break;
-		}
-	}
-
+	_playerHP += 1;
 }
 
 void UiManager::BossHpMinus()
