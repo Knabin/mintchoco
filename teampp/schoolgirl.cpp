@@ -344,7 +344,8 @@ void schoolgirl::render()
 		break;
 	}
 	//_rc.render(getMemDC());
-	_attackRC.render(getMemDC());
+	
+	//_attackRC.render(getMemDC());
 	IMAGEMANAGER->findImage("schoolgirl_shadow")->alphaRender(getMemDC(), _rc.left - 19, _rc.bottom - 25, 100);
 	ZORDER->pushObject(getMemDC(), _enemyImg, _enemyMotion, 1, _rc.getCenterX(), 0, _rc.bottom);
 }

@@ -209,6 +209,7 @@ HRESULT schoolboy::init(string imageName, float x, float y, float speed)
 	_rc.set(0, 0, _enemyImg->getFrameWidth(), _enemyImg->getFrameHeight());
 	_rc.setCenterPos(_x, _y);
 
+	
 	_attackRC.set(0, 0, 0, 0);
 	_attackRC.setCenterPos(0, 0);
 

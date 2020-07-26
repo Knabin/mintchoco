@@ -344,7 +344,7 @@ void cheerleader::render()
 		break;
 	}
 	//_rc.render(getMemDC());
-	_attackRC.render(getMemDC());
+	//_attackRC.render(getMemDC());
 	IMAGEMANAGER->findImage("cheer_shadow")->alphaRender(getMemDC(), _rc.left + 35, _rc.bottom - 25, 100);
 	ZORDER->pushObject(getMemDC(), _enemyImg, _enemyMotion, 1, _rc.getCenterX(), 0, _rc.bottom);
 }
