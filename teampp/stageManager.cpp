@@ -207,11 +207,11 @@ void stageManager::update()
 		PlayBattleStartFrame();
 	}
 
-	//Stage4ChainLock();
+	Stage4ChainLock();
 
-	//Stage3ChainLock();
+	Stage3ChainLock();
 
-	//Stage2ChainLock();
+	Stage2ChainLock();
 
 	Stage1ChainLock();
 
@@ -227,11 +227,11 @@ void stageManager::render()
 		_vNpcs[i]->render();
 
 
-	//Stage4DoorLockDraw();
+	Stage4DoorLockDraw();
 	
-	//Stage3DoorLockDraw();
+	Stage3DoorLockDraw();
 
-	//Stage2DoorLockDraw();
+	Stage2DoorLockDraw();
 
 	Stage1DoorLockDraw();
 
