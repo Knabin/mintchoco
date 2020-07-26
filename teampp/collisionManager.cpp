@@ -1515,6 +1515,7 @@ void collisionManager::player_bossCollision()
 
 void collisionManager::playPlayerGetHitSound()
 {
+	if (_player->getPlayerHP() <= 0) return;
 	playGetHitSound();
 	int n = RND->getInt(2);
 	if (n == 0) SOUNDMANAGER->play("player gethit light1", 0.9f);
@@ -1523,6 +1524,7 @@ void collisionManager::playPlayerGetHitSound()
 
 void collisionManager::playGetHitSound()
 {
+	if (_player->getPlayerHP() <= 0) return;
 	int n = RND->getInt(3);
 	if (n == 0) SOUNDMANAGER->play("gethit1", 0.7f);
 	else if (n == 1) SOUNDMANAGER->play("gethit2", 0.7f);
