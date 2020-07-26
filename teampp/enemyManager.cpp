@@ -134,7 +134,7 @@ void enemyManager::setEnemiesVector(int stageNum)
 		// 스테이지 1
 	{
 		float x[] = { 800, 1010, 1500, 1750 };
-		float y[] = { 500, 300, 350, 500 };
+		float y[] = { 480, 300, 350, 500 };
 		for (int i = 0; i < 4; i++)
 		{
 			if (i < 2) _vEnemies.push_back(createEnemy(1, x[i], y[i]));
@@ -159,7 +159,7 @@ void enemyManager::setEnemiesVector(int stageNum)
 		// 스테이지 3
 	{
 		float x[] = { 1800, 1400, 550, 1700 };
-		float y[] = { 450, 700, 650, 800 };
+		float y[] = { 450, 700, 650, 750 };
 
 		for (int i = 0; i < 4; i++)
 		{
