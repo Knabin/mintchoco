@@ -221,6 +221,9 @@ public:
 	MYRECT& getBossAttackRect() { return _rcA; }
 	void setBossAttackRect(int a, int b, int c, int d) { _rcA.set(a, b, c, d); }
 
+	float getBossHP() { return _hp; }
+	void setHitBossHP(int hp) { _hp -= hp; }
+
 
 	// ==========GET 쳐 맞는 모션 (충돌처리용)=============
 
@@ -256,4 +259,3 @@ public:
 
 
 };
-
