@@ -95,6 +95,15 @@ void playGround::update()
 {
 	gameNode::update();
 
+	if (_uiManager->getRestartDirect())
+	{
+		this->release();
+		this->init();
+		_playIntroVideo = true;
+		_endIntroVideo = true;
+		_scene->setLoading(true);
+	}
+
 	if (!_playIntroVideo && !_endIntroVideo)
 	{
 		IntroVideo = MCIWndCreate(_hWnd, _hInstance, MCIWNDF_NOTIFYANSI | MCIWNDF_NOMENU | MCIWNDF_NOTIFYALL | MCIWNDF_NOPLAYBAR, intro); // 초기화
@@ -118,7 +127,7 @@ void playGround::update()
 			stopVideo();
 		}
 	}
-	else
+	else if (!_uiManager->getIsGameOver())
 	{
 		if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == false)
 		{
@@ -189,6 +198,11 @@ void playGround::update()
 					MCIWndPlay(LogoVideo);
 					_playVideo = true;
 				}
+
+				if (_player->getIsDead())
+				{
+					_uiManager->setIsGameOver(true);
+				}
 			}
 			
 			_uiManager->update();
@@ -197,6 +211,9 @@ void playGround::update()
 			{
 				this->release();
 				this->init();
+				_playIntroVideo = true;
+				_endIntroVideo = true;
+				SOUNDMANAGER->playBGM("bgm title");
 			}
 
 			_enemyManager->setPlayerPos(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
@@ -215,7 +232,7 @@ void playGround::update()
 			}
 			if (KEYMANAGER->isOnceKeyDown('4'))
 			{
-				dataManager::getInstance()->saveData(100, 10, _stageManager->getNowStage());
+				_player->setHitPlayerHP(100);
 			}
 			if (KEYMANAGER->isOnceKeyDown(VK_F1))
 			{
@@ -248,6 +265,10 @@ void playGround::update()
 			if (!_uiManager->isMiniMapOpen())
 				CAMERA->changePosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
 		}
+	}
+	else
+	{
+		_uiManager->update();
 	}
 }
 
@@ -358,7 +379,7 @@ void playGround::stopIntro()
 	RECT _temp;
 	GetWindowRect(_hWnd, &_temp);
 
-	MCIWndClose(IntroVideo);
+	MCIWndDestroy(IntroVideo);
 	MoveWindow(_hWnd, _temp.left, _temp.top, _temp.right - _temp.left, _temp.bottom - _temp.top, true);
 
 	_endIntroVideo = true;

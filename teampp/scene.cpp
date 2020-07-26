@@ -162,11 +162,13 @@ void scene::PointerMove()
 	{
 		_Pointer._y += 55;
 		_Pointer._PointerState = QUIT;
+		SOUNDMANAGER->play("menu cursor");
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_UP) && _Pointer._PointerState == QUIT)
 	{
 		_Pointer._y -= 55;
 		_Pointer._PointerState = START;
+		SOUNDMANAGER->play("menu cursor");
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _Pointer._PointerState == START)
 	{
@@ -176,6 +178,7 @@ void scene::PointerMove()
 		getPlayerSaveData();
 		SOUNDMANAGER->play("bgm menu");
 		SOUNDMANAGER->stopAll("bgm menu");
+		SOUNDMANAGER->play("menu confirm");
 	}
 
 	switch (_Pointer._PointerState)		//포인터가 현재 어디를 가르키고 있나?
@@ -201,11 +204,13 @@ void scene::SaveLoadMove()
 		if (_SaveLoadWindowState == W1)
 		{
 			_SaveLoadWindowState = W2;
+			SOUNDMANAGER->play("menu cursor");
 		}
 
 		else if (_SaveLoadWindowState == W2)
 		{
 			_SaveLoadWindowState = W3;
+			SOUNDMANAGER->play("menu cursor");
 		}
 	}
 
@@ -214,11 +219,13 @@ void scene::SaveLoadMove()
 		if (_SaveLoadWindowState == W3)
 		{
 			_SaveLoadWindowState = W2;
+			SOUNDMANAGER->play("menu cursor");
 		}
 
 		else if (_SaveLoadWindowState == W2)
 		{
 			_SaveLoadWindowState = W1;
+			SOUNDMANAGER->play("menu cursor");
 		}
 	}
 
@@ -228,6 +235,7 @@ void scene::SaveLoadMove()
 		_SaveLoading = false;
 		_GameStart = false;
 		SOUNDMANAGER->stop("bgm menu");
+		SOUNDMANAGER->play("menu select");
 	}
 }
 

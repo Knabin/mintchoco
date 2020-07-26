@@ -1,12 +1,14 @@
 #pragma once
+#include "gameNode.h"
 class player;
 class enemyManager;
 class stageManager;
 class itemManager;
 class UiManager;
+class boss;
 
 
-class collisionManager
+class collisionManager : public gameNode
 {
 private:
 	player* _player;
@@ -14,6 +16,13 @@ private:
 	stageManager* _stageManager;
 	itemManager* _itemManager;
 	UiManager* _uiManager;
+	boss* _boss;
+
+	image* _attackEffect;//플레이어가 적을 공격할때 적과 충돌시 이펙트 이미지
+
+	float _enemyEffectPosX;//플레이어의 공격이 에너미랑 충돌시 충돌한 에너미의 위치에 뿌려줄 이펙트 위치
+	float _enemyEffectPosY;//플레이어의 공격이 에너미랑 충돌시 충돌한 에너미의 위치에 뿌려줄 이펙트 위치
+	bool _attackEffectFrame;//플레이어가 적을 공격했을때 생기는 이펙트
 
 	int _count;
 	int _enemyCollisionCount;

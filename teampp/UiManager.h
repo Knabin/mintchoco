@@ -13,6 +13,13 @@ enum MiniMapState // 미니맵 상태
 	OPENSTOP,
 	CLOSESTOP
 };
+
+enum class GAMEOVERSTATE
+{
+	RESTART,
+	QUIT
+};
+
 struct tagUIbar	  //UI 구조체
 {
 	image* _UIimage;
@@ -44,6 +51,7 @@ private:
 	// ======= 나빈 추가 =======
 	RECT _saveRc;							// 세이브 버튼 RECT
 	bool _restart;							// 저장 후 재시작
+	bool _restartDirect;					// 재시작
 
 	vector<string> _vScript;
 	bool _scriptStart;
@@ -54,6 +62,10 @@ private:
 	string _txt;
 
 	bool _isKyoko;
+
+	image* _imgGameOver;
+	bool _isGameOver;
+	GAMEOVERSTATE _gameOverState;
 	// ========================
 
 public:
@@ -72,6 +84,8 @@ public:
 	void PlayerHpPlus();
 	void BossHpMinus();						//boss hp 감소 함수
 	void BossDeath();						//boss hp가 완전히 감소하면?
+	
+	void gameOver();
 
 	void PlayerCurrentCoin(HDC hdc);
 
@@ -90,7 +104,12 @@ public:
 	bool getRestart() { return _restart; }
 	void setRestart(bool res) { _restart = res; }
 
+	bool getRestartDirect() { return _restartDirect; }
+	void setRestartDirect(bool res) { _restartDirect = res; }
+
 	bool getScriptStart() { return _scriptStart; }
 	void setScriptStart(bool b) { _scriptStart = b; }
 
+	bool getIsGameOver() { return _isGameOver; }
+	void setIsGameOver(bool gameover) { _isGameOver = gameover; }
 };

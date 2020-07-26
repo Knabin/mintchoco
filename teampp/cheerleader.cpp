@@ -23,6 +23,7 @@ HRESULT cheerleader::init(string imageName, float x, float y, float speed)
 	_dead = IMAGEMANAGER->addFrameImage("cheer_dead", "images/enemys/CheerLeader_weapon_swing.bmp", 7084, 436, 22, 2, true, RGB(255, 0, 255));
 	_block = IMAGEMANAGER->addFrameImage("cheer_block", "images/enemys/CheerLeader_block.bmp", 489, 428, 3, 2, true, RGB(255, 0, 255));
 	_run = IMAGEMANAGER->addFrameImage("cheer_run", "images/enemys/CheerLeader_run.bmp", 1368, 318, 8, 2, true, RGB(255, 0, 255));
+	_backdown = IMAGEMANAGER->addFrameImage("cheer_backdown", "images/enemys/CheerLeader_backdown.bmp", 9660, 436, 30, 2, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addImage("cheer_shadow", "images/enemys/CheerLeader_Shadow.bmp", 150, 44, true, RGB(255, 0, 255));
 
@@ -115,12 +116,12 @@ HRESULT cheerleader::init(string imageName, float x, float y, float speed)
 	_enemyMotion_L_hit_1 = new animation;
 	_enemyMotion_L_hit_1->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
 	_enemyMotion_L_hit_1->setPlayFrame(17, 15, false, false);
-	_enemyMotion_L_hit_1->setFPS(1);
+	_enemyMotion_L_hit_1->setFPS(0.3);
 	//_enemyMotion_L_hit_1->start();
 	_enemyMotion_R_hit_1 = new animation;
 	_enemyMotion_R_hit_1->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
 	_enemyMotion_R_hit_1->setPlayFrame(0, 2, false, false);
-	_enemyMotion_R_hit_1->setFPS(1);
+	_enemyMotion_R_hit_1->setFPS(0.3);
 	//_enemyMotion_R_hit_1->start();
 	// ============================	치어리더 히트1 ============================ //
 
@@ -128,12 +129,12 @@ HRESULT cheerleader::init(string imageName, float x, float y, float speed)
 	_enemyMotion_L_hit_2 = new animation;
 	_enemyMotion_L_hit_2->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
 	_enemyMotion_L_hit_2->setPlayFrame(14, 12, false, false);
-	_enemyMotion_L_hit_2->setFPS(1);
+	_enemyMotion_L_hit_2->setFPS(0.3);
 	//_enemyMotion_L_hit_2->start();
 	_enemyMotion_R_hit_2 = new animation;
 	_enemyMotion_R_hit_2->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
 	_enemyMotion_R_hit_2->setPlayFrame(3, 5, false, false);
-	_enemyMotion_R_hit_2->setFPS(1);
+	_enemyMotion_R_hit_2->setFPS(0.3);
 	//_enemyMotion_R_hit_2->start();
 	// ============================	치어리더 히트2 ============================ //
 
@@ -141,12 +142,12 @@ HRESULT cheerleader::init(string imageName, float x, float y, float speed)
 	_enemyMotion_L_hit_3 = new animation;
 	_enemyMotion_L_hit_3->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
 	_enemyMotion_L_hit_3->setPlayFrame(11, 9, false, false);
-	_enemyMotion_L_hit_3->setFPS(1);
+	_enemyMotion_L_hit_3->setFPS(0.3);
 	//_enemyMotion_L_hit_3->start();
 	_enemyMotion_R_hit_3 = new animation;
 	_enemyMotion_R_hit_3->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
 	_enemyMotion_R_hit_3->setPlayFrame(6, 8, false, false);
-	_enemyMotion_R_hit_3->setFPS(1);
+	_enemyMotion_R_hit_3->setFPS(0.3);
 	//_enemyMotion_R_hit_3->start();
 	// ============================	치어리더 히트3 ============================ //
 
@@ -195,6 +196,17 @@ HRESULT cheerleader::init(string imageName, float x, float y, float speed)
 	_enemyMotion_R_run->setPlayFrame(0, 7, false, false);
 	_enemyMotion_R_run->setFPS(1.5);
 	// ============================	치어리더 런 ============================ //
+
+	// ============================	치어리더 백다운 ============================ //
+	_enemyMotion_L_backdown = new animation;
+	_enemyMotion_L_backdown->init(_backdown->getWidth(), _backdown->getHeight(), _backdown->getFrameWidth(), _backdown->getFrameHeight());
+	_enemyMotion_L_backdown->setPlayFrame(0, 28, false, false);
+	_enemyMotion_L_backdown->setFPS(2);
+	_enemyMotion_R_backdown = new animation;
+	_enemyMotion_R_backdown->init(_backdown->getWidth(), _backdown->getHeight(), _backdown->getFrameWidth(), _backdown->getFrameHeight());
+	_enemyMotion_R_backdown->setPlayFrame(59, 32, false, false);
+	_enemyMotion_R_backdown->setFPS(2);
+	// ============================	치어리더 백다운 ============================ //
 
 	_rc.set(0, 0, _enemyImg->getFrameWidth(), _enemyImg->getFrameHeight());
 	_rc.setCenterPos(_x, _y);
@@ -260,7 +272,7 @@ void cheerleader::render()
 		break;
 	case ENEMY_LEFT_COMBO2:	//치어리더 백플립.bmp
 		_enemyImg = _combo2;
-		_attackRC.set(0, 0, 100,100);
+		_attackRC.set(0, 0, 100, 100);
 		_attackRC.setCenterPos(_rc.left, _rc.getCenterY());
 		break;
 	case ENEMY_RIGHT_COMBO2:
@@ -275,30 +287,24 @@ void cheerleader::render()
 	case ENEMY_RIGHT_SUBMOTION:
 		_enemyImg = _submotion;
 		_x += 8.f;
-			break;
+		break;
 	case ENEMY_LEFT_GETHIT_1:
 		_enemyImg = _gethit;
-		_enemyMotion_L_hit_1->start();
 		break;
 	case ENEMY_RIGHT_GETHIT_1:
 		_enemyImg = _gethit;
-		_enemyMotion_R_hit_1->start();
 		break;
 	case ENEMY_LEFT_GETHIT_2:
 		_enemyImg = _gethit;
-		_enemyMotion_L_hit_2->start();
 		break;
 	case ENEMY_RIGHT_GETHIT_2:
 		_enemyImg = _gethit;
-		_enemyMotion_R_hit_2->start();
 		break;
 	case ENEMY_LEFT_GETHIT_3:
 		_enemyImg = _gethit;
-		_enemyMotion_L_hit_3->start();
 		break;
 	case ENEMY_RIGHT_GETHIT_3:
 		_enemyImg = _gethit;
-		_enemyMotion_R_hit_3->start();
 		break;
 	case ENEMY_LEFT_STUN:
 		_enemyImg = _stun;
@@ -326,10 +332,20 @@ void cheerleader::render()
 		_x += 4.5f;
 		_enemyImg = _run;
 		break;
+	case ENEMY_LEFT_BACKDOWN: 
+		if (_enemyMotion->getFramePos().x < 19 * _enemyMotion->getFrameWidth())
+		_x -= 10.f;
+		_enemyImg = _backdown;
+		break;
+	case ENEMY_RIGHT_BACKDOWN:
+		if (_enemyMotion->getFramePos().x > 10 * _enemyMotion->getFrameWidth())
+		_x += 10.f;
+		_enemyImg = _backdown;
+		break;
 	}
 	//_rc.render(getMemDC());
 	_attackRC.render(getMemDC());
-	IMAGEMANAGER->findImage("cheer_shadow")->alphaRender(getMemDC(), _rc.left + 35, _rc.bottom - 25,100);
+	IMAGEMANAGER->findImage("cheer_shadow")->alphaRender(getMemDC(), _rc.left + 35, _rc.bottom - 25, 100);
 	ZORDER->pushObject(getMemDC(), _enemyImg, _enemyMotion, 1, _rc.getCenterX(), 0, _rc.bottom);
 }
 

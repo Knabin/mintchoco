@@ -140,6 +140,11 @@ HRESULT UiManager::init()
 
 	//=============================================================================================================================//
 
+	SOUNDMANAGER->addSound("menu cursor", "sounds/menu/menu_cursor.wav", false, false);
+	SOUNDMANAGER->addSound("menu confirm", "sounds/menu/menu_confirm.wav", false, false);
+	SOUNDMANAGER->addSound("menu phone", "sounds/menu/menu_phone_slider_tick.wav", false, false);
+	SOUNDMANAGER->addSound("menu select", "sounds/menu/menu_player_select_last.wav", false, false);
+
 	IMAGEMANAGER->addImage("kyoko1", "images/ui/kyoko_1.bmp", 386, 460, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("kyoko2", "images/ui/kyoko_2.bmp", 386, 460, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("kyoko3", "images/ui/kyoko_3.bmp", 386, 460, true, RGB(255, 0, 255));
@@ -150,8 +155,11 @@ HRESULT UiManager::init()
 	IMAGEMANAGER->addImage("script m", "images/ui/script_misuzu.bmp", 200, 76, false, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("misuzu vs", "images/ui/battle_misuzu.bmp", 1280, 720, true, RGB(255, 0, 255));
 
+	IMAGEMANAGER->addImage("gameover 1", "images/ui/gameover1.bmp", 679, 400, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("gameover 2", "images/ui/gameover2.bmp", 679, 400, true, RGB(255, 0, 255));
+
 	_saveRc = RectMakeCenter(WINSIZEX / 2, WINSIZEY / 2 + 150, 220, 70);
-	_scriptIndex = _txtIndex = _endCount = 0;
+	_scriptIndex = _txtIndex = _endCount = _isGameOver = _restartDirect = 0;
 
 	if (TXTDATA->canLoadFile("data/script.data", ';'))
 	{
@@ -170,24 +178,40 @@ void UiManager::release()
 
 void UiManager::update()
 {
-	BossDeath();
-	MiniMapMove(); //미니맵 이동,상태 함수
-	if (_scriptStart && !_scriptEnd) printScript();
-	else if (_scriptStart && _scriptEnd)
+	if (_isGameOver)
+		gameOver();
+	else
 	{
-		_endCount++;
-		if (_endCount % 200 == 0)
+		BossDeath();
+		MiniMapMove(); //미니맵 이동,상태 함수
+		if (_scriptStart && !_scriptEnd) printScript();
+		else if (_scriptStart && _scriptEnd)
 		{
-			_endCount = 0;
-			_scriptStart = false;
+			_endCount++;
+			if (_endCount % 200 == 0)
+			{
+				_endCount = 0;
+				_scriptStart = false;
+			}
 		}
 	}
 }
 
 void UiManager::render(HDC hdc)
 {
-												
-	if (!_scriptStart)
+	if (_isGameOver)
+	{
+		switch (_gameOverState)
+		{
+		case GAMEOVERSTATE::RESTART:
+			IMAGEMANAGER->findImage("gameover 1")->render(hdc, WINSIZEX / 2 - IMAGEMANAGER->findImage("gameover 1")->getWidth() / 2, WINSIZEY / 2 - IMAGEMANAGER->findImage("gameover 1")->getHeight() / 2);
+			break;
+		case GAMEOVERSTATE::QUIT:
+			IMAGEMANAGER->findImage("gameover 2")->render(hdc, WINSIZEX / 2 - IMAGEMANAGER->findImage("gameover 2")->getWidth() / 2, WINSIZEY / 2 - IMAGEMANAGER->findImage("gameover 2")->getHeight() / 2);
+			break;
+		}
+	}
+	else if (!_scriptStart)
 	{
 		IMAGEMANAGER->findImage("HPbar")->render(hdc, _PlayerHpBar._x - 165, _PlayerHpBar._y - 45);
 
@@ -476,6 +500,7 @@ void UiManager::MiniMapMove()
 	//키 입력시 미니맵 이동 (키 중복 주의)
 	if (KEYMANAGER->isOnceKeyDown('M'))
 	{
+		SOUNDMANAGER->play("menu phone");
 		if (_MiniMap._MiniMapState == CLOSESTOP)
 			_MiniMap._MiniMapState = OPEN;
 		else if (_MiniMap._MiniMapState == OPENSTOP)
@@ -491,9 +516,10 @@ void UiManager::MiniMapMove()
 		_MiniMap._MiniMapState = CLOSESTOP;
 	}
 
-	//cout << _saveRc.left << ", " << _ptMouse.x << "    " << _saveRc.top << ", " << _ptMouse.y << endl;
-	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_saveRc, _ptMouse))
+	if (_MiniMap._MiniMapState == OPEN && KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_saveRc, _ptMouse))
 	{
+		SOUNDMANAGER->stopAll("");
+		SOUNDMANAGER->play("menu confirm");
 		dataManager::getInstance()->saveData(26, 10, _stageManager->getNowStage());
 		_restart = true;
 	}
@@ -510,18 +536,6 @@ void UiManager::MiniMapMove()
 	case CLOSE:
 	{
 		_MiniMap._y += 20;
-	}
-	break;
-
-	case OPENSTOP:
-	{
-
-	}
-	break;
-
-	case CLOSESTOP:
-	{
-
 	}
 	break;
 	}
@@ -566,23 +580,6 @@ void UiManager::BossDeath()
 	{
 		_BossHpPoint._x = WINSIZEX / 2 - 46;
 		_BossHpPoint._y = WINSIZEY / 2 + 306;
-	}
-}
-
-void UiManager::PlayerCurrentCoin(HDC hdc)
-{
-	if (_player->getCoin() == 0)
-	{
-		IMAGEMANAGER->findImage("0")->render(hdc, _CurrentCoin[0]._x, _CurrentCoin[0]._y);
-		IMAGEMANAGER->findImage("0")->render(hdc, _CurrentCoin[1]._x + 23, _CurrentCoin[1]._y);
-		IMAGEMANAGER->findImage("0")->render(hdc, _CurrentCoin[2]._x + 46, _CurrentCoin[2]._y);
-		IMAGEMANAGER->findImage("0")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
-		IMAGEMANAGER->findImage("0")->render(hdc, _CurrentCoin[4]._x + 92, _CurrentCoin[4]._y);
-	}
-
-	if (_player->getCoin() == 10)
-	{
-		IMAGEMANAGER->findImage("1")->render(hdc, _CurrentCoin[1]._x + 23, _CurrentCoin[1]._y);
 	}
 }
 

@@ -90,6 +90,11 @@ private:
 	bool _PlayerStage3ChainLock;	
 	bool _PlayerStage4ChainLock;	
 
+	bool _PlayerStage1ChainLockAlready;
+	bool _PlayerStage2ChainLockAlready;
+	bool _PlayerStage3ChainLockAlready;
+	bool _PlayerStage4ChainLockAlready;
+
 	//테스트용 체인락 타임
 	int _ChainLockTime;
 
@@ -112,6 +117,9 @@ private:
 
 	// 보스 스테이지에서 동영상 재생을 위한 bool값
 	bool _canPlayVideo;
+
+	// 체인 락 상태를 풀기 위해 처치한 enemy를 저장하는 int 값
+	int _enemyCount;
 
 	class enemyManager* _em;
 	class player*		_player;
@@ -152,6 +160,9 @@ public:
 	//체인락을 실질적으로 움직이게 하고 그립니다.
 	void ChainLockMove();					 
 	void ChainLockFrameDraw();				 
+
+	// ===== 나빈 추가 =====
+	void plusEnemyCount() { _enemyCount += 1; }
 
 	//각 스테이지 마다 어느 지점에 접근 시 위의 체인락 함수를 실행시킵니다.
 

@@ -106,6 +106,11 @@ HRESULT stageManager::init()
 	_PlayerStage3ChainLock = false;
 	_PlayerStage4ChainLock = false;
 
+	_PlayerStage1ChainLockAlready = false;
+	_PlayerStage2ChainLockAlready = false;
+	_PlayerStage3ChainLockAlready = false;
+	_PlayerStage4ChainLockAlready = false;
+
 	_ChainLockTime = 0;
 
 	//=============================================================================================================================//
@@ -154,6 +159,8 @@ HRESULT stageManager::init()
 	_spawnCount = 0;
 	_bossIntroX = 1900;
 
+	_enemyCount = 0;
+
 	//-----------------------------------------------------------------------------------------------------------------------------//
 
 	return S_OK;
@@ -181,7 +188,7 @@ void stageManager::update()
 	_spawnCount++;
 
 	// 너무 빠르거나 느리면 숫자 수정해 주세요
-	if (_spawnCount % 1500 == 0)
+	if (_spawnCount % 1300 == 0)
 	{
 		_em->spawnEnemy(_NowStage);
 		_spawnCount = 0;
@@ -281,6 +288,7 @@ void stageManager::Stage1Move()
 	_em->setEnemiesVector(_NowStage);
 
 	_spawnCount = 0;
+	_enemyCount = 0;
 
 	if(!SOUNDMANAGER->isPlaySound("bgm classroom")) SOUNDMANAGER->playBGM("bgm classroom");
 	SOUNDMANAGER->stopAll("bgm classroom");
@@ -302,6 +310,7 @@ void stageManager::Stage2Move()
 	_em->setEnemiesVector(_NowStage);
 
 	_spawnCount = 0;
+	_enemyCount = 0;
 
 	if (!SOUNDMANAGER->isPlaySound("bgm hall")) SOUNDMANAGER->playBGM("bgm hall");
 	SOUNDMANAGER->stopAll("bgm hall");
@@ -323,6 +332,7 @@ void stageManager::Stage3Move()
 	_em->setEnemiesVector(_NowStage);
 
 	_spawnCount = 0;
+	_enemyCount = 0;
 
 	if (!SOUNDMANAGER->isPlaySound("bgm hall")) SOUNDMANAGER->playBGM("bgm hall");
 	SOUNDMANAGER->stopAll("bgm hall");
@@ -344,6 +354,7 @@ void stageManager::Stage4Move()
 	_em->setEnemiesVector(_NowStage);
 
 	_spawnCount = 0;
+	_enemyCount = 0;
 
 	if (!SOUNDMANAGER->isPlaySound("bgm chemi")) SOUNDMANAGER->playBGM("bgm chemi");
 	SOUNDMANAGER->stopAll("bgm chemi");
@@ -429,7 +440,7 @@ void stageManager::ChainLockMove()
 			_ChainLockState = LOCK;
 		}
 
-		if (_ClearCount >= 500 && _ChainLockState == LOCK)
+		if (_enemyCount >= 4 && _ChainLockState == LOCK)
 		{
 			_ClearCount = 0;
 			_ChainLockState = CLEARING;
@@ -444,7 +455,10 @@ void stageManager::ChainLockMove()
 		{
 			case CLEAR:
 			{
-	
+				_PlayerStage1ChainLock = false;
+				_PlayerStage2ChainLock = false;
+				_PlayerStage3ChainLock = false;
+				_PlayerStage4ChainLock = false;
 			}
 			break;
 
@@ -536,7 +550,8 @@ void stageManager::ChainLockMove()
 			{
 				_ClearCount++;
 
-				if (_ClearCount >= 100)
+				//if (_ClearCount >= 100)
+				if(_enemyCount == 0)
 				{
 					_LockDamage1 = true;
 					_LockDamage2 = false;
@@ -544,7 +559,8 @@ void stageManager::ChainLockMove()
 					IMAGEMANAGER->findImage("Lock2")->setFrameX(6);
 				}
 
-				if (_ClearCount >= 200)
+				//if (_ClearCount >= 200)
+				if(_enemyCount == 1)
 				{
 
 					IMAGEMANAGER->findImage("Lock2")->setFrameY(0);
@@ -558,7 +574,8 @@ void stageManager::ChainLockMove()
 					}
 				}
 
-				if (_ClearCount >= 300)
+				//if (_ClearCount >= 300)
+				if(_enemyCount == 2)
 				{
 					_LockDamage1 = false;
 					_LockDamage2 = true;
@@ -566,7 +583,8 @@ void stageManager::ChainLockMove()
 					IMAGEMANAGER->findImage("Lock3")->setFrameX(6);
 				}
 
-				if (_ClearCount >= 400)
+				//if (_ClearCount >= 400)
+				if(_enemyCount >= 3)
 				{
 					IMAGEMANAGER->findImage("Lock3")->setFrameY(0);
 
@@ -628,6 +646,8 @@ void stageManager::ChainLockMove()
 		_LockDamage1 = false;
 		_LockDamage2 = false;
 		_LockClear = false;
+
+		CAMERA->setIsFixed(false);
 	}
 
 }
@@ -692,19 +712,19 @@ void stageManager::Stage1ChainLock()
 {
 	if (_NowStage == S1)
 	{
-		if (_player->getPlayerRect().right > WINSIZEX)
+		if (_player->getPlayerRect().right > WINSIZEX && !_PlayerStage1ChainLock && !_PlayerStage1ChainLockAlready)
 		{
 			_ChainLockTime++;
 			CAMERA->cameraFixed();
 			_PlayerStage1ChainLock = true;
 
 			_Stage1->getRect().setCenterPos(7777, 7777);	
+			_enemyCount = 0;
 		}
 
-		if (_ChainLockTime > 530)
+		if (_enemyCount >= 4)
 		{
-			CAMERA->setIsFixed(false);
-			_PlayerStage1ChainLock = false;
+			_PlayerStage1ChainLockAlready = true;
 
 			_Stage1->getRect().setCenterPos(WINSIZEX + 155 , WINSIZEY / 2 - 125);
 		}
@@ -723,19 +743,21 @@ void stageManager::Stage2ChainLock()
 {
 	if (_NowStage == S2)
 	{
-		if (_player->getPlayerRect().right > WINSIZEX - 350)
+		if (_player->getPlayerRect().right > WINSIZEX - 350 && !_PlayerStage2ChainLock && !_PlayerStage2ChainLockAlready)
 		{
 			CAMERA->cameraFixed();
 			_PlayerStage2ChainLock = true;
 
 			_Stage2->getRect().setCenterPos(7777, 7777);
 			_Stage2->getRect2().setCenterPos(7777, 7777);
+			_enemyCount = 0;
 		}
 
-		else
+		if (_enemyCount >= 4)
 		{
 			CAMERA->setIsFixed(false);
 			_PlayerStage2ChainLock = false;
+			_PlayerStage2ChainLockAlready = true;
 
 			_Stage2->getRect().setCenterPos(WINSIZEX - 300, WINSIZEY / 2 - 30);
 			_Stage2->getRect2().setCenterPos(245, WINSIZEY / 2 + 225);
@@ -757,19 +779,21 @@ void stageManager::Stage3ChainLock()
 {
 	if (_NowStage == S3)
 	{
-		if (_player->getPlayerRect().right > WINSIZEX + 450)
+		if (_player->getPlayerRect().right > WINSIZEX + 450 && !_PlayerStage3ChainLock && !_PlayerStage3ChainLockAlready)
 		{
 			CAMERA->cameraFixed();
 			_PlayerStage3ChainLock = true;
 
 			_Stage3->getRect().setCenterPos(7777, 7777);
 			_Stage3->getRect2().setCenterPos(7777, 7777);
+			_enemyCount = 0;
 		}
 
-		else
+		if (_enemyCount >= 4)
 		{
 			CAMERA->setIsFixed(false);
 			_PlayerStage3ChainLock = false;
+			_PlayerStage3ChainLockAlready = true;
 
 			_Stage3->getRect().setCenterPos(WINSIZEX, WINSIZEY / 2 - 10);
 			_Stage3->getRect2().setCenterPos(WINSIZEX + 850, WINSIZEY / 2 + 165);
@@ -791,19 +815,21 @@ void stageManager::Stage4ChainLock()
 {
 	if (_NowStage == S4)
 	{
-		if (_player->getPlayerRect().right > WINSIZEX + 300)
+		if (_player->getPlayerRect().right > WINSIZEX + 300 && !_PlayerStage4ChainLock && !_PlayerStage4ChainLockAlready)
 		{
 			CAMERA->cameraFixed();
 			_PlayerStage4ChainLock = true;
 
 			_Stage4->getRect().setCenterPos(7777, 7777);
 			_Stage4->getRect2().setCenterPos(7777, 7777);
+			_enemyCount = 0;
 		}
 
-		else
+		if (_enemyCount >= 4)
 		{
 			CAMERA->setIsFixed(false);
 			_PlayerStage4ChainLock = false;
+			_PlayerStage4ChainLockAlready = true;
 
 			_Stage4->getRect().setCenterPos(WINSIZEX / 2 + 1200, WINSIZEY / 2 + 200);
 			_Stage4->getRect2().setCenterPos(WINSIZEX / 2 - 390, WINSIZEY / 2 + 200);

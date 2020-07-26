@@ -8,11 +8,13 @@ enum SaveLoadWindowState // 세이브 로드 창 현 위치
 	W3
 
 };
+
 enum PointerState //포인터 렉트 현위치
 {
 	START = 0,
 	QUIT
 };
+
 struct tagScene
 {
 	image* SceneImage;
@@ -101,6 +103,8 @@ public:
 
 	void getPlayerSaveData();
 	void getPlayerSaveData(int slot);
+
+	void setLoading(bool loading) { _Loading = loading; }
 	// ====================
 
 };

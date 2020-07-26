@@ -23,6 +23,7 @@ HRESULT schoolboy::init(string imageName, float x, float y, float speed)
 	_dead = IMAGEMANAGER->addFrameImage("schoolboy_dead", "images/enemys/SchoolBoy_weapon_swing.bmp", 5415, 438, 19, 2, true, RGB(255, 0, 255));
 	_block = IMAGEMANAGER->addFrameImage("schoolboy_block", "images/enemys/SchoolBoy_block.bmp", 459, 438, 3, 2, true, RGB(255, 0, 255));
 	_run = IMAGEMANAGER->addFrameImage("schoolboy_run", "images/enemys/SchoolBoy_run.bmp", 1920, 390, 10, 2, true, RGB(255, 0, 255));
+	_backdown = IMAGEMANAGER->addFrameImage("schoolboy_backdown", "images/enemys/SchoolBoy_backdown.bmp", 7695, 438, 27, 2, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addImage("schoolboy_shadow", "images/enemys/SchoolBoy_Shadow.bmp", 180, 53, true, RGB(255, 0, 255));
 
@@ -115,12 +116,12 @@ HRESULT schoolboy::init(string imageName, float x, float y, float speed)
 	_enemyMotion_L_hit_1 = new animation;
 	_enemyMotion_L_hit_1->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
 	_enemyMotion_L_hit_1->setPlayFrame(17, 15, false, false);
-	_enemyMotion_L_hit_1->setFPS(1);
+	_enemyMotion_L_hit_1->setFPS(0.3);
 	//_enemyMotion_L_hit_1->start();
 	_enemyMotion_R_hit_1 = new animation;
 	_enemyMotion_R_hit_1->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
 	_enemyMotion_R_hit_1->setPlayFrame(0, 2, false, false);
-	_enemyMotion_R_hit_1->setFPS(1);
+	_enemyMotion_R_hit_1->setFPS(0.3);
 	//_enemyMotion_R_hit_1->start();
 	// ============================	스쿨보이 히트1 ============================ //
 
@@ -128,23 +129,23 @@ HRESULT schoolboy::init(string imageName, float x, float y, float speed)
 	_enemyMotion_L_hit_2 = new animation;
 	_enemyMotion_L_hit_2->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
 	_enemyMotion_L_hit_2->setPlayFrame(14, 12, false, false);
-	_enemyMotion_L_hit_2->setFPS(1);
+	_enemyMotion_L_hit_2->setFPS(0.3);
 	_enemyMotion_R_hit_2 = new animation;
 	_enemyMotion_R_hit_2->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
 	_enemyMotion_R_hit_2->setPlayFrame(3, 5, false, false);
-	_enemyMotion_R_hit_2->setFPS(1);
+	_enemyMotion_R_hit_2->setFPS(0.3);
 	// ============================	스쿨보이 히트2 ============================ //
 
 	// ============================	스쿨보이 히트3 ============================ //
 	_enemyMotion_L_hit_3 = new animation;
 	_enemyMotion_L_hit_3->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
 	_enemyMotion_L_hit_3->setPlayFrame(11, 9, false, false);
-	_enemyMotion_L_hit_3->setFPS(1);
+	_enemyMotion_L_hit_3->setFPS(0.3);
 	//_enemyMotion_L_hit_3->start();
 	_enemyMotion_R_hit_3 = new animation;
 	_enemyMotion_R_hit_3->init(_gethit->getWidth(), _gethit->getHeight(), _gethit->getFrameWidth(), _gethit->getFrameHeight());
 	_enemyMotion_R_hit_3->setPlayFrame(6, 8, false, false);
-	_enemyMotion_R_hit_3->setFPS(1);
+	_enemyMotion_R_hit_3->setFPS(0.3);
 	//_enemyMotion_R_hit_3->start();
 	// ============================	스쿨보이 히트3 ============================ //
 
@@ -193,6 +194,17 @@ HRESULT schoolboy::init(string imageName, float x, float y, float speed)
 	_enemyMotion_R_run->setPlayFrame(0, 9, false, false);
 	_enemyMotion_R_run->setFPS(1.5);
 	// ============================	스쿨보이 런 ============================ //
+
+	// ============================	스쿨보이 백다운 ============================ //
+	_enemyMotion_L_backdown = new animation;
+	_enemyMotion_L_backdown->init(_backdown->getWidth(), _backdown->getHeight(), _backdown->getFrameWidth(), _backdown->getFrameHeight());
+	_enemyMotion_L_backdown->setPlayFrame(0, 26, false, false);
+	_enemyMotion_L_backdown->setFPS(2);
+	_enemyMotion_R_backdown = new animation;
+	_enemyMotion_R_backdown->init(_backdown->getWidth(), _backdown->getHeight(), _backdown->getFrameWidth(), _backdown->getFrameHeight());
+	_enemyMotion_R_backdown->setPlayFrame(53, 27, false, false);
+	_enemyMotion_R_backdown->setFPS(2);
+	// ============================	스쿨보이 백다운 ============================ //
 
 	_rc.set(0, 0, _enemyImg->getFrameWidth(), _enemyImg->getFrameHeight());
 	_rc.setCenterPos(_x, _y);
@@ -277,27 +289,21 @@ void schoolboy::render()
 		_attackRC.setCenterPos(_rc.right, _rc.getCenterY());
 		break;
 	case ENEMY_LEFT_GETHIT_1:
-		_enemyMotion_L_hit_1->start();
 		_enemyImg = _gethit;
 		break;
 	case ENEMY_RIGHT_GETHIT_1:
-		_enemyMotion_R_hit_1->start();
 		_enemyImg = _gethit;
 		break;
 	case ENEMY_LEFT_GETHIT_2:
-		_enemyMotion_L_hit_2->start();
 		_enemyImg = _gethit;
 		break;
 	case ENEMY_RIGHT_GETHIT_2:
-		_enemyMotion_R_hit_2->start();
 		_enemyImg = _gethit;
 		break;
 	case ENEMY_LEFT_GETHIT_3:
-		_enemyMotion_L_hit_3->start();
 		_enemyImg = _gethit;
 		break;
 	case ENEMY_RIGHT_GETHIT_3:
-		_enemyMotion_R_hit_3->start();
 		_enemyImg = _gethit;
 		break;
 	case ENEMY_LEFT_STUN:
@@ -325,6 +331,16 @@ void schoolboy::render()
 	case ENEMY_RIGHT_RUN:
 		_x += 4.5f;
 		_enemyImg = _run;
+		break;
+	case ENEMY_LEFT_BACKDOWN:
+		if (_enemyMotion->getFramePos().x < 19 * _enemyMotion->getFrameWidth())
+			_x -= 10.f;
+		_enemyImg = _backdown;
+		break;
+	case ENEMY_RIGHT_BACKDOWN:
+		if (_enemyMotion->getFramePos().x > 10 * _enemyMotion->getFrameWidth())
+			_x += 10.f;
+		_enemyImg = _backdown;
 		break;
 	}
 	//_rc.render(getMemDC());

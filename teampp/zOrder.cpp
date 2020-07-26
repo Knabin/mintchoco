@@ -205,7 +205,6 @@ void zOrder::pushShadowObject(HDC hdc, image * img, int type, float x, float jum
 
 void zOrder::sortVector(int start, int end)
 {
-	//cout << start << ", " << end << endl;
 	if (start >= end) return;
 	float pivot = _vObject[(start+end) / 2].z;
 	int left = start;

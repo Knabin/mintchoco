@@ -47,7 +47,13 @@ enum PLAYERDIRECTION
 	PLAYERDIRECTION_LEFT_JUMP_ATTACK,
 
 	PLAYERDIRECTION_RIGHT_DASH_ATTACK,
-	PLAYERDIRECTION_LEFT_DASH_ATTACK
+	PLAYERDIRECTION_LEFT_DASH_ATTACK,
+
+	PLAYERDIRECTION_RIGHT_DEAD,
+	PLAYERDIRECTION_LEFT_DEAD,
+
+	PLAYERDIRECTION_RIGHT_HIT,
+	PLAYERDIRECTION_LEFT_HIT,
 };
 
 class player : public gameNode
@@ -70,6 +76,10 @@ private:
 	image* _dashAttackImage;//대쉬 공격 이미지
 	image* _guardImage;//플레이어 방어 이미지
 	image* _downImage;//플레이어가 피격 당했을때 다운 이미지
+	image* _deadImage;//플레이어 사망 이미지
+	image* _hitImage;//플레이어 피격 이미지
+	image* _runEffect;//플레이어가 달릴때 생기는 먼지 이펙트 이미지
+
 
 	MYRECT _rc;//플레이어 렉트
 	MYRECT _attackRc;//공격용으로 사용할 렉트
@@ -98,7 +108,9 @@ private:
 	bool _comboAttack;//콤보공격 프레임에 사용할 변수
 	bool _comboAttack2;//콤보공격 3단계 실행여부를 확인하기 위한 변수
 	bool _pixelCollision;//장애물 픽셀충돌 조건
-	bool _pixelCollisionDown;//픽셀충돌이 트루면 플레이어 위치 아래로 조정
+	bool _oneFramePlay;//히트, 다운 프레임의 set상태를 한번씩만 초기화가 되게 하기위해 사용할 변수
+	bool _deadOneFramePlay;//플레이어가 죽었을때 프레임의 초기화를 한번만 하기위해 필요한 변수
+	bool _jumpingHit;//점프중에 맞으면 플레이어의 렉트위치를 점프파워만큼 위로 올려주기 위해 필요한 변수
 
 	image* _playerImage;
 	float _yPlayerY;
@@ -144,7 +156,7 @@ public:
 	bool keyUp()
 	{
 		if (KEYMANAGER->isStayKeyDown(VK_UP)) return true;
-			return false;
+		return false;
 	}
 
 	bool keyDown()
@@ -171,7 +183,7 @@ public:
 		return false;
 	}
 
-	void setComboAttack(bool comboAttack) {  _comboAttack = comboAttack; }
+	void setComboAttack(bool comboAttack) { _comboAttack = comboAttack; }
 	void setComboAttack2(bool comboAttack2) { _comboAttack2 = comboAttack2; }
 	void setHitPlayerHP(int hp) { _hp -= hp; }
 	void setPlusPlayerHP(int hp) { _hp += hp; }
@@ -180,16 +192,19 @@ public:
 	void setPlayerAttackRectRemove2(int a, int b, int c, int d) { _comboAttackRc2.set(0, 0, 0, 0); }
 	void setPlayerAttackRectRemove3(int a, int b, int c, int d) { _comboAttackRc3.set(0, 0, 0, 0); }
 	void setCoin(int coin) { _coin += coin; }//돈
+	void setPlayerDirection(PLAYERDIRECTION playerDirection) { _playerDirection = playerDirection; }
+
 	PLAYERDIRECTION getPlayerdirection() { return _playerDirection; }
 	float getPlayerX() { return _x; }
 	float getPlayerZ() { return _z; }
 	int getCoin() { return _coin; }//돈
+	int getPlayerHP() { return _hp; }//hp
 	MYRECT getPlayerRect() { return _rc; }
 	MYRECT getAttackRc() { return _attackRc; }
 	MYRECT getComboAttackRc1() { return _comboAttackRc1; }
 	MYRECT getComboAttackRc2() { return _comboAttackRc2; }
 	MYRECT getComboAttackRc3() { return _comboAttackRc3; }
-	bool getIsAttacking() { 
+	bool getIsAttacking() {
 		switch (_playerDirection)
 		{
 		case PLAYERDIRECTION_RIGHT_COMBO_ATTACK1:
@@ -210,6 +225,12 @@ public:
 		default:
 			return false;
 		}
+	}
+	bool getIsDead() 
+	{
+		if (_deadOneFramePlay && (_playerDirection == PLAYERDIRECTION_LEFT_DEAD && _deadImage->getFrameX() == 0 || _playerDirection == PLAYERDIRECTION_RIGHT_DEAD && _deadImage->getFrameX() == _deadImage->getMaxFrameX()))
+			return true;
+		return false;
 	}
 
 	void playerPosition_1();

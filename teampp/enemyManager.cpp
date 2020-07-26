@@ -1,6 +1,7 @@
 //#include "..\..\..\..\..\Desktop\teampp (1)\enemyManager.h"
 #include "stdafx.h"
 #include "enemyManager.h"
+#include "stageManager.h"
 
 enemyManager::enemyManager()
 {
@@ -91,7 +92,8 @@ void enemyManager::update()
 		//_vEnemies[i]->update();		//collisionManager의 itemDrop 함수에 옮겼습니다.
 		if (_vEnemies[i]->getHP() <= 0 && _vEnemies[i]->getEnemyDead())
 		{
-			_vEnemies[i]->setEnemyDead(false);
+			_sm->plusEnemyCount();
+			//_vEnemies[i]->setEnemyDead(false);
 			_vEnemies.erase(_vEnemies.begin() + i);
 		}
 	}
@@ -111,12 +113,11 @@ void enemyManager::render()
 void enemyManager::setBossMove()	//보스 무브 추가
 {
 	_boss = new boss;
-	_boss->init("BOOSIDLE", WINSIZEX / 2, WINSIZEY / 2, 0.0f);
+	_boss->init("BOSSIDLE", WINSIZEX / 2, WINSIZEY / 2, 0.0f);
 }
 
 void enemyManager::setEnemiesVector(int stageNum)
 {
-	//if (stageNum == 4) return;	// for test
 	if (_vEnemies.size() != 0)
 	{
 		for (int i = 0; i < _vEnemies.size(); ++i)
@@ -136,8 +137,7 @@ void enemyManager::setEnemiesVector(int stageNum)
 		float y[] = { 500, 300, 350, 500 };
 		for (int i = 0; i < 4; i++)
 		{
-			if (i < 1)	_vEnemies.push_back(createEnemy(0, x[i], y[i]));
-			else if(i == 3) _vEnemies.push_back(createEnemy(1, x[i], y[i]));
+			if (i < 2) _vEnemies.push_back(createEnemy(1, x[i], y[i]));
 			else		_vEnemies.push_back(createEnemy(2, x[i], y[i]));
 		}
 	}
@@ -150,7 +150,7 @@ void enemyManager::setEnemiesVector(int stageNum)
 		for (int i = 0; i < 5; i++)
 		{
 			if (i < 2)		_vEnemies.push_back(createEnemy(1, x[i], y[i]));
-			else if (i > 4) _vEnemies.push_back(createEnemy(0, x[i], y[i]));
+			else if (i >= 4) _vEnemies.push_back(createEnemy(0, x[i], y[i]));
 			else			_vEnemies.push_back(createEnemy(2, x[i], y[i]));
 		}
 	}
@@ -158,10 +158,10 @@ void enemyManager::setEnemiesVector(int stageNum)
 	case 2:
 		// 스테이지 3
 	{
-		float x[] = { 1000 };
-		float y[] = { 450 };
+		float x[] = { 1800, 1400, 550, 1700 };
+		float y[] = { 450, 700, 650, 800 };
 
-		for (int i = 0; i < 1; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			enemy* _tempSchoolGirl = new schoolgirl;
 			_tempSchoolGirl->init("schoolgirl_move", x[i], y[i], 2.3f);
@@ -177,7 +177,7 @@ void enemyManager::setEnemiesVector(int stageNum)
 		for (int i = 0; i < 5; i++)
 		{
 			if (i < 2)		_vEnemies.push_back(createEnemy(1, x[i], y[i]));
-			else if (i > 4) _vEnemies.push_back(createEnemy(0, x[i], y[i]));
+			else if (i >= 4) _vEnemies.push_back(createEnemy(0, x[i], y[i]));
 			else			_vEnemies.push_back(createEnemy(2, x[i], y[i]));
 		}
 	}
@@ -221,7 +221,7 @@ enemy* enemyManager::createEnemy(int enemyType, float x, float y)
 	case 3:			// 보스
 	{
 		enemy* em = new boss;
-		em->init("BOOSIDLE", x, y, 0.0f);
+		em->init("BOSSIDLE", x, y, 0.0f);
 		return em;
 	}
 		break;
@@ -260,7 +260,7 @@ enemy * enemyManager::createEnemy(int enemyType, float x, float y, int stageNum)
 	case 3:			// 보스
 	{
 		enemy* em = new boss;
-		em->init("BOOSIDLE", WINSIZEX / 2, WINSIZEY / 2, 0.0f);
+		em->init("BOSSIDLE", WINSIZEX / 2, WINSIZEY / 2, 0.0f);
 		em->setStageNum(stageNum);
 		return em;
 	}

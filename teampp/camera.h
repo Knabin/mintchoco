@@ -82,6 +82,8 @@ public:
 	// 자연스럽게 따라오는 카메라(centerX, centerY)
 	void changePosition(float x, float y);
 
+	void testPosition(float x, float y);
+
 
 	// =======================================================
 	// ##				카메라 getter / setter				##
