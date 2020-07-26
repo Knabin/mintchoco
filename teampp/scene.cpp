@@ -170,16 +170,24 @@ void scene::PointerMove()
 		_Pointer._PointerState = START;
 		SOUNDMANAGER->play("menu cursor");
 	}
-	if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _Pointer._PointerState == START)
+	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
-		_GameStart = false;
-		_Loading = false;
-		_SaveLoading = true;
-		getPlayerSaveData();
-		SOUNDMANAGER->play("bgm menu");
-		SOUNDMANAGER->stopAll("bgm menu");
-		SOUNDMANAGER->play("menu confirm");
+		if (_Pointer._PointerState == START)
+		{
+			_GameStart = false;
+			_Loading = false;
+			_SaveLoading = true;
+			getPlayerSaveData();
+			SOUNDMANAGER->play("bgm menu");
+			SOUNDMANAGER->stopAll("bgm menu");
+			SOUNDMANAGER->play("menu confirm");
+		}
+		else if(_Pointer._PointerState == QUIT)
+		{
+			ExitProcess(0);
+		}
 	}
+	
 
 	switch (_Pointer._PointerState)		//포인터가 현재 어디를 가르키고 있나?
 	{

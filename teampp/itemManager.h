@@ -40,8 +40,11 @@ public:
 
 	void setVItemsDrop(float x, float y);    //아이템 루트
 
-	void removeItem();		//아이템 삭제
-	void removeMoney();		// 돈 삭제
+	void removeItem(int Num);		//아이템 삭제
+	void removeMoney(int Num2);		// 돈 삭제
+
+	void removeAllItem();
+	void removeAllMoney();
 
 
 };

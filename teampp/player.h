@@ -192,6 +192,7 @@ public:
 	void setPlayerAttackRectRemove2(int a, int b, int c, int d) { _comboAttackRc2.set(0, 0, 0, 0); }
 	void setPlayerAttackRectRemove3(int a, int b, int c, int d) { _comboAttackRc3.set(0, 0, 0, 0); }
 	void setCoin(int coin) { _coin += coin; }//µ·
+	void setPlayerHP(int hp) { _hp = hp; }
 	void setPlayerDirection(PLAYERDIRECTION playerDirection) { _playerDirection = playerDirection; }
 
 	PLAYERDIRECTION getPlayerdirection() { return _playerDirection; }

@@ -151,6 +151,9 @@ void playGround::update()
 				vector<int> temp = dataManager::getInstance()->loadDataInteger();
 				if (temp.size() != 0)
 				{
+					_player->setPlayerHP(temp[0]);
+					_uiManager->setPlayerHP(temp[0]);
+					_player->setCoin(temp[1]);
 					switch (temp[2])
 					{
 					case 0:
