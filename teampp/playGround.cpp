@@ -188,7 +188,7 @@ void playGround::update()
 		if (_scene->getGameStart() == true && _scene->getSaveLoading() == false && _scene->getLoading() == false)
 		{
 			//==========================================================================================================================//
-			if (!_uiManager->isMiniMapOpen())
+			if (!_uiManager->isMiniMapOpen() && !_uiManager->getIsGameEnd())
 			{
 				_enemyManager->update();
 				_player->update();
@@ -218,6 +218,7 @@ void playGround::update()
 				this->init();
 				_playIntroVideo = true;
 				_endIntroVideo = true;
+				SOUNDMANAGER->stopAll("");
 				SOUNDMANAGER->playBGM("bgm title");
 			}
 
@@ -237,7 +238,7 @@ void playGround::update()
 			}
 			if (KEYMANAGER->isOnceKeyDown('4'))
 			{
-				_player->setHitPlayerHP(100);
+				_uiManager->setIsGameEnd(true);
 			}
 			if (KEYMANAGER->isOnceKeyDown(VK_F1))
 			{
@@ -301,6 +302,11 @@ void playGround::render()
 		{
 			stopVideo();
 		}
+	}
+	else if (_uiManager->getIsGameEnd())
+	{
+		_uiManager->render(CAMERA->getMemDC());
+		CAMERA->render(getHDC());
 	}
 	else {
 		if (_scene->getGameStart() == false && _scene->getSaveLoading() == false && _scene->getLoading() == false)

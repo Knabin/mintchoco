@@ -142,6 +142,7 @@ HRESULT UiManager::init()
 	SOUNDMANAGER->addSound("menu confirm", "sounds/menu/menu_confirm.wav", false, false);
 	SOUNDMANAGER->addSound("menu phone", "sounds/menu/menu_phone_slider_tick.wav", false, false);
 	SOUNDMANAGER->addSound("menu select", "sounds/menu/menu_player_select_last.wav", false, false);
+	SOUNDMANAGER->addSound("end song", "sounds/bgm/RCG_End_Credits.wav", true, false);
 
 	IMAGEMANAGER->addImage("kyoko1", "images/ui/kyoko_1.bmp", 386, 460, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("kyoko2", "images/ui/kyoko_2.bmp", 386, 460, true, RGB(255, 0, 255));
@@ -155,9 +156,10 @@ HRESULT UiManager::init()
 
 	IMAGEMANAGER->addImage("gameover 1", "images/ui/gameover1.bmp", 679, 400, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("gameover 2", "images/ui/gameover2.bmp", 679, 400, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("game end", "images/ui/endLog.bmp", 1280, 4815, false, RGB(255, 0, 255));
 
 	_saveRc = RectMakeCenter(WINSIZEX / 2, WINSIZEY / 2 + 150, 220, 70);
-	_scriptIndex = _txtIndex = _endCount = _isGameOver = _restartDirect = 0;
+	_scriptIndex = _txtIndex = _endCount = _isGameOver = _restartDirect = _endY = _isGameEnd = _creditCount = 0;
 
 	_playerHP = 26;
 
@@ -178,8 +180,26 @@ void UiManager::release()
 
 void UiManager::update()
 {
-	if (_isGameOver)
+	if (_isGameEnd)
+	{
+		if (_endY > -4815 + WINSIZEY)
+		{
+			_endY -= 3;
+		}
+		else
+		{
+			_creditCount++;
+			if (KEYMANAGER->isOnceKeyDown(VK_RETURN) || _creditCount >= 1500)
+			{
+				_isGameEnd = false;
+				_restart = true;
+			}
+		}
+	}
+	else if (_isGameOver)
+	{
 		gameOver();
+	}
 	else
 	{
 		BossDeath();
@@ -199,7 +219,11 @@ void UiManager::update()
 
 void UiManager::render(HDC hdc)
 {
-	if (_isGameOver)
+	if (_isGameEnd)
+	{
+		IMAGEMANAGER->findImage("game end")->render(hdc, 0, _endY);
+	}
+	else if (_isGameOver)
 	{
 		switch (_gameOverState)
 		{
@@ -589,6 +613,9 @@ void UiManager::BossDeath()
 	{
 		_BossHpPoint._x = WINSIZEX / 2 - 46;
 		_BossHpPoint._y = WINSIZEY / 2 + 306;
+		_isGameEnd = true;
+		SOUNDMANAGER->stopAll("");
+		SOUNDMANAGER->playBGM("end song");
 	}
 }
 
