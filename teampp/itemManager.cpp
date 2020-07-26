@@ -72,19 +72,38 @@ void itemManager::setVItemsDrop(float x, float y)
 
 }
 
-void itemManager::removeItem()
+void itemManager::removeItem(int Num)
 {
-	for (int i = 0; i < _vItems.size(); i++)
-	{
-		_vItems.erase(_vItems.begin() + i);
-	}
+	_vItems[Num]->release();
+	SAFE_DELETE(_vItems[Num]);
+	_vItems.erase(_vItems.begin() + Num);
 }
 
-void itemManager::removeMoney()
+void itemManager::removeMoney(int Num2)
 {
-	for (int i = 0; i < _vMoney.size(); i++)
+	_vMoney[Num2]->release();
+	SAFE_DELETE(_vMoney[Num2]);
+	_vMoney.erase(_vMoney.begin() + Num2);
+
+}
+
+void itemManager::removeAllItem()
+{
+	for (int i = 0; i < _vItems.size(); ++i)
 	{
-		_vMoney.erase(_vMoney.begin() + i);
+		_vItems[i]->release();
+		SAFE_DELETE(_vItems[i]);
 	}
+	_vItems.clear();
+}
+
+void itemManager::removeAllMoney()
+{
+	for (int i = 0; i < _vMoney.size(); ++i)
+	{
+		_vMoney[i]->release();
+		SAFE_DELETE(_vMoney[i]);
+	}
+	_vMoney.clear();
 }
 

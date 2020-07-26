@@ -35,8 +35,6 @@ HRESULT UiManager::init()
 	}
 
 
-
-
 	//ui 돈 선언
 
 	_UiCoin._UIimage = IMAGEMANAGER->addImage("UICoin", "images/ui/coin.bmp", 32, 32, true, RGB(255, 0, 255));
@@ -463,8 +461,6 @@ void UiManager::render(HDC hdc)
 			DeleteObject(font);
 		}
 	}
-
-
 
 
 	// 스테이지 이동 시 미니맵 렌더링 변경
