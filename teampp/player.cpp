@@ -270,10 +270,10 @@ void player::update()
 void player::render()
 {
 
-	_rc.render(getMemDC());//플레이어 렉트
-	_attackRc.render(getMemDC());//플레이어 공격 렉트
-	_comboAttackRc1.render(getMemDC());//1단계 콤보공격 렉트
-	_comboAttackRc2.render(getMemDC());//2단계 콤보공격 렉트
+	//_rc.render(getMemDC());//플레이어 렉트
+	//_attackRc.render(getMemDC());//플레이어 공격 렉트
+	//_comboAttackRc1.render(getMemDC());//1단계 콤보공격 렉트
+	//_comboAttackRc2.render(getMemDC());//2단계 콤보공격 렉트
 
 	if (!_pixelCollision)
 		ZORDER->pushShadowObject(getMemDC(), _shadow, 3, _rc.getCenterX(), 0, _z + 15);
