@@ -97,8 +97,10 @@ void playGround::update()
 
 	if (_uiManager->getRestartDirect())
 	{
+		int temp = _scene->getSaveLoadWindowState();
 		this->release();
 		this->init();
+		_scene->setSaveLoadWindowState(temp);
 		_playIntroVideo = true;
 		_endIntroVideo = true;
 		_scene->setLoading(true);
@@ -174,7 +176,7 @@ void playGround::update()
 						break;
 					case 4:
 						_stageManager->BossStageMove();
-						_player->playerPosition_Bossat4();
+						_player->playerPosition_4atBoss();
 						break;
 					}
 
