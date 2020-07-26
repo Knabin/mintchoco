@@ -20,21 +20,6 @@ void zOrder::render()
 {
 	sortVector(0, _vObject.size()-1);
 
-
-	//for (int i = 0; i < _vObject.size(); ++i)
-	//{
-	//	for (int j = 0; j < _vObject.size(); ++j)
-	//	{
-	//		if (_vObject[i].z == _vObject[j].z)
-	//		{
-	//			if (_vObject[i].type == 0 && i < j)
-	//			{
-	//				swap(_vObject[i], _vObject[j]);
-	//			}
-	//		}
-	//	}
-	//}
-
 	int index = -1;
 	for (int i = 0; i < _vObject.size(); ++i)
 	{

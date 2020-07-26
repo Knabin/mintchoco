@@ -161,6 +161,9 @@ HRESULT stageManager::init()
 
 	_enemyCount = 0;
 
+	SOUNDMANAGER->addSound("chain on", "sounds/menu/UI_chains_appear.wav", false, false);
+	SOUNDMANAGER->addSound("chain break", "sounds/menu/UI_chains_break.wav", false, false);
+
 	//-----------------------------------------------------------------------------------------------------------------------------//
 
 	return S_OK;
@@ -432,6 +435,7 @@ void stageManager::ChainLockMove()
 			_RightChainShake = true;
 			_TopChainShake = true;
 			_BottomChainShake = true;
+			SOUNDMANAGER->play("chain on");
 		}
 
 		if (_LockCount >= 14 && _ChainLockState == LOCKING)
@@ -449,6 +453,7 @@ void stageManager::ChainLockMove()
 		if (_ChainTop._y <= CAMERA->getTop() - 55 && _ChainBottom._y >= CAMERA->getTop() + 525 && _ChainLockState == CLEARING)
 		{
 			_ChainLockState = CLEAR;
+			SOUNDMANAGER->play("chain break");
 		}
 
 		switch (_ChainLockState)
@@ -658,52 +663,52 @@ void stageManager::ChainLockFrameDraw()
 	{
 		if (_ChainLockState == LOCKING)
 		{
-			IMAGEMANAGER->findImage("ChainLeft")->frameRender(getMemDC(), _ChainLeft._x, _ChainLeft._y);
+			ZORDER->pushObject(getMemDC(), "ChainLeft", IMAGEMANAGER->findImage("ChainLeft")->getFrameX(), IMAGEMANAGER->findImage("ChainLeft")->getFrameY(), 2, _ChainLeft._x + IMAGEMANAGER->findImage("ChainLeft")->getFrameWidth() / 2, WINSIZEY, WINSIZEY + _ChainLeft._y + IMAGEMANAGER->findImage("ChainLeft")->getFrameHeight());
 
-			IMAGEMANAGER->findImage("ChainRight")->frameRender(getMemDC(), _ChainRight._x, _ChainRight._y);
+			ZORDER->pushObject(getMemDC(), "ChainRight", IMAGEMANAGER->findImage("ChainRight")->getFrameX(), IMAGEMANAGER->findImage("ChainRight")->getFrameY(), 2, _ChainRight._x + IMAGEMANAGER->findImage("ChainRight")->getFrameWidth() / 2, WINSIZEY, WINSIZEY + _ChainRight._y + IMAGEMANAGER->findImage("ChainRight")->getFrameHeight());
 
-			IMAGEMANAGER->findImage("ChainTop")->frameRender(getMemDC(), _ChainTop._x, _ChainTop._y);
+			ZORDER->pushObject(getMemDC(), "ChainTop", IMAGEMANAGER->findImage("ChainTop")->getFrameX(), IMAGEMANAGER->findImage("ChainTop")->getFrameY(), 2, _ChainTop._x + IMAGEMANAGER->findImage("ChainTop")->getFrameWidth() / 2, WINSIZEY, WINSIZEY + _ChainTop._y + IMAGEMANAGER->findImage("ChainTop")->getFrameHeight());
 
-			IMAGEMANAGER->findImage("ChainBottom")->frameRender(getMemDC(), _ChainBottom._x, _ChainBottom._y);
+			ZORDER->pushObject(getMemDC(), "ChainBottom", IMAGEMANAGER->findImage("ChainBottom")->getFrameX(), IMAGEMANAGER->findImage("ChainBottom")->getFrameY(), 2, _ChainBottom._x + IMAGEMANAGER->findImage("ChainBottom")->getFrameWidth() / 2, WINSIZEY, WINSIZEY + _ChainBottom._y + IMAGEMANAGER->findImage("ChainBottom")->getFrameHeight());
 
-			IMAGEMANAGER->findImage("Lock1")->frameRender(getMemDC(), _Lock._x, _Lock._y);
+			ZORDER->pushObject(getMemDC(), "Lock1", IMAGEMANAGER->findImage("Lock1")->getFrameX(), IMAGEMANAGER->findImage("Lock1")->getFrameY(), 2, _Lock._x + IMAGEMANAGER->findImage("Lock1")->getFrameWidth() / 2, WINSIZEY, WINSIZEY + _Lock._y + IMAGEMANAGER->findImage("Lock1")->getFrameHeight());
 		}
 
 		if (_ChainLockState == LOCK)
 		{
-			IMAGEMANAGER->findImage("ChainLeft")->frameRender(getMemDC(), _ChainLeft._x, _ChainLeft._y);
+			ZORDER->pushObject(getMemDC(), "ChainLeft", IMAGEMANAGER->findImage("ChainLeft")->getFrameX(), IMAGEMANAGER->findImage("ChainLeft")->getFrameY(), 2, _ChainLeft._x + IMAGEMANAGER->findImage("ChainLeft")->getFrameWidth() / 2, WINSIZEY, WINSIZEY + _ChainLeft._y + IMAGEMANAGER->findImage("ChainLeft")->getFrameHeight());
 
-			IMAGEMANAGER->findImage("ChainRight")->frameRender(getMemDC(), _ChainRight._x, _ChainRight._y);
+			ZORDER->pushObject(getMemDC(), "ChainRight", IMAGEMANAGER->findImage("ChainRight")->getFrameX(), IMAGEMANAGER->findImage("ChainRight")->getFrameY(), 2, _ChainRight._x + IMAGEMANAGER->findImage("ChainRight")->getFrameWidth() / 2, WINSIZEY, WINSIZEY + _ChainRight._y + IMAGEMANAGER->findImage("ChainRight")->getFrameHeight());
 
-			IMAGEMANAGER->findImage("ChainTop")->frameRender(getMemDC(), _ChainTop._x, _ChainTop._y);
+			ZORDER->pushObject(getMemDC(), "ChainTop", IMAGEMANAGER->findImage("ChainTop")->getFrameX(), IMAGEMANAGER->findImage("ChainTop")->getFrameY(), 2, _ChainTop._x + IMAGEMANAGER->findImage("ChainTop")->getFrameWidth() / 2, WINSIZEY, WINSIZEY + _ChainTop._y + IMAGEMANAGER->findImage("ChainTop")->getFrameHeight());
 
-			IMAGEMANAGER->findImage("ChainBottom")->frameRender(getMemDC(), _ChainBottom._x, _ChainBottom._y);
+			ZORDER->pushObject(getMemDC(), "ChainBottom", IMAGEMANAGER->findImage("ChainBottom")->getFrameX(), IMAGEMANAGER->findImage("ChainBottom")->getFrameY(), 2, _ChainBottom._x + IMAGEMANAGER->findImage("ChainBottom")->getFrameWidth() / 2, WINSIZEY, WINSIZEY + _ChainBottom._y + IMAGEMANAGER->findImage("ChainBottom")->getFrameHeight());
 		}
 
 		if (_ChainLockState == LOCK && _LockDamage1 == false && _LockDamage2 == false)
 		{
-			IMAGEMANAGER->findImage("Lock1")->frameRender(getMemDC(), _Lock._x + 4, _Lock._y);
+			ZORDER->pushObject(getMemDC(), "Lock1", IMAGEMANAGER->findImage("Lock1")->getFrameX(), IMAGEMANAGER->findImage("Lock1")->getFrameY(), 2, _Lock._x + IMAGEMANAGER->findImage("Lock1")->getFrameWidth() / 2 + 4, WINSIZEY, WINSIZEY + _Lock._y + IMAGEMANAGER->findImage("Lock1")->getFrameHeight());
 		}
 		if (_ChainLockState == LOCK && _LockDamage1 == true)
 		{
-			IMAGEMANAGER->findImage("Lock2")->frameRender(getMemDC(), _Lock._x, _Lock._y);
+			ZORDER->pushObject(getMemDC(), "Lock2", IMAGEMANAGER->findImage("Lock2")->getFrameX(), IMAGEMANAGER->findImage("Lock2")->getFrameY(), 2, _Lock._x + IMAGEMANAGER->findImage("Lock2")->getFrameWidth() / 2, WINSIZEY, WINSIZEY + _Lock._y + IMAGEMANAGER->findImage("Lock2")->getFrameHeight());
 		}
 		if (_ChainLockState == LOCK && _LockDamage2 == true)
 		{
-			IMAGEMANAGER->findImage("Lock3")->frameRender(getMemDC(), _Lock._x, _Lock._y);
+			ZORDER->pushObject(getMemDC(), "Lock3", IMAGEMANAGER->findImage("Lock3")->getFrameX(), IMAGEMANAGER->findImage("Lock3")->getFrameY(), 2, _Lock._x + IMAGEMANAGER->findImage("Lock3")->getFrameWidth() / 2, WINSIZEY, WINSIZEY + _Lock._y + IMAGEMANAGER->findImage("Lock3")->getFrameHeight());
 		}
 
 		if (_ChainLockState == CLEARING)
 		{
-			IMAGEMANAGER->findImage("ChainLeft")->frameRender(getMemDC(), _ChainLeft._x, _ChainLeft._y);
+			ZORDER->pushObject(getMemDC(), "ChainLeft", IMAGEMANAGER->findImage("ChainLeft")->getFrameX(), IMAGEMANAGER->findImage("ChainLeft")->getFrameY(), 2, _ChainLeft._x + IMAGEMANAGER->findImage("ChainLeft")->getFrameWidth() / 2, WINSIZEY, WINSIZEY + _ChainLeft._y + IMAGEMANAGER->findImage("ChainLeft")->getFrameHeight());
 
-			IMAGEMANAGER->findImage("ChainRight")->frameRender(getMemDC(), _ChainRight._x, _ChainRight._y);
+			ZORDER->pushObject(getMemDC(), "ChainRight", IMAGEMANAGER->findImage("ChainRight")->getFrameX(), IMAGEMANAGER->findImage("ChainRight")->getFrameY(), 2, _ChainRight._x + IMAGEMANAGER->findImage("ChainRight")->getFrameWidth() / 2, WINSIZEY, WINSIZEY + _ChainRight._y + IMAGEMANAGER->findImage("ChainRight")->getFrameHeight());
 
-			IMAGEMANAGER->findImage("ChainTop")->frameRender(getMemDC(), _ChainTop._x, _ChainTop._y);
+			ZORDER->pushObject(getMemDC(), "ChainTop", IMAGEMANAGER->findImage("ChainTop")->getFrameX(), IMAGEMANAGER->findImage("ChainTop")->getFrameY(), 2, _ChainTop._x + IMAGEMANAGER->findImage("ChainTop")->getFrameWidth() / 2, WINSIZEY, WINSIZEY + _ChainTop._y + IMAGEMANAGER->findImage("ChainTop")->getFrameHeight());
 
-			IMAGEMANAGER->findImage("ChainBottom")->frameRender(getMemDC(), _ChainBottom._x, _ChainBottom._y);
+			ZORDER->pushObject(getMemDC(), "ChainBottom", IMAGEMANAGER->findImage("ChainBottom")->getFrameX(), IMAGEMANAGER->findImage("ChainBottom")->getFrameY(), 2, _ChainBottom._x + IMAGEMANAGER->findImage("ChainBottom")->getFrameWidth() / 2, WINSIZEY, WINSIZEY + _ChainBottom._y + IMAGEMANAGER->findImage("ChainBottom")->getFrameHeight());
 
-			IMAGEMANAGER->findImage("Lock4")->frameRender(getMemDC(), _Lock._x - 12, _Lock._y + 5);
+			ZORDER->pushObject(getMemDC(), "Lock4", IMAGEMANAGER->findImage("Lock4")->getFrameX(), IMAGEMANAGER->findImage("Lock4")->getFrameY(), 2, _Lock._x + IMAGEMANAGER->findImage("Lock4")->getFrameWidth() / 2 - 12, WINSIZEY, WINSIZEY + _Lock._y + IMAGEMANAGER->findImage("Lock4")->getFrameHeight() + 5);
 		}
 	}
 }
