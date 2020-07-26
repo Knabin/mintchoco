@@ -1602,9 +1602,12 @@ void player::frameDraw()
 		if (_count % 5 == 0)
 		{
 			_comboAttackImage3->setFrameX(_comboAttackImage3->getFrameX() - 1);
-			_comboAttackRc3.set(0, 0, 200, 200);
+			if (_comboAttackImage3->getFrameX() >= _comboAttackImage3->getMaxFrameX() - 3)
+			{
+				_comboAttackRc3.set(0, 0, 200, 200);
+			}
 			_comboAttackRc3.setCenterPos(_rc.left, _rc.getCenterY());
-			if (_comboAttackImage3->getFrameX() <= _comboAttackImage3->getMaxFrameX() - 2)
+			if (_comboAttackImage3->getFrameX() <= _comboAttackImage3->getMaxFrameX() - 3)
 			{
 				_comboAttackRc3.set(0, 0, 0, 0);
 			}
@@ -1627,9 +1630,12 @@ void player::frameDraw()
 		if (_count % 5 == 0)
 		{
 			_comboAttackImage3->setFrameX(_comboAttackImage3->getFrameX() + 1);
-			_comboAttackRc3.set(0, 0, 200, 200);
+			if (_comboAttackImage3->getFrameX() <= 3)
+			{
+				_comboAttackRc3.set(0, 0, 200, 200);
+			}
 			_comboAttackRc3.setCenterPos(_rc.right, _rc.getCenterY());
-			if (_comboAttackImage3->getFrameX() >= 2)
+			if (_comboAttackImage3->getFrameX() >= 3)
 			{
 				_comboAttackRc3.set(0, 0, 0, 0);
 			}
@@ -1653,9 +1659,12 @@ void player::frameDraw()
 		if (_count % 4 == 0)
 		{
 			_strongAttackImage->setFrameX(_strongAttackImage->getFrameX() + 1);
-			_attackRc.set(0, 0, 150, 200);
+			if (_strongAttackImage->getFrameX() <= 3)
+			{
+				_attackRc.set(0, 0, 150, 200);
+			}
 			_attackRc.setCenterPos(_rc.left - 50, _rc.getCenterY() - _jump->getJumpPower());
-			if (_strongAttackImage->getFrameX() >= 2)
+			if (_strongAttackImage->getFrameX() >= 3)
 			{
 				_attackRc.set(0, 0, 0, 0);
 			}
@@ -1677,9 +1686,12 @@ void player::frameDraw()
 		if (_count % 4 == 0)
 		{
 			_strongAttackImage->setFrameX(_strongAttackImage->getFrameX() - 1);
-			_attackRc.set(0, 0, 150, 200);
+			if (_strongAttackImage->getFrameX() >= _strongAttackImage->getMaxFrameX() - 3)
+			{
+				_attackRc.set(0, 0, 150, 200);
+			}
 			_attackRc.setCenterPos(_rc.right + 50, _rc.getCenterY() - _jump->getJumpPower());
-			if (_strongAttackImage->getFrameX() <= _strongAttackImage->getMaxFrameX() - 2)
+			if (_strongAttackImage->getFrameX() <= _strongAttackImage->getMaxFrameX() - 3)
 			{
 				_attackRc.set(0, 0, 0, 0);
 			}
@@ -1703,9 +1715,12 @@ void player::frameDraw()
 			{
 				_jumpAttackImage->setFrameX(_jumpAttackImage->getFrameX() - 1);
 			}
-			_attackRc.set(0, 0, 50, 100);
+			if (_jumpAttackImage->getFrameX() >= _jumpAttackImage->getMaxFrameX() - 3)
+			{
+				_attackRc.set(0, 0, 50, 100);
+			}
 			_attackRc.setCenterPos(_rc.left, _rc.getCenterY());
-			if (_jumpAttackImage->getFrameX() <= _jumpAttackImage->getMaxFrameX() - 2)
+			if (_jumpAttackImage->getFrameX() <= _jumpAttackImage->getMaxFrameX() - 3)
 			{
 				_attackRc.set(0, 0, 0, 0);
 			}
@@ -1733,9 +1748,12 @@ void player::frameDraw()
 			{
 				_jumpAttackImage->setFrameX(_jumpAttackImage->getFrameX() + 1);
 			}
-			_attackRc.set(0, 0, 50, 100);
+			if (_jumpAttackImage->getFrameX() <= 3)
+			{
+				_attackRc.set(0, 0, 50, 100);
+			}
 			_attackRc.setCenterPos(_rc.right, _rc.getCenterY());
-			if (_jumpAttackImage->getFrameX() >= 2)
+			if (_jumpAttackImage->getFrameX() >= 3)
 			{
 				_attackRc.set(0, 0, 0, 0);
 			}
@@ -1762,9 +1780,12 @@ void player::frameDraw()
 		if (_count % 5 == 0)
 		{
 			_dashAttackImage->setFrameX(_dashAttackImage->getFrameX() - 1);
-			_attackRc.set(0, 0, 120, 100);
+			if (_dashAttackImage->getFrameX() >= _dashAttackImage->getMaxFrameX() - 3)
+			{
+				_attackRc.set(0, 0, 120, 100);
+			}
 			_attackRc.setCenterPos(_rc.left - 50, _rc.getCenterY() - 30);
-			if (_dashAttackImage->getFrameX() <= _dashAttackImage->getMaxFrameX() - 2)
+			if (_dashAttackImage->getFrameX() <= _dashAttackImage->getMaxFrameX() - 3)
 			{
 				_attackRc.set(0, 0, 0, 0);
 			}
@@ -1787,9 +1808,12 @@ void player::frameDraw()
 		if (_count % 5 == 0)
 		{
 			_dashAttackImage->setFrameX(_dashAttackImage->getFrameX() + 1);
-			_attackRc.set(0, 0, 120, 100);
+			if (_dashAttackImage->getFrameX() <= 3)
+			{
+				_attackRc.set(0, 0, 120, 100);
+			}
 			_attackRc.setCenterPos(_rc.right + 50, _rc.getCenterY() - 30);
-			if (_dashAttackImage->getFrameX() >= 2)
+			if (_dashAttackImage->getFrameX() >= 3)
 			{
 				_attackRc.set(0, 0, 0, 0);
 			}
@@ -1814,9 +1838,12 @@ void player::frameDraw()
 			{
 				_ultimate = true;
 			}
-			_attackRc.set(0, 0, 250, 300);
+			if (_ultimateImage->getFrameX() >= _ultimateImage->getMaxFrameX() - 4)
+			{
+				_attackRc.set(0, 0, 250, 300);
+			}
 			_attackRc.setCenterPos(_rc.left - 50, _rc.getCenterY());
-			if (_ultimateImage->getFrameX() <= _ultimateImage->getMaxFrameX() - 2)
+			if (_ultimateImage->getFrameX() <= _ultimateImage->getMaxFrameX() - 4)
 			{
 				_attackRc.set(0, 0, 0, 0);
 			}
@@ -1842,9 +1869,12 @@ void player::frameDraw()
 			{
 				_ultimate = true;
 			}
-			_attackRc.set(0, 0, 250, 300);
+			if (_ultimateImage->getFrameX() <= 4)
+			{
+				_attackRc.set(0, 0, 250, 300);
+			}
 			_attackRc.setCenterPos(_rc.right + 50, _rc.getCenterY());
-			if (_ultimateImage->getFrameX() >= 2)
+			if (_ultimateImage->getFrameX() >= 4)
 			{
 				_attackRc.set(0, 0, 0, 0);
 			}
