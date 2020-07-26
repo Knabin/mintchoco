@@ -48,6 +48,7 @@ HRESULT playGround::init()
 	_enemyManager->setStageManagerMemoryAddressLink(_stageManager);
 	_player->setStageManagerMemoryAddressLink(_stageManager);
 
+	_uiManager->setPlayerMemoryAddressLink(_player);
 	_uiManager->setStageManagerMemoryAddressLink(_stageManager);
 
 
@@ -188,6 +189,7 @@ void playGround::update()
 				_player->update();
 				_collisionManager->update();
 				_stageManager->update();
+
 				if (_stageManager->checkBossStageX(_player->getPlayerX()))
 				{
 					SOUNDMANAGER->stopAll("");
@@ -326,7 +328,7 @@ void playGround::render()
 			_player->render();
 			_collisionManager->render();
 			_enemyManager->render();
-			//_itemManager->render();
+			_itemManager->render();
 			_scene->render();
 
 			ZORDER->render();

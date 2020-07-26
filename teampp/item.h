@@ -3,10 +3,10 @@
 
 class item : public gameNode
 {
-protected:
+private:
 
-	image* ItemImage;
-	MYRECT _rc;
+	image* _itemImage;		//아이템 이미지
+	MYRECT _rc;				//아이템 충돌용 렉트
 	float _x, _y;
 
 public:
@@ -14,7 +14,7 @@ public:
 	item();
 	~item();
 
-	HRESULT init();
+	HRESULT init(const char * imageName, float x, float y);
 	void release();
 	void update();
 	void render();
@@ -22,3 +22,4 @@ public:
 	inline MYRECT getRect() { return _rc; }
 
 };
+

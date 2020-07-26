@@ -9,11 +9,16 @@ item::~item()
 {
 }
 
-HRESULT item::init()
+HRESULT item::init(const char * imageName, float x, float y)
 {
-	ItemImage = IMAGEMANAGER->addImage("사과", "images/item/apple.bmp", 48, 50, true, RGB(255, 0, 255));
-	_x = WINSIZEX / 2 - 100;
-	_y = WINSIZEY / 2 + 200;
+	IMAGEMANAGER->addImage("아이스크림", "images/item/icecream.bmp", 55, 70, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("햄버거", "images/item/hamburger.bmp", 64, 55, true, RGB(255, 0, 255));
+
+	_itemImage = IMAGEMANAGER->findImage(imageName);
+
+	_x = x;
+	_y = y;
+
 	_rc.setCenterPos(_x, _y);
 
 	return S_OK;
@@ -29,5 +34,7 @@ void item::update()
 
 void item::render()
 {
-	IMAGEMANAGER->findImage("사과")->render(getMemDC(), _x - 24, _y - 25);
+	_itemImage->render(getMemDC(), _rc.left, _rc.top);
 }
+
+

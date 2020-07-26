@@ -295,7 +295,6 @@ void enemy::update()
 
 						}
 					}
-
 				}
 				else
 				{

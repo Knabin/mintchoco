@@ -89,7 +89,7 @@ void enemyManager::update()
 {
 	for (int i = 0; i < _vEnemies.size(); ++i)
 	{
-		_vEnemies[i]->update();
+		//_vEnemies[i]->update();		//collisionManager의 itemDrop 함수에 옮겼습니다.
 		if (_vEnemies[i]->getHP() <= 0 && _vEnemies[i]->getEnemyDead())
 		{
 			_sm->plusEnemyCount();
