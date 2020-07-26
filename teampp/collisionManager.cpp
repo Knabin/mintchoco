@@ -1443,9 +1443,9 @@ void collisionManager::player_bossCollision()
 			btemp->getBossRect().bottom + 50 >= _player->getPlayerZ())
 		{
 			btemp->setBossAttackRect(0, 0, 0, 0);
-			_count++;
+		/*	_count++;
 			if (_count % 20 == 0)
-			{
+			{*/
 				if (_player->getPlayerdirection() == PLAYERDIRECTION_LEFT_COMBO_ATTACK1 || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_COMBO_ATTACK2 ||
 					_player->getPlayerdirection() == PLAYERDIRECTION_LEFT_COMBO_ATTACK3 || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_DASH_ATTACK ||
 					_player->getPlayerdirection() == PLAYERDIRECTION_LEFT_JUMP || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_JUMP_ATTACK ||
@@ -1466,8 +1466,9 @@ void collisionManager::player_bossCollision()
 				_player->setHitPlayerHP(1);
 				_uiManager->PlayerHpMinus();
 				_count = 0;
-			}
+			//}
 		}
+			
 	}
 
 	if (_player->getPlayerdirection() == PLAYERDIRECTION_LEFT_GUARD && _player->getPlayerX() < btemp->getBossRect().getCenterX())
@@ -1477,15 +1478,15 @@ void collisionManager::player_bossCollision()
 			btemp->getBossRect().bottom + 50 >= _player->getPlayerZ())
 		{
 			btemp->setBossAttackRect(0, 0, 0, 0);
-			_count++;
+			/*_count++;
 			if (_count % 20 == 0)
-			{
+			{*/
 				_player->setPlayerDirection(PLAYERDIRECTION_RIGHT_HIT);
 				playPlayerGetHitSound();
 				_player->setHitPlayerHP(1);
 				_uiManager->PlayerHpMinus();
 				_count = 0;
-			}
+			//}
 		}
 	}
 
@@ -1496,15 +1497,15 @@ void collisionManager::player_bossCollision()
 			btemp->getBossRect().bottom + 50 >= _player->getPlayerZ())
 		{
 			btemp->setBossAttackRect(0, 0, 0, 0);
-			_count++;
+			/*_count++;
 			if (_count % 20 == 0)
-			{
+			{*/
 				_player->setPlayerDirection(PLAYERDIRECTION_LEFT_HIT);
 				playPlayerGetHitSound();
 				_player->setHitPlayerHP(1);
 				_uiManager->PlayerHpMinus();
 				_count = 0;
-			}
+			//}
 		}
 	}
 }
