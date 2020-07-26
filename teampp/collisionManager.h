@@ -24,7 +24,7 @@ private:
 public:
 	collisionManager() {}
 	~collisionManager() {}
-	
+
 	HRESULT init();
 	void render();
 	void update();
@@ -37,6 +37,9 @@ public:
 	void enemy_collisionRightBlock();
 	void npcCollision();
 	void player_collision();//플레이어랑 적 공격이랑 충돌시
+	void item_drop();		//에너미 사망 시 아이템 드랍
+	void item_collision();	//아이템 먹을 경우 (체력 5씩 회복)
+	void money_collision(); // 돈 먹을 경우	  (10원씩 획득)
 
 	void setPlayerMemoryAddressLink(player* player) { _player = player; }
 	void setEnemyManagerMemoryAddressLink(enemyManager* enemyManager) { _enemyManager = enemyManager; }

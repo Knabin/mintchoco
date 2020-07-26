@@ -129,6 +129,7 @@ HRESULT player::init()
 	_yPlayerY = 0;
 	_playerImage = _idleImage;
 	_hp = 26;
+	_coin = 0;
 
 	{
 		SOUNDMANAGER->addSound("attack1", "sounds/effect/player_punch_01.wav", false, false);

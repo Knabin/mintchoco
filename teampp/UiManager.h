@@ -1,8 +1,9 @@
 #pragma once
 #include "gameNode.h"
 #define PLAYERHPPOINT 26
+#define CURRENTCOIN 5
 
-
+class player;
 class stageManager;
 
 enum MiniMapState // 미니맵 상태
@@ -33,9 +34,11 @@ private:
 	tagUIbar _BossName;						  //보스 Name
 	tagUIbar _BossHpbarHide;				  
 	tagUIbar _UiCoin;						  //ui창 돈
+	tagUIbar _CurrentCoin[CURRENTCOIN];		//현재 소지금
 
 	tagUIbar _MiniMap;						  //미니맵
 
+	player* _player;
 	stageManager* _stageManager;			//stageManager 전방선언
 
 	// ======= 나빈 추가 =======
@@ -66,12 +69,16 @@ public:
 	void MiniMapMove();						//미니맵 이동 함수
 	
 	void PlayerHpMinus();					//PlayerHpPoint 감소 함수
+	void PlayerHpPlus();
 	void BossHpMinus();						//boss hp 감소 함수
 	void BossDeath();						//boss hp가 완전히 감소하면?
+
+	void PlayerCurrentCoin(HDC hdc);
 
 	void printScript();
 
 	void setStageManagerMemoryAddressLink(stageManager* stageManager) { _stageManager = stageManager; }
+	void setPlayerMemoryAddressLink(player* player) { _player = player; }
 
 	bool isMiniMapOpen() {
 		if (_MiniMap._MiniMapState == OPENSTOP || _MiniMap._MiniMapState == OPEN || _scriptStart)

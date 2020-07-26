@@ -31,6 +31,10 @@ void collisionManager::update()
 
 	player_collision();
 
+	item_collision();
+	money_collision();
+	item_drop();
+
 }
 
 void collisionManager::release()
@@ -566,6 +570,56 @@ void collisionManager::player_collision()
 		}
 	}
 
+}
+
+void collisionManager::item_drop()
+{
+	vector<enemy*> temp = _enemyManager->getEnemiesVector();
+
+	
+	for (int i = 0; i < temp.size(); ++i)
+	{
+		temp[i]->update();
+		if (temp[i]->getHP() <= 0 && temp[i]->getEnemyDead())
+		{
+			_itemManager->setVItemsDrop(temp[i]->getEnemyRect().getCenterX(), temp[i]->getEnemyRect().getCenterY() + 50);
+
+		}
+	}
+}
+
+void collisionManager::item_collision()
+{
+	vector<item*> temp = _itemManager->getItemsVector();
+
+	for (int i = 0; i < temp.size(); i++)
+	{
+		if (isCollision(_player->getPlayerRect(), temp[i]->getRect()))
+		{
+			_itemManager->removeItem();
+			_uiManager->PlayerHpPlus();
+			_uiManager->PlayerHpPlus();
+			_uiManager->PlayerHpPlus();
+			_uiManager->PlayerHpPlus();
+			_uiManager->PlayerHpPlus();
+			_player->setHitPlayerHP(5);
+		}
+	}
+}
+
+void collisionManager::money_collision()
+{
+	vector<money*> temp = _itemManager->getMoneyVector();
+	
+	for (int i = 0; i < temp.size(); i++)
+	{
+		if (isCollision(_player->getPlayerRect(), temp[i]->getRect()))
+		{
+			_itemManager->removeMoney();
+			_player->setCoin(10);
+		}
+
+	}
 }
 
 

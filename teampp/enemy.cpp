@@ -283,7 +283,6 @@ void enemy::update()
 
 						}
 					}
-
 				}
 				else
 				{

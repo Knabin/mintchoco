@@ -2,14 +2,28 @@
 #include "gameNode.h"
 #include "item.h"
 #include "money.h"
+#include <vector>
+
 
 
 class itemManager : public gameNode
 {
 private:
 	
-	item* _Item;
-	money* _Money;
+	typedef vector<item*>						vItem;
+	typedef vector<item*>::iterator				viItem;
+
+	typedef vector<money*>						vMoney;
+	typedef vector<money*>::iterator			viMoney;
+
+private:
+
+	vItem  _vItems;
+	viItem _viItems;
+
+	vMoney _vMoney;
+	viMoney _viMoney;
+
 
 public:
 
@@ -21,8 +35,13 @@ public:
 	void update();
 	void render();
 
-	item* getVItem() { return _Item; }
+	vector<item*>& getItemsVector() { return _vItems; }
+	vector<money*>& getMoneyVector() { return _vMoney; }
 
-	
+	void setVItemsDrop(float x, float y);    //아이템 루트
+
+	void removeItem();		//아이템 삭제
+	void removeMoney();		// 돈 삭제
+
 
 };
