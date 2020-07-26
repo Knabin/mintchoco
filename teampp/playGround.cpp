@@ -263,7 +263,10 @@ void playGround::update()
 			//CAMERA->setPosition(WINSIZEX/2, WINSIZEY/2);
 			// 따라오는 카메라
 			if (!_uiManager->isMiniMapOpen())
-				CAMERA->changePosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+			{
+				if (CAMERA->getIsReturn()) CAMERA->cameraFixedEnd(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+				else CAMERA->changePosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+			}
 		}
 	}
 	else

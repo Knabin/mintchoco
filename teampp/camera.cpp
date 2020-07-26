@@ -141,3 +141,20 @@ void camera::changePosition(float x, float y)
 		_cameraInfo->y -= sinf(angle) * 5;
 	}
 }
+
+void camera::cameraFixedEnd(float x, float y)
+{
+	int d = getDistance(_fixedLeft, _fixedTop, x, y);
+	float angle = getAngle(_fixedLeft, _fixedTop, x, y);
+
+	if (d > 5)
+	{
+		_fixedLeft += cosf(angle) * 5;
+		_fixedTop -= sinf(angle) * 5;
+	}
+	else
+	{
+		_isFixed = false;
+		_isReturn = false;
+	}
+}

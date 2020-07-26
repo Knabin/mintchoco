@@ -54,6 +54,8 @@ private:
 	int _fixedLeft;			// 고정된 left
 	int _fixedTop;			// 고정된 top
 
+	bool _isReturn;
+
 public:
 	camera();
 	~camera();
@@ -81,8 +83,7 @@ public:
 
 	// 자연스럽게 따라오는 카메라(centerX, centerY)
 	void changePosition(float x, float y);
-
-	void testPosition(float x, float y);
+	void cameraFixedEnd(float x, float y);
 
 
 	// =======================================================
@@ -129,11 +130,26 @@ public:
 		return _cameraInfo->y - _cameraInfo->viewHeight / 2;
 	}
 
+	inline int getOriginalLeft() 
+	{
+		if (!checkCameraX()) return (_cameraInfo->x <= _cameraInfo->backWidth / 2) ? 0 : _cameraInfo->backWidth - _cameraInfo->viewWidth;
+		return _cameraInfo->x - _cameraInfo->viewWidth / 2;
+	}
+
+	inline int getOriginalTop()
+	{
+		if (!checkCameraY()) return (_cameraInfo->y <= _cameraInfo->backHeight / 2) ? 0 : _cameraInfo->backHeight - _cameraInfo->viewHeight;
+		return _cameraInfo->y - _cameraInfo->viewHeight / 2;
+	}
+
 	inline void setIsShaking(bool isShaking) { _isShaking = isShaking; _shakeAmount = _isShaking ? 6.0f : 0; }
 	inline bool getIsShaking() { return _isShaking; }
 
 	inline void setIsFixed(bool isFixed) { _isFixed = isFixed; }
 	inline bool getIsFixed() { return _isFixed; }
+
+	inline void setIsReturn(bool isReturn) { _isReturn = isReturn; }
+	inline bool getIsReturn() { return _isReturn; }
 
 	// TODO: 수정 필요합니다 사용하지 마세요 ㅠㅠ
 	// 카메라 전체 사이즈 기준으로 생성된 RECT 반환
