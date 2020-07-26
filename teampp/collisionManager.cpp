@@ -11,6 +11,7 @@ HRESULT collisionManager::init()
 {
 	_count = 0;
 	_enemyCollisionCount = _enemyCollisionCount1  =  _enemyCollisionCount2 = _enemyCollisionCount3 = 0;
+	_bossCollisionCount = _bossCollisionCount1 = _bossCollisionCount2 = _bossCollisionCount3 = 0;
 
 	_attackEffect = IMAGEMANAGER->addFrameImage("playerAttackEffect", "images/player/Kyoko_Attack_Effect.bmp", 612, 196, 3, 1, true, RGB(255, 0, 255));//플레이어가 적을 공격할때 적과 충돌시 이펙트 이미지
 
@@ -854,12 +855,9 @@ void collisionManager::boss_collisionNoBlock()
 			_attackEffectFrame = true;
 			_enemyEffectPosX = btemp->getBossRect().getCenterX();
 			_enemyEffectPosY = btemp->getBossRect().bottom;
-			//_player->setPlayerAttackRectRemove(0, 0, 0, 0);
-			_enemyCollisionCount++;
-			if (_enemyCollisionCount % 7 == 0)
+			_bossCollisionCount++;
+			if (_bossCollisionCount % 7 == 0)
 			{
-
-
 				if ((btemp->getBossDirection() == BOSS_LEFT_IDLE || btemp->getBossDirection() == BOSS_LEFT_WALK ||
 					btemp->getBossDirection() == BOSS_LEFT_SLAP || btemp->getBossDirection() == BOSS_LEFT_ELBOW ||
 					btemp->getBossDirection() == BOSS_LEFT_METEOR_G || btemp->getBossDirection() == BOSS_LEFT_METEOR_M ||
@@ -898,7 +896,7 @@ void collisionManager::boss_collisionNoBlock()
 					btemp->setHitBossHP(15);
 					SOUNDMANAGER->play("gethit big", 1.0f);
 				}
-				_enemyCollisionCount = 0;
+				_bossCollisionCount = 0;
 			}
 		}
 
@@ -943,9 +941,8 @@ void collisionManager::boss_collisionNoBlock()
 			_enemyEffectPosX = btemp->getBossRect().getCenterX();
 			_enemyEffectPosY = btemp->getBossRect().bottom;
 			_player->setComboAttack(true);//2단콤보변수 트루
-			//_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
-			_enemyCollisionCount1++;
-			if (_enemyCollisionCount1 % 1 == 0)
+			_bossCollisionCount1++;
+			if (_bossCollisionCount1 % 1 == 0)
 			{
 				btemp->setHitBossHP(1);
 				_enemyCollisionCount1 = 0;
@@ -960,9 +957,8 @@ void collisionManager::boss_collisionNoBlock()
 			_enemyEffectPosX = btemp->getBossRect().getCenterX();
 			_enemyEffectPosY = btemp->getBossRect().bottom;
 			_player->setComboAttack2(true);//3단콤보공격 트루
-			//_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
-			_enemyCollisionCount2++;
-			if (_enemyCollisionCount2 % 1 == 0)
+			_bossCollisionCount2++;
+			if (_bossCollisionCount2 % 1 == 0)
 			{
 				if (btemp->getBossDirection() == BOSS_LEFT_HIT1)
 				{
@@ -1000,9 +996,8 @@ void collisionManager::boss_collisionNoBlock()
 			_attackEffectFrame = true;
 			_enemyEffectPosX = btemp->getBossRect().getCenterX();
 			_enemyEffectPosY = btemp->getBossRect().bottom;
-			//_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
-			_enemyCollisionCount3++;
-			if (_enemyCollisionCount3 % 1 == 0)
+			_bossCollisionCount3++;
+			if (_bossCollisionCount3 % 1 == 0)
 			{
 				if (btemp->getBossDirection() == BOSS_LEFT_HIT2)
 				{
@@ -1055,9 +1050,8 @@ void collisionManager::boss_collisionLeftBlock()
 			_attackEffectFrame = true;
 			_enemyEffectPosX = btemp->getBossRect().getCenterX();
 			_enemyEffectPosY = btemp->getBossRect().bottom;
-			//_player->setPlayerAttackRectRemove(0, 0, 0, 0);
-			_enemyCollisionCount++;
-			if (_enemyCollisionCount % 7 == 0)
+			_bossCollisionCount++;
+			if (_bossCollisionCount % 7 == 0)
 			{
 
 
@@ -1099,7 +1093,7 @@ void collisionManager::boss_collisionLeftBlock()
 					btemp->setHitBossHP(15);
 					SOUNDMANAGER->play("gethit big", 1.0f);
 				}
-				_enemyCollisionCount = 0;
+				_bossCollisionCount = 0;
 			}
 		}
 
@@ -1144,9 +1138,8 @@ void collisionManager::boss_collisionLeftBlock()
 			_enemyEffectPosX = btemp->getBossRect().getCenterX();
 			_enemyEffectPosY = btemp->getBossRect().bottom;
 			_player->setComboAttack(true);//2단콤보변수 트루
-			//_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
-			_enemyCollisionCount1++;
-			if (_enemyCollisionCount1 % 1 == 0)
+			_bossCollisionCount1++;
+			if (_bossCollisionCount1 % 1 == 0)
 			{
 				btemp->setHitBossHP(1);
 				_enemyCollisionCount1 = 0;
@@ -1161,9 +1154,8 @@ void collisionManager::boss_collisionLeftBlock()
 			_enemyEffectPosX = btemp->getBossRect().getCenterX();
 			_enemyEffectPosY = btemp->getBossRect().bottom;
 			_player->setComboAttack2(true);//3단콤보공격 트루
-			//_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
-			_enemyCollisionCount2++;
-			if (_enemyCollisionCount2 % 1 == 0)
+			_bossCollisionCount2++;
+			if (_bossCollisionCount2 % 1 == 0)
 			{
 				if (btemp->getBossDirection() == BOSS_LEFT_HIT1)
 				{
@@ -1201,9 +1193,8 @@ void collisionManager::boss_collisionLeftBlock()
 			_attackEffectFrame = true;
 			_enemyEffectPosX = btemp->getBossRect().getCenterX();
 			_enemyEffectPosY = btemp->getBossRect().bottom;
-			//_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
-			_enemyCollisionCount3++;
-			if (_enemyCollisionCount3 % 1 == 0)
+			_bossCollisionCount3++;
+			if (_bossCollisionCount3 % 1 == 0)
 			{
 				if (btemp->getBossDirection() == BOSS_LEFT_HIT2)
 				{
@@ -1256,9 +1247,8 @@ void collisionManager::boss_collisionRightBlock()
 			_attackEffectFrame = true;
 			_enemyEffectPosX = btemp->getBossRect().getCenterX();
 			_enemyEffectPosY = btemp->getBossRect().bottom;
-			//_player->setPlayerAttackRectRemove(0, 0, 0, 0);
-			_enemyCollisionCount++;
-			if (_enemyCollisionCount % 7 == 0)
+			_bossCollisionCount++;
+			if (_bossCollisionCount % 7 == 0)
 			{
 
 
@@ -1300,7 +1290,7 @@ void collisionManager::boss_collisionRightBlock()
 					btemp->setHitBossHP(15);
 					SOUNDMANAGER->play("gethit big", 1.0f);
 				}
-				_enemyCollisionCount = 0;
+				_bossCollisionCount = 0;
 			}
 		}
 
@@ -1345,9 +1335,8 @@ void collisionManager::boss_collisionRightBlock()
 			_enemyEffectPosX = btemp->getBossRect().getCenterX();
 			_enemyEffectPosY = btemp->getBossRect().bottom;
 			_player->setComboAttack(true);//2단콤보변수 트루
-			//_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
-			_enemyCollisionCount1++;
-			if (_enemyCollisionCount1 % 1 == 0)
+			_bossCollisionCount1++;
+			if (_bossCollisionCount1 % 1 == 0)
 			{
 				btemp->setHitBossHP(1);
 				_enemyCollisionCount1 = 0;
@@ -1362,9 +1351,8 @@ void collisionManager::boss_collisionRightBlock()
 			_enemyEffectPosX = btemp->getBossRect().getCenterX();
 			_enemyEffectPosY = btemp->getBossRect().bottom;
 			_player->setComboAttack2(true);//3단콤보공격 트루
-			//_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
-			_enemyCollisionCount2++;
-			if (_enemyCollisionCount2 % 1 == 0)
+			_bossCollisionCount2++;
+			if (_bossCollisionCount2 % 1 == 0)
 			{
 				if (btemp->getBossDirection() == BOSS_LEFT_HIT1)
 				{
@@ -1402,9 +1390,8 @@ void collisionManager::boss_collisionRightBlock()
 			_attackEffectFrame = true;
 			_enemyEffectPosX = btemp->getBossRect().getCenterX();
 			_enemyEffectPosY = btemp->getBossRect().bottom;
-			//_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
-			_enemyCollisionCount3++;
-			if (_enemyCollisionCount3 % 1 == 0)
+			_bossCollisionCount3++;
+			if (_bossCollisionCount3 % 1 == 0)
 			{
 				if (btemp->getBossDirection() == BOSS_LEFT_HIT2)
 				{
