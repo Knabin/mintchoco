@@ -583,6 +583,34 @@ void UiManager::BossDeath()
 	}
 }
 
+void UiManager::gameOver()
+{	
+	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT) && _gameOverState == GAMEOVERSTATE::RESTART)
+	{
+		_gameOverState = GAMEOVERSTATE::QUIT;
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_LEFT) && _gameOverState == GAMEOVERSTATE::QUIT)
+	{
+		_gameOverState = GAMEOVERSTATE::RESTART;
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+	{
+		if (_gameOverState == GAMEOVERSTATE::RESTART)
+		{
+			SOUNDMANAGER->stopAll("");
+			SOUNDMANAGER->play("menu confirm");
+			_restartDirect = true;
+		}
+		else
+		{
+			SOUNDMANAGER->stopAll("");
+			SOUNDMANAGER->play("menu confirm");
+			_restart = true;
+			_isGameOver = false;
+		}
+	}	
+}
+
 void UiManager::printScript()
 {
 	_txt = _vScript[_scriptIndex];

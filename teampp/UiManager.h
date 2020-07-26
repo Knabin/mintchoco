@@ -87,8 +87,6 @@ public:
 	
 	void gameOver();
 
-	void PlayerCurrentCoin(HDC hdc);
-
 	void printScript();
 
 	void setStageManagerMemoryAddressLink(stageManager* stageManager) { _stageManager = stageManager; }

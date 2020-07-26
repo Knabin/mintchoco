@@ -1508,7 +1508,6 @@ void collisionManager::playGetHitSound()
 	else if (n == 1) SOUNDMANAGER->play("gethit2", 0.7f);
 	else SOUNDMANAGER->play("gethit3", 0.7f);
 }
-	}
-}
+
 
 

@@ -50,6 +50,16 @@ public:
 	void item_collision();	//¾ÆÀÌÅÛ ¸ÔÀ» °æ¿ì (Ã¼·Â 5¾¿ È¸º¹)
 	void money_collision(); // µ· ¸ÔÀ» °æ¿ì	  (10¿ø¾¿ È¹µæ)
 
+	void boss_collisionNoBlock();
+	void boss_collisionLeftBlock();
+	void boss_collisionRightBlock();
+	void player_bossCollision();
+
+	void playGetHitSound();
+	void playPlayerGetHitSound();
+	void playerAttackHitEffect();
+
+
 	void setPlayerMemoryAddressLink(player* player) { _player = player; }
 	void setEnemyManagerMemoryAddressLink(enemyManager* enemyManager) { _enemyManager = enemyManager; }
 	void setStageManagerMemoryAddressLink(stageManager* stageManager) { _stageManager = stageManager; }
