@@ -30,6 +30,11 @@ private:
 	int _enemyCollisionCount2;
 	int _enemyCollisionCount3;
 
+	int _bossCollisionCount;
+	int _bossCollisionCount1;
+	int _bossCollisionCount2;
+	int _bossCollisionCount3;
+
 public:
 	collisionManager() {}
 	~collisionManager() {}
