@@ -10,7 +10,7 @@ enemy::~enemy()
 }
 
 HRESULT enemy::init(string imageName, float x, float y, float speed)
-{ 
+{
 	_point = IMAGEMANAGER->addFrameImage("point", "images/enemys/enemy_point.bmp", 560, 70, 8, 1, true, RGB(255, 0, 255));
 	_stunImg = IMAGEMANAGER->addFrameImage("stunImg", "images/enemys/enemy_stun.bmp", 420, 54, 6, 1, true, RGB(255, 0, 255));
 	// ============================	느낌표 ============================ //
@@ -32,6 +32,7 @@ HRESULT enemy::init(string imageName, float x, float y, float speed)
 	_isPoint = false;
 	_isStun = false;
 	_enemyDead = false;
+	_isDown = false;
 
 	return S_OK;
 }
@@ -41,9 +42,9 @@ void enemy::release()
 }
 
 void enemy::update()
-{	
+{
 	_enemyMotion->frameUpdate(TIMEMANAGER->getElapsedTime() * 10);
-	
+
 
 	distance = getDistance(_x, _y, _playerX, _playerY);
 	angle = getAngle(_x, _y, _playerX, _playerY);
@@ -66,7 +67,7 @@ void enemy::update()
 		if (distance < 300)
 		{
 			_isStart = true;
-		
+
 		}
 		if (_enemyMotion->isPlay() == false)
 		{
@@ -85,9 +86,11 @@ void enemy::update()
 			}
 			_ani_point->frameUpdate(TIMEMANAGER->getElapsedTime() * 10);
 		}
-			
+
 		_isAttackCount++;
-		if (distance > 165 && (_direction == ENEMY_RIGHT_IDLE || _direction == ENEMY_LEFT_IDLE || _direction == ENEMY_RIGHT_MOVE || _direction == ENEMY_LEFT_MOVE))
+		if (distance > 165 && (_direction == ENEMY_RIGHT_IDLE || _direction == ENEMY_LEFT_IDLE || _direction == ENEMY_RIGHT_MOVE || _direction == ENEMY_LEFT_MOVE)
+			&& (_direction != ENEMY_RIGHT_BACKDOWN && _direction != ENEMY_LEFT_BACKDOWN
+				&& _direction != ENEMY_RIGHT_DEAD && _direction != ENEMY_LEFT_DEAD))
 		{
 			if (_playerX > _x)
 			{
@@ -106,9 +109,11 @@ void enemy::update()
 			}
 		}
 
-		if (distance > 300 && (_direction == ENEMY_RIGHT_IDLE || _direction == ENEMY_LEFT_IDLE 
+		if (distance > 300 && (_direction == ENEMY_RIGHT_IDLE || _direction == ENEMY_LEFT_IDLE
 			|| _direction == ENEMY_RIGHT_MOVE || _direction == ENEMY_LEFT_MOVE
-			|| _direction == ENEMY_RIGHT_RUN || _direction == ENEMY_LEFT_RUN))
+			|| _direction == ENEMY_RIGHT_RUN || _direction == ENEMY_LEFT_RUN)
+			&& (_direction != ENEMY_RIGHT_BACKDOWN && _direction != ENEMY_LEFT_BACKDOWN
+				&& _direction != ENEMY_RIGHT_DEAD && _direction != ENEMY_LEFT_DEAD))
 		{
 			if (_playerX > _x)
 			{
@@ -127,14 +132,21 @@ void enemy::update()
 			}
 		}
 
-		if (distance > 165 && (_direction == ENEMY_RIGHT_MOVE || _direction == ENEMY_LEFT_MOVE) && (_direction != ENEMY_LEFT_SUBMOTION && _direction != ENEMY_RIGHT_SUBMOTION))
+		if (distance > 165 && (_direction == ENEMY_RIGHT_MOVE || _direction == ENEMY_LEFT_MOVE) && (_direction != ENEMY_LEFT_SUBMOTION && _direction != ENEMY_RIGHT_SUBMOTION)
+			&& (_direction != ENEMY_RIGHT_BACKDOWN && _direction != ENEMY_LEFT_BACKDOWN
+				&& _direction != ENEMY_RIGHT_DEAD && _direction != ENEMY_LEFT_DEAD))
 		{
 			_x += cosf(angle) * _speed;
 			_y -= sinf(angle) * _speed;
 		}
 
 		// ==============================		에너미 움직임 및 공격      ==============================//
-		if (_direction != ENEMY_LEFT_SUBMOTION && _direction != ENEMY_RIGHT_SUBMOTION)
+		if (_direction != ENEMY_LEFT_SUBMOTION && _direction != ENEMY_RIGHT_SUBMOTION &&
+			_direction != ENEMY_LEFT_BACKDOWN && _direction != ENEMY_RIGHT_BACKDOWN &&
+			_direction != ENEMY_LEFT_GETHIT_1 && _direction != ENEMY_RIGHT_GETHIT_1 &&
+			_direction != ENEMY_LEFT_GETHIT_2 && _direction != ENEMY_RIGHT_GETHIT_2 &&
+			_direction != ENEMY_LEFT_GETHIT_3 && _direction != ENEMY_RIGHT_GETHIT_3 &&
+			_direction != ENEMY_LEFT_DEAD && _direction != ENEMY_RIGHT_DEAD)
 		{
 			if (_x < _playerX)
 			{
@@ -143,7 +155,7 @@ void enemy::update()
 					_enemyMotion = _enemyMotion_R_idle;
 					_direction = ENEMY_RIGHT_IDLE;
 				}
-				if (_isAttackCount > 75)
+				if (_isAttackCount > 115)
 				{
 					_isPoint = true;	//에너미 느낌표 꺼지는 곳
 					if (distance < 170)
@@ -151,8 +163,8 @@ void enemy::update()
 						switch (_random)
 						{
 						case 0:
-							_direction = ENEMY_RIGHT_ATTACK;
 							_enemyMotion = _enemyMotion_R_A;
+							_direction = ENEMY_RIGHT_ATTACK;
 							if (_enemyMotion->isPlay() == false)
 							{
 								_enemyMotion->start();
@@ -161,8 +173,8 @@ void enemy::update()
 							}
 							break;
 						case 1:
-							_direction = ENEMY_RIGHT_COMBO1;
 							_enemyMotion = _enemyMotion_R_combo1;
+							_direction = ENEMY_RIGHT_COMBO1;
 							if (_enemyMotion->isPlay() == false)
 							{
 								_enemyMotion->start();
@@ -171,8 +183,8 @@ void enemy::update()
 							}
 							break;
 						case 2:
-							_direction = ENEMY_RIGHT_COMBO2;
 							_enemyMotion = _enemyMotion_R_combo2;
+							_direction = ENEMY_RIGHT_COMBO2;
 							if (_enemyMotion->isPlay() == false)
 							{
 								_enemyMotion->start();
@@ -181,13 +193,13 @@ void enemy::update()
 							}
 							break;
 						case 3:
-							_direction = ENEMY_RIGHT_SUBMOTION;
 							_enemyMotion = _enemyMotion_R_submotion;
+							_direction = ENEMY_RIGHT_SUBMOTION;
 
 							break;
 						case 4:
-							_direction = ENEMY_RIGHT_BLOCK;
 							_enemyMotion = _enemyMotion_R_block;
+							_direction = ENEMY_RIGHT_BLOCK;
 							if (_enemyMotion->isPlay() == false)
 							{
 								_enemyMotion->start();
@@ -196,8 +208,8 @@ void enemy::update()
 							}
 							break;
 						case 5:
-							_direction = ENEMY_RIGHT_BACK_MOVE;
 							_enemyMotion = _enemyMotion_R_back;
+							_direction = ENEMY_RIGHT_BACK_MOVE;
 							if (_enemyMotion->isPlay() == false)
 							{
 								_enemyMotion->start();
@@ -220,7 +232,7 @@ void enemy::update()
 					_direction = ENEMY_LEFT_IDLE;
 				}
 
-				if (_isAttackCount > 75)
+				if (_isAttackCount > 115)
 				{
 					_isPoint = true;	//에너미 느낌표 꺼지는 곳
 					if (distance < 170)
@@ -228,8 +240,8 @@ void enemy::update()
 						switch (_random)
 						{
 						case 0:
-							_direction = ENEMY_LEFT_ATTACK;
 							_enemyMotion = _enemyMotion_L_A;
+							_direction = ENEMY_LEFT_ATTACK;
 							if (_enemyMotion->isPlay() == false)
 							{
 								_enemyMotion->start();
@@ -238,8 +250,8 @@ void enemy::update()
 							}
 							break;
 						case 1:
-							_direction = ENEMY_LEFT_COMBO1;
 							_enemyMotion = _enemyMotion_L_combo1;
+							_direction = ENEMY_LEFT_COMBO1;
 							if (_enemyMotion->isPlay() == false)
 							{
 								_enemyMotion->start();
@@ -248,8 +260,8 @@ void enemy::update()
 							}
 							break;
 						case 2:
-							_direction = ENEMY_LEFT_COMBO2;
 							_enemyMotion = _enemyMotion_L_combo2;
+							_direction = ENEMY_LEFT_COMBO2;
 							if (_enemyMotion->isPlay() == false)
 							{
 								_enemyMotion->start();
@@ -258,8 +270,8 @@ void enemy::update()
 							}
 							break;
 						case 3:
-							_direction = ENEMY_LEFT_SUBMOTION;
 							_enemyMotion = _enemyMotion_L_submotion;
+							_direction = ENEMY_LEFT_SUBMOTION;
 						case 4:
 							_direction = ENEMY_LEFT_BLOCK;
 							_enemyMotion = _enemyMotion_L_block;
@@ -271,8 +283,8 @@ void enemy::update()
 							}
 							break;
 						case 5:
-							_direction = ENEMY_LEFT_BACK_MOVE;
 							_enemyMotion = _enemyMotion_L_back;
+							_direction = ENEMY_LEFT_BACK_MOVE;
 							if (_enemyMotion->isPlay() == false)
 							{
 								_enemyMotion->start();
@@ -314,22 +326,74 @@ void enemy::update()
 		}
 	}
 
-	if (_direction == ENEMY_LEFT_GETHIT_1 || _direction == ENEMY_RIGHT_GETHIT_1 ||
-		_direction == ENEMY_LEFT_GETHIT_2 || _direction == ENEMY_RIGHT_GETHIT_2 ||
-		_direction == ENEMY_LEFT_GETHIT_3 || _direction == ENEMY_RIGHT_GETHIT_3)
+
+	if (_direction == ENEMY_LEFT_GETHIT_1 || _direction == ENEMY_LEFT_GETHIT_2 || _direction == ENEMY_LEFT_GETHIT_3)
 	{
-		if (!_enemyMotion->isPlay())
+		if (_enemyMotion->isPlay() == false)
 		{
-			_enemyMotion->start();
+			_direction = ENEMY_LEFT_IDLE;
+			_enemyMotion = _enemyMotion_L_idle;
+		}
+	}
+	else if (_direction == ENEMY_RIGHT_GETHIT_1 || _direction == ENEMY_RIGHT_GETHIT_2 || _direction == ENEMY_RIGHT_GETHIT_3)
+	{
+		if (_enemyMotion->isPlay() == false)
+		{
+			_direction = ENEMY_RIGHT_IDLE;
+			_enemyMotion = _enemyMotion_R_idle;
 		}
 	}
 
-	if (0 < _hp &&  _hp < 7 && _isStunCount <= 120)				//에너미 스턴
+	if (_direction == ENEMY_LEFT_BACKDOWN)
+	{
+		if (_enemyMotion->isPlay() == false)
+		{
+			if (_isDown)
+			{
+				_direction = ENEMY_LEFT_IDLE;
+				_enemyMotion = _enemyMotion_L_idle;
+				_isDown = false;
+			}
+			else if (!_isDown)
+			{
+				_isDown = true;
+				_enemyMotion->start();
+			}
+		}
+	}
+	else if (_direction == ENEMY_RIGHT_BACKDOWN)
+	{
+		if (_enemyMotion->isPlay() == false)
+		{
+			if (_isDown)
+			{
+				_direction = ENEMY_RIGHT_IDLE;
+				_enemyMotion = _enemyMotion_R_idle;
+				_isDown = false;
+			}
+			else if (!_isDown)
+			{
+				_isDown = true;
+				_enemyMotion->start();
+			}
+		}
+	}
+
+	if (1 < _hp &&  _hp < 7 && _isStunCount <= 120)				//에너미 스턴
 	{
 		_isStun = true;
+		if ((_direction == ENEMY_LEFT_GETHIT_1 || _direction == ENEMY_RIGHT_GETHIT_1 ||
+			_direction == ENEMY_LEFT_GETHIT_2 || _direction == ENEMY_RIGHT_GETHIT_2 ||
+			_direction == ENEMY_LEFT_GETHIT_3 || _direction == ENEMY_RIGHT_GETHIT_3) &&
+			_isStunCount > 10)
+		{
+			_isStun = false;
+			_isStunCount = 300;
+
+		}
 		_isStunCount++;
 
-		if (_x < _playerX)
+		if (_x < _playerX && _isStunCount < 300)
 		{
 			_enemyMotion = _enemyMotion_R_stun;
 			_direction = ENEMY_RIGHT_STUN;
@@ -347,7 +411,7 @@ void enemy::update()
 				}
 			}
 		}
-		else
+		else if (_x > _playerX && _isStunCount < 300)
 		{
 			_enemyMotion = _enemyMotion_L_stun;
 			_direction = ENEMY_LEFT_STUN;
@@ -368,18 +432,18 @@ void enemy::update()
 		_ani_stunImg->frameUpdate(TIMEMANAGER->getElapsedTime() * 10);
 	}
 
-	if (_hp < 0)
+	if (_hp < 1)
 	{
-		if (_x < _playerX)
+		if (_x < _playerX && _direction != ENEMY_RIGHT_DEAD)
 		{
 			_enemyMotion = _enemyMotion_L_dead;
 			_direction = ENEMY_LEFT_DEAD;
 			if (_enemyMotion->isPlay() == false)
 			{
 				_enemyDead = true;
-			}		
+			}
 		}
-		else
+		else if (_x > _playerX && _direction != ENEMY_LEFT_DEAD)
 		{
 			_enemyMotion = _enemyMotion_R_dead;
 			_direction = ENEMY_RIGHT_DEAD;
@@ -389,9 +453,8 @@ void enemy::update()
 			}
 		}
 	}
-	//hit();
 	// ==============================		에너미 움직임 및 공격      ==============================//
-	
+
 	switch (_stageNum)
 	{
 	case 0:
@@ -425,7 +488,7 @@ void enemy::pixel(string stageName)
 
 	for (int i = _rc.bottom + 3; i > _rc.bottom - 3; --i)
 	{
-		COLORREF color = GetPixel(IMAGEMANAGER->findImage(stageName)->getMemDC(),_rc.getCenterX(),i);
+		COLORREF color = GetPixel(IMAGEMANAGER->findImage(stageName)->getMemDC(), _rc.getCenterX(), i);
 
 		int r = GetRValue(color);
 		int g = GetGValue(color);
@@ -434,7 +497,7 @@ void enemy::pixel(string stageName)
 		if (r == 255 && g == 255 && b == 255)
 		{
 			//cout << r << "," << g << "," << b << endl;
-			_y = i - _rc.getHeight() / 2 - 4;		
+			_y = i - _rc.getHeight() / 2 - 4;
 			break;
 		}
 	}
@@ -484,30 +547,6 @@ void enemy::pixel(string stageName)
 	}
 
 }
-
-//void enemy::hit()
-//{
-//	if (_x < _playerX)
-//	{
-//		_direction = ENEMY_LEFT_GETHIT_1;
-//		_enemyMotion = _enemyMotion_L_hit_1;
-//		if (_enemyMotion->isPlay() == false)
-//		{
-//			_enemyMotion->start();
-//		}
-//	}
-//	else
-//	{
-//		_direction = ENEMY_RIGHT_GETHIT_1;
-//		_enemyMotion = _enemyMotion_R_hit_1;
-//		if (_enemyMotion->isPlay() == false)
-//		{
-//			_enemyMotion->start();
-//		}
-//	}
-//}
-
-
 void enemy::setPlayerPos(float x, float y)
 {
 	_playerX = x;

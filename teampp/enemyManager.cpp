@@ -1,6 +1,7 @@
 //#include "..\..\..\..\..\Desktop\teampp (1)\enemyManager.h"
 #include "stdafx.h"
 #include "enemyManager.h"
+#include "stageManager.h"
 
 enemyManager::enemyManager()
 {
@@ -91,7 +92,8 @@ void enemyManager::update()
 		_vEnemies[i]->update();
 		if (_vEnemies[i]->getHP() <= 0 && _vEnemies[i]->getEnemyDead())
 		{
-			_vEnemies[i]->setEnemyDead(false);
+			_sm->plusEnemyCount();
+			//_vEnemies[i]->setEnemyDead(false);
 			_vEnemies.erase(_vEnemies.begin() + i);
 		}
 	}
@@ -111,7 +113,7 @@ void enemyManager::render()
 void enemyManager::setBossMove()	//보스 무브 추가
 {
 	_boss = new boss;
-	_boss->init("BOOSIDLE", WINSIZEX / 2, WINSIZEY / 2, 0.0f);
+	_boss->init("BOSSIDLE", WINSIZEX / 2, WINSIZEY / 2, 0.0f);
 }
 
 void enemyManager::setEnemiesVector(int stageNum)
@@ -219,7 +221,7 @@ enemy* enemyManager::createEnemy(int enemyType, float x, float y)
 	case 3:			// 보스
 	{
 		enemy* em = new boss;
-		em->init("BOOSIDLE", x, y, 0.0f);
+		em->init("BOSSIDLE", x, y, 0.0f);
 		return em;
 	}
 		break;
@@ -258,7 +260,7 @@ enemy * enemyManager::createEnemy(int enemyType, float x, float y, int stageNum)
 	case 3:			// 보스
 	{
 		enemy* em = new boss;
-		em->init("BOOSIDLE", WINSIZEX / 2, WINSIZEY / 2, 0.0f);
+		em->init("BOSSIDLE", WINSIZEX / 2, WINSIZEY / 2, 0.0f);
 		em->setStageNum(stageNum);
 		return em;
 	}

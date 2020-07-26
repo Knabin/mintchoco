@@ -11,24 +11,33 @@ boss::~boss()
 
 HRESULT boss::init(string imageName, float x, float z, float speed)
 {
-	_bossIdle = IMAGEMANAGER->addFrameImage("BOSSIDLE", "images/boss/boss_idle.bmp", 3189, 634, 12, 2, true, RGB(255, 0, 255));
-	_bossWalk = IMAGEMANAGER->addFrameImage("BOSSWALK", "images/boss/boss_walk.bmp", 2113, 589, 10, 2, true, RGB(255, 0, 255));
-	_bossHit = IMAGEMANAGER->addFrameImage("BOSSHIT", "images/boss/boss_gethit.bmp", 692, 186, 9, 2, true, RGB(255, 0, 255));
-	_bossSlap = IMAGEMANAGER->addFrameImage("BOSSSLAP", "images/boss/boss_slap.bmp", 5283, 582, 14, 2, true, RGB(255, 0, 255));
-	_bossElbow = IMAGEMANAGER->addFrameImage("BOSSELBOW", "images/boss/boss_elbow.bmp", 2922, 653, 11, 2, true, RGB(255, 0, 255));
+	_bossIdle = IMAGEMANAGER->addFrameImage("BOSSIDLE", "images/boss/boss_idle.bmp", 3180, 634, 12, 2, true, RGB(255, 0, 255));
+	_bossWalk = IMAGEMANAGER->addFrameImage("BOSSWALK", "images/boss/boss_walk.bmp", 2110, 588, 10, 2, true, RGB(255, 0, 255));
+	_bossHit = IMAGEMANAGER->addFrameImage("BOSSHIT", "images/boss/boss_gethit.bmp", 2214, 594, 9, 2, true, RGB(255, 0, 255));
+	_bossSlap = IMAGEMANAGER->addFrameImage("BOSSSLAP", "images/boss/boss_slap.bmp", 5278, 582, 14, 2, true, RGB(255, 0, 255));
+	_bossElbow = IMAGEMANAGER->addFrameImage("BOSSELBOW", "images/boss/boss_elbow.bmp", 2915, 652, 11, 2, true, RGB(255, 0, 255));
 	_bossBlock = IMAGEMANAGER->addFrameImage("BOSSBLOCK", "images/boss/boss_block1.bmp", 1688, 576, 8, 2, true, RGB(255, 0, 255));
-	_bossRoar = IMAGEMANAGER->addFrameImage("BOSSROAR", "images/boss/boss_roar.bmp", 2918, 576, 12, 2, true, RGB(255, 0, 255));
-	_bossRoar_u = IMAGEMANAGER->addFrameImage("BOSSROAR_U", "images/boss/boss_roar_U.bmp", 999, 474, 4, 2, true, RGB(255, 0, 255));
+	_bossRoar = IMAGEMANAGER->addFrameImage("BOSSROAR", "images/boss/boss_roar.bmp", 2916, 576, 12, 2, true, RGB(255, 0, 255));
+	_bossRoar_u = IMAGEMANAGER->addFrameImage("BOSSROAR_U", "images/boss/boss_roar_U.bmp", 1000, 474, 4, 2, true, RGB(255, 0, 255));
 	_bossTackle = IMAGEMANAGER->addFrameImage("BOSSTACKLE", "images/boss/boss_tackle.bmp", 1120, 576, 5, 2, true, RGB(255, 0, 255));
-	_bossTackle_l = IMAGEMANAGER->addFrameImage("BOSSTACKLE_L", "images/boss/boss_tackle_L.bmp", 2886, 576, 11, 2, true, RGB(255, 0, 255));
-	_bossTaunt = IMAGEMANAGER->addFrameImage("BOSSTAUNT", "images/boss/boss_taunt.bmp", 5669, 749, 23, 2, true, RGB(255, 0, 255));
-	_bossMeteor = IMAGEMANAGER->addFrameImage("BOSSMETEOR", "images/boss/boss_meteor.bmp", 480, 461, 2, 2, true, RGB(255, 0, 255));
-	_bossMeteor_g = IMAGEMANAGER->addFrameImage("BOSSMETEOR_G", "images/boss/boss_meteor_G.bmp", 1228, 422, 6, 2, true, RGB(255, 0, 255));
-	_bossMeteor_c = IMAGEMANAGER->addFrameImage("BOSSMETEOR_C", "images/boss/boss_meteor_C.bmp", 2995, 576, 12, 2, true, RGB(255, 0, 255));
-	_bossMeteor_m = IMAGEMANAGER->addFrameImage("BOSSMETEOR_M", "images/boss/boss_meteor_M.bmp", 4682, 576, 19, 2, true, RGB(255, 0, 255));
-	_bossMeteor_j = IMAGEMANAGER->addFrameImage("BOSSMETEOR_J", "images/boss/boss_meteor_J.bmp", 1894, 672, 8, 2, true, RGB(255, 0, 255));
-	_bossMeteor_a = IMAGEMANAGER->addFrameImage("BOSSMETEOR_A", "images/boss/boss_meteor_A.bmp", 409, 659, 2, 2, true, RGB(255, 0, 255));
-	_bossWupunch = IMAGEMANAGER->addFrameImage("BOSSWUPUNCH", "images/boss/boss_wupunch.bmp", 11919, 595, 27, 2, true, RGB(255, 0, 255));
+	_bossTackle_l = IMAGEMANAGER->addFrameImage("BOSSTACKLE_L", "images/boss/boss_tackle_L.bmp", 2882, 576, 11, 2, true, RGB(255, 0, 255));
+	_bossTaunt = IMAGEMANAGER->addFrameImage("BOSSTAUNT", "images/boss/boss_taunt.bmp", 5658, 748, 23, 2, true, RGB(255, 0, 255));
+	_bossMeteor = IMAGEMANAGER->addFrameImage("BOSSMETEOR", "images/boss/boss_meteor.bmp", 480, 460, 2, 2, true, RGB(255, 0, 255));
+	_bossMeteor_g = IMAGEMANAGER->addFrameImage("BOSSMETEOR_G", "images/boss/boss_meteor_G.bmp", 1224, 422, 6, 2, true, RGB(255, 0, 255));
+	_bossMeteor_c = IMAGEMANAGER->addFrameImage("BOSSMETEOR_C", "images/boss/boss_meteor_C.bmp", 2988, 576, 12, 2, true, RGB(255, 0, 255));
+	_bossMeteor_m = IMAGEMANAGER->addFrameImage("BOSSMETEOR_M", "images/boss/boss_meteor_M.bmp", 4674, 576, 19, 2, true, RGB(255, 0, 255));
+	_bossMeteor_j = IMAGEMANAGER->addFrameImage("BOSSMETEOR_J", "images/boss/boss_meteor_J.bmp", 1888, 672, 8, 2, true, RGB(255, 0, 255));
+	_bossMeteor_a = IMAGEMANAGER->addFrameImage("BOSSMETEOR_A", "images/boss/boss_meteor_A.bmp", 410, 660, 2, 2, true, RGB(255, 0, 255));
+	_bossWupunch = IMAGEMANAGER->addFrameImage("BOSSWUPUNCH", "images/boss/boss_wupunch.bmp", 11880, 594, 27, 2, true, RGB(255, 0, 255));
+
+	_bossHit_a = IMAGEMANAGER->addFrameImage("BOSSHIT_A", "images/boss/boss_gethit_A.bmp", 5830, 510, 22, 2, true, RGB(255, 0, 255));
+	_bossHit_k = IMAGEMANAGER->addFrameImage("BOSSHIT_K", "images/boss/boss_gethit_K.bmp", 2880, 594, 10, 2, true, RGB(255, 0, 255));
+	_bossG_hit = IMAGEMANAGER->addFrameImage("BOSSG_HIT", "images/boss/boss_groundhit.bmp", 1036, 460, 4, 2, true, RGB(255, 0, 255));
+	_bossGetup_s = IMAGEMANAGER->addFrameImage("BOSSGETUP_S", "images/boss/boss_getup_S.bmp", 2560, 466, 10, 2, true, RGB(255, 0, 255));
+	_bossGetup_ss = IMAGEMANAGER->addFrameImage("BOSSGETUP_SS", "images/boss/boss_getup_SS.bmp", 3735, 580, 15, 2, true, RGB(255, 0, 255));
+	_bossDizzy = IMAGEMANAGER->addFrameImage("BOSSDIZZY", "images/boss/boss_dizzy.bmp", 1024, 434, 4, 2, true, RGB(255, 0, 255));
+	_bossGetup_c = IMAGEMANAGER->addFrameImage("BOSSGETUP_C", "images/boss/boss_getup_C.bmp", 2187, 576, 9, 2, true, RGB(255, 0, 255));
+	_bossDefeat = IMAGEMANAGER->addFrameImage("BOSSDEFEAT", "images/boss/boss_defeat.bmp", 4576, 576, 13, 2, true, RGB(255, 0, 255));
 
 
 	_bossImg = IMAGEMANAGER->findImage(imageName);
@@ -45,11 +54,8 @@ HRESULT boss::init(string imageName, float x, float z, float speed)
 	_random1 = RND->getInt(2);
 
 	_bossDirection = BOSS_LEFT_IDLE;
+	_bossPhase = PHASE1;
 
-	//_isAttack = _attackCount = _attackTime = _count = _index = 0;
-
-	//_rc.set(0, 0, _bossIdle->getFrameWidth(), _bossIdle->getFrameHeight());
-	//_rc.setCenterPos(_x, _y);
 
 	_boss_L_IDLE = new animation;
 	_boss_L_IDLE->init(_bossIdle->getWidth(), _bossIdle->getHeight(), _bossIdle->getFrameWidth(), _bossIdle->getFrameHeight());
@@ -168,13 +174,17 @@ HRESULT boss::init(string imageName, float x, float z, float speed)
 	_boss_R_METEOR_C->setPlayFrame(0, 11, false, false);
 	_boss_R_METEOR_C->setFPS(1);
 
+	int arr_L[30] = { 37,36,35,34,33,32,31,30,29,28,27,26,25,24,23,22,22,22,22,22,22,21,21,21,21,21,21,21,20,19 };
 	_boss_L_METEOR_M = new animation;
 	_boss_L_METEOR_M->init(_bossMeteor_m->getWidth(), _bossMeteor_m->getHeight(), _bossMeteor_m->getFrameWidth(), _bossMeteor_m->getFrameHeight());
-	_boss_L_METEOR_M->setPlayFrame(37, 19, false, false);
+	//_boss_L_METEOR_M->setPlayFrame(37, 19, false, false);
+	_boss_L_METEOR_M->setPlayFrame(arr_L, 30, false);
 	_boss_L_METEOR_M->setFPS(1);
+	int arr_R[30] = { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,15,15,15,15,15,16,16,16,16,16,16,16,17,18 };
 	_boss_R_METEOR_M = new animation;
 	_boss_R_METEOR_M->init(_bossMeteor_m->getWidth(), _bossMeteor_m->getHeight(), _bossMeteor_m->getFrameWidth(), _bossMeteor_m->getFrameHeight());
-	_boss_R_METEOR_M->setPlayFrame(0, 18, false, false);
+	//_boss_R_METEOR_M->setPlayFrame(0, 18, false, false);
+	_boss_R_METEOR_M->setPlayFrame(arr_R, 30, false);
 	_boss_R_METEOR_M->setFPS(1);
 
 	_boss_L_METEOR_J = new animation;
@@ -199,24 +209,95 @@ HRESULT boss::init(string imageName, float x, float z, float speed)
 	_boss_L_WUPUNCH->init(_bossWupunch->getWidth(), _bossWupunch->getHeight(), _bossWupunch->getFrameWidth(), _bossWupunch->getFrameHeight());
 	_boss_L_WUPUNCH->setPlayFrame(53, 27, false, false);
 	_boss_L_WUPUNCH->setFPS(1);
-
 	_boss_R_WUPUNCH = new animation;
 	_boss_R_WUPUNCH->init(_bossWupunch->getWidth(), _bossWupunch->getHeight(), _bossWupunch->getFrameWidth(), _bossWupunch->getFrameHeight());
 	_boss_R_WUPUNCH->setPlayFrame(0, 26, false, false);
 	_boss_R_WUPUNCH->setFPS(1);
 
+	_boss_L_HIT1 = new animation;
+	_boss_L_HIT1->init(_bossHit->getWidth(), _bossHit->getHeight(), _bossHit->getFrameWidth(), _bossHit->getFrameHeight());
+	_boss_L_HIT1->setPlayFrame(17, 15, false, false);
+	_boss_L_HIT1->setFPS(1);
+	_boss_R_HIT1 = new animation;
+	_boss_R_HIT1->init(_bossHit->getWidth(), _bossHit->getHeight(), _bossHit->getFrameWidth(), _bossHit->getFrameHeight());
+	_boss_R_HIT1->setPlayFrame(0, 2, false, false);
+	_boss_R_HIT1->setFPS(1);
+
+	_boss_L_HIT2 = new animation;
+	_boss_L_HIT2->init(_bossHit->getWidth(), _bossHit->getHeight(), _bossHit->getFrameWidth(), _bossHit->getFrameHeight());
+	_boss_L_HIT2->setPlayFrame(14, 12, false, false);
+	_boss_L_HIT2->setFPS(1);
+	_boss_R_HIT2 = new animation;
+	_boss_R_HIT2->init(_bossHit->getWidth(), _bossHit->getHeight(), _bossHit->getFrameWidth(), _bossHit->getFrameHeight());
+	_boss_R_HIT2->setPlayFrame(3, 5, false, false);
+	_boss_R_HIT2->setFPS(1);
+
+	_boss_L_HIT3 = new animation;
+	_boss_L_HIT3->init(_bossHit->getWidth(), _bossHit->getHeight(), _bossHit->getFrameWidth(), _bossHit->getFrameHeight());
+	_boss_L_HIT3->setPlayFrame(11, 9, false, false);
+	_boss_L_HIT3->setFPS(1);
+	_boss_R_HIT3 = new animation;
+	_boss_R_HIT3->init(_bossHit->getWidth(), _bossHit->getHeight(), _bossHit->getFrameWidth(), _bossHit->getFrameHeight());
+	_boss_R_HIT3->setPlayFrame(6, 8, false, false);
+	_boss_R_HIT3->setFPS(1);
+
+	_boss_L_G_HIT1 = new animation;
+	_boss_L_G_HIT1->init(_bossG_hit->getWidth(), _bossG_hit->getHeight(), _bossG_hit->getFrameWidth(), _bossG_hit->getFrameHeight());
+	_boss_L_G_HIT1->setPlayFrame(6, 5, false, false);
+	_boss_L_G_HIT1->setFPS(1);
+	_boss_R_G_HIT1 = new animation;
+	_boss_R_G_HIT1->init(_bossG_hit->getWidth(), _bossG_hit->getHeight(), _bossG_hit->getFrameWidth(), _bossG_hit->getFrameHeight());
+	_boss_R_G_HIT1->setPlayFrame(1, 2, false, false);
+	_boss_R_G_HIT1->setFPS(1);
+
+	_boss_L_HIT_A = new animation;
+	_boss_L_HIT_A->init(_bossHit_a->getWidth(), _bossHit_a->getHeight(), _bossHit_a->getFrameWidth(), _bossHit_a->getFrameHeight());
+	_boss_L_HIT_A->setPlayFrame(43, 22, false, false);
+	_boss_L_HIT_A->setFPS(0.5);
+	_boss_R_HIT_A = new animation;
+	_boss_R_HIT_A->init(_bossHit_a->getWidth(), _bossHit_a->getHeight(), _bossHit_a->getFrameWidth(), _bossHit_a->getFrameHeight());
+	_boss_R_HIT_A->setPlayFrame(0, 21, false, false);
+	_boss_R_HIT_A->setFPS(0.5);
+
+	_boss_L_DIZZY = new animation;
+	_boss_L_DIZZY->init(_bossDizzy->getWidth(), _bossDizzy->getHeight(), _bossDizzy->getFrameWidth(), _bossDizzy->getFrameHeight());
+	_boss_L_DIZZY->setPlayFrame(7, 4, false, false);
+	_boss_L_DIZZY->setFPS(1);
+	_boss_R_DIZZY = new animation;
+	_boss_R_DIZZY->init(_bossDizzy->getWidth(), _bossDizzy->getHeight(), _bossDizzy->getFrameWidth(), _bossDizzy->getFrameHeight());
+	_boss_R_DIZZY->setPlayFrame(0, 3, false, false);
+	_boss_R_DIZZY->setFPS(1);
+
+	_boss_L_GETUP_SS = new animation;
+	_boss_L_GETUP_SS->init(_bossGetup_ss->getWidth(), _bossGetup_ss->getHeight(), _bossGetup_ss->getFrameWidth(), _bossGetup_ss->getFrameHeight());
+	_boss_L_GETUP_SS->setPlayFrame(29, 15, false, false);
+	_boss_L_GETUP_SS->setFPS(1);
+	_boss_R_GETUP_SS = new animation;
+	_boss_R_GETUP_SS->init(_bossGetup_ss->getWidth(), _bossGetup_ss->getHeight(), _bossGetup_ss->getFrameWidth(), _bossGetup_ss->getFrameHeight());
+	_boss_R_GETUP_SS->setPlayFrame(0, 14, false, false);
+	_boss_R_GETUP_SS->setFPS(1);
+
+	_boss_L_DEFEAT = new animation;
+	_boss_L_DEFEAT->init(_bossDefeat->getWidth(), _bossDefeat->getHeight(), _bossDefeat->getFrameWidth(), _bossDefeat->getFrameHeight());
+	_boss_L_DEFEAT->setPlayFrame(25, 13, false, false);
+	_boss_L_DEFEAT->setFPS(1);
+	_boss_R_DEFEAT = new animation;
+	_boss_R_DEFEAT->init(_bossDefeat->getWidth(), _bossDefeat->getHeight(), _bossDefeat->getFrameWidth(), _bossDefeat->getFrameHeight());
+	_boss_R_DEFEAT->setPlayFrame(0, 12, false, false);
+	_boss_R_DEFEAT->setFPS(1);
+
 
 	_jumpPower = _gravity = _isJumping = _attackTime = 0;
 
 
-	_rc.set(0, 0, _bossIdle->getFrameWidth(), _bossIdle->getFrameHeight());
+	_rc.set(0, 0, _bossImg->getFrameWidth(), _bossImg->getFrameHeight());
 	_rc.setCenterPos(_x, _z);
 
 	_rcA.set(0, 0, 0, 0);
 	_rcA.setCenterPos(0, 0);
 
 	_bossMotion = _boss_L_IDLE;
-	_hp = 1;
+	_hp = 66;
 
 
 	return S_OK;
@@ -237,23 +318,23 @@ void boss::update()
 		_bossMotion->frameUpdate(TIMEMANAGER->getElapsedTime() * 6);
 	else _bossMotion->frameUpdate(TIMEMANAGER->getElapsedTime() * 12);
 
+	_bossPhase = PHASE1;
+
+	if (_hp < 45 || _hp > 23)	// HP가 45보다 작고 23보단 크면 페이즈 변화
+	{
+		_bossPhase = PHASE2;
+	}
+
+	if (_hp < 23)				// HP가 23보다 작으면 페이즈 변화
+	{
+		_bossPhase = PHASE3;
+	}
 
 
 	if (_isJumping)
 	{
 		_jumpPower += _gravity;
-		//_attackTime++;
-		//_gravity -= 0.1f;
 
-		//if (_jumpPower < 0)
-		//{
-		//	_jumpPower = 0;
-		//	//_attackCount = 0;
-		//	//_bossMotion->start();
-		//	//_random1 = RND->getInt(2);
-		//	//_isJumping = false;
-		//
-		//}
 	}
 
 	//cout << _playerX << endl;
@@ -317,321 +398,199 @@ void boss::update()
 
 		if (_bossMotion->isPlay() == false)	_bossMotion->start();
 	}
+
+	//if (_bossDirection == BOSS_LEFT_HIT1 || _bossDirection == BOSS_RIGHT_HIT1 ||
+	//	_bossDirection == BOSS_LEFT_HIT2 || _bossDirection == BOSS_RIGHT_HIT2 ||
+	//	_bossDirection == BOSS_LEFT_HIT3 || _bossDirection == BOSS_RIGHT_HIT3 ||
+	//	_bossDirection == BOSS_LEFT_HIT_A || _bossDirection == BOSS_RIGHT_HIT_A)
+	//{
+	//	if (!_bossMotion->isPlay())
+	//	{
+	//		_bossMotion->start();
+	//	}
+	//}
+
+
+
 	// 공격 패턴
-	if (_attackCount > 150)
+	switch (_bossPhase == PHASE1)
 	{
-		if (_distance < 170)
+	case PHASE1:
+		if (_attackCount > 150)
 		{
-			switch (_random)
+			if (_distance < 170)
 			{
-			case 0:
-				if (_x < _playerX)
+				switch (_random)
 				{
-					_bossDirection = BOSS_RIGHT_SLAP;
-					_bossMotion = _boss_R_SLAP;
-					if (_bossMotion->isPlay() == false)
-					{
-						_attackCount = 0;
-						_bossMotion->start();
-						_random = RND->getInt(4);
+				case 0:
+					attackSlap();
+					break;
 
-					}
+				case 1:
+					attackElbow();
+					break;
+
+				case 2:
+					block();
+					break;
+
+				case 3:
+					attackWupnch();
 					break;
 				}
-				else
-				{
-					_bossDirection = BOSS_LEFT_SLAP;
-					_bossMotion = _boss_L_SLAP;
-					if (_bossMotion->isPlay() == false)
-					{
-						_attackCount = 0;
-						_bossMotion->start();
-						_random = RND->getInt(4);
+			}
 
-					}
+			//if (_distance >= 175 && _distance < 800 || _isJumping)
+			if (_distance < 800 || _isJumping)
+			{
+				switch (_random1)
+				{
+				case 0:
+					roar();
 					break;
-				}
-			case 1:
-				if (_x < _playerX)
-				{
-					_bossDirection = BOSS_RIGHT_ELBOW;
-					_bossMotion = _boss_R_ELBOW;
-					if (_bossMotion->isPlay() == false)
-					{
-						_attackCount = 0;
-						_bossMotion->start();
-						_random = RND->getInt(4);
 
-					}
+				case 1:
+					meteor_j();
 					break;
-				}
-				else
-				{
-					_bossDirection = BOSS_LEFT_ELBOW;
-					_bossMotion = _boss_L_ELBOW;
-					if (_bossMotion->isPlay() == false)
-					{
-						_attackCount = 0;
-						_bossMotion->start();
-						_random = RND->getInt(4);
 
-					}
+				case 10:
+					tackle();
 					break;
-				}
-			case 2:
-				if (_x < _playerX)
-				{
-					_bossDirection = BOSS_RIGHT_BLOCK;
-					_bossMotion = _boss_R_BLOCK;
-					if (_bossMotion->isPlay() == false)
-					{
-						_attackCount = 0;
-						_bossMotion->start();
-						_random = RND->getInt(4);
 
-					}
+				case 11:
+					tackle_loop();
 					break;
-				}
-				else
-				{
-					_bossDirection = BOSS_LEFT_BLOCK;
-					_bossMotion = _boss_L_BLOCK;
-					if (_bossMotion->isPlay() == false)
-					{
-						_attackCount = 0;
-						_bossMotion->start();
-						_random = RND->getInt(4);
 
-					}
+				case 12:
+					meteor_a();
 					break;
-				}
-			case 3:
-				if (_x < _playerX)
-				{
-					_bossDirection = BOSS_RIGHT_WUPUNCH;
-					_bossMotion = _boss_R_WUPUNCH;
-					if (_bossMotion->isPlay() == false)
-					{
-						_attackCount = 0;
-						_bossMotion->start();
-						_random = RND->getInt(4);
 
-					}
+				case 13:
+					meteor();
 					break;
-				}
-				else
-				{
-					_bossDirection = BOSS_LEFT_WUPUNCH;
-					_bossMotion = _boss_L_WUPUNCH;
-					if (_bossMotion->isPlay() == false)
-					{
-						_attackCount = 0;
-						_bossMotion->start();
-						_random = RND->getInt(4);
 
-					}
+				case 14:
+					meteor_m();
+					_attackCount = 0;
+					break;
+
+				case 15:
+					taunt();
 					break;
 				}
 			}
 		}
-		if (_distance >= 175 && _distance < 800 || _isJumping)
-			//if (_distance > 175 || _isJumping)
+
+	case PHASE2:
+		if (_attackCount > 120)
 		{
-			switch (_random1)
+			if (_distance < 170)
 			{
-
-			case 0:
-				if (_x < _playerX)
+				switch (_random)
 				{
-					_bossDirection = BOSS_RIGHT_ROAR;
-					_bossMotion = _boss_R_ROAR;
-					if (_bossMotion->isPlay() == false)
-					{
-						_bossMotion->start();
-						_random1 = 10;
-					}
+				case 0:
+					attackSlap();
+					break;
+
+				case 1:
+					attackElbow();
+					break;
+
+				case 2:
+					block();
+					break;
+
+				case 3:
+					attackWupnch();
 					break;
 				}
-				else
+			}
+
+			if (_distance >= 175 && _distance < 800 || _isJumping)
+			{
+				switch (_random1)
 				{
-					_bossDirection = BOSS_LEFT_ROAR;
-					_bossMotion = _boss_L_ROAR;
-					if (_bossMotion->isPlay() == false)
-					{
-						_bossMotion->start();
-						_random1 = 10;
-					}
+
+				case 0:
+					roar();
+					break;
+
+				case 1:
+					meteor_j();
+					break;
+
+				case 10:
+					tackle();
+					break;
+
+				case 11:
+					tackle_loop();
+					break;
+
+				case 12:
+					meteor_a();
+					break;
+
+				case 13:
+					meteor();
 					break;
 				}
+			}
+		}
 
-			case 1:
-				if (_x < _playerX)
+	case PHASE3:
+		if (_attackCount > 100)
+		{
+			if (_distance < 170)
+			{
+				switch (_random)
 				{
-					_bossDirection = BOSS_RIGHT_METEOR_J;
-					_bossMotion = _boss_R_METEOR_J;
-					if (_bossMotion->isPlay() == false)
-					{
-						_bossMotion->start();
+				case 0:
+					attackSlap();
+					break;
 
-						_ys = _z;
-						_gravity = 20.0f;
-						_random1 = 12;
-						_isJumping = true;
+				case 1:
+					attackElbow();
+					break;
 
-					}
+				case 2:
+					block();
+					break;
+
+				case 3:
+					attackWupnch();
 					break;
 				}
-				else
+			}
+
+			if (_distance >= 175 && _distance < 800 || _isJumping)
+			{
+				switch (_random1)
 				{
-					_bossDirection = BOSS_LEFT_METEOR_J;
-					_bossMotion = _boss_L_METEOR_J;
-					if (_bossMotion->isPlay() == false)
-					{
-						_bossMotion->start();
 
-						_ys = _z;
-						_gravity = 20.0f;
-						_random1 = 12;
-						_isJumping = true;
-
-					}
+				case 0:
+					roar();
 					break;
 
-				}
-
-			case 10:
-				if (_x < _playerX)
-				{
-					_bossDirection = BOSS_RIGHT_TACKLE;
-					_bossMotion = _boss_R_TACKLE;
-					if (_bossMotion->isPlay() == false)
-					{
-						_bossMotion->start();
-						_random1 = 11;
-					}
-					break;
-				}
-				else
-				{
-					_bossDirection = BOSS_LEFT_TACKLE;
-					_bossMotion = _boss_L_TACKLE;
-					if (_bossMotion->isPlay() == false)
-					{
-						_bossMotion->start();
-						_random1 = 11;
-					}
-					break;
-				}
-
-
-			case 11:
-
-				if (_x < _playerX)
-				{
-					_bossDirection = BOSS_RIGHT_TACKLE_L;
-					_bossMotion = _boss_R_TACKLE_L;
-					if (_bossMotion->isPlay() == false)
-					{
-						_attackCount = 0;
-						_bossMotion->start();
-						_random1 = RND->getInt(2);
-
-
-					}
-					break;
-				}
-				else
-				{
-					_bossDirection = BOSS_LEFT_TACKLE_L;
-					_bossMotion = _boss_L_TACKLE_L;
-					if (_bossMotion->isPlay() == false)
-					{
-						_attackCount = 0;
-						_bossMotion->start();
-						_random1 = RND->getInt(2);
-
-					}
-					break;
-				}
-			case 12:
-
-				if (_x < _playerX)
-				{
-					_bossDirection = BOSS_RIGHT_METEOR_A;
-					_bossMotion = _boss_R_METEOR_A;
-					if (_isJumping == true)
-					{
-						_x += cosf(_angle) * _speed;
-						_z -= sinf(_angle) * _speed;
-						if (_jumpPower > 1800)
-						{
-							_gravity = 0;
-							_bossMotion->start();
-							_random1 = 13;
-
-						}
-
-					}
-					break;
-				}
-				else
-				{
-					_bossDirection = BOSS_LEFT_METEOR_A;
-					_bossMotion = _boss_L_METEOR_A;
-					if (_isJumping == true)
-					{
-						_x += cosf(_angle) * _speed;
-						_z -= sinf(_angle) * _speed;
-						if (_jumpPower > 1800)
-						{
-							_gravity = 0;
-							_bossMotion->start();
-							_random1 = 13;
-						}
-					}
-					break;
-				}
-			case 13:
-				if (_x < _playerX)
-				{
-					_bossDirection = BOSS_RIGHT_METEOR;
-					_bossMotion = _boss_R_METEOR;
-					if (_isJumping = true)
-					{
-						_jumpPower -= 30.0f;
-						if (_jumpPower <= 0)
-						{
-							_gravity = 0;
-							_jumpPower = 0;
-							_attackCount = 0;
-							_bossMotion->start();
-							_random1 = RND->getInt(2);
-							_isJumping = false;
-
-						}
-					}
-					break;
-				}
-				else
-				{
-					_bossDirection = BOSS_LEFT_METEOR;
-					_bossMotion = _boss_L_METEOR;
-					if (_isJumping = true)
-					{
-						_jumpPower -= 30.0f;
-						if (_jumpPower <= 0)
-						{
-							_gravity = 0;
-							_jumpPower = 0;
-							_attackCount = 0;
-							_bossMotion->start();
-							_random1 = RND->getInt(2);
-							_isJumping = false;
-
-						}
-					}
+				case 1:
+					meteor_j();
 					break;
 
+				case 10:
+					tackle();
+					break;
+
+				case 11:
+					tackle_loop();
+					break;
+
+				case 12:
+					meteor_a();
+					break;
+
+				case 13:
+					meteor();
+					break;
 				}
 			}
 		}
@@ -766,9 +725,403 @@ void boss::render()
 		_bossImg = _bossWupunch;
 		_speed = 1.0f;
 		break;
+	case BOSS_RIGHT_HIT1:
+		_bossImg = _bossHit;
+		//_boss_R_HIT1->start();
+		break;
+	case BOSS_RIGHT_HIT2:
+		_bossImg = _bossHit;
+		//_boss_R_HIT2->start();
+		break;
+	case BOSS_RIGHT_HIT3:
+		_bossImg = _bossHit;
+		//_boss_R_HIT3->start();
+		break;
+	case BOSS_LEFT_HIT1:
+		_bossImg = _bossHit;
+		//_boss_L_HIT1->start();
+		break;
+	case BOSS_LEFT_HIT2:
+		_bossImg = _bossHit;
+		//_boss_L_HIT2->start();
+		break;
+	case BOSS_LEFT_HIT3:
+		_bossImg = _bossHit;
+		//_boss_L_HIT3->start();
+		break;
+	case BOSS_RIGHT_HIT_A:
+		_bossImg = _bossHit_a;
+		//_boss_R_HIT_A->start();
+		_rc.move(-50, 0);
+		break;
+	case BOSS_LEFT_HIT_A:
+		_bossImg = _bossHit_a;
+		//_boss_L_HIT_A->start();
+		_rc.move(50, 0);
+		break;
+	case BOSS_RIGHT_G_HIT:
+		_bossImg = _bossG_hit;
+		break;
+	case BOSS_LEFT_G_HIT:
+		_bossImg = _bossG_hit;
+		break;
+
 
 	}
 
 	ZORDER->pushObject(getMemDC(), _bossImg, _bossMotion, 1, _rc.getCenterX(), _jumpPower, _rc.bottom);
 	_rcA.render(getMemDC());
+}
+
+void boss::attackSlap()
+{
+	if (_x < _playerX)
+	{
+		_bossDirection = BOSS_RIGHT_SLAP;
+		_bossMotion = _boss_R_SLAP;
+		if (_bossMotion->isPlay() == false)
+		{
+			_attackCount = 0;
+			_bossMotion->start();
+			_random = RND->getInt(4);
+
+		}
+	}
+	else
+	{
+		_bossDirection = BOSS_LEFT_SLAP;
+		_bossMotion = _boss_L_SLAP;
+		if (_bossMotion->isPlay() == false)
+		{
+			_attackCount = 0;
+			_bossMotion->start();
+			_random = RND->getInt(4);
+
+		}
+	}
+}
+
+void boss::attackElbow()
+{
+	if (_x < _playerX)
+	{
+		_bossDirection = BOSS_RIGHT_ELBOW;
+		_bossMotion = _boss_R_ELBOW;
+		if (_bossMotion->isPlay() == false)
+		{
+			_attackCount = 0;
+			_bossMotion->start();
+			_random = RND->getInt(4);
+
+		}
+	}
+	else
+	{
+		_bossDirection = BOSS_LEFT_ELBOW;
+		_bossMotion = _boss_L_ELBOW;
+		if (_bossMotion->isPlay() == false)
+		{
+			_attackCount = 0;
+			_bossMotion->start();
+			_random = RND->getInt(4);
+
+		}
+	}
+}
+
+void boss::block()
+{
+	if (_x < _playerX)
+	{
+		_bossDirection = BOSS_RIGHT_BLOCK;
+		_bossMotion = _boss_R_BLOCK;
+		if (_bossMotion->isPlay() == false)
+		{
+			_attackCount = 0;
+			_bossMotion->start();
+			_random = RND->getInt(4);
+
+		}
+	}
+	else
+	{
+		_bossDirection = BOSS_LEFT_BLOCK;
+		_bossMotion = _boss_L_BLOCK;
+		if (_bossMotion->isPlay() == false)
+		{
+			_attackCount = 0;
+			_bossMotion->start();
+			_random = RND->getInt(4);
+
+		}
+	}
+}
+
+void boss::attackWupnch()
+{
+	if (_x < _playerX)
+	{
+		_bossDirection = BOSS_RIGHT_WUPUNCH;
+		_bossMotion = _boss_R_WUPUNCH;
+		if (_bossMotion->isPlay() == false)
+		{
+			_attackCount = 0;
+			_bossMotion->start();
+			_random = RND->getInt(4);
+
+		}
+	}
+	else
+	{
+		_bossDirection = BOSS_LEFT_WUPUNCH;
+		_bossMotion = _boss_L_WUPUNCH;
+		if (_bossMotion->isPlay() == false)
+		{
+			_attackCount = 0;
+			_bossMotion->start();
+			_random = RND->getInt(4);
+
+		}
+	}
+
+}
+
+void boss::roar()
+{
+	if (_x < _playerX)
+	{
+		_bossDirection = BOSS_RIGHT_ROAR;
+		_bossMotion = _boss_R_ROAR;
+		if (_bossMotion->isPlay() == false)
+		{
+			_bossMotion->start();
+			_random1 = 10;
+		}
+	}
+	else
+	{
+		_bossDirection = BOSS_LEFT_ROAR;
+		_bossMotion = _boss_L_ROAR;
+		if (_bossMotion->isPlay() == false)
+		{
+			_bossMotion->start();
+			_random1 = 10;
+		}
+	}
+}
+
+void boss::meteor_j()
+{
+	if (_x < _playerX)
+	{
+		_bossDirection = BOSS_RIGHT_METEOR_J;
+		_bossMotion = _boss_R_METEOR_J;
+		if (_bossMotion->isPlay() == false)
+		{
+			_bossMotion->start();
+
+			_ys = _z;
+			_gravity = 20.0f;
+			_random1 = 12;
+			_isJumping = true;
+
+		}
+	}
+	else
+	{
+		_bossDirection = BOSS_LEFT_METEOR_J;
+		_bossMotion = _boss_L_METEOR_J;
+		if (_bossMotion->isPlay() == false)
+		{
+			_bossMotion->start();
+
+			_ys = _z;
+			_gravity = 20.0f;
+			_random1 = 12;
+			_isJumping = true;
+
+		}
+	}
+}
+
+void boss::tackle()
+{
+	if (_x < _playerX)
+	{
+		_bossDirection = BOSS_RIGHT_TACKLE;
+		_bossMotion = _boss_R_TACKLE;
+		if (_bossMotion->isPlay() == false)
+		{
+			_bossMotion->start();
+			_random1 = 11;
+		}
+	}
+	else
+	{
+		_bossDirection = BOSS_LEFT_TACKLE;
+		_bossMotion = _boss_L_TACKLE;
+		if (_bossMotion->isPlay() == false)
+		{
+			_bossMotion->start();
+			_random1 = 11;
+		}
+	}
+}
+
+void boss::tackle_loop()
+{
+	if (_x < _playerX)
+	{
+		_bossDirection = BOSS_RIGHT_TACKLE_L;
+		_bossMotion = _boss_R_TACKLE_L;
+		if (_bossMotion->isPlay() == false)
+		{
+			_bossMotion->start();
+			_random1 = 15;
+
+
+		}
+	}
+	else
+	{
+		_bossDirection = BOSS_LEFT_TACKLE_L;
+		_bossMotion = _boss_L_TACKLE_L;
+		if (_bossMotion->isPlay() == false)
+		{
+			_bossMotion->start();
+			_random1 = 15;
+
+		}
+	}
+}
+
+void boss::taunt()
+{
+	if (_x < _playerX)
+	{
+		_bossDirection = BOSS_RIGHT_TAUNT;
+		_bossMotion = _boss_R_TAUNT;
+		if (_bossMotion->isPlay() == false)
+		{
+			_attackCount = 0;
+			_bossMotion->start();
+			_random1 = RND->getInt(2);
+
+		}
+	}
+	else
+	{
+		_bossDirection = BOSS_LEFT_METEOR_M;
+		_bossMotion = _boss_L_METEOR_M;
+		if (_bossMotion->isPlay() == false)
+		{
+			_attackCount = 0;
+			_bossMotion->start();
+			_random1 = RND->getInt(2);
+
+		}
+	}
+}
+
+void boss::meteor_a()
+{
+	if (_x < _playerX)
+	{
+		_bossDirection = BOSS_RIGHT_METEOR_A;
+		_bossMotion = _boss_R_METEOR_A;
+		if (_isJumping == true)
+		{
+			_x += cosf(_angle) * _speed;
+			_z -= sinf(_angle) * _speed;
+			if (_jumpPower > 1800)
+			{
+				_gravity = 0;
+				_bossMotion->start();
+				_random1 = 13;
+
+			}
+		}
+	}
+	else
+	{
+		_bossDirection = BOSS_LEFT_METEOR_A;
+		_bossMotion = _boss_L_METEOR_A;
+		if (_isJumping == true)
+		{
+			_x += cosf(_angle) * _speed;
+			_z -= sinf(_angle) * _speed;
+			if (_jumpPower > 1800)
+			{
+				_gravity = 0;
+				_bossMotion->start();
+				_random1 = 13;
+			}
+		}
+	}
+}
+
+void boss::meteor()
+{
+	if (_x < _playerX)
+	{
+		_bossDirection = BOSS_RIGHT_METEOR;
+		_bossMotion = _boss_R_METEOR;
+		if (_isJumping = true)
+		{
+			_jumpPower -= 30.0f;
+			if (_jumpPower <= 0)
+			{
+				_gravity = 0;
+				_jumpPower = 0;
+				_bossMotion->start();
+				_random1 = 14;
+				_isJumping = false;
+
+			}
+		}
+	}
+	else
+	{
+		_bossDirection = BOSS_LEFT_METEOR;
+		_bossMotion = _boss_L_METEOR;
+		if (_isJumping = true)
+		{
+			_jumpPower -= 30.0f;
+			if (_jumpPower <= 0)
+			{
+				_gravity = 0;
+				_jumpPower = 0;
+				_bossMotion->start();
+				_random1 = 14;
+				_isJumping = false;
+
+			}
+		}
+	}
+}
+
+void boss::meteor_m()
+{
+	if (_x < _playerX)
+	{
+		_bossDirection = BOSS_RIGHT_METEOR_M;
+		_bossMotion = _boss_R_METEOR_M;
+		if (_bossMotion->isPlay() == false)
+		{
+			_bossMotion->start();
+			_random1 = RND->getInt(2);
+
+		}
+	}
+	else
+	{
+		_bossDirection = BOSS_LEFT_METEOR_M;
+		_bossMotion = _boss_L_METEOR_M;
+		if (_bossMotion->isPlay() == false)
+		{
+			_bossMotion->start();
+			_random1 = RND->getInt(2);
+
+		}
+	}
 }

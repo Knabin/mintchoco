@@ -161,6 +161,8 @@ HRESULT player::init()
 		SOUNDMANAGER->addSound("jump", "sounds/effect/player_jump.wav", false, false);
 		SOUNDMANAGER->addSound("land", "sounds/effect/player_land.wav", false, false);
 		SOUNDMANAGER->addSound("dab", "sounds/effect/player_kyoko_dab_slam.wav", false, false);
+
+		SOUNDMANAGER->addSound("gameover", "sounds/menu/interface_game_over.wav", false, false);
 	}
 
 	return S_OK;
@@ -2001,6 +2003,8 @@ void player::frameDraw()
 	case PLAYERDIRECTION_LEFT_DEAD:
 		if (!_deadOneFramePlay)
 		{
+			SOUNDMANAGER->stopAll("");
+			SOUNDMANAGER->play("gameover");
 			_deadImage->setFrameX(_deadImage->getMaxFrameX());
 			_deadImage->setFrameY(0);
 			_deadOneFramePlay = true;
@@ -2019,6 +2023,8 @@ void player::frameDraw()
 	case PLAYERDIRECTION_RIGHT_DEAD:
 		if (!_deadOneFramePlay)
 		{
+			SOUNDMANAGER->stopAll("");
+			SOUNDMANAGER->play("gameover");
 			_deadImage->setFrameX(0);
 			_deadImage->setFrameY(1);
 			_deadOneFramePlay = true;
