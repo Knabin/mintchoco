@@ -48,6 +48,7 @@ HRESULT playGround::init()
 	_enemyManager->setStageManagerMemoryAddressLink(_stageManager);
 	_player->setStageManagerMemoryAddressLink(_stageManager);
 
+	_uiManager->setPlayerMemoryAddressLink(_player);
 	_uiManager->setStageManagerMemoryAddressLink(_stageManager);
 
 
@@ -188,6 +189,7 @@ void playGround::update()
 				_player->update();
 				_collisionManager->update();
 				_stageManager->update();
+
 				if (_stageManager->checkBossStageX(_player->getPlayerX()))
 				{
 					SOUNDMANAGER->stopAll("");
@@ -261,7 +263,10 @@ void playGround::update()
 			//CAMERA->setPosition(WINSIZEX/2, WINSIZEY/2);
 			// 따라오는 카메라
 			if (!_uiManager->isMiniMapOpen())
-				CAMERA->changePosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+			{
+				if (CAMERA->getIsReturn()) CAMERA->cameraFixedEnd(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+				else CAMERA->changePosition(_player->getPlayerRect().getCenterX(), _player->getPlayerRect().getCenterY());
+			}
 		}
 	}
 	else
@@ -323,7 +328,7 @@ void playGround::render()
 			_player->render();
 			_collisionManager->render();
 			_enemyManager->render();
-			//_itemManager->render();
+			_itemManager->render();
 			_scene->render();
 
 			ZORDER->render();

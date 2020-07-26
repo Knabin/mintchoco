@@ -33,7 +33,7 @@ private:
 public:
 	collisionManager() {}
 	~collisionManager() {}
-	
+
 	HRESULT init();
 	void render();
 	void update();
@@ -46,18 +46,19 @@ public:
 	void enemy_collisionRightBlock();
 	void npcCollision();
 	void player_collision();//플레이어랑 적 공격이랑 충돌시
-	void playerAttackHitEffect();//플레이어가 에너미를 공격해서 충돌시 나올 이펙트 이미지
+	void item_drop();		//에너미 사망 시 아이템 드랍
+	void item_collision();	//아이템 먹을 경우 (체력 5씩 회복)
+	void money_collision(); // 돈 먹을 경우	  (10원씩 획득)
 
-	// == 운천 추가 ==   보스랑 플레이어 충돌시
 	void boss_collisionNoBlock();
 	void boss_collisionLeftBlock();
 	void boss_collisionRightBlock();
-
 	void player_bossCollision();
 
-	// ===== 나빈 추가 =====
-	void playPlayerGetHitSound();
 	void playGetHitSound();
+	void playPlayerGetHitSound();
+	void playerAttackHitEffect();
+
 
 	void setPlayerMemoryAddressLink(player* player) { _player = player; }
 	void setEnemyManagerMemoryAddressLink(enemyManager* enemyManager) { _enemyManager = enemyManager; }

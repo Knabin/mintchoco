@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "UiManager.h"
 #include "stageManager.h"
+#include "player.h"
 
 UiManager::UiManager()
 {
@@ -13,11 +14,34 @@ UiManager::~UiManager()
 HRESULT UiManager::init()
 {
 
+	//ui 현재 소지금 선언
+
+	for (int i = 0; i < 5; i++)
+	{
+		_CurrentCoin[i]._UIimage = IMAGEMANAGER->addImage("0", "images/ui/0.bmp", 18, 25, true, RGB(255, 0, 255));
+		IMAGEMANAGER->addImage("1", "images/ui/1.bmp", 18, 25, true, RGB(255, 0, 255));
+		IMAGEMANAGER->addImage("2", "images/ui/2.bmp", 18, 25, true, RGB(255, 0, 255));
+		IMAGEMANAGER->addImage("3", "images/ui/3.bmp", 18, 25, true, RGB(255, 0, 255));
+		IMAGEMANAGER->addImage("4", "images/ui/4.bmp", 18, 25, true, RGB(255, 0, 255));
+		IMAGEMANAGER->addImage("5", "images/ui/5.bmp", 18, 25, true, RGB(255, 0, 255));
+		IMAGEMANAGER->addImage("6", "images/ui/6.bmp", 18, 25, true, RGB(255, 0, 255));
+		IMAGEMANAGER->addImage("7", "images/ui/7.bmp", 18, 25, true, RGB(255, 0, 255));
+		IMAGEMANAGER->addImage("8", "images/ui/8.bmp", 18, 25, true, RGB(255, 0, 255));
+		IMAGEMANAGER->addImage("9", "images/ui/9.bmp", 18, 25, true, RGB(255, 0, 255));
+
+		_CurrentCoin[i]._x = WINSIZEX / 2 - 372;
+		_CurrentCoin[i]._y = WINSIZEX / 2 - 547;
+		_CurrentCoin[i]._rc = RectMakeCenter(_CurrentCoin[i]._x + 23 * i, _CurrentCoin[i]._y, 18, 25);
+	}
+
+
+
+
 	//ui 돈 선언
 
 	_UiCoin._UIimage = IMAGEMANAGER->addImage("UICoin", "images/ui/coin.bmp", 32, 32, true, RGB(255, 0, 255));
 	_UiCoin._x = WINSIZEX / 2 - 392;
-	_UiCoin._y = WINSIZEY / 2 - 251;
+	_UiCoin._y = WINSIZEY / 2 - 249;
 	_UiCoin._rc = RectMakeCenter(_UiCoin._x, _UiCoin._y, _UiCoin._UIimage->getWidth(), _UiCoin._UIimage->getHeight());
 
 	//=============================================================================================================================//
@@ -200,6 +224,156 @@ void UiManager::render(HDC hdc)
 
 		IMAGEMANAGER->findImage("UICoin")->render(hdc, _UiCoin._x - 18, _UiCoin._y - 18);
 
+
+
+		//플레이어 돈 300까지 구현
+
+		for (int i = 0; i < 5; i++)
+		{
+			IMAGEMANAGER->findImage("0")->render(hdc, _CurrentCoin[i]._x + 23 * i, _CurrentCoin[i]._y);
+
+
+			if (_player->getCoin() % 9 == 1)
+			{
+				IMAGEMANAGER->findImage("1")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+			}
+			if (_player->getCoin() % 9 == 2)
+			{
+				IMAGEMANAGER->findImage("2")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+			}
+			if (_player->getCoin() % 9 == 3)
+			{
+				IMAGEMANAGER->findImage("3")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+			}
+			if (_player->getCoin() % 9 == 4)
+			{
+				IMAGEMANAGER->findImage("4")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+			}
+			if (_player->getCoin() % 9 == 5)
+			{
+				IMAGEMANAGER->findImage("5")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+			}
+			if (_player->getCoin() % 9 == 6)
+			{
+				IMAGEMANAGER->findImage("6")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+			}
+			if (_player->getCoin() % 9 == 7)
+			{
+				IMAGEMANAGER->findImage("7")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+			}
+			if (_player->getCoin() % 9 == 8)
+			{
+				IMAGEMANAGER->findImage("8")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+			}
+			if (_player->getCoin() == 90)
+			{
+				IMAGEMANAGER->findImage("9")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+			}
+			if (_player->getCoin() == 100)
+			{
+				IMAGEMANAGER->findImage("1")->render(hdc, _CurrentCoin[2]._x + 46, _CurrentCoin[2]._y);
+				IMAGEMANAGER->findImage("0")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+			}
+
+			if (_player->getCoin() >= 101)
+			{
+				IMAGEMANAGER->findImage("1")->render(hdc, _CurrentCoin[2]._x + 46, _CurrentCoin[2]._y);
+
+				if (_player->getCoin() % 9 == 2)
+				{
+					IMAGEMANAGER->findImage("1")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+				}
+				if (_player->getCoin() % 9 == 3)
+				{
+					IMAGEMANAGER->findImage("2")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+				}
+				if (_player->getCoin() % 9 == 4)
+				{
+					IMAGEMANAGER->findImage("3")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+				}
+				if (_player->getCoin() % 9 == 5)
+				{
+					IMAGEMANAGER->findImage("4")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+				}
+				if (_player->getCoin() % 9 == 6)
+				{
+					IMAGEMANAGER->findImage("5")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+				}
+				if (_player->getCoin() % 9 == 7)
+				{
+					IMAGEMANAGER->findImage("6")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+				}
+				if (_player->getCoin() % 9 == 8)
+				{
+					IMAGEMANAGER->findImage("7")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+				}
+				if (_player->getCoin() == 180)
+				{
+					IMAGEMANAGER->findImage("8")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+				}
+				if (_player->getCoin() % 9 == 1)
+				{
+					IMAGEMANAGER->findImage("9")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+				}
+				if (_player->getCoin() == 200)
+				{
+					IMAGEMANAGER->findImage("2")->render(hdc, _CurrentCoin[2]._x + 46, _CurrentCoin[2]._y);
+					IMAGEMANAGER->findImage("0")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+				}
+
+			}
+
+			if (_player->getCoin() >= 201)
+			{
+				IMAGEMANAGER->findImage("2")->render(hdc, _CurrentCoin[2]._x + 46, _CurrentCoin[2]._y);
+
+				if (_player->getCoin() % 9 == 3)
+				{
+					IMAGEMANAGER->findImage("1")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+				}
+				if (_player->getCoin() % 9 == 4)
+				{
+					IMAGEMANAGER->findImage("2")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+				}
+				if (_player->getCoin() % 9 == 5)
+				{
+					IMAGEMANAGER->findImage("3")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+				}
+				if (_player->getCoin() % 9 == 6)
+				{
+					IMAGEMANAGER->findImage("4")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+				}
+				if (_player->getCoin() % 9 == 7)
+				{
+					IMAGEMANAGER->findImage("5")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+				}
+				if (_player->getCoin() % 9 == 8)
+				{
+					IMAGEMANAGER->findImage("6")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+				}
+				if (_player->getCoin() == 270)
+				{
+					IMAGEMANAGER->findImage("7")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+				}
+				if (_player->getCoin() % 9 == 1)
+				{
+					IMAGEMANAGER->findImage("8")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+				}
+				if (_player->getCoin() % 9 == 2)
+				{
+					IMAGEMANAGER->findImage("9")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+				}
+				if (_player->getCoin() == 300)
+				{
+					IMAGEMANAGER->findImage("3")->render(hdc, _CurrentCoin[2]._x + 46, _CurrentCoin[2]._y);
+					IMAGEMANAGER->findImage("0")->render(hdc, _CurrentCoin[3]._x + 69, _CurrentCoin[3]._y);
+				}
+			}
+
+		}
+
+
+
 		
 		if (_stageManager->getNowbossStage() == true)
 		{
@@ -381,6 +555,19 @@ void UiManager::PlayerHpMinus()
 	}
 }
 
+void UiManager::PlayerHpPlus()
+{
+	for (int i = 26; i > -1; i--)
+	{
+		if (_PlayerHpPoint[i]._y > CAMERA->getTop() - 300) continue;  // if문의 정수 변경시 감소 속도 조절
+		{
+			_PlayerHpPoint[i]._y += 500;
+			break;
+		}
+	}
+
+}
+
 void UiManager::BossHpMinus()
 {
 	_BossHpPoint._x -= 0.70f;
@@ -397,7 +584,7 @@ void UiManager::BossDeath()
 }
 
 void UiManager::gameOver()
-{
+{	
 	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT) && _gameOverState == GAMEOVERSTATE::RESTART)
 	{
 		_gameOverState = GAMEOVERSTATE::QUIT;
@@ -421,7 +608,7 @@ void UiManager::gameOver()
 			_restart = true;
 			_isGameOver = false;
 		}
-	}
+	}	
 }
 
 void UiManager::printScript()
