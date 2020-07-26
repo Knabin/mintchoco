@@ -49,6 +49,8 @@ private:
 	stageManager* _stageManager;			//stageManager 전방선언
 
 	// ======= 나빈 추가 =======
+	int _playerHP;
+
 	RECT _saveRc;							// 세이브 버튼 RECT
 	bool _restart;							// 저장 후 재시작
 	bool _restartDirect;					// 재시작
@@ -80,6 +82,8 @@ public:
 
 	void MiniMapMove();						//미니맵 이동 함수
 	
+	void setPlayerHP(int hp) { _playerHP = hp; }
+
 	void PlayerHpMinus();					//PlayerHpPoint 감소 함수
 	void PlayerHpPlus();
 	void BossHpMinus();						//boss hp 감소 함수
