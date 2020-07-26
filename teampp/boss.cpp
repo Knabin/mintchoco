@@ -317,7 +317,7 @@ void boss::update()
 		_attackCount++;
 	}
 
-	//cout << "보스 HP" << _hp << endl;
+	cout << "보스 HP" << _hp << endl;
 	//cout << "어택카운트" << _attackCount << endl;
 	cout << "랜덤1" << _random1 << endl;
 
@@ -330,16 +330,35 @@ void boss::update()
 		_bossMotion->frameUpdate(TIMEMANAGER->getElapsedTime() * 6);
 	else _bossMotion->frameUpdate(TIMEMANAGER->getElapsedTime() * 12);
 
-	_bossPhase = PHASE1;
+	if (_hp >= 45)
+	{
+		_bossPhase = PHASE1;
+	}
 
 	if (_hp < 45 && _hp > 23)	// HP가 45보다 작고 23보단 크면 페이즈 변화
 	{
 		_bossPhase = PHASE2;
 	}
 
-	if (_hp < 23)				// HP가 23보다 작으면 페이즈 변화
+	if (_hp <= 23)				// HP가 23보다 작으면 페이즈 변화
 	{
 		_bossPhase = PHASE3;
+	}
+
+	if (_hp = 0)			// HP 0되면 죽는모션 게임 끝나는것도 연동 필요?
+	{
+		if (_x < _playerX)
+		{
+			_bossMotion = _boss_R_DEFEAT;
+			_bossDirection = BOSS_RIGHT_DEFEAT;
+
+		}
+		else
+		{
+			_bossMotion = _boss_L_DEFEAT;
+			_bossDirection = BOSS_LEFT_DEFEAT;
+		}
+		if (_bossMotion->isPlay() == false)	_bossMotion->start();
 	}
 
 
@@ -349,7 +368,6 @@ void boss::update()
 		_rc.setCenterPos(_x, _z-_jumpPower);
 
 	}
-
 
 
 	_distance = getDistance(_x, _z, _playerX, _playerY);
@@ -388,20 +406,7 @@ void boss::update()
 
 
 
-	if (_bossMotion->isPlay() == false && _x < _playerX)
-	{
-		_bossMotion = _boss_R_IDLE;
-		_bossDirection = BOSS_RIGHT_IDLE;
 
-		if (_bossMotion->isPlay() == false)	_bossMotion->start();
-	}
-	if (_bossMotion->isPlay() == false && _x > _playerX)
-	{
-		_bossMotion = _boss_L_IDLE;
-		_bossDirection = BOSS_LEFT_IDLE;
-
-		if (_bossMotion->isPlay() == false)	_bossMotion->start();
-	}
 
 	//if (_bossDirection == BOSS_LEFT_HIT1 || _bossDirection == BOSS_RIGHT_HIT1 ||
 	//	_bossDirection == BOSS_LEFT_HIT2 || _bossDirection == BOSS_RIGHT_HIT2 ||
@@ -510,7 +515,7 @@ void boss::update()
 				}
 			}
 
-			if (_distance >= 175 && _distance < 800 || _isJumping)
+			if ((_distance >= 175 && _distance < 800) || _isJumping)
 			{
 				switch (_random1)
 				{
@@ -567,7 +572,7 @@ void boss::update()
 				}
 			}
 
-			if (_distance >= 175 && _distance < 800 || _isJumping)
+			if ((_distance >= 175 && _distance < 800) || _isJumping)
 			{
 				switch (_random1)
 				{
@@ -603,6 +608,21 @@ void boss::update()
 	{
 		_rc.setCenterPos(_x, _z);
 	}
+
+	//if (_bossMotion->isPlay() == false && _x < _playerX)
+	//{
+	//	_bossMotion = _boss_R_IDLE;
+	//	_bossDirection = BOSS_RIGHT_IDLE;
+	//
+	//	if (_bossMotion->isPlay() == false)	_bossMotion->start();
+	//}
+	//if (_bossMotion->isPlay() == false && _x > _playerX)
+	//{
+	//	_bossMotion = _boss_L_IDLE;
+	//	_bossDirection = BOSS_LEFT_IDLE;
+	//
+	//	if (_bossMotion->isPlay() == false)	_bossMotion->start();
+	//}
 }
 
 
@@ -656,9 +676,13 @@ void boss::render()
 		break;
 	case BOSS_RIGHT_ROAR:
 		_bossImg = _bossRoar;
+		_rcA.set(0, 0, 150, 150);
+		_rcA.setCenterPos(_rc.right, _rc.getCenterY());
 		break;
 	case BOSS_LEFT_ROAR:
 		_bossImg = _bossRoar;
+		_rcA.set(0, 0, 150, 150);
+		_rcA.setCenterPos(_rc.left, _rc.getCenterY());
 		break;
 	case BOSS_RIGHT_ROAR_U:
 		_bossImg = _bossRoar_u;
@@ -668,18 +692,26 @@ void boss::render()
 		break;
 	case BOSS_RIGHT_TACKLE:
 		_bossImg = _bossTackle;
+		_rcA.set(0, 0, 60, 90);
+		_rcA.setCenterPos(_rc.right, _rc.getCenterY());
 		_speed = 2.0f;
 		break;
 	case BOSS_LEFT_TACKLE:
 		_bossImg = _bossTackle;
+		_rcA.set(0, 0, 60, 90);
+		_rcA.setCenterPos(_rc.left, _rc.getCenterY());
 		_speed = 2.0f;
 		break;
 	case BOSS_RIGHT_TACKLE_L:
 		_bossImg = _bossTackle_l;
+		_rcA.set(0, 0, 60, 90);
+		_rcA.setCenterPos(_rc.right, _rc.getCenterY());
 		_speed = 10.0f;
 		break;
 	case BOSS_LEFT_TACKLE_L:
 		_bossImg = _bossTackle_l;
+		_rcA.set(0, 0, 60, 90);
+		_rcA.setCenterPos(_rc.left, _rc.getCenterY());
 		_speed = 10.0f;
 		break;
 	case BOSS_RIGHT_TAUNT:
@@ -690,9 +722,13 @@ void boss::render()
 		break;
 	case BOSS_RIGHT_METEOR:
 		_bossImg = _bossMeteor;
+		_rcA.set(0, 0, 150, 150);
+		_rcA.setCenterPos(_rc.right, _rc.getCenterY());
 		break;
 	case BOSS_LEFT_METEOR:
 		_bossImg = _bossMeteor;
+		_rcA.set(0, 0, 150, 150);
+		_rcA.setCenterPos(_rc.left, _rc.getCenterY());
 		break;
 	case BOSS_RIGHT_METEOR_G:
 		_bossImg = _bossMeteor_g;
@@ -728,10 +764,14 @@ void boss::render()
 		break;
 	case BOSS_RIGHT_WUPUNCH:
 		_bossImg = _bossWupunch;
+		_rcA.set(0, 0, 90, 60);
+		_rcA.setCenterPos(_rc.right, _rc.getCenterY());
 		_speed = 1.0f;
 		break;
 	case BOSS_LEFT_WUPUNCH:
 		_bossImg = _bossWupunch;
+		_rcA.set(0, 0, 90, 60);
+		_rcA.setCenterPos(_rc.left, _rc.getCenterY());
 		_speed = 1.0f;
 		break;
 	case BOSS_RIGHT_HIT1:
@@ -774,7 +814,12 @@ void boss::render()
 	case BOSS_LEFT_G_HIT:
 		_bossImg = _bossG_hit;
 		break;
-
+	case BOSS_RIGHT_DEFEAT:
+		_bossImg = _bossDefeat;
+		break;
+	case BOSS_LEFT_DEFEAT:
+		_bossImg = _bossDefeat;
+		break;
 
 	}
 

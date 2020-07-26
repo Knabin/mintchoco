@@ -264,7 +264,7 @@ void player::update()
 		break;
 	}
 
-	cout << _hp << endl;
+	//cout << _hp << endl;
 }
 
 void player::render()
