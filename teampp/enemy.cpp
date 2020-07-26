@@ -88,7 +88,9 @@ void enemy::update()
 		}
 
 		_isAttackCount++;
-		if (distance > 165 && (_direction == ENEMY_RIGHT_IDLE || _direction == ENEMY_LEFT_IDLE || _direction == ENEMY_RIGHT_MOVE || _direction == ENEMY_LEFT_MOVE))
+		if (distance > 165 && (_direction == ENEMY_RIGHT_IDLE || _direction == ENEMY_LEFT_IDLE || _direction == ENEMY_RIGHT_MOVE || _direction == ENEMY_LEFT_MOVE)
+			&& (_direction != ENEMY_RIGHT_BACKDOWN && _direction != ENEMY_LEFT_BACKDOWN
+				&& _direction != ENEMY_RIGHT_DEAD && _direction != ENEMY_LEFT_DEAD))
 		{
 			if (_playerX > _x)
 			{
@@ -130,7 +132,9 @@ void enemy::update()
 			}
 		}
 
-		if (distance > 165 && (_direction == ENEMY_RIGHT_MOVE || _direction == ENEMY_LEFT_MOVE) && (_direction != ENEMY_LEFT_SUBMOTION && _direction != ENEMY_RIGHT_SUBMOTION) && (_direction != ENEMY_LEFT_BACKDOWN && _direction != ENEMY_RIGHT_BACKDOWN))
+		if (distance > 165 && (_direction == ENEMY_RIGHT_MOVE || _direction == ENEMY_LEFT_MOVE) && (_direction != ENEMY_LEFT_SUBMOTION && _direction != ENEMY_RIGHT_SUBMOTION)
+			&& (_direction != ENEMY_RIGHT_BACKDOWN && _direction != ENEMY_LEFT_BACKDOWN
+				&& _direction != ENEMY_RIGHT_DEAD && _direction != ENEMY_LEFT_DEAD))
 		{
 			_x += cosf(angle) * _speed;
 			_y -= sinf(angle) * _speed;
@@ -357,7 +361,7 @@ void enemy::update()
 			}
 		}
 	}
-	else
+	else if (_direction == ENEMY_RIGHT_BACKDOWN)
 	{
 		if (_enemyMotion->isPlay() == false)
 		{

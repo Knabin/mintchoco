@@ -326,10 +326,10 @@ void collisionManager::enemy_collisionNoBlock()
 		}
 
 	}
-	//_player->setPlayerAttackRectRemove(0, 0, 0, 0);
-	//_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
-	//_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
-	//_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
+	_player->setPlayerAttackRectRemove(0, 0, 0, 0);
+	_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
+	_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
+	_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
 
 }
 
@@ -486,10 +486,10 @@ void collisionManager::enemy_collisionLeftBlock()
 			}
 		}
 	}
-	//_player->setPlayerAttackRectRemove(0, 0, 0, 0);
-	//_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
-	//_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
-	//_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
+	_player->setPlayerAttackRectRemove(0, 0, 0, 0);
+	_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
+	_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
+	_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
 }
 
 
@@ -645,10 +645,10 @@ void collisionManager::enemy_collisionRightBlock()
 			}
 		}
 	}
-	//_player->setPlayerAttackRectRemove(0, 0, 0, 0);
-	//_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
-	//_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
-	//_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
+	_player->setPlayerAttackRectRemove(0, 0, 0, 0);
+	_player->setPlayerAttackRectRemove1(0, 0, 0, 0);
+	_player->setPlayerAttackRectRemove2(0, 0, 0, 0);
+	_player->setPlayerAttackRectRemove3(0, 0, 0, 0);
 }
 
 
