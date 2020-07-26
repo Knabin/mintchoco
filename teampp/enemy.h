@@ -6,36 +6,27 @@ using namespace std;
 
 enum ENEMYDIRECTION
 {
-	ENEMY_LEFT_IDLE,
-	ENEMY_RIGHT_IDLE,
-	ENEMY_LEFT_MOVE,
-	ENEMY_RIGHT_MOVE,
-	ENEMY_LEFT_BACK_MOVE,
-	ENEMY_RIGHT_BACK_MOVE,
+	ENEMY_LEFT_IDLE,			ENEMY_RIGHT_IDLE,
+	ENEMY_LEFT_MOVE,			ENEMY_RIGHT_MOVE,
+	ENEMY_LEFT_BACK_MOVE,		ENEMY_RIGHT_BACK_MOVE,
 	ENEMY_LEFT_ATTACK,			//에너미 공격모션
 	ENEMY_RIGHT_ATTACK,			//에너미 공격모션
 	ENEMY_LEFT_COMBO1,			//에너미 공격모션 
 	ENEMY_RIGHT_COMBO1,			//에너미 공격모션 
 	ENEMY_LEFT_COMBO2,			//에너미 공격모션 
 	ENEMY_RIGHT_COMBO2,			//에너미 공격모션 
-	ENEMY_LEFT_SUBMOTION,		//치어리더는 백덤블링, 남학생은 어퍼컷, 여학생은 어택
-	ENEMY_RIGHT_SUBMOTION,		//치어리더는 백덤블링, 남학생은 어퍼컷, 여학생은 어택
-	ENEMY_LEFT_GETHIT_1,
-	ENEMY_RIGHT_GETHIT_1,
-	ENEMY_LEFT_GETHIT_2,
-	ENEMY_RIGHT_GETHIT_2,
-	ENEMY_LEFT_GETHIT_3,
-	ENEMY_RIGHT_GETHIT_3,
-	ENEMY_LEFT_STUN,
-	ENEMY_RIGHT_STUN,
+	ENEMY_LEFT_SUBMOTION,		//에너미 강공격 치어리더는 백덤블링, 남학생은 발차기, 여학생은 니킥
+	ENEMY_RIGHT_SUBMOTION,		//에너미 강공격 치어리더는 백덤블링, 남학생은 발차기, 여학생은 니킥
+	ENEMY_LEFT_GETHIT_1,		ENEMY_RIGHT_GETHIT_1,
+	ENEMY_LEFT_GETHIT_2,		ENEMY_RIGHT_GETHIT_2,
+	ENEMY_LEFT_GETHIT_3,		ENEMY_RIGHT_GETHIT_3,
+	ENEMY_LEFT_STUN,			ENEMY_RIGHT_STUN,
 	ENEMY_POINT,
-	ENEMY_LEFT_DEAD,
-	ENEMY_RIGHT_DEAD,
-	ENEMY_LEFT_BLOCK,
-	ENEMY_RIGHT_BLOCK,
+	ENEMY_LEFT_DEAD,			ENEMY_RIGHT_DEAD,
+	ENEMY_LEFT_BLOCK,			ENEMY_RIGHT_BLOCK,
 	ENEMY_STUNIMG,
-	ENEMY_LEFT_RUN,
-	ENEMY_RIGHT_RUN
+	ENEMY_LEFT_RUN,				ENEMY_RIGHT_RUN,
+	ENEMY_LEFT_BACKDOWN,		ENEMY_RIGHT_BACKDOWN,
 };
 
 class enemy : public gameNode
@@ -53,6 +44,7 @@ protected:
 	image* _dead;
 	image* _block;
 	image* _run;
+	image* _backdown;
 	
 	image* _point;
 	image* _stunImg;
@@ -88,6 +80,8 @@ protected:
 	animation* _enemyMotion_R_block;
 	animation* _enemyMotion_L_run;
 	animation* _enemyMotion_R_run;
+	animation* _enemyMotion_L_backdown;
+	animation* _enemyMotion_R_backdown;
 
 	animation* _ani_point;
 	animation* _ani_stunImg;
@@ -111,6 +105,7 @@ protected:
 	bool _isPoint;
 	bool _isStun;
 	bool _enemyDead;
+	bool _isDown;
 	
 	MYRECT _rc;			//에너미 렉트
 	MYRECT _attackRC;	//에너미 공격렉트
@@ -143,6 +138,8 @@ public:
 	animation* getEnemyMotion_R_hit_2() { return _enemyMotion_R_hit_2; }
 	animation* getEnemyMotion_L_hit_3() { return _enemyMotion_L_hit_3; }
 	animation* getEnemyMotion_R_hit_3() { return _enemyMotion_R_hit_3; }
+	animation* getEnemyMotion_L_backdown() { return _enemyMotion_L_backdown; }
+	animation* getEnemyMotion_R_backdown() { return _enemyMotion_R_backdown; }
 	
 	void setHitEnemyHP(int hp) { _hp -= hp; }
 	void setPlayerPos(float x, float y);

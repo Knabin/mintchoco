@@ -181,7 +181,8 @@ void collisionManager::enemy_collisionNoBlock()
 	for (int i = 0; i < temp.size(); i++)
 	{
 		// ============================================ 에너미가 가드 상태가 아닐 시 ============================================ //
-		if (temp[i]->getEnemyDirection() != ENEMY_LEFT_BLOCK && temp[i]->getEnemyDirection() != ENEMY_RIGHT_BLOCK)
+		if (temp[i]->getEnemyDirection() != ENEMY_LEFT_BLOCK && temp[i]->getEnemyDirection() != ENEMY_RIGHT_BLOCK
+			&& temp[i]->getEnemyDirection() != ENEMY_LEFT_DEAD && temp[i]->getEnemyDirection() != ENEMY_RIGHT_DEAD)
 		{
 			if (isCollision(temp[i]->getEnemyRect(), _player->getAttackRc()) &&
 				_player->getPlayerZ() - 50 <= temp[i]->getEnemyRect().bottom &&
@@ -200,8 +201,18 @@ void collisionManager::enemy_collisionNoBlock()
 						temp[i]->setHitEnemyHP(1);
 						playGetHitSound();
 					}
-					else if (_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_STRONG_ATTACK || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_STRONG_ATTACK)
+					else if ( _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_STRONG_ATTACK)
 					{
+						temp[i]->setEnemyDirection(ENEMY_LEFT_BACKDOWN);
+						temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_L_backdown());
+						temp[i]->setHitEnemyHP(4);
+						SOUNDMANAGER->play("gethit big", 0.85f);
+						CAMERA->cameraShake();
+					}
+					else if (_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_STRONG_ATTACK)
+					{
+						temp[i]->setEnemyDirection(ENEMY_RIGHT_BACKDOWN);
+						temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_R_backdown());
 						temp[i]->setHitEnemyHP(4);
 						SOUNDMANAGER->play("gethit big", 0.85f);
 						CAMERA->cameraShake();
@@ -228,6 +239,7 @@ void collisionManager::enemy_collisionNoBlock()
 				{
 					temp[i]->setEnemyDirection(ENEMY_LEFT_GETHIT_1);
 					temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_L_hit_1());
+					temp[i]->getEnemyMotion_L_hit_1()->start();
 				}
 				else if (temp[i]->getEnemyDirection() == ENEMY_RIGHT_IDLE || temp[i]->getEnemyDirection() == ENEMY_RIGHT_MOVE ||
 					temp[i]->getEnemyDirection() == ENEMY_RIGHT_BACK_MOVE || temp[i]->getEnemyDirection() == ENEMY_RIGHT_ATTACK ||
@@ -237,6 +249,7 @@ void collisionManager::enemy_collisionNoBlock()
 				{
 					temp[i]->setEnemyDirection(ENEMY_RIGHT_GETHIT_1);
 					temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_R_hit_1());
+					temp[i]->getEnemyMotion_R_hit_1()->start();
 				}
 				_attackEffectFrame = true;
 				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
@@ -268,11 +281,13 @@ void collisionManager::enemy_collisionNoBlock()
 					{
 						temp[i]->setEnemyDirection(ENEMY_LEFT_GETHIT_2);
 						temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_L_hit_2());
+						temp[i]->getEnemyMotion_L_hit_2()->start();
 					}
 					else if (temp[i]->getEnemyDirection() == ENEMY_RIGHT_GETHIT_1)
 					{
 						temp[i]->setEnemyDirection(ENEMY_RIGHT_GETHIT_2);
 						temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_R_hit_2());
+						temp[i]->getEnemyMotion_R_hit_2()->start();
 					}
 					temp[i]->setHitEnemyHP(1);
 					_enemyCollisionCount2 = 0;
@@ -295,11 +310,13 @@ void collisionManager::enemy_collisionNoBlock()
 					{
 						temp[i]->setEnemyDirection(ENEMY_LEFT_GETHIT_3);
 						temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_L_hit_3());
+						temp[i]->getEnemyMotion_L_hit_3()->start();
 					}
 					else if (temp[i]->getEnemyDirection() == ENEMY_RIGHT_GETHIT_2)
 					{
 						temp[i]->setEnemyDirection(ENEMY_RIGHT_GETHIT_3);
 						temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_R_hit_3());
+						temp[i]->getEnemyMotion_R_hit_3()->start();
 					}
 					temp[i]->setHitEnemyHP(1);
 					_enemyCollisionCount3 = 0;
@@ -324,7 +341,8 @@ void collisionManager::enemy_collisionLeftBlock()
 	{
 
 		// ============================================ 에너미상태가 왼쪽 가드이고 플레이어가 오른쪽에서 공격시 ============================================ //
-		if (temp[i]->getEnemyDirection() == ENEMY_LEFT_BLOCK && temp[i]->getEnemyRect().getCenterX() < _player->getPlayerRect().getCenterX())
+		if (temp[i]->getEnemyDirection() == ENEMY_LEFT_BLOCK && temp[i]->getEnemyRect().getCenterX() < _player->getPlayerRect().getCenterX()
+			&& temp[i]->getEnemyDirection() != ENEMY_LEFT_DEAD && temp[i]->getEnemyDirection() != ENEMY_RIGHT_DEAD)
 		{
 			if (isCollision(temp[i]->getEnemyRect(), _player->getAttackRc()) &&
 				_player->getPlayerZ() - 50 <= temp[i]->getEnemyRect().bottom &&
@@ -343,8 +361,18 @@ void collisionManager::enemy_collisionLeftBlock()
 						temp[i]->setHitEnemyHP(1);
 						playGetHitSound();
 					}
-					else if (_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_STRONG_ATTACK || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_STRONG_ATTACK)
+					else if (_player->getPlayerdirection() == PLAYERDIRECTION_LEFT_STRONG_ATTACK)
 					{
+						temp[i]->setEnemyDirection(ENEMY_LEFT_BACKDOWN);
+						temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_L_backdown());
+						temp[i]->setHitEnemyHP(4);
+						SOUNDMANAGER->play("gethit big", 0.85f);
+						CAMERA->cameraShake();
+					}
+					else if (_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_STRONG_ATTACK)
+					{
+						temp[i]->setEnemyDirection(ENEMY_RIGHT_BACKDOWN);
+						temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_R_backdown());
 						temp[i]->setHitEnemyHP(4);
 						SOUNDMANAGER->play("gethit big", 0.85f);
 						CAMERA->cameraShake();
@@ -371,6 +399,7 @@ void collisionManager::enemy_collisionLeftBlock()
 				{
 					temp[i]->setEnemyDirection(ENEMY_LEFT_GETHIT_1);
 					temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_L_hit_1());
+					temp[i]->getEnemyMotion_L_hit_1()->start();
 				}
 				else if (temp[i]->getEnemyDirection() == ENEMY_RIGHT_IDLE || temp[i]->getEnemyDirection() == ENEMY_RIGHT_MOVE ||
 					temp[i]->getEnemyDirection() == ENEMY_RIGHT_BACK_MOVE || temp[i]->getEnemyDirection() == ENEMY_RIGHT_ATTACK ||
@@ -380,6 +409,7 @@ void collisionManager::enemy_collisionLeftBlock()
 				{
 					temp[i]->setEnemyDirection(ENEMY_RIGHT_GETHIT_1);
 					temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_R_hit_1());
+					temp[i]->getEnemyMotion_R_hit_1()->start();
 				}
 				_attackEffectFrame = true;
 				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
@@ -411,11 +441,13 @@ void collisionManager::enemy_collisionLeftBlock()
 					{
 						temp[i]->setEnemyDirection(ENEMY_LEFT_GETHIT_2);
 						temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_L_hit_2());
+						temp[i]->getEnemyMotion_L_hit_2()->start();
 					}
 					else if (temp[i]->getEnemyDirection() == ENEMY_RIGHT_GETHIT_1)
 					{
 						temp[i]->setEnemyDirection(ENEMY_RIGHT_GETHIT_2);
 						temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_R_hit_2());
+						temp[i]->getEnemyMotion_R_hit_2()->start();
 					}
 					temp[i]->setHitEnemyHP(1);
 					_enemyCollisionCount2 = 0;
@@ -438,11 +470,13 @@ void collisionManager::enemy_collisionLeftBlock()
 					{
 						temp[i]->setEnemyDirection(ENEMY_LEFT_GETHIT_3);
 						temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_L_hit_3());
+						temp[i]->getEnemyMotion_L_hit_3()->start();
 					}
 					else if (temp[i]->getEnemyDirection() == ENEMY_RIGHT_GETHIT_2)
 					{
 						temp[i]->setEnemyDirection(ENEMY_RIGHT_GETHIT_3);
 						temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_R_hit_3());
+						temp[i]->getEnemyMotion_R_hit_3()->start();
 					}
 					temp[i]->setHitEnemyHP(1);
 					_enemyCollisionCount3 = 0;
@@ -467,7 +501,8 @@ void collisionManager::enemy_collisionRightBlock()
 	{
 
 	// ============================================ 에너미상태가 오른쪽 가드이고 플레이어가 왼쪽에서 공격시 ============================================ //
-		if (temp[i]->getEnemyDirection() == ENEMY_RIGHT_BLOCK && temp[i]->getEnemyRect().getCenterX() > _player->getPlayerRect().getCenterX())
+		if (temp[i]->getEnemyDirection() == ENEMY_RIGHT_BLOCK && temp[i]->getEnemyRect().getCenterX() > _player->getPlayerRect().getCenterX()
+			&& temp[i]->getEnemyDirection() != ENEMY_LEFT_DEAD && temp[i]->getEnemyDirection() != ENEMY_RIGHT_DEAD)
 		{
 			if (isCollision(temp[i]->getEnemyRect(), _player->getAttackRc()) &&
 				_player->getPlayerZ() - 50 <= temp[i]->getEnemyRect().bottom &&
@@ -486,8 +521,18 @@ void collisionManager::enemy_collisionRightBlock()
 						temp[i]->setHitEnemyHP(1);
 						playGetHitSound();
 					}
-					else if (_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_STRONG_ATTACK || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_STRONG_ATTACK)
+					else if ( _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_STRONG_ATTACK)
 					{
+						temp[i]->setEnemyDirection(ENEMY_LEFT_BACKDOWN);
+						temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_L_backdown());
+						temp[i]->setHitEnemyHP(4);
+						SOUNDMANAGER->play("gethit big", 0.85f);
+						CAMERA->cameraShake();
+					}
+					else if (_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_STRONG_ATTACK)
+					{
+						temp[i]->setEnemyDirection(ENEMY_RIGHT_BACKDOWN);
+						temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_R_backdown());
 						temp[i]->setHitEnemyHP(4);
 						SOUNDMANAGER->play("gethit big", 0.85f);
 						CAMERA->cameraShake();
@@ -513,6 +558,7 @@ void collisionManager::enemy_collisionRightBlock()
 				{
 					temp[i]->setEnemyDirection(ENEMY_LEFT_GETHIT_1);
 					temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_L_hit_1());
+					temp[i]->getEnemyMotion_L_hit_1()->start();
 				}
 				else if (temp[i]->getEnemyDirection() == ENEMY_RIGHT_IDLE || temp[i]->getEnemyDirection() == ENEMY_RIGHT_MOVE ||
 					temp[i]->getEnemyDirection() == ENEMY_RIGHT_BACK_MOVE || temp[i]->getEnemyDirection() == ENEMY_RIGHT_ATTACK ||
@@ -522,6 +568,7 @@ void collisionManager::enemy_collisionRightBlock()
 				{
 					temp[i]->setEnemyDirection(ENEMY_RIGHT_GETHIT_1);
 					temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_R_hit_1());
+					temp[i]->getEnemyMotion_R_hit_1()->start();
 				}
 				_attackEffectFrame = true;
 				_enemyEffectPosX = temp[i]->getEnemyRect().getCenterX();
@@ -553,11 +600,13 @@ void collisionManager::enemy_collisionRightBlock()
 					{
 						temp[i]->setEnemyDirection(ENEMY_LEFT_GETHIT_2);
 						temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_L_hit_2());
+						temp[i]->getEnemyMotion_L_hit_2()->start();
 					}
 					else if (temp[i]->getEnemyDirection() == ENEMY_RIGHT_GETHIT_1)
 					{
 						temp[i]->setEnemyDirection(ENEMY_RIGHT_GETHIT_2);
 						temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_R_hit_2());
+						temp[i]->getEnemyMotion_R_hit_2()->start();
 					}
 					temp[i]->setHitEnemyHP(1);
 					_enemyCollisionCount2 = 0;
@@ -580,11 +629,13 @@ void collisionManager::enemy_collisionRightBlock()
 					{
 						temp[i]->setEnemyDirection(ENEMY_LEFT_GETHIT_3);
 						temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_L_hit_3());
+						temp[i]->getEnemyMotion_L_hit_3()->start();
 					}
 					else if (temp[i]->getEnemyDirection() == ENEMY_RIGHT_GETHIT_2)
 					{
 						temp[i]->setEnemyDirection(ENEMY_RIGHT_GETHIT_3);
 						temp[i]->setEnemyMotion(temp[i]->getEnemyMotion_R_hit_3());
+						temp[i]->getEnemyMotion_R_hit_3()->start();
 					}
 					temp[i]->setHitEnemyHP(1);
 					_enemyCollisionCount3 = 0;
