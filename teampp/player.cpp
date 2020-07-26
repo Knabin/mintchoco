@@ -263,6 +263,8 @@ void player::update()
 		pixelCollision("boss_stage_pixel");
 		break;
 	}
+
+	cout << _hp << endl;
 }
 
 void player::render()
@@ -1244,24 +1246,24 @@ void player::upMove()
 				}
 			}
 		}
+	}
 
-		if (KEYMANAGER->isOnceKeyUp(VK_UP))//위쪽키를 뗏으면
+	if (KEYMANAGER->isOnceKeyUp(VK_UP))//위쪽키를 뗏으면
+	{
+		if (!_jumping && !_attack && !_guard)
 		{
-			if (!_jumping && !_attack && !_guard)
+			if (_playerDirection == PLAYERDIRECTION_LEFT_WALK)
 			{
-				if (_playerDirection == PLAYERDIRECTION_LEFT_WALK)
-				{
-					_playerDirection = PLAYERDIRECTION_LEFT_STOP;
-					_idleImage->setFrameX(0);
-					_idleImage->setFrameY(0);
-				}
+				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
+				_idleImage->setFrameX(0);
+				_idleImage->setFrameY(0);
+			}
 
-				if (_playerDirection == PLAYERDIRECTION_RIGHT_WALK)
-				{
-					_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
-					_idleImage->setFrameX(0);
-					_idleImage->setFrameY(1);
-				}
+			if (_playerDirection == PLAYERDIRECTION_RIGHT_WALK)
+			{
+				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
+				_idleImage->setFrameX(0);
+				_idleImage->setFrameY(1);
 			}
 		}
 	}
@@ -1313,24 +1315,24 @@ void player::downMove()
 				_z += _walkSpeed;
 			}
 		}
+	}
 
-		if (KEYMANAGER->isOnceKeyUp(VK_DOWN))//아래키를 뗏으면
+	if (KEYMANAGER->isOnceKeyUp(VK_DOWN))//아래키를 뗏으면
+	{
+		if (!_jumping && !_attack && !_guard)
 		{
-			if (!_jumping && !_attack && !_guard)
+			if (_playerDirection == PLAYERDIRECTION_LEFT_WALK)
 			{
-				if (_playerDirection == PLAYERDIRECTION_LEFT_WALK)
-				{
-					_playerDirection = PLAYERDIRECTION_LEFT_STOP;
-					_idleImage->setFrameX(0);
-					_idleImage->setFrameY(0);
-				}
+				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
+				_idleImage->setFrameX(0);
+				_idleImage->setFrameY(0);
+			}
 
-				if (_playerDirection == PLAYERDIRECTION_RIGHT_WALK)
-				{
-					_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
-					_idleImage->setFrameX(0);
-					_idleImage->setFrameY(1);
-				}
+			if (_playerDirection == PLAYERDIRECTION_RIGHT_WALK)
+			{
+				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
+				_idleImage->setFrameX(0);
+				_idleImage->setFrameY(1);
 			}
 		}
 	}
