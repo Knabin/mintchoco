@@ -173,6 +173,12 @@ HRESULT player::init()
 
 void player::update()
 {
+	if (_hp >= 27)
+	{
+		_hp = 26;
+	}
+
+
 	if (_hp >= 1)
 	{
 		attack();//플레이어 공격

@@ -548,7 +548,33 @@ void UiManager::PlayerHpMinus()
 
 void UiManager::PlayerHpPlus()
 {
-	_playerHP += 1;
+	
+
+	if (_playerHP < 22)
+	{
+		_playerHP += 5;
+	}
+	if (_playerHP == 25)
+	{
+		_playerHP += 1;
+	}
+	if (_playerHP == 24)
+	{
+		_playerHP += 2;
+	}
+	if (_playerHP == 23)
+	{
+		_playerHP += 3;
+	}
+	if (_playerHP == 22)
+	{
+		_playerHP += 4;
+	}
+	if (_playerHP >= 26)
+	{
+		_playerHP += 0;
+	}
+
 }
 
 void UiManager::BossHpMinus()
