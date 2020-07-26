@@ -796,11 +796,14 @@ void collisionManager::item_collision()
 		{
 			_itemManager->removeItem(i);
 			_uiManager->PlayerHpPlus();
-			_uiManager->PlayerHpPlus();
-			_uiManager->PlayerHpPlus();
-			_uiManager->PlayerHpPlus();
-			_uiManager->PlayerHpPlus();
 			_player->setPlusPlayerHP(5);
+
+			if (_player->getPlayerHP() >= 26)
+			{
+				break;
+			}
+
+
 		}
 	}	
 }

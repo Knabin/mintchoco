@@ -13,7 +13,6 @@ itemManager::~itemManager()
 HRESULT itemManager::init()
 {
 
-		
 	return S_OK;
 }
 
@@ -41,9 +40,9 @@ void itemManager::render()
 
 void itemManager::setVItemsDrop(float x, float y)
 {	
-	int randomDrop = RND->getFromFloatTo(1, 6);
+	int randomDrop = RND->getFromFloatTo(1, 13);
 
-	if (randomDrop == 2)
+	if (randomDrop == 1)
 	{
 		item* Hamburger;
 		Hamburger = new item;
@@ -52,7 +51,7 @@ void itemManager::setVItemsDrop(float x, float y)
 		_vItems.push_back(Hamburger);
 	}
 	
-	if (randomDrop == 1)
+	if (randomDrop == 2)
 	{
 		item* Icecream;
 		Icecream = new item;
@@ -60,8 +59,35 @@ void itemManager::setVItemsDrop(float x, float y)
 
 		_vItems.push_back(Icecream);
 	}
+
+	if (randomDrop == 3)
+	{
+		item* Aloe;
+		Aloe = new item;
+		Aloe->init("¾Ë·Î¿¡", x, y);
+
+		_vItems.push_back(Aloe);
+	}
+
+	if (randomDrop == 4)
+	{
+		item* tempura;
+		tempura = new item;
+		tempura->init("Æ¢±è", x, y);
+
+		_vItems.push_back(tempura);
+	}
+
+	if (randomDrop >= 5)
+	{
+		item* Tonkatsu;
+		Tonkatsu = new item;
+		Tonkatsu->init("µ·°¡½º", x, y);
+
+		_vItems.push_back(Tonkatsu);
+	}
 	
-	if (randomDrop >= 3)
+	if (randomDrop >= 13)
 	{
 		money* Money;
 		Money = new money;
@@ -69,7 +95,7 @@ void itemManager::setVItemsDrop(float x, float y)
 
 		_vMoney.push_back(Money);
 	}
-
+	
 }
 
 void itemManager::removeItem(int Num)
