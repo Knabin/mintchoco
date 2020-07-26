@@ -200,12 +200,12 @@ HRESULT cheerleader::init(string imageName, float x, float y, float speed)
 	// ============================	치어리더 백다운 ============================ //
 	_enemyMotion_L_backdown = new animation;
 	_enemyMotion_L_backdown->init(_backdown->getWidth(), _backdown->getHeight(), _backdown->getFrameWidth(), _backdown->getFrameHeight());
-	_enemyMotion_L_backdown->setPlayFrame(0, 29, false, false);
-	_enemyMotion_L_backdown->setFPS(1);
+	_enemyMotion_L_backdown->setPlayFrame(0, 28, false, false);
+	_enemyMotion_L_backdown->setFPS(2);
 	_enemyMotion_R_backdown = new animation;
 	_enemyMotion_R_backdown->init(_backdown->getWidth(), _backdown->getHeight(), _backdown->getFrameWidth(), _backdown->getFrameHeight());
-	_enemyMotion_R_backdown->setPlayFrame(59, 30, false, false);
-	_enemyMotion_R_backdown->setFPS(1);
+	_enemyMotion_R_backdown->setPlayFrame(59, 32, false, false);
+	_enemyMotion_R_backdown->setFPS(2);
 	// ============================	치어리더 백다운 ============================ //
 
 	_rc.set(0, 0, _enemyImg->getFrameWidth(), _enemyImg->getFrameHeight());
@@ -332,12 +332,14 @@ void cheerleader::render()
 		_x += 4.5f;
 		_enemyImg = _run;
 		break;
-	case ENEMY_LEFT_BACKDOWN:
-		_x -= 3.f;
+	case ENEMY_LEFT_BACKDOWN: 
+		if (_enemyMotion->getFramePos().x < 19 * _enemyMotion->getFrameWidth())
+		_x -= 10.f;
 		_enemyImg = _backdown;
 		break;
 	case ENEMY_RIGHT_BACKDOWN:
-		_x += 3.f;
+		if (_enemyMotion->getFramePos().x > 10 * _enemyMotion->getFrameWidth())
+		_x += 10.f;
 		_enemyImg = _backdown;
 		break;
 	}

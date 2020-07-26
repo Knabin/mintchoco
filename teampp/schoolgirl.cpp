@@ -201,11 +201,11 @@ HRESULT schoolgirl::init(string imageName, float x, float y, float speed)
 	_enemyMotion_L_backdown = new animation;
 	_enemyMotion_L_backdown->init(_backdown->getWidth(), _backdown->getHeight(), _backdown->getFrameWidth(), _backdown->getFrameHeight());
 	_enemyMotion_L_backdown->setPlayFrame(0, 26, false, false);
-	_enemyMotion_L_backdown->setFPS(1);
+	_enemyMotion_L_backdown->setFPS(2);
 	_enemyMotion_R_backdown = new animation;
 	_enemyMotion_R_backdown->init(_backdown->getWidth(), _backdown->getHeight(), _backdown->getFrameWidth(), _backdown->getFrameHeight());
 	_enemyMotion_R_backdown->setPlayFrame(53, 27, false, false);
-	_enemyMotion_R_backdown->setFPS(1);
+	_enemyMotion_R_backdown->setFPS(2);
 	// ============================	여학우 백다운 ============================ //
 
 	_rc.set(0, 0, _enemyImg->getFrameWidth(), _enemyImg->getFrameHeight());
@@ -333,11 +333,13 @@ void schoolgirl::render()
 		_enemyImg = _run;
 		break;
 	case ENEMY_LEFT_BACKDOWN:
-		_x -= 3.f;
+		if (_enemyMotion->getFramePos().x < 19 * _enemyMotion->getFrameWidth())
+			_x -= 10.f;
 		_enemyImg = _backdown;
 		break;
 	case ENEMY_RIGHT_BACKDOWN:
-		_x += 3.f;
+		if (_enemyMotion->getFramePos().x > 10 * _enemyMotion->getFrameWidth())
+			_x += 10.f;
 		_enemyImg = _backdown;
 		break;
 	}

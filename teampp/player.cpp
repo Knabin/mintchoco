@@ -195,10 +195,7 @@ void player::update()
 
 	frameDraw();//ÇÁ·¹ÀÓ °ü¸®
 
-	//cout << "attack : " << _attack << endl;
-	//cout << "comboAttack : " << _comboAttack << endl;
-	//cout << "comboAttack2 : " << _comboAttack2 << endl;
-	cout << "hp" << _hp << endl;
+	
 
 	if (_jumping && !_pixelCollision && !_jumpingHit)
 	{
@@ -454,7 +451,6 @@ void player::pixelCollision(string stageName)
 			int g = GetGValue(color);
 			int b = GetBValue(color);
 
-			//cout << r << ", " << g << ", " << b << endl;
 
 			if ((r == 255 && g == 0 && b == 0) || (!_jumping && (r == 0 && g == 255 && b == 0)))
 			{
@@ -821,7 +817,6 @@ void player::pixelCollision(string stageName)
 
 			if (!(r == 255 && g == 0 && b == 255))
 			{
-				//cout << r << ", " << g << ", " << b << endl;
 				_z = i + 5;
 				break;
 			}
@@ -1608,12 +1603,15 @@ void player::frameDraw()
 			_comboAttackImage3->setFrameX(_comboAttackImage3->getFrameX() - 1);
 			_comboAttackRc3.set(0, 0, 200, 200);
 			_comboAttackRc3.setCenterPos(_rc.left, _rc.getCenterY());
+			if (_comboAttackImage3->getFrameX() <= _comboAttackImage3->getMaxFrameX() - 2)
+			{
+				_comboAttackRc3.set(0, 0, 0, 0);
+			}
 			if (_comboAttackImage3->getFrameX() <= 0)
 			{
 				_comboAttackImage3->setFrameX(_comboAttackImage3->getMaxFrameX());
 				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
 				_attack = false;
-				_comboAttackRc3.set(0, 0, 0, 0);
 				_comboAttack = false;//2´ÜÄÞº¸ ½ÇÇàÁ¶°Ç ÆÞ½º
 				_comboAttack2 = false;//3´ÜÄÞº¸ ½ÇÇàÁ¶°Ç ÆÞ½º
 			}
@@ -1630,12 +1628,15 @@ void player::frameDraw()
 			_comboAttackImage3->setFrameX(_comboAttackImage3->getFrameX() + 1);
 			_comboAttackRc3.set(0, 0, 200, 200);
 			_comboAttackRc3.setCenterPos(_rc.right, _rc.getCenterY());
+			if (_comboAttackImage3->getFrameX() >= 2)
+			{
+				_comboAttackRc3.set(0, 0, 0, 0);
+			}
 			if (_comboAttackImage3->getFrameX() >= _comboAttackImage3->getMaxFrameX())
 			{
 				_comboAttackImage3->setFrameX(0);
 				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
 				_attack = false;
-				_comboAttackRc3.set(0, 0, 0, 0);
 				_comboAttack = false;//2´ÜÄÞº¸ ½ÇÇàÁ¶°Ç ÆÞ½º
 				_comboAttack2 = false;//3´ÜÄÞº¸ ½ÇÇàÁ¶°Ç ÆÞ½º
 			}
@@ -1651,14 +1652,17 @@ void player::frameDraw()
 		if (_count % 4 == 0)
 		{
 			_strongAttackImage->setFrameX(_strongAttackImage->getFrameX() + 1);
-			_attackRc.set(0, 0, 200, 200);
-			_attackRc.setCenterPos(_rc.left, _rc.getCenterY() - _jump->getJumpPower());
+			_attackRc.set(0, 0, 150, 200);
+			_attackRc.setCenterPos(_rc.left - 50, _rc.getCenterY() - _jump->getJumpPower());
+			if (_strongAttackImage->getFrameX() >= 2)
+			{
+				_attackRc.set(0, 0, 0, 0);
+			}
 			if (_strongAttackImage->getFrameX() >= _strongAttackImage->getMaxFrameX())
 			{
 				_strongAttackImage->setFrameX(_strongAttackImage->getMaxFrameX());
 				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
 				_attack = false;
-				_attackRc.set(0, 0, 0, 0);
 			}
 			_count = 0;
 		}
@@ -1672,14 +1676,17 @@ void player::frameDraw()
 		if (_count % 4 == 0)
 		{
 			_strongAttackImage->setFrameX(_strongAttackImage->getFrameX() - 1);
-			_attackRc.set(0, 0, 200, 200);
-			_attackRc.setCenterPos(_rc.right, _rc.getCenterY() - _jump->getJumpPower());
+			_attackRc.set(0, 0, 150, 200);
+			_attackRc.setCenterPos(_rc.right + 50, _rc.getCenterY() - _jump->getJumpPower());
+			if (_strongAttackImage->getFrameX() <= _strongAttackImage->getMaxFrameX() - 2)
+			{
+				_attackRc.set(0, 0, 0, 0);
+			}
 			if (_strongAttackImage->getFrameX() <= 0)
 			{
 				_strongAttackImage->setFrameX(0);
 				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
 				_attack = false;
-				_attackRc.set(0, 0, 0, 0);
 			}
 			_count = 0;
 		}
@@ -1697,6 +1704,10 @@ void player::frameDraw()
 			}
 			_attackRc.set(0, 0, 50, 100);
 			_attackRc.setCenterPos(_rc.left, _rc.getCenterY());
+			if (_jumpAttackImage->getFrameX() <= _jumpAttackImage->getMaxFrameX() - 2)
+			{
+				_attackRc.set(0, 0, 0, 0);
+			}
 			if (_jumpAttackImage->getFrameX() <= 0)
 			{
 				if (_z <= _z - _jump->getJumpPower())
@@ -1706,7 +1717,6 @@ void player::frameDraw()
 					_jumping = false;
 					_attack = false;
 				}
-				_attackRc.set(0, 0, 0, 0);
 			}
 			_count = 0;
 		}
@@ -1724,6 +1734,10 @@ void player::frameDraw()
 			}
 			_attackRc.set(0, 0, 50, 100);
 			_attackRc.setCenterPos(_rc.right, _rc.getCenterY());
+			if (_jumpAttackImage->getFrameX() >= 2)
+			{
+				_attackRc.set(0, 0, 0, 0);
+			}
 			if (_jumpAttackImage->getFrameX() >= _jumpAttackImage->getMaxFrameX())
 			{
 				if (_z <= _z - _jump->getJumpPower())
@@ -1733,7 +1747,6 @@ void player::frameDraw()
 					_jumping = false;
 					_attack = false;
 				}
-				_attackRc.set(0, 0, 0, 0);
 			}
 			_count = 0;
 		}
@@ -1750,12 +1763,15 @@ void player::frameDraw()
 			_dashAttackImage->setFrameX(_dashAttackImage->getFrameX() - 1);
 			_attackRc.set(0, 0, 120, 100);
 			_attackRc.setCenterPos(_rc.left - 50, _rc.getCenterY() - 30);
+			if (_dashAttackImage->getFrameX() <= _dashAttackImage->getMaxFrameX() - 2)
+			{
+				_attackRc.set(0, 0, 0, 0);
+			}
 			if (_dashAttackImage->getFrameX() <= 0)
 			{
 				_dashAttackImage->setFrameX(_dashAttackImage->getMaxFrameX());
 				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
 				_attack = false;
-				_attackRc.set(0, 0, 0, 0);
 			}
 			_count = 0;
 		}
@@ -1772,12 +1788,15 @@ void player::frameDraw()
 			_dashAttackImage->setFrameX(_dashAttackImage->getFrameX() + 1);
 			_attackRc.set(0, 0, 120, 100);
 			_attackRc.setCenterPos(_rc.right + 50, _rc.getCenterY() - 30);
+			if (_dashAttackImage->getFrameX() >= 2)
+			{
+				_attackRc.set(0, 0, 0, 0);
+			}
 			if (_dashAttackImage->getFrameX() >= _dashAttackImage->getMaxFrameX())
 			{
 				_dashAttackImage->setFrameX(0);
 				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
 				_attack = false;
-				_attackRc.set(0, 0, 0, 0);
 			}
 			_count = 0;
 		}
@@ -1794,15 +1813,18 @@ void player::frameDraw()
 			{
 				_ultimate = true;
 			}
-			_attackRc.set(0, 0, 300, 300);
-			_attackRc.setCenterPos(_rc.left, _rc.getCenterY());
+			_attackRc.set(0, 0, 250, 300);
+			_attackRc.setCenterPos(_rc.left - 50, _rc.getCenterY());
+			if (_ultimateImage->getFrameX() <= _ultimateImage->getMaxFrameX() - 2)
+			{
+				_attackRc.set(0, 0, 0, 0);
+			}
 			if (_ultimateImage->getFrameX() <= 0)
 			{
 				_ultimateImage->setFrameX(_ultimateImage->getMaxFrameX());
 				_playerDirection = PLAYERDIRECTION_LEFT_STOP;
 				_attack = false;
 				_ultimate = false;
-				_attackRc.set(0, 0, 0, 0);
 			}
 			_count = 0;
 		}
@@ -1819,15 +1841,18 @@ void player::frameDraw()
 			{
 				_ultimate = true;
 			}
-			_attackRc.set(0, 0, 300, 300);
-			_attackRc.setCenterPos(_rc.right, _rc.getCenterY());
+			_attackRc.set(0, 0, 250, 300);
+			_attackRc.setCenterPos(_rc.right + 50, _rc.getCenterY());
+			if (_ultimateImage->getFrameX() >= 2)
+			{
+				_attackRc.set(0, 0, 0, 0);
+			}
 			if (_ultimateImage->getFrameX() >= _ultimateImage->getMaxFrameX())
 			{
 				_ultimateImage->setFrameX(0);
 				_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
 				_attack = false;
 				_ultimate = false;
-				_attackRc.set(0, 0, 0, 0);
 			}
 		}
 		break;

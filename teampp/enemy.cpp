@@ -90,7 +90,7 @@ void enemy::update()
 		_isAttackCount++;
 		if (distance > 165 && (_direction == ENEMY_RIGHT_IDLE || _direction == ENEMY_LEFT_IDLE || _direction == ENEMY_RIGHT_MOVE || _direction == ENEMY_LEFT_MOVE)
 			&& (_direction != ENEMY_RIGHT_BACKDOWN && _direction != ENEMY_LEFT_BACKDOWN
-				&& _direction != ENEMY_RIGHT_DEAD && _direction != ENEMY_LEFT_DEAD))
+				&& _direction != ENEMY_RIGHT_DEAD && _direction != ENEMY_LEFT_DEAD) && _isAttackCount > 20)
 		{
 			if (_playerX > _x)
 			{
@@ -113,7 +113,7 @@ void enemy::update()
 			|| _direction == ENEMY_RIGHT_MOVE || _direction == ENEMY_LEFT_MOVE
 			|| _direction == ENEMY_RIGHT_RUN || _direction == ENEMY_LEFT_RUN)
 			&& (_direction != ENEMY_RIGHT_BACKDOWN && _direction != ENEMY_LEFT_BACKDOWN
-				&& _direction != ENEMY_RIGHT_DEAD && _direction != ENEMY_LEFT_DEAD))
+				&& _direction != ENEMY_RIGHT_DEAD && _direction != ENEMY_LEFT_DEAD) && _isAttackCount > 20 )
 		{
 			if (_playerX > _x)
 			{
@@ -331,6 +331,7 @@ void enemy::update()
 	{
 		if (_enemyMotion->isPlay() == false)
 		{
+			_isAttackCount = 0;
 			_direction = ENEMY_LEFT_IDLE;
 			_enemyMotion = _enemyMotion_L_idle;
 		}
@@ -339,6 +340,7 @@ void enemy::update()
 	{
 		if (_enemyMotion->isPlay() == false)
 		{
+			_isAttackCount = 0;
 			_direction = ENEMY_RIGHT_IDLE;
 			_enemyMotion = _enemyMotion_R_idle;
 		}
@@ -350,8 +352,9 @@ void enemy::update()
 		{
 			if (_isDown)
 			{
-				_direction = ENEMY_LEFT_IDLE;
-				_enemyMotion = _enemyMotion_L_idle;
+				_isAttackCount = 0;
+				_direction = ENEMY_RIGHT_IDLE;
+				_enemyMotion = _enemyMotion_R_idle;
 				_isDown = false;
 			}
 			else if (!_isDown)
@@ -367,8 +370,9 @@ void enemy::update()
 		{
 			if (_isDown)
 			{
-				_direction = ENEMY_RIGHT_IDLE;
-				_enemyMotion = _enemyMotion_R_idle;
+				_isAttackCount = 0;
+				_direction = ENEMY_LEFT_IDLE;
+				_enemyMotion = _enemyMotion_L_idle;
 				_isDown = false;
 			}
 			else if (!_isDown)
@@ -473,8 +477,7 @@ void enemy::update()
 		pixel("boss_stage_pixel");
 		break;
 	}
-	//cout << _stageNum << endl;
-	cout << _hp << endl;
+	
 	_rc.setCenterPos(_x, _y);
 }
 
@@ -496,7 +499,6 @@ void enemy::pixel(string stageName)
 
 		if (r == 255 && g == 255 && b == 255)
 		{
-			//cout << r << "," << g << "," << b << endl;
 			_y = i - _rc.getHeight() / 2 - 4;
 			break;
 		}

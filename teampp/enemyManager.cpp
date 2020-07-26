@@ -150,7 +150,7 @@ void enemyManager::setEnemiesVector(int stageNum)
 		for (int i = 0; i < 5; i++)
 		{
 			if (i < 2)		_vEnemies.push_back(createEnemy(1, x[i], y[i]));
-			else if (i > 4) _vEnemies.push_back(createEnemy(0, x[i], y[i]));
+			else if (i >= 4) _vEnemies.push_back(createEnemy(0, x[i], y[i]));
 			else			_vEnemies.push_back(createEnemy(2, x[i], y[i]));
 		}
 	}
@@ -177,7 +177,7 @@ void enemyManager::setEnemiesVector(int stageNum)
 		for (int i = 0; i < 5; i++)
 		{
 			if (i < 2)		_vEnemies.push_back(createEnemy(1, x[i], y[i]));
-			else if (i > 4) _vEnemies.push_back(createEnemy(0, x[i], y[i]));
+			else if (i >= 4) _vEnemies.push_back(createEnemy(0, x[i], y[i]));
 			else			_vEnemies.push_back(createEnemy(2, x[i], y[i]));
 		}
 	}
