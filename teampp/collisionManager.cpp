@@ -847,7 +847,7 @@ void collisionManager::boss_collisionNoBlock()
 	vector<enemy*> temp = _enemyManager->getEnemiesVector();
 	if (temp.size() == 0) return;
 	boss* btemp = dynamic_cast<boss*>(temp[0]);
-
+	
 	// ============================================ 에너미가 가드 상태가 아닐 시 ============================================ //
 	if (btemp->getBossDirection() != BOSS_LEFT_BLOCK && btemp->getBossDirection() != BOSS_RIGHT_BLOCK)
 	{
@@ -861,6 +861,7 @@ void collisionManager::boss_collisionNoBlock()
 			_bossCollisionCount++;
 			if (_bossCollisionCount % 7 == 0)
 			{
+				
 				if ((btemp->getBossDirection() == BOSS_LEFT_IDLE || btemp->getBossDirection() == BOSS_LEFT_WALK ||
 					btemp->getBossDirection() == BOSS_LEFT_SLAP || btemp->getBossDirection() == BOSS_LEFT_ELBOW ||
 					btemp->getBossDirection() == BOSS_LEFT_METEOR_G || btemp->getBossDirection() == BOSS_LEFT_METEOR_M ||
@@ -888,15 +889,35 @@ void collisionManager::boss_collisionNoBlock()
 				{
 					btemp->setHitBossHP(1);
 					playGetHitSound();
+					_uiManager->BossHpMinus();
 				}
 				else if (_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_STRONG_ATTACK || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_STRONG_ATTACK)
 				{
 					btemp->setHitBossHP(4);
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
 					SOUNDMANAGER->play("gethit big", 1.0f);
 				}
 				else if (_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_ULTIMATE || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_ULTIMATE)
 				{
 					btemp->setHitBossHP(15);
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
 					SOUNDMANAGER->play("gethit big", 1.0f);
 				}
 				_bossCollisionCount = 0;
@@ -948,6 +969,7 @@ void collisionManager::boss_collisionNoBlock()
 			if (_bossCollisionCount1 % 1 == 0)
 			{
 				btemp->setHitBossHP(1);
+				_uiManager->BossHpMinus();
 				_enemyCollisionCount1 = 0;
 			}
 		}
@@ -988,6 +1010,7 @@ void collisionManager::boss_collisionNoBlock()
 					btemp->getBossMotion_L_G_HIT1()->start();
 				}
 				btemp->setHitBossHP(1);
+				_uiManager->BossHpMinus();
 				_enemyCollisionCount2 = 0;
 			}
 		}
@@ -1027,6 +1050,7 @@ void collisionManager::boss_collisionNoBlock()
 					btemp->getBossMotion_L_G_HIT1()->start();
 				}
 				btemp->setHitBossHP(1);
+				_uiManager->BossHpMinus();
 				_enemyCollisionCount3 = 0;
 			}
 		}
@@ -1084,16 +1108,36 @@ void collisionManager::boss_collisionLeftBlock()
 					_player->getPlayerdirection() != PLAYERDIRECTION_RIGHT_ULTIMATE && _player->getPlayerdirection() != PLAYERDIRECTION_LEFT_ULTIMATE)
 				{
 					btemp->setHitBossHP(1);
+					_uiManager->BossHpMinus();
 					playGetHitSound();
 				}
 				else if (_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_STRONG_ATTACK || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_STRONG_ATTACK)
 				{
 					btemp->setHitBossHP(4);
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
 					SOUNDMANAGER->play("gethit big", 1.0f);
 				}
 				else if (_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_ULTIMATE || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_ULTIMATE)
 				{
 					btemp->setHitBossHP(15);
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
 					SOUNDMANAGER->play("gethit big", 1.0f);
 				}
 				_bossCollisionCount = 0;
@@ -1145,6 +1189,7 @@ void collisionManager::boss_collisionLeftBlock()
 			if (_bossCollisionCount1 % 1 == 0)
 			{
 				btemp->setHitBossHP(1);
+				_uiManager->BossHpMinus();
 				_enemyCollisionCount1 = 0;
 			}
 		}
@@ -1185,6 +1230,7 @@ void collisionManager::boss_collisionLeftBlock()
 					btemp->getBossMotion_L_G_HIT1()->start();
 				}
 				btemp->setHitBossHP(1);
+				_uiManager->BossHpMinus();
 				_enemyCollisionCount2 = 0;
 			}
 		}
@@ -1224,6 +1270,7 @@ void collisionManager::boss_collisionLeftBlock()
 					btemp->getBossMotion_L_G_HIT1()->start();
 				}
 				btemp->setHitBossHP(1);
+				_uiManager->BossHpMinus();
 				_enemyCollisionCount3 = 0;
 			}
 		}
@@ -1281,16 +1328,36 @@ void collisionManager::boss_collisionRightBlock()
 					_player->getPlayerdirection() != PLAYERDIRECTION_RIGHT_ULTIMATE && _player->getPlayerdirection() != PLAYERDIRECTION_LEFT_ULTIMATE)
 				{
 					btemp->setHitBossHP(1);
+					_uiManager->BossHpMinus();
 					playGetHitSound();
 				}
 				else if (_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_STRONG_ATTACK || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_STRONG_ATTACK)
 				{
 					btemp->setHitBossHP(4);
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
 					SOUNDMANAGER->play("gethit big", 1.0f);
 				}
 				else if (_player->getPlayerdirection() == PLAYERDIRECTION_RIGHT_ULTIMATE || _player->getPlayerdirection() == PLAYERDIRECTION_LEFT_ULTIMATE)
 				{
 					btemp->setHitBossHP(15);
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
+					_uiManager->BossHpMinus();
 					SOUNDMANAGER->play("gethit big", 1.0f);
 				}
 				_bossCollisionCount = 0;
@@ -1342,6 +1409,7 @@ void collisionManager::boss_collisionRightBlock()
 			if (_bossCollisionCount1 % 1 == 0)
 			{
 				btemp->setHitBossHP(1);
+				_uiManager->BossHpMinus();
 				_enemyCollisionCount1 = 0;
 			}
 		}
@@ -1382,6 +1450,7 @@ void collisionManager::boss_collisionRightBlock()
 					btemp->getBossMotion_L_G_HIT1()->start();
 				}
 				btemp->setHitBossHP(1);
+				_uiManager->BossHpMinus();
 				_enemyCollisionCount2 = 0;
 			}
 		}
@@ -1421,6 +1490,7 @@ void collisionManager::boss_collisionRightBlock()
 					btemp->getBossMotion_L_G_HIT1()->start();
 				}
 				btemp->setHitBossHP(1);
+				_uiManager->BossHpMinus();
 				_enemyCollisionCount3 = 0;
 			}
 		}
