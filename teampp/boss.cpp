@@ -337,16 +337,7 @@ void boss::update()
 
 	}
 
-	//cout << _playerX << endl;
-	//cout << _playerY << endl;
-	//cout << _distance << endl;
-	//cout << "어택카운트" << _attackCount << endl;
-	//cout << "어택타임" << _attackTime << endl;
-	//cout << "근거리랜던값" << _random << endl;
-	//cout << "원거리랜덤값" << _random1 << endl;
-	//cout << "_y 값" << _y << endl;
-	//cout << "중력값" << _gravity << endl;
-	cout << "점프값" << _jumpPower << endl;
+
 
 	_distance = getDistance(_x, _z, _playerX, _playerY);
 	_angle = getAngle(_x, _z, _playerX, _playerY);

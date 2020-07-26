@@ -195,10 +195,7 @@ void player::update()
 
 	frameDraw();//프레임 관리
 
-	//cout << "attack : " << _attack << endl;
-	//cout << "comboAttack : " << _comboAttack << endl;
-	//cout << "comboAttack2 : " << _comboAttack2 << endl;
-	cout << "hp" << _hp << endl;
+	
 
 	if (_jumping && !_pixelCollision && !_jumpingHit)
 	{
@@ -454,7 +451,6 @@ void player::pixelCollision(string stageName)
 			int g = GetGValue(color);
 			int b = GetBValue(color);
 
-			//cout << r << ", " << g << ", " << b << endl;
 
 			if ((r == 255 && g == 0 && b == 0) || (!_jumping && (r == 0 && g == 255 && b == 0)))
 			{
@@ -821,7 +817,6 @@ void player::pixelCollision(string stageName)
 
 			if (!(r == 255 && g == 0 && b == 255))
 			{
-				//cout << r << ", " << g << ", " << b << endl;
 				_z = i + 5;
 				break;
 			}
