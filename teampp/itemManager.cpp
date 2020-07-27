@@ -78,7 +78,7 @@ void itemManager::setVItemsDrop(float x, float y)
 		_vItems.push_back(tempura);
 	}
 
-	if (randomDrop >= 5)
+	if (randomDrop == 5)
 	{
 		item* Tonkatsu;
 		Tonkatsu = new item;
@@ -87,7 +87,7 @@ void itemManager::setVItemsDrop(float x, float y)
 		_vItems.push_back(Tonkatsu);
 	}
 	
-	if (randomDrop >= 13)
+	if (randomDrop >= 6)
 	{
 		money* Money;
 		Money = new money;

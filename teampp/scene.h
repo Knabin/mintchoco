@@ -100,6 +100,7 @@ public:
 
 	// ===== ³ªºó Ãß°¡ =====
 	int getSaveLoadWindowState() { return _SaveLoadWindowState; }
+	void setSaveLoadWindowState(int sl) { _SaveLoadWindowState = (SaveLoadWindowState)sl; }
 
 	void getPlayerSaveData();
 	void getPlayerSaveData(int slot);

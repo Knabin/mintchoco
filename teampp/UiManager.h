@@ -68,6 +68,10 @@ private:
 	image* _imgGameOver;
 	bool _isGameOver;
 	GAMEOVERSTATE _gameOverState;
+	
+	bool _isGameEnd;
+	int _endY;
+	int _creditCount;
 	// ========================
 
 public:
@@ -114,4 +118,7 @@ public:
 
 	bool getIsGameOver() { return _isGameOver; }
 	void setIsGameOver(bool gameover) { _isGameOver = gameover; }
+
+	bool getIsGameEnd() { return _isGameEnd; }
+	void setIsGameEnd(bool end) { _isGameEnd = end; }
 };
