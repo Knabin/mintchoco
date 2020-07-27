@@ -577,41 +577,79 @@ void player::pixelCollision(string stageName)
 	}
 
 
-
-	if (_jumping && _jump->getGravity() < 0 && _z < 560.f)
+	if (stageName == "stage1_pixel")
 	{
-		for (int i = _rc.bottom - 3; i < _rc.bottom + 3; i++)
+		if (_jumping && _jump->getGravity() < 0 && _z < 560.f)
 		{
-			COLORREF color = GetPixel(IMAGEMANAGER->findImage(stageName)->getMemDC(), _x, i);
-
-			int r = GetRValue(color);
-			int g = GetGValue(color);
-			int b = GetBValue(color);
-
-			if ((r == 255 && g == 255 && b == 0))
+			for (int i = _rc.bottom - 3; i < _rc.bottom + 3; i++)
 			{
-				_pixelCollision = true;
-				_jumping = false;
-				_jump->setJumpPower(0);
+				COLORREF color = GetPixel(IMAGEMANAGER->findImage(stageName)->getMemDC(), _x, i);
 
-				_rc.setCenterPos(_x, i + 10);
+				int r = GetRValue(color);
+				int g = GetGValue(color);
+				int b = GetBValue(color);
 
-				_yPlayerY = i + 10;
-				if (_playerDirection == PLAYERDIRECTION_LEFT_JUMP)
+				if ((r == 255 && g == 255 && b == 0))
 				{
-					_playerDirection = PLAYERDIRECTION_LEFT_STOP;
-				}
-				if (_playerDirection == PLAYERDIRECTION_RIGHT_JUMP)
-				{
-					_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
-				}
-				SOUNDMANAGER->play("land");
+					_pixelCollision = true;
+					_jumping = false;
+					_jump->setJumpPower(0);
 
-				break;
+					_rc.setCenterPos(_x, i + 70);
+
+					_yPlayerY = i + 70;
+					if (_playerDirection == PLAYERDIRECTION_LEFT_JUMP)
+					{
+						_playerDirection = PLAYERDIRECTION_LEFT_STOP;
+					}
+					if (_playerDirection == PLAYERDIRECTION_RIGHT_JUMP)
+					{
+						_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
+					}
+					SOUNDMANAGER->play("land");
+
+					break;
+				}
 			}
 		}
 	}
 
+	if (stageName == "stage4_pixel")
+	{
+		if (_jumping && _jump->getGravity() < 0 && _z < 560.f)
+		{
+			for (int i = _rc.bottom - 3; i < _rc.bottom + 3; i++)
+			{
+				COLORREF color = GetPixel(IMAGEMANAGER->findImage(stageName)->getMemDC(), _x, i);
+
+				int r = GetRValue(color);
+				int g = GetGValue(color);
+				int b = GetBValue(color);
+
+				if ((r == 255 && g == 255 && b == 0))
+				{
+					_pixelCollision = true;
+					_jumping = false;
+					_jump->setJumpPower(0);
+
+					_rc.setCenterPos(_x, i + 10);
+
+					_yPlayerY = i + 10;
+					if (_playerDirection == PLAYERDIRECTION_LEFT_JUMP)
+					{
+						_playerDirection = PLAYERDIRECTION_LEFT_STOP;
+					}
+					if (_playerDirection == PLAYERDIRECTION_RIGHT_JUMP)
+					{
+						_playerDirection = PLAYERDIRECTION_RIGHT_STOP;
+					}
+					SOUNDMANAGER->play("land");
+
+					break;
+				}
+			}
+		}
+	}
 
 
 	if (_pixelCollision && !_jumping)
@@ -1318,7 +1356,12 @@ void player::downMove()
 					_jump->setStartZpls(_walkSpeed);
 				}
 
-				_z += _walkSpeed;
+				if (!_pixelCollision)
+					_z += _walkSpeed;
+				else if (_pixelCollision)
+				{
+					_yPlayerY += _walkSpeed;
+				}
 			}
 		}
 	}
