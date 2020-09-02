@@ -3,7 +3,9 @@
 
 
 camera::camera()
-	: _cameraInfo(NULL)
+	: _hMemDC(NULL), _hBit(NULL), _hOBit(NULL), _blackSize(0), _width(WINSIZEX), _height(WINSIZEY),
+	_backWidth(WINSIZEX), _backHeight(WINSIZEY), _viewWidth(WINSIZEX), _viewHeight(WINSIZEY),
+	_isShaking(false), _shakeAmount(0.f), _shakeCount(0), _isFixed(false), _fixedLeft(0), _fixedTop(0)
 {
 }
 
@@ -15,20 +17,18 @@ camera::~camera()
 
 HRESULT camera::init(int width, int height, int backWidth, int backHeight)
 {
-	if (_cameraInfo != NULL) release();
 	HDC hdc = GetDC(_hWnd);
 
-	_cameraInfo = new CAMERA_INFO;
-	_cameraInfo->hMemDC = CreateCompatibleDC(hdc);
-	_cameraInfo->hBit = (HBITMAP)CreateCompatibleBitmap(hdc, backWidth, backHeight);
-	_cameraInfo->hOBit = (HBITMAP)SelectObject(_cameraInfo->hMemDC, _cameraInfo->hBit);
-	_cameraInfo->blackSize = 160;
-	_cameraInfo->width = width;
-	_cameraInfo->height = height;
-	_cameraInfo->backWidth = backWidth;
-	_cameraInfo->backHeight = backHeight;
-	_cameraInfo->viewWidth = width;
-	_cameraInfo->viewHeight = height - _cameraInfo->blackSize;
+	_hMemDC = CreateCompatibleDC(hdc);
+	_hBit = (HBITMAP)CreateCompatibleBitmap(hdc, backWidth, backHeight);
+	_hOBit = (HBITMAP)SelectObject(_hMemDC, _hBit);
+	_blackSize = 160;
+	_width = width;
+	_height = height;
+	_backWidth = backWidth;
+	_backHeight = backHeight;
+	_viewWidth = width;
+	_viewHeight = height - _blackSize;
 
 	_isShaking = false;
 	_shakeAmount = 0.f;
@@ -39,7 +39,7 @@ HRESULT camera::init(int width, int height, int backWidth, int backHeight)
 	_fixedTop = 0;
 
 
-	if (_cameraInfo == NULL)
+	if (_hMemDC == NULL)
 	{
 		release();
 		return E_FAIL;
@@ -51,13 +51,11 @@ HRESULT camera::init(int width, int height, int backWidth, int backHeight)
 
 void camera::release()
 {
-	if (_cameraInfo)
+	if (_hMemDC)
 	{
-		SelectObject(_cameraInfo->hMemDC, _cameraInfo->hOBit);
-		DeleteObject(_cameraInfo->hBit);
-		DeleteDC(_cameraInfo->hMemDC);
-
-		SAFE_DELETE(_cameraInfo);
+		SelectObject(_hMemDC, _hOBit);
+		DeleteObject(_hBit);
+		DeleteDC(_hMemDC);
 	}
 }
 
@@ -66,25 +64,25 @@ void camera::render(HDC hdc)
 	BitBlt(hdc,
 		0,
 		0,
-		_cameraInfo->width,
-		_cameraInfo->height,
-		_cameraInfo->hMemDC,
+		_width,
+		_height,
+		_hMemDC,
 		0, 0,
 		SRCCOPY);
 }
 
 bool camera::checkCameraX()
 {
-	if (_cameraInfo->x - _cameraInfo->viewWidth / 2 <= 0 ||
-		_cameraInfo->x + _cameraInfo->viewWidth / 2 >= _cameraInfo->backWidth)
+	if (_x - _viewWidth / 2 <= 0 ||
+		_x + _viewWidth / 2 >= _backWidth)
 		return false;
 	return true;
 }
 
 bool camera::checkCameraY()
 {
-	if (_cameraInfo->y - _cameraInfo->viewHeight / 2 <= 0 ||
-		_cameraInfo->y + _cameraInfo->viewHeight / 2 >= _cameraInfo->backHeight)
+	if (_y - _viewHeight / 2 <= 0 ||
+		_y + _viewHeight / 2 >= _backHeight)
 		return false;
 	return true;
 }
@@ -132,13 +130,13 @@ void camera::cameraFixed(float x, float y)
 
 void camera::changePosition(float x, float y)
 {
-	int d = getDistance(x, y, _cameraInfo->x, _cameraInfo->y);
-	float angle = getAngle(_cameraInfo->x, _cameraInfo->y, x, y);
+	int d = getDistance(x, y, _x, _y);
+	float angle = getAngle(_x, _y, x, y);
 
 	if (d > 50)
 	{
-		_cameraInfo->x += cosf(angle) * 5;
-		_cameraInfo->y -= sinf(angle) * 5;
+		_x += cosf(angle) * 5;
+		_y -= sinf(angle) * 5;
 	}
 }
 

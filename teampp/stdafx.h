@@ -45,18 +45,18 @@ using namespace TTYONE_UTIL;
 #define WINSIZEY	720
 #define WINSTYLE	WS_CAPTION | WS_SYSMENU
 
-#define RND randomFunction::getSingleton()
-#define KEYMANAGER keyManager::getSingleton()
-#define IMAGEMANAGER imageManager::getSingleton()
-#define TIMEMANAGER timeManager::getSingleton()
-#define EFFECTMANAGER effectManager::getSingleton()
-#define SOUNDMANAGER soundManager::getSingleton()
-#define SCENEMANAGER sceneManager::getSingleton()
-#define KEYANIMANAGER keyAniManager::getSingleton()
-#define ZORDER zOrder::getSingleton()
-#define TXTDATA txtData::getSingleton()
-#define INIDATA iniDataManager::getSingleton()
-#define CAMERA camera::getSingleton()
+#define RND randomFunction::getInstance()
+#define KEYMANAGER keyManager::getInstance()
+#define IMAGEMANAGER imageManager::getInstance()
+#define TIMEMANAGER timeManager::getInstance()
+#define EFFECTMANAGER effectManager::getInstance()
+#define SOUNDMANAGER soundManager::getInstance()
+#define SCENEMANAGER sceneManager::getInstance()
+#define KEYANIMANAGER keyAniManager::getInstance()
+#define ZORDER zOrder::getInstance()
+#define TXTDATA txtData::getInstance()
+#define INIDATA iniDataManager::getInstance()
+#define CAMERA camera::getInstance()
 
 #define SAFE_DELETE(p)		{if(p) {delete(p); (p) = NULL;}}
 #define SAFE_RELEASE(p)		{if(p) {(p)->release(); (p) = NULL;}}

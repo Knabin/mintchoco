@@ -1,12 +1,21 @@
 #pragma once
-#include "singletonBase.h"
 #include <map>
 
 class image;
 class animation;
 
-class keyAniManager : public singletonBase<keyAniManager>
+class keyAniManager
 {
+public:
+	static keyAniManager* getInstance()
+	{
+		static keyAniManager instance;
+		return &instance;
+	}
+private:
+	keyAniManager();
+	~keyAniManager();
+
 private:
 	typedef vector<animation*>						arrAnimations;
 	typedef vector<animation*>::iterator			iterAnimations;
@@ -21,9 +30,6 @@ private:
 	arrTotalAnimation _vTotalAnimation;
 
 public:
-	keyAniManager();
-	~keyAniManager();
-
 	HRESULT init();
 	void release();
 	void update();

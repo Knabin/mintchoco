@@ -1,6 +1,4 @@
 #pragma once
-#include "singletonBase.h"
-
 
 enum OBJECTTYPE
 {
@@ -26,14 +24,23 @@ struct tagObject
 	int frameY;
 };
 
-class zOrder : public singletonBase<zOrder>
+class zOrder
 {
+public:
+	static zOrder* getInstance()
+	{
+		static zOrder instance;
+		return &instance;
+	}
+
+private:
+	zOrder();
+	~zOrder();
 
 private:
 	vector<tagObject> _vObject;
 
 public:
-
 	HRESULT init();
 	void release();
 	void update();

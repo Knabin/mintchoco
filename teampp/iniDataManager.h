@@ -1,5 +1,4 @@
 #pragma once
-#include "singletonBase.h"
 #include <vector>
 
 struct tagIniData
@@ -9,8 +8,18 @@ struct tagIniData
 	const char* body;		//100
 };
 
-class iniDataManager : public singletonBase<iniDataManager>
+class iniDataManager
 {
+public:
+	static iniDataManager* getInstance()
+	{
+		static iniDataManager instance;
+		return &instance;
+	}
+private:
+	iniDataManager();
+	~iniDataManager();
+
 private:
 	typedef vector<tagIniData>			 arrIniData;
 	typedef vector<tagIniData>::iterator arrIniDataIter;
@@ -22,9 +31,6 @@ private:
 	arrIniDatas _vIniData;
 
 public:
-	iniDataManager();
-	~iniDataManager();
-
 	HRESULT init();
 	void release();
 

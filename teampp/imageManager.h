@@ -1,12 +1,21 @@
 #pragma once
-#include "singletonBase.h"
 #include "image.h"
 #include <map>
 
-class imageManager : public singletonBase<imageManager>
+class imageManager
 {
+public:
+	static imageManager* getInstance()
+	{
+		static imageManager instance;
+		return &instance;
+	}
+
 private:
-	//      map<first, second>
+	imageManager();
+	~imageManager();
+
+private:
 	typedef map<string, image*>				mapImageList;
 	typedef map<string, image*>::iterator	mapImageIter;
 
@@ -14,9 +23,6 @@ private:
 	mapImageList _mImageList;
 	   
 public:
-	imageManager();
-	~imageManager();
-
 	HRESULT init();
 	void release();
 

@@ -1,10 +1,15 @@
 #pragma once
-#include "singletonBase.h"
 #include <time.h>
 
-class randomFunction : public singletonBase<randomFunction>
+class randomFunction
 {
 public:
+	static randomFunction* getInstance()
+	{
+		static randomFunction object;
+		return &object;
+	}
+private:
 	randomFunction()
 	{
 		srand(GetTickCount());
@@ -14,6 +19,7 @@ public:
 
 	}
 
+public:
 	//매개변수에 넣은 숫자의 -1만큼 범위를 가지는 난수
 	inline int getInt(int num) { return rand() % num; }
 
