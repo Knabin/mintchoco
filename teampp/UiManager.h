@@ -93,9 +93,10 @@ public:
 	void BossHpMinus();						//boss hp 감소 함수
 	void BossDeath();						//boss hp가 완전히 감소하면?
 	
+	// ====== 나빈 추가 =======
 	void gameOver();
-
 	void printScript();
+	// =======================
 
 	void setStageManagerMemoryAddressLink(stageManager* stageManager) { _stageManager = stageManager; }
 	void setPlayerMemoryAddressLink(player* player) { _player = player; }

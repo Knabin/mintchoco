@@ -69,6 +69,10 @@ HRESULT npc::init(float x, float y, int typeNum, bool isLeft)
 
 void npc::release()
 {
+	_ani_idle->release();
+	SAFE_DELETE(_ani_idle);
+	_ani_react->release();
+	SAFE_DELETE(_ani_react);
 }
 
 void npc::update()
